@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+         
+      <objectContribution
+            id="ArduinoCLIUtilizer.contributionInstallZippedArduinoLibrary"
+            nameFilter="*.zip"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               label="ArduinoCLIUtilizer"
+               path="additions"
+               id="ArduinoCLIUtilizer.menuInstallZippedArduinoLibrary">
+            <separator
+                  name="groupInstallZippedArduinoLibrary">
+            </separator>
+         </menu>
+         <action
+               label="Install zipped arduino library"
+               class="arduinocliutilizer.popup.actions.InstallZippedArduinoLibraryAction"
+               menubarPath="ArduinoCLIUtilizer.menuInstallZippedArduinoLibrary/groupInstallZippedArduinoLibrary"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.InstallZippedArduinoLibraryAction">
+         </action>
+         <action
+               label="Generate ArduinoCLIUtilizer config file"
+               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               menubarPath="ArduinoCLIUtilizer.menuInstallZippedArduinoLibrary/groupInstallZippedArduinoLibrary"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
+         </action>
+      </objectContribution>
+      
+      <objectContribution
+            adaptable="true"
+            id="ArduinoCLIUtilizer.contributionVerifyCompileUpload"
+            nameFilter="*.ino"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               id="ArduinoCLIUtilizer.menuVerifyCompileUpload"
+               label="ArduinoCLIUtilizer"
+               path="additions">
+            <separator
+                  name="groupVerifyCompileUpload">
+            </separator>
+         </menu>
+         <action
+               class="arduinocliutilizer.popup.actions.VerifyArduinoProjectAction"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.VerifyArduinoProjectAction"
+               label="Verify Arduino project"
+               menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload">
+         </action>
+         <action
+               class="arduinocliutilizer.popup.actions.CompileArduinoProjectAction"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.CompileArduinoProjectAction"
+               label="Compile Arduino project"
+               menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload">
+         </action>
+         <action
+               class="arduinocliutilizer.popup.actions.CompileAndUploadArduinoProjectAction"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.CompileAndUploadArduinoProjectAction"
+               label="Compile and Upload Arduino project"
+               menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload">
+         </action>
+         <action
+               label="Generate ArduinoCLIUtilizer config file"
+               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
+         </action>
+      </objectContribution>
+      
+      <objectContribution
+            id="ArduinoCLIUtilizer.contributionUploadInoHexFile"
+            nameFilter="*.ino.hex"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               label="ArduinoCLIUtilizer"
+               path="additions"
+               id="ArduinoCLIUtilizer.menuUploadInoHexFile">
+            <separator
+                  name="groupUploadInoHexFile">
+            </separator>
+         </menu>
+         <action
+               label="Upload .ino.hex file"
+               class="arduinocliutilizer.popup.actions.UploadInoHexFileAction"
+               menubarPath="ArduinoCLIUtilizer.menuUploadInoHexFile/groupUploadInoHexFile"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.UploadInoHexFileAction">
+         </action>
+         <action
+               label="Generate ArduinoCLIUtilizer config file"
+               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               menubarPath="ArduinoCLIUtilizer.menuUploadInoHexFile/groupUploadInoHexFile"
+               enablesFor="1"
+               id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
+         </action>
+      </objectContribution>
+      
+   </extension>
+
+</plugin>
