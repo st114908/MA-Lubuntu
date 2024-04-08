@@ -8,6 +8,8 @@
 		#ifndef COURSECONTROLCOMPONENT_Interface_H_
 		#define COURSECONTROLCOMPONENT_Interface_H_
 
+#include "clock.h"
+
 #ifdef __cplusplus
   extern "C" {
 #endif		// Library
@@ -15,7 +17,6 @@
 	#include "customTypes.h"
 	#include "port.h"
 		#include "messages_types.h"
-	#include "clock.h"
 	#include "Debug.h"
 
 
