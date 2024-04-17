@@ -1,0 +1,4 @@
+For the origin of the Overtaking-Cars (I added -Baumfalk) file see https://github.com/SQA-Robo-Lab .
+For the origin of mechatronicuml-cadapter-component-container see https://github.com/fraunhofer-iem/mechatronicuml-cadapter-component-container/tree/stuerner_ma .
+
+I was afraid of causing damage to the respective origin repository, so I added them to this one for now.
