@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="MUMLArduinoAutomatisation.contribution1"
+            nameFilter="*.muml"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               label="Pipeline"
+               path="additions"
+               id="MUMLArduinoAutomatisation.menuPipeline">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Run Pipeline"
+               class="mumlacgppa.popup.actions.RunPipelineAction"
+               menubarPath="MUMLArduinoAutomatisation.menuPipeline/groupPipeline"
+               enablesFor="1"
+               id="MUMLArduinoAutomatisation.RunPipelineAction">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
