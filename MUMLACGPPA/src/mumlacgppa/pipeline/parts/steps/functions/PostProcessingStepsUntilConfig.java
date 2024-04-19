@@ -60,7 +60,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -77,9 +77,9 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 		
 		// Ins:
@@ -97,7 +97,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 	}
 	
 	
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
 	 */
 	@Override
@@ -107,11 +107,9 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
 		
-		Path dummy = ProjectFolderPathStorage.projectFolderPath;
-		
 		// Only load once.
-		Path arduinoContainersPath = resolvePath( handleInputByKey("arduinoContainersPath").getContent() );
-		Path componentCodePath = resolvePath( handleInputByKey("componentCodePath").getContent() );
+		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
+		Path componentCodePath = resolveFullOrLocalPath( handleInputByKey("componentCodePath").getContent() );
 		
 		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
 		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  

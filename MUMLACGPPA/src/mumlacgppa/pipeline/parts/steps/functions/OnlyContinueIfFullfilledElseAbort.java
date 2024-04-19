@@ -3,18 +3,11 @@ package mumlacgppa.pipeline.parts.steps.functions;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.yaml.snakeyaml.Yaml;
 
 import mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
@@ -29,7 +22,11 @@ import mumlacgppa.pipeline.parts.storage.VariableHandler;
 public class OnlyContinueIfFullfilledElseAbort extends PipelineStep implements Keywords{
 
 	public static final String nameFlag = "OnlyContinueIfFullfilledElseAbort";
-	
+
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
+	@Override
 	protected void setRequiredInsAndOuts(){
 		requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();
 		
@@ -42,9 +39,9 @@ public class OnlyContinueIfFullfilledElseAbort extends PipelineStep implements K
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:

@@ -7,9 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import arduinocliutilizer.paths.FQBNStorageFileName;
+import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
 import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
-import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
@@ -32,7 +32,7 @@ public class UploadCall extends ACLIWorkstep implements SaveResponseInfoLocation
 			// arduino-cli upload --port [PORT] --fqbn [BOARD] --input-file [HEXFILE]
 			uploadCommand = "arduino-cli upload --port " + foundPortAddress + " --fqbn " + targetFqbn + " --input-file " + targetFile + " --format yaml";
 			Path parentPath = targetFilePath.getParent();
-			Path fqbnFilePath = parentPath.resolve(fqbnStorageFileName);
+			Path fqbnFilePath = parentPath.resolve(FQBN_STORAGE_FILE_NAME);
 			if(Files.exists(fqbnFilePath) && Files.isRegularFile(fqbnFilePath)){
 				BufferedReader FQBNFileReader = new BufferedReader(new FileReader(fqbnFilePath.toFile()));
 				String readFQBN = FQBNFileReader.readLine();

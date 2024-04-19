@@ -1,5 +1,5 @@
 package arduinocliutilizer.paths;
 
 public interface FQBNStorageFileName {
-	public static final String fqbnStorageFileName = "fqbn.txt";
+	public static final String FQBN_STORAGE_FILE_NAME = "fqbn.txt";
 }

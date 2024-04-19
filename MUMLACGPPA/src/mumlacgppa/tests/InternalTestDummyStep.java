@@ -1,12 +1,8 @@
 package mumlacgppa.tests;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-
-import org.yaml.snakeyaml.Yaml;
 
 import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;

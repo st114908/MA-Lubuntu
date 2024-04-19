@@ -1,14 +1,10 @@
 package mumlacgppa.pipeline.parts.steps.functions;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-
-import org.eclipse.emf.common.util.URI;
 
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
@@ -32,22 +28,27 @@ public class ContainerCodeGeneration extends PipelineStep{
 		super(VariableHandlerInstance, yamlData);
 	}
 
+
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
 	@Override
 	protected void setRequiredInsAndOuts() {
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
+		
 		// Source/ MUML domain element:
 		// platform:/resource/[Project]/model/roboCar.muml
 		// There "root node"/"Model Element Category manual_allocation"/"System Allocation"
-		
 		ins.add("muml_containerSourceFile");
-		ins.add("arduino_containersDestinationFolder");
+		
     	// As per tutorial: platform:/resource/[Project]/container-models,
 		// so only the folder within the project will set and
 		// internally platform:/resource/[Project]/ will be appended in front of it. 
+		ins.add("arduino_containersDestinationFolder");
 		
-		// The Overwrite option doesn't work. 
+		// The Overwrite option shown by the export wizard doesn't work. 
 		
 		requiredInsAndOuts.put(inFlag, ins);
 		
@@ -56,9 +57,9 @@ public class ContainerCodeGeneration extends PipelineStep{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 		
 		// Ins:
@@ -80,8 +81,13 @@ public class ContainerCodeGeneration extends PipelineStep{
 	public void execute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
-		// Currently done by export structures in the project PipelineExecution.  
-		// Its presence in the pipeline gets detected.
+		/*
+		 * Due to a lack of detailed knowledge about Eclipse plug ins and a lack
+		 * of time this is currently done by a copied and adjusted call from
+		 * PipeLineExecutionAsExport. Its presence in the pipeline simply gets
+		 * detected by PipeLineExecutionAsExport, which adjusts its behaviour
+		 * and calls in order to trigger the desired generation/transformation.
+		 */
 	}
 
 }

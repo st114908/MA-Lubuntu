@@ -1,10 +1,8 @@
 package mumlacgppa.pipeline.settings;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,8 +43,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 					+ "to be set to a complete file system path to the project's folder!"
 							);
 		}
-		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(pipelineSettingsDirectoryFolder);
-		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(pipelineSettingsFileName);
+		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
+		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(PIPELINE_SETTINGS_FILE_NAME);
 	}
 	
 	

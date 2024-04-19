@@ -3,8 +3,6 @@ package mumlacgppa.pipeline.parts.steps.functions;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -13,7 +11,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.yaml.snakeyaml.Yaml;
 
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
@@ -28,6 +25,9 @@ public class SelectableTextWindow extends PipelineStep implements Keywords{
 
 	public static final String nameFlag = "SelectableTextWindow";
 
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
 	@Override
 	protected void setRequiredInsAndOuts(){
 		requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();

@@ -3,19 +3,13 @@
  */
 package mumlacgppa.pipeline.parts.steps.functions;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -62,7 +56,7 @@ public class PostProcessingStateChartValues extends PipelineStep{
 	}
 
 	
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -84,9 +78,9 @@ public class PostProcessingStateChartValues extends PipelineStep{
 	}
 
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:
@@ -117,7 +111,7 @@ public class PostProcessingStateChartValues extends PipelineStep{
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
 
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
-		Path arduinoContainersPath = resolvePath( handleInputByKey("arduinoContainersPath").getContent() );
+		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
 		
 		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
 		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
@@ -193,7 +187,7 @@ public class PostProcessingStateChartValues extends PipelineStep{
 				+ "  laneDistance: direct 4\n"
 				+ outFlag + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n";
-		Yaml yaml = new Yaml();
+		Yaml yaml = new Yaml(); // For yaml validity check.
 		Map <String, Map <String, String>> testMap = yaml.load(testYaml);
 		VariableHandler VariableHandlerInstance = new VariableHandler();
 		PostProcessingStateChartValues debugTest = new PostProcessingStateChartValues(VariableHandlerInstance, testYaml);

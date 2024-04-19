@@ -1,5 +1,10 @@
 package mumlacgppa.pipeline.parts.storage;
 
+/**
+ * This class handles the storage of variable content. 
+ * The possibility of generics 
+ * The possibility of data types for differentiating between strings for paths and strings for has been noticed during planning, but didn't get implemented due to time constraints. 
+ */
 public class VariableContent {
 	private String content;
 	// TODO: type
@@ -46,3 +51,22 @@ public class VariableContent {
 	
 	
 }
+
+/*public class VariableContent<T> {
+	private T content;
+	// TODO: type implementation
+
+	public VariableContent(T content) {
+		this.content = content;
+	}
+
+	public void setContent(T content) {
+		this.content = content;
+		// TODO: Type implementation
+	}
+
+	public T getContent() {
+		return content;
+	}
+}*/
+

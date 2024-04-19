@@ -1,9 +1,7 @@
 package mumlacgppa.pipeline.parts.steps.functions;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -29,7 +27,11 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 	public static final String nameFlag = "LookupBoardBySerialNumber";
 	private static ArrayList<Map<String, Object>> resultList; // For doing the search only once.
 
-	
+
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
+	@Override
 	protected void setRequiredInsAndOuts(){
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
@@ -43,9 +45,9 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:

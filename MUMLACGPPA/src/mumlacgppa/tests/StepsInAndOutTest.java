@@ -10,10 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
@@ -390,7 +387,7 @@ public class StepsInAndOutTest implements Keywords{
 				+ "  output2: testTextVariable\n";
 		
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance, testYamlTextCompleteDefinitionContent);
-		testInstance.validate();
+		testInstance.checkForDetectableErrors();
 	}
 	
 	

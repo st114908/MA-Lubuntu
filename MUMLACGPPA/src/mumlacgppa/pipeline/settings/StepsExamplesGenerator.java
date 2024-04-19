@@ -1,14 +1,11 @@
 package mumlacgppa.pipeline.settings;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.yaml.snakeyaml.DumperOptions;
@@ -52,8 +49,8 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 					+ "to be set to a complete file system path to the project's folder!"
 							);
 		}
-		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(pipelineSettingsDirectoryFolder);
-		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(StepExamplesFileName);
+		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
+		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(STEP_EXAMPLES_FILE_NAME);
 	}
 	
 	

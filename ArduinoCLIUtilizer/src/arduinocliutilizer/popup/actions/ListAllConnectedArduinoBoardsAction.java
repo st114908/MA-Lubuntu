@@ -12,14 +12,16 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+
+import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
+import arduinocliutilizer.worksteps.functions.ConnectedBoardsFinder;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
-import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
-import arduinocliutilizer.worksteps.functions.ConnectedBoardsFinder;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 

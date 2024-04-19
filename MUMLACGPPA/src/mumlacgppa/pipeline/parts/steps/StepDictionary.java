@@ -3,13 +3,7 @@
  */
 package mumlacgppa.pipeline.parts.steps;
 
-import java.nio.file.Path;
 import java.util.Map;
-
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.TypeDescription;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
@@ -19,11 +13,11 @@ import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
 import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
 import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFullfilledElseAbort;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStepsUntilConfig;
-import mumlacgppa.pipeline.parts.steps.functions.ReplaceLineContent;
 import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
+import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStepsUntilConfig;
+import mumlacgppa.pipeline.parts.steps.functions.ReplaceLineContent;
 import mumlacgppa.pipeline.parts.steps.functions.SaveToTextFile;
 import mumlacgppa.pipeline.parts.steps.functions.SelectableTextWindow;
 import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;

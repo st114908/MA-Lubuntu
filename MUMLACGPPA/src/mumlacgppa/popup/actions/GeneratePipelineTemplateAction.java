@@ -1,7 +1,5 @@
 package mumlacgppa.popup.actions;
 
-import java.util.LinkedHashMap;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;

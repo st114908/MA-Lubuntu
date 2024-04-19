@@ -5,14 +5,10 @@ package mumlacgppa.pipeline.parts.steps.functions;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-
-import org.yaml.snakeyaml.Yaml;
 
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import arduinocliutilizer.worksteps.functions.CompilationCall;
@@ -36,6 +32,11 @@ public class Compile extends PipelineStep {
 		super(VariableHandlerInstance, readData);
 	}
 	
+	
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
+	@Override
 	protected void setRequiredInsAndOuts(){
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
@@ -52,9 +53,9 @@ public class Compile extends PipelineStep {
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:
@@ -83,7 +84,7 @@ public class Compile extends PipelineStep {
 	}
 
 	
-	/* (non-Javadoc)
+	/**
 	 * @see mumlarduinopipelineautomatisation.pipeline.parts.steps.common.PipelineStep#execute()
 	 */
 	@Override
@@ -92,7 +93,7 @@ public class Compile extends PipelineStep {
 			StructureException, ProjectFolderPathNotSetException{
 		handleOutputByKey("ifSuccessful", false); // For Exceptions 
 		String foundFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
-		Path targetINOFilePath = resolvePath( handleInputByKey("targetInoFile").getContent() );
+		Path targetINOFilePath = resolveFullOrLocalPath( handleInputByKey("targetInoFile").getContent() );
 		boolean saveCompiledFilesNearby = handleInputByKey("saveCompiledFilesNearby").getBooleanContent();
 		CompilationCall CompilationStepInstance = new CompilationCall(targetINOFilePath, foundFqbn, saveCompiledFilesNearby);
 		

@@ -10,6 +10,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+
+/**
+ * 
+ */
 interface SelectedFilePathAndContextFinder {
 	
 	public static IResource getRessourceOfSelectedFile(){
@@ -37,11 +41,6 @@ interface SelectedFilePathAndContextFinder {
 		return selectedFile;
 	}
 	
-	public static Path getParentPathOfSelectedFile(){
-		Path result = Paths.get(getSelectedFile().getRawLocation().toString()).getParent(); 
-		return result;
-	}
-
 	public static Path getPathOfSelectedFile(){
 		Path result = Paths.get(getSelectedFile().getRawLocation().toString()); 
 		return result;

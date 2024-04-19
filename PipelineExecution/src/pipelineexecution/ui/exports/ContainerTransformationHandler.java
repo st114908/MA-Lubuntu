@@ -1,14 +1,13 @@
-package pipelineexecution.ui;
+package pipelineexecution.ui.exports;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -18,25 +17,43 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.workspace.WorkspaceEditingDomainFactory;
+
+import org.muml.codegen.componenttype.export.ui.Activator;
 import org.muml.container.transformation.job.ContainerGenerationJob;
 import org.muml.container.transformation.job.MiddlewareOption;
 import org.muml.psm.allocation.SystemAllocation;
 import org.muml.psm.muml_container.DeploymentConfiguration;
 
+import projectfolderpathstorageplugin.ProjectFolderPathStorage;
+
+import mumlacgppa.pipeline.parts.exceptions.StructureException;
+import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
+import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
+
 class ContainerTransformationHandler{
-	private IResource selectedResource;
 	private EObject[] sourceElementsSystemAllocation;
-	private final URI destinationContainerTransformationURI;
-	private Path destinationContainerTransformationPath;
-	final MiddlewareOption selectedMiddleware;
+	//private final URI destinationContainerTransformationURI;
+	//private Path destinationContainerTransformationPath;
+	//final MiddlewareOption selectedMiddleware;
+	private ContainerTransformation step;
 	
-	public ContainerTransformationHandler(IResource selectedResource, EObject[] sourceElementsSystemAllocation, IFolder destinationFolder,
-			final MiddlewareOption selectedMiddleware){
-		this.selectedResource = selectedResource;
+	public ContainerTransformationHandler(EObject[] sourceElementsSystemAllocation, ContainerTransformation step)
+			throws VariableNotDefinedException, StructureException{
+		// Because I didn't manage to get the resource selection working:
 		this.sourceElementsSystemAllocation = sourceElementsSystemAllocation;
-		destinationContainerTransformationURI = URI.createPlatformResourceURI( destinationFolder.getFullPath().toString() , true);
-		destinationContainerTransformationPath = Paths.get( destinationFolder.getRawLocation().toString() );
+		this.step = step;
+	}
+	
+	public void performContainerTransformation(IProgressMonitor progressMonitor, EditingDomain editingDomain)
+			throws VariableNotDefinedException, StructureException{
+		Path referenceFolderForURIPathGeneration = ProjectFolderPathStorage.projectFolderPath.getParent();
 		
+		Path muml_containerFolderPath = step.getResolvedPathContentOfInput("muml_containerFileDestination").getParent();
+		Path subPathForPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(muml_containerFolderPath);
+		
+		final URI destinationContainerTransformationURI = URI.createPlatformResourceURI(subPathForPlatformRessourseURI.toString(), true);
+		Path destinationContainerTransformationPath = Paths.get( muml_containerFolderPath.toString() );
+
 		if(! Files.isDirectory(destinationContainerTransformationPath) ){
 			try {
 				Files.createDirectory(destinationContainerTransformationPath);
@@ -45,10 +62,16 @@ class ContainerTransformationHandler{
 				e.printStackTrace();
 			}
 		}
-		this.selectedMiddleware = selectedMiddleware;
-	}
-	
-	public void performContainerTransformation(IProgressMonitor progressMonitor, EditingDomain editingDomain){
+
+		MiddlewareOption selectedMiddleware;
+		if(step.getContentOfInput("middlewareOption").getContent().equals("MQTT_I2C_CONFIG")){
+			selectedMiddleware = MiddlewareOption.MQTT_I2C_CONFIG;
+		}
+		else{
+			selectedMiddleware = MiddlewareOption.DDS_CONFIG;
+		}
+		
+		
 		final SystemAllocation systemAllocation = (SystemAllocation) sourceElementsSystemAllocation[0];
 		AdapterFactoryEditingDomain.getEditingDomainFor(systemAllocation);
 
@@ -71,11 +94,9 @@ class ContainerTransformationHandler{
 				//Job ddsJob = new DDSContainerGenerationJob(systemConfig, destinationURIContainerGeneration, editingDomain);
 				//ddsJob.schedule();
 			}
-			//selectedFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, progressMonitor);
-			selectedResource.getProject().refreshLocal(IResource.DEPTH_INFINITE, progressMonitor);
-		} catch (InterruptedException | CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (InterruptedException e) {
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
 		} 
 	
 		// Handling of existing old MUML_Container.muml_container via deletion of the old and moving/renaming of the new one.
@@ -86,9 +107,10 @@ class ContainerTransformationHandler{
 				Files.delete(muml_containerPath);
 				Files.move(muml_container2Path, muml_containerPath);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+				Activator.getDefault().getLog().log(status);
 			}
 		}
 	}
 }
+

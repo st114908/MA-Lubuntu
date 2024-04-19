@@ -6,8 +6,6 @@ package mumlacgppa.pipeline.parts.steps.functions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -31,91 +29,97 @@ public class TerminalCommand extends PipelineStep {
 
 	public static final String nameFlag = "TerminalCommand";
 
-
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
 	@Override
-	protected void setRequiredInsAndOuts(){
+	protected void setRequiredInsAndOuts() {
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("terminalCommand");
 		ins.add("exitCodeNumberForSuccessfulExecution");
 		requiredInsAndOuts.put(inFlag, ins);
-		
+
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		outs.add("exitCode");
-    	outs.add("normalFeedback");
-    	outs.add("errorFeedback");
+		outs.add("normalFeedback");
+		outs.add("errorFeedback");
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
-		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
+	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
+		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String, String>>();
 
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("terminalCommand", "direct echo example");
 		ins.put("exitCodeNumberForSuccessfulExecution", "direct 0");
 		exampleSettings.put(inFlag, ins);
-		
+
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
 		outs.put("exitCode", "exitCode");
-    	outs.put("normalFeedback", "normalFeedback");
-    	outs.put("errorFeedback", "errorFeedback");
+		outs.put("normalFeedback", "normalFeedback");
+		outs.put("errorFeedback", "errorFeedback");
 		exampleSettings.put(outFlag, outs);
-		
+
 		return exampleSettings;
 	}
-	
-	
+
 	/**
 	 * @param readData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
 	 */
-	public TerminalCommand(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public TerminalCommand(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData)
+			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 
 	/**
 	 * @param yamlData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
 	 */
-	public TerminalCommand(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public TerminalCommand(VariableHandler VariableHandlerInstance, String yamlData)
+			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
 	 */
 	@Override
 	public void execute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
-		//add("terminalCommand");
-    	//add("exitCodeNumberForSuccessfulExecution");
+		// add("terminalCommand");
+		// add("exitCodeNumberForSuccessfulExecution");
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
 		String command = handleInputByKey("terminalCommand").getContent();
 		int desiredExitCode = handleInputByKey("exitCodeNumberForSuccessfulExecution").getIntContent();
-		
+
 		// Processbuilder is more intuitive to use than Runtime.
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		//if(isWindows){
-		//	processBuilder.command("cmd.exe", "/c", potentialArduinoCLIPathCommand + commandSequence);
-		//}
-		//else{
-			processBuilder.command("bash", "-c", command);
-		//}
+		// if(isWindows){
+		// processBuilder.command("cmd.exe", "/c",
+		// potentialArduinoCLIPathCommand + commandSequence);
+		// }
+		// else{
+		processBuilder.command("bash", "-c", command);
+		// }
 		Process proc = processBuilder.start();
-		
+
 		// https://stackoverflow.com/questions/5711084/java-runtime-getruntime-getting-output-from-executing-a-command-line-program
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 		int exitCode = proc.waitFor();
-		
+
 		// Read the output from the command
 		String currentNormalFeedback = null;
 		String normalFeedback = "";
@@ -128,13 +132,13 @@ public class TerminalCommand extends PipelineStep {
 		while ((currentErrorFeedback = stdError.readLine()) != null) {
 			errorFeedback += currentErrorFeedback + "\n";
 		}
-		
-		handleOutputByKey("ifSuccessful", (desiredExitCode == exitCode) );
+
+		handleOutputByKey("ifSuccessful", (desiredExitCode == exitCode));
 		handleOutputByKey("exitCode", exitCode);
-		
+
 		handleOutputByKey("normalFeedback", normalFeedback);
 		handleOutputByKey("errorFeedback", errorFeedback);
-		
+
 	}
 
 }

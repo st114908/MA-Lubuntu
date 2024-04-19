@@ -4,8 +4,6 @@
 package mumlacgppa.pipeline.parts.steps.functions;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -45,8 +43,9 @@ public class ContainerTransformation extends PipelineStep {
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
-	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
+
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
 	protected void setRequiredInsAndOuts() {
@@ -54,7 +53,7 @@ public class ContainerTransformation extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("roboCar_mumlSourceFile");
-		ins.add("MiddlewareOption");
+		ins.add("middlewareOption");
 		ins.add("muml_containerFileDestination");
 		requiredInsAndOuts.put(inFlag, ins);
 		
@@ -63,15 +62,15 @@ public class ContainerTransformation extends PipelineStep {
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 		
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
-		ins.put("MiddlewareOption", "direct MQTT_I2C_CONFIG");
+		ins.put("middlewareOption", "direct MQTT_I2C_CONFIG # Or DDS_CONFIG");
 		ins.put("muml_containerFileDestination", "direct container-models/MUML_Container.muml_container");
 		exampleSettings.put(inFlag, ins);
 		
@@ -90,9 +89,13 @@ public class ContainerTransformation extends PipelineStep {
 	public void execute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
-		// Currently done by export structures in the project PipelineExecution.  
-		// Its presence in the pipeline gets detected.
-
+		/*
+		 * Due to a lack of detailed knowledge about Eclipse plug ins and a lack
+		 * of time this is currently done by a copied and adjusted call from
+		 * PipeLineExecutionAsExport. Its presence in the pipeline simply gets
+		 * detected by PipeLineExecutionAsExport, which adjusts its behaviour
+		 * and calls in order to trigger the desired generation/transformation.
+		 */
 	}
 
 }

@@ -10,10 +10,10 @@ import java.util.Map;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
+import arduinocliutilizer.paths.DefaultArduinoCLIPath;
 import arduinocliutilizer.paths.DefaultConfigDirectoryAndFilePath;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
-import arduinocliutilizer.paths.DefaultArduinoCLIPath;
 
 public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectoryAndFilePath, DefaultArduinoCLIPath {
 	//private String completeConfigDirectoryPath;
@@ -32,7 +32,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 							);
 		}
 		completeConfigDirectoryPath = ProjectFolderPathStorage.projectFolderPath;
-		completeConfigFilePath = completeConfigDirectoryPath.resolve(configFileName);
+		completeConfigFilePath = completeConfigDirectoryPath.resolve(CONFIG_FILE_NAME);
 		checkedForArduinoCLIFile = false;
 		arduinoCLIFileFound = false;
 	}
@@ -41,7 +41,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 	public boolean checkForArduinoCLIFile() throws IOException{
 		checkedForArduinoCLIFile = true;
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("bash", "-c", "export PATH=" + defaultArduinoCLIPath + ":$PATH && arduino-cli config dump");
+		processBuilder.command("bash", "-c", "export PATH=" + DEFAULT_ARDUINO_CLI_PATH + ":$PATH && arduino-cli config dump");
 		Process proc = processBuilder.start();
 		try {
 			int exitCode = proc.waitFor();
@@ -68,7 +68,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		// Use default values and generate the config file with default values.
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
 	    data.put("arduinoCLIPathSetInPathEnvironment", false);
-	    data.put("arduinoCLIDirectory", defaultArduinoCLIPath);
+	    data.put("arduinoCLIDirectory", DEFAULT_ARDUINO_CLI_PATH);
 	    // For DumperOptions examples see 
 	    // https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak
 	    DumperOptions options = new DumperOptions();

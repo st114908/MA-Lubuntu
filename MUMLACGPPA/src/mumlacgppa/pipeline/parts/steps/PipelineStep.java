@@ -7,11 +7,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.yaml.snakeyaml.Yaml;
 
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
@@ -24,7 +19,6 @@ import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.storage.VariableContent;
 import mumlacgppa.pipeline.parts.storage.VariableHandler;
-import mumlacgppa.pipeline.settings.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -37,11 +31,14 @@ public abstract class PipelineStep implements Keywords{
 	protected Map<String, HashSet<String>> requiredInsAndOuts;
 	
 	
+	/**
+	 * To set the required parameters for the inputs (in) and the outputs (out).
+	 * Required to set the field requiredInsAndOuts for checkForDetectableErrorsEntryCheck.
+	 */
 	protected abstract void setRequiredInsAndOuts();
-
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
-		return new LinkedHashMap<String, Map<String, String>>();
-	};
+	
+	
+	//public static abstract Map<String, Map<String, String>> generateDefaultOrExampleValues(); // public static abstract at once don't fit together.
 	
 	/**
 	 * @param in
@@ -116,7 +113,7 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 
-	protected VariableContent handleInputEntry(String entry) throws VariableNotDefinedException, StructureException{
+	protected VariableContent resolveInputEntry(String entry) throws VariableNotDefinedException, StructureException{
 		if(entry.startsWith(directValueFlag)){
 			String writtenInValue = entry.substring(directValueFlag.length()).trim();
 			VariableContent directlyInsertedValue = new VariableContent(writtenInValue);
@@ -128,7 +125,7 @@ public abstract class PipelineStep implements Keywords{
 		}
 		else if(entry.startsWith(notValueFlag)){
 			String afterNot = entry.substring(notValueFlag.length()).trim();
-			VariableContent gainedContent = handleInputEntry(afterNot);
+			VariableContent gainedContent = resolveInputEntry(afterNot);
 			boolean received = gainedContent.getBooleanContent();
 			VariableContent invertedBooleanContent = new VariableContent( Boolean.toString(!received) );
 			return invertedBooleanContent;
@@ -140,7 +137,7 @@ public abstract class PipelineStep implements Keywords{
 	
 	
 	protected VariableContent handleInputByKey(String key) throws VariableNotDefinedException, StructureException{
-		return handleInputEntry(in.get(key));
+		return resolveInputEntry(in.get(key));
 	}
 	
 	
@@ -164,7 +161,15 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	
-	private void validateEntryCheck(String entry) throws StructureException, VariableNotDefinedException, FaultyDataException{
+	/**
+	 * Helper function for checkForDetectableErrors.
+	 * Handles direct, from and not keywords in the input entries. 
+	 * @param entry
+	 * @throws StructureException
+	 * @throws VariableNotDefinedException
+	 * @throws FaultyDataException
+	 */
+	private void checkForDetectableErrorsEntryCheck(String entry) throws StructureException, VariableNotDefinedException, FaultyDataException{
 		if(entry.startsWith(directValueFlag)){
 			String afterDirect = entry.substring(directValueFlag.length()).trim();
 			if(afterDirect.equals("")){
@@ -187,7 +192,7 @@ public abstract class PipelineStep implements Keywords{
 		}
 		else if(entry.startsWith(notValueFlag)){
 			String afterNot = entry.substring(notValueFlag.length()).trim();
-			validateEntryCheck(afterNot);
+			checkForDetectableErrorsEntryCheck(afterNot);
 		}
 		else{
 			throw new StructureException("Structure error or unexpected element " + entry);
@@ -199,7 +204,16 @@ public abstract class PipelineStep implements Keywords{
 		}
 	}
 	
-	public void validate() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
+	
+	/**
+	 * Checks for errors such as missing parameters or referenced not existing variables.
+	 * If it finds an error, then it throws an exception, else it simply finishes its execution. 
+	 * @throws VariableNotDefinedException
+	 * @throws StructureException
+	 * @throws FaultyDataException
+	 * @throws ParameterMismatchException
+	 */
+	public void checkForDetectableErrors() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
 		if(! (in.keySet()).equals(requiredInsAndOuts.get(inFlag)) ){
 			throw new ParameterMismatchException("Input parameter mismatch! Expected "+
 					requiredInsAndOuts.get(inFlag).toString() + ", got " + in.keySet().toString());
@@ -211,7 +225,7 @@ public abstract class PipelineStep implements Keywords{
 		
 		for(String currentKey:in.keySet()){
 			String entry = in.get(currentKey);
-			validateEntryCheck(entry);
+			checkForDetectableErrorsEntryCheck(entry);
 		}
 		for(String currentKey:out.keySet()){
 			String entry = out.get(currentKey);
@@ -220,13 +234,18 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	
-	protected Path resolvePath(String givenPath){
-		if(givenPath.startsWith("/")){
-			return Paths.get(givenPath);
+	/**
+	 * Resolves the potentially relative path givenPathString to a full/absolute path.
+	 * @param givenPathString
+	 * Returns a full/absolute path to the intended directory or file.
+	 */
+	protected Path resolveFullOrLocalPath(String givenPathString){
+		if(givenPathString.startsWith("/")){ // Full path.
+			return Paths.get(givenPathString);
 		}
-		else{
+		else{ // Local path
 			//String completePath = projectFolderPath + "/" + givenPath;
-			Path completePath = ProjectFolderPathStorage.projectFolderPath.resolve(givenPath);
+			Path completePath = ProjectFolderPathStorage.projectFolderPath.resolve(givenPathString);
 			return completePath;
 		}
 	}
@@ -240,6 +259,12 @@ public abstract class PipelineStep implements Keywords{
 	
 	public VariableContent getContentOfInput(String key) throws VariableNotDefinedException, StructureException{
 		return handleInputByKey(key);
+	}
+	
+	// For the improvisation:
+	public Path getResolvedPathContentOfInput(String key) throws VariableNotDefinedException, StructureException{
+		Path result = resolveFullOrLocalPath(getContentOfInput(key).getContent());
+		return result;
 	}
 	
 	

@@ -3,19 +3,13 @@
  */
 package mumlacgppa.pipeline.parts.steps.functions;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -112,7 +106,7 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
 
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
-		Path arduinoContainersPath = resolvePath( handleInputByKey("arduinoContainersPath").getContent() );
+		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
 		
 		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
 		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
@@ -185,7 +179,7 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 				+ "  valueToSet: direct 12\n"
 				+ outFlag + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n";
-		Yaml yaml = new Yaml();
+		Yaml yaml = new Yaml(); // For yaml validity check.
 		Map <String, Map <String, String>> testMap = yaml.load(testYaml);
 		VariableHandler VariableHandlerInstance = new VariableHandler();
 		PostProcessingStateChartValuesFlexible debugTest = new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, testYaml);

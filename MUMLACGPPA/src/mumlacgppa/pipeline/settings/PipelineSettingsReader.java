@@ -1,6 +1,5 @@
 package mumlacgppa.pipeline.settings;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -8,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
@@ -168,7 +166,7 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 		// standaloneUsageDefs:
 		for(String currentKey: standaloneUsageDefs.keySet()){
 			try {
-				standaloneUsageDefs.get(currentKey).validate();
+				standaloneUsageDefs.get(currentKey).checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
 				throw new ParameterMismatchException(e.getMessage() + " at " + currentKey + " in " + standaloneUsageDefsFlag + ".");
 			}
@@ -177,7 +175,7 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 		// Pipeline:
 		for(PipelineStep currentStep: pipelineSequence){
 			try{
-				currentStep.validate();
+				currentStep.checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
 				throw new ParameterMismatchException(e.getMessage() + " at " + currentStep + " in " + pipelineSequenceDefFlag + ".");
 			}

@@ -6,7 +6,6 @@ package mumlacgppa.pipeline.parts.steps.functions;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -47,7 +46,7 @@ public class SaveToTextFile extends PipelineStep {
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -64,9 +63,9 @@ public class SaveToTextFile extends PipelineStep {
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
+	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
 	// Map<String, Map<String, String>> for
 	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:
@@ -83,7 +82,7 @@ public class SaveToTextFile extends PipelineStep {
 		return exampleSettings;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
 	 */
 	@Override
@@ -92,7 +91,7 @@ public class SaveToTextFile extends PipelineStep {
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
 		//String completePath = handleInputByKey("path").getContent() + "/" + handleInputByKey("name").getContent() + ".txt";
-		Path completePath = resolvePath( handleInputByKey("path").getContent() );
+		Path completePath = resolveFullOrLocalPath( handleInputByKey("path").getContent() );
 		FileWriter myWriter = new FileWriter(completePath.toFile());
 		myWriter.write(handleInputByKey("text").getContent());
 		myWriter.close();

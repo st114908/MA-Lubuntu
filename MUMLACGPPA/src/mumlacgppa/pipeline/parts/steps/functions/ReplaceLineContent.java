@@ -3,19 +3,13 @@
  */
 package mumlacgppa.pipeline.parts.steps.functions;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -60,7 +54,7 @@ public class ReplaceLineContent extends PipelineStep{
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -78,9 +72,9 @@ public class ReplaceLineContent extends PipelineStep{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 		
 		// Ins:
@@ -141,7 +135,7 @@ public class ReplaceLineContent extends PipelineStep{
             1. Also set distance und lanedistance.
         For our modifications: The targeted file is "courseControlCourseControlComponentStateChart.c".
         */
-		Path targetFilePath = resolvePath( handleInputByKey("filePath").getContent() );
+		Path targetFilePath = resolveFullOrLocalPath( handleInputByKey("filePath").getContent() );
 		String intermediateFileName = targetFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
 		
@@ -174,7 +168,7 @@ public class ReplaceLineContent extends PipelineStep{
 				+ "  contentReplacement: direct stateChart->distanceLimit = stateChart->distanceLimit = 0;\n"
 				+ outFlag + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n";
-		Yaml yaml = new Yaml();
+		Yaml yaml = new Yaml(); // For yaml validity check.
 		Map <String, Map <String, String>> testMap = yaml.load(testYaml);
 		VariableHandler VariableHandlerInstance = new VariableHandler();
 		ReplaceLineContent debugTest = new ReplaceLineContent(VariableHandlerInstance, testYaml);

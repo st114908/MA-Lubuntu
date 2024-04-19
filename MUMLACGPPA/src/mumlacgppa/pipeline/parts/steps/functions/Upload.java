@@ -25,7 +25,9 @@ public class Upload extends PipelineStep {
 
 	public static final String nameFlag = "Upload";
 
-
+	/**
+	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 */
 	@Override
 	protected void setRequiredInsAndOuts(){
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
@@ -42,9 +44,9 @@ public class Upload extends PipelineStep {
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
+	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
 	// Map<String, Map<String, String>> for
 	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:

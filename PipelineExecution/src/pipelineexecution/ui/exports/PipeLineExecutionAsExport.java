@@ -1,46 +1,26 @@
-package pipelineexecution.ui;
+package pipelineexecution.ui.exports;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.workspace.WorkspaceEditingDomainFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.muml.arduino.adapter.container.ui.common.GenerateAll;
-import org.muml.c.adapter.componenttype.ui.export.C99SourceCodeExport;
+
 import org.muml.codegen.componenttype.export.ui.Activator;
-import org.muml.codegen.componenttype.export.ui.ITargetPlatformGenerator;
-import org.muml.container.transformation.job.ContainerGenerationJob;
-import org.muml.container.transformation.job.MiddlewareOption;
 import org.muml.core.export.operation.AbstractFujabaExportOperation;
 import org.muml.core.export.operation.IFujabaExportOperation;
 import org.muml.core.export.pages.AbstractFujabaExportSourcePage;
@@ -48,10 +28,13 @@ import org.muml.core.export.pages.ElementSelectionMode;
 import org.muml.core.export.wizard.AbstractFujabaExportWizard;
 import org.muml.pim.instance.ComponentInstanceConfiguration;
 import org.muml.psm.allocation.SystemAllocation;
-import org.muml.psm.muml_container.DeploymentConfiguration;
+
+import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
+import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
+
 import mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
@@ -59,14 +42,10 @@ import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUML
 import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import mumlacgppa.pipeline.parts.steps.Keywords;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
 import mumlacgppa.pipeline.parts.steps.functions.*;
-import mumlacgppa.pipeline.parts.storage.VariableHandler;
 import mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import mumlacgppa.pipeline.settings.PipelineSettingsReader;
-import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
-import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 
 public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
@@ -83,7 +62,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	@Override
 	public String wizardGetId() {
 		// TODO Auto-generated method stub
-		return "pipelineexecution.ui.AutoGenerateAndPostProcessPrototype";
+		return "pipelineexecution.ui.exports.PipeLineExecutionAsExport";
 	}
 
 	@Override
@@ -97,27 +76,17 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		Path projectPath = Paths.get(targetProject.getRawLocation().toString());
 		
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
-		pipelineSettingsPath = projectPath.resolve(PipelineSettingsDirectoryAndFilePaths.pipelineSettingsDirectoryFolder)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.pipelineSettingsFileName);
+		pipelineSettingsPath = projectPath.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
 		
 		try {
 			PSRInstance = new PipelineSettingsReader(pipelineSettingsPath);
 			PSRInstance.validateOrder();
 		} catch (FileNotFoundException | StructureException | StepNotMatched
-				| ProjectFolderPathNotSetExceptionMUMLACGPPA e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			//TODO: Fehlermeldung.
-			return;
-		} catch (VariableNotDefinedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FaultyDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParameterMismatchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException
+				| FaultyDataException | ParameterMismatchException e) {
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
 		}
 		//Search for some steps that require some preparations but
 		// neither allow that they get done right before they are needed
@@ -137,8 +106,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 				try {
 					generateFolderIfNecessary(targetProject, currentStep.getContentOfInput("muml_containerFileDestination").getContent().split("/")[0]);
 				} catch (VariableNotDefinedException | StructureException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+					Activator.getDefault().getLog().log(status);
 				}
 			}
 			else if( currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)){
@@ -147,8 +116,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 				try {
 					generateFolderIfNecessary(targetProject, currentStep.getContentOfInput("arduino_containersDestinationFolder").getContent());
 				} catch (VariableNotDefinedException | StructureException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+					Activator.getDefault().getLog().log(status);
 				}
     		}
 			else if( currentStep.getClass().getSimpleName().equals(ComponentCodeGeneration.nameFlag)){
@@ -159,8 +128,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 				try {
 					generateFolderIfNecessary(targetProject, currentStep.getContentOfInput("arduino_containersDestinationFolder").getContent());
 				} catch (VariableNotDefinedException | StructureException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+					Activator.getDefault().getLog().log(status);
 				}
     		}
 		}
@@ -218,7 +187,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	@Override
 	public IFujabaExportOperation wizardCreateExportOperation() {
 		// Here the preparations, because when doExecute(IProgressMonitor progressMonitor) gets executed
-		// the file handling gets a bit tricky as is evident with the MUML_Container2.muml_container if MUML_Container.muml_container doesn't get deleted early enough.
+		// the file handling gets a bit tricky as is evident with MUML_Container2.muml_container getting generated
+		// if MUML_Container.muml_container doesn't get deleted early enough.
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IStructuredSelection selection = (IStructuredSelection) window.getSelectionService().getSelection();
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
@@ -242,7 +212,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 						if( currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)){
 							// T3.6 and T3.7: Container Code Generation
 							if(containerCodeGenerationToBePerformed){
-								doExecuteContanerCodeGeneration(targetProject, muml_containerFile, progressMonitor);
+								doExecuteContainerCodeGeneration(targetProject, muml_containerFile, (ContainerCodeGeneration) currentStep, progressMonitor);
 							}
 			    		}
 						else{
@@ -252,15 +222,13 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 									| ParameterMismatchException | IOException | InterruptedException
 									| NoArduinoCLIConfigFileException | FQBNErrorEception
 									| ProjectFolderPathNotSetException | AbortPipelineException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+								Activator.getDefault().getLog().log(status);
 								
 							}
 						}
 						refreshWorkSpace(selectedFile);
 					}
-					// Post-Processing:
-					//doExecutePostProcessingUntilConfigPart(VariableHandlerInstance);
 					refreshWorkSpace(selectedFile);
 					return Status.OK_STATUS;
 				}
@@ -277,12 +245,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 					for(PipelineStep currentStep: PSRInstance.getPipelineSequence()){
 						if(currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)){
 							// T3.2: Deployment Configuration aka Container Transformation
-							doExecuteContainerTransformationPart(selectedResource, containerModelsFolder, sourceElementsSystemAllocation, progressMonitor);
+							doExecuteContainerTransformationPart(sourceElementsSystemAllocation, (ContainerTransformation) currentStep, progressMonitor);
 						}
 						else if( currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)){
 							// T3.6 and T3.7: Container Code Generation
 							if(containerCodeGenerationToBePerformed){
-								doExecuteContanerCodeGeneration(targetProject, muml_containerFile, progressMonitor);
+								doExecuteContainerCodeGeneration(targetProject, muml_containerFile, (ContainerCodeGeneration) currentStep, progressMonitor);
 							}
 			    		}
 						else{
@@ -292,15 +260,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 									| ParameterMismatchException | IOException | InterruptedException
 									| NoArduinoCLIConfigFileException | FQBNErrorEception
 									| ProjectFolderPathNotSetException | AbortPipelineException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								
+								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+								Activator.getDefault().getLog().log(status);								
 							}
 						}
 						refreshWorkSpace(selectedFile);
 					}
-					// Post-Processing:
-					//doExecutePostProcessingUntilConfigPart(VariableHandlerInstance);
 					refreshWorkSpace(selectedFile);
 					return Status.OK_STATUS;
 				}
@@ -318,12 +283,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 						if( currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)){
 							// T3.6 and T3.7: Container Code Generation
 							if(containerCodeGenerationToBePerformed){
-								doExecuteContanerCodeGeneration(targetProject, muml_containerFile, progressMonitor);
+								doExecuteContainerCodeGeneration(targetProject, muml_containerFile, (ContainerCodeGeneration) currentStep, progressMonitor);
 							}
 			    		}
 						else if( currentStep.getClass().getSimpleName().equals(ComponentCodeGeneration.nameFlag)){
 							// T3.3: Component Code Generation
-							doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance, progressMonitor);
+							doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance, (ComponentCodeGeneration) currentStep, progressMonitor);
 			    		}
 						else{
 							try {
@@ -332,15 +297,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 									| ParameterMismatchException | IOException | InterruptedException
 									| NoArduinoCLIConfigFileException | FQBNErrorEception
 									| ProjectFolderPathNotSetException | AbortPipelineException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								
+								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+								Activator.getDefault().getLog().log(status);
 							}
 						}
 						refreshWorkSpace(selectedFile);
 					}
-					// Post-Processing:
-					//doExecutePostProcessingUntilConfigPart(VariableHandlerInstance);
 					refreshWorkSpace(selectedFile);
 					return Status.OK_STATUS;
 				}
@@ -360,17 +322,17 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 					for(PipelineStep currentStep: PSRInstance.getPipelineSequence()){
 						if(currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)){
 							// T3.2: Deployment Configuration aka Container Transformation
-							doExecuteContainerTransformationPart(selectedResource, containerModelsFolder, sourceElementsSystemAllocation, progressMonitor);
+							doExecuteContainerTransformationPart(sourceElementsSystemAllocation, (ContainerTransformation) currentStep, progressMonitor);
 						}
 						else if( currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)){
 							// T3.6 and T3.7: Container Code Generation
 							if(containerCodeGenerationToBePerformed){
-								doExecuteContanerCodeGeneration(targetProject, muml_containerFile, progressMonitor);
+								doExecuteContainerCodeGeneration(targetProject, muml_containerFile, (ContainerCodeGeneration) currentStep, progressMonitor);
 							}
 			    		}
 						else if( currentStep.getClass().getSimpleName().equals(ComponentCodeGeneration.nameFlag)){
 							// T3.3: Component Code Generation
-							doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance, progressMonitor);
+							doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance, (ComponentCodeGeneration) currentStep, progressMonitor);
 			    		}
 						else{
 							try {
@@ -379,16 +341,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 									| ParameterMismatchException | IOException | InterruptedException
 									| NoArduinoCLIConfigFileException | FQBNErrorEception
 									| ProjectFolderPathNotSetException | AbortPipelineException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								
+								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+								Activator.getDefault().getLog().log(status);
 							}
 						}
 						refreshWorkSpace(selectedFile);
 					}
-					// Post-Processing:
-					//doExecutePostProcessingUntilConfigPart(VariableHandlerInstance);
-					refreshWorkSpace(selectedFile);
 					return Status.OK_STATUS;
 				}
 			};
@@ -409,8 +367,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 			try {
 				Files.createDirectory(arduinoCodeDestinationPath);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+				Activator.getDefault().getLog().log(status);
 			}
 		}
 	}
@@ -424,8 +382,6 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 			try {
 				Files.createDirectory(destinationContainerTransformationPath);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);
 			}
@@ -439,12 +395,16 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	 * @param sourceElementsSystemAllocation
 	 * @param progressMonitor
 	 */
-	private void doExecuteContainerTransformationPart(final IResource selectedResource, IFolder containerModelsFolder,
-			final EObject[] sourceElementsSystemAllocation, IProgressMonitor progressMonitor) {
-		final MiddlewareOption selectedMiddleware = MiddlewareOption.MQTT_I2C_CONFIG;
-		ContainerTransformationHandler ContainerTransformationHandlerInstance = new ContainerTransformationHandler(
-				selectedResource, sourceElementsSystemAllocation, containerModelsFolder, selectedMiddleware);
-		ContainerTransformationHandlerInstance.performContainerTransformation(progressMonitor, editingDomain);
+	private void doExecuteContainerTransformationPart(final EObject[] sourceElementsSystemAllocation,
+			ContainerTransformation step, IProgressMonitor progressMonitor) {
+		try {
+			ContainerTransformationHandler ContainerTransformationHandlerInstance = new ContainerTransformationHandler(
+					sourceElementsSystemAllocation, step);
+			ContainerTransformationHandlerInstance.performContainerTransformation(progressMonitor, editingDomain);
+		} catch (VariableNotDefinedException | StructureException e) {
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
+		}
 	}
 
 	/**
@@ -452,11 +412,15 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	 * @param muml_containerFile
 	 * @param progressMonitor
 	 */
-	private void doExecuteContanerCodeGeneration(final IProject targetProject, IFile muml_containerFile, IProgressMonitor progressMonitor) {
-		String arduinoContainersFolderName = "arduino-containers";
-		IFolder arduinoContainersFolder = targetProject.getFolder(arduinoContainersFolderName);
-		ContainerCodeGenerationHandler ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationHandler(muml_containerFile, arduinoContainersFolder);
-		ContainerCodeGenerationHandlerInstance.performContainerCodeGeneration(progressMonitor);
+	private void doExecuteContainerCodeGeneration(final IProject targetProject, IFile muml_containerFile,
+			ContainerCodeGeneration step, IProgressMonitor progressMonitor) {
+		try {
+			ContainerCodeGenerationImprovisation ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationImprovisation(step);
+			ContainerCodeGenerationHandlerInstance.performContainerCodeGeneration(targetProject, muml_containerFile, progressMonitor);
+		} catch (VariableNotDefinedException | StructureException e) {
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
+		}
 	}
 	
 	/**
@@ -464,76 +428,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	 * @param sourceElementsComponentInstance
 	 * @param progressMonitor
 	 */
-	private void doExecuteComponentCodeGeneration(final IProject targetProject, final EObject[] sourceElementsComponentInstance, IProgressMonitor progressMonitor) {
-		String arduinoContainersFolderName = "arduino-containers";
-		IFolder arduinoContainersFolder = targetProject.getFolder(arduinoContainersFolderName);
-		final IContainer componentCodeDestinationIContainer = arduinoContainersFolder;
-		final ITargetPlatformGenerator targetPlatform = new C99SourceCodeExport();
+	private void doExecuteComponentCodeGeneration(final IProject targetProject, final EObject[] sourceElementsComponentInstance, 
+			ComponentCodeGeneration step, IProgressMonitor progressMonitor) {
 		try {
-			for (EObject element : sourceElementsComponentInstance){
-				targetPlatform.generateSourceCode(element, componentCodeDestinationIContainer, progressMonitor);
-			}
-		} catch (Exception e) {
-			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			Activator.getDefault().getLog().log(status);
-		}
-	}
-	
-	/**
-	 * @param VariableHandlerInstance
-	 */
-	private void doExecutePostProcessingUntilConfigPart(VariableHandler VariableHandlerInstance) {
-		String yamlForPostProcessingStepsUntilConfig =
-				"in:\n"
-				+ "  arduinoContainersPath: direct arduino-containers\n"
-				+ "  componentCodePath: direct arduino-containers/fastAndSlowCar_v2\n"
-				+ "out:\n"
-				+ "  ifSuccessful: ifSuccessful\n";
-		try {
-		PostProcessingStepsUntilConfig PerformPostProcessingInstance =
-				new PostProcessingStepsUntilConfig(VariableHandlerInstance, yamlForPostProcessingStepsUntilConfig);
-			PerformPostProcessingInstance.execute();
-		}
-		catch(Exception e){
-			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			Activator.getDefault().getLog().log(status);
-		}
-		
-		try {
-			String yamlForFastCarDriverECUStateChartValues =
-					"in:\n"
-					+ "  arduinoContainersPath: direct /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/arduino-containers\n"
-					+ "  ECUName: direct fastCarDriverECU\n"
-					+ "  distanceLimit: direct 1\n"
-					+ "  desiredVelocity: direct 2\n"
-					+ "  slowVelocity: direct 3\n"
-					+ "  laneDistance: direct 4\n"
-					+ "out:\n"
-					+ "  ifSuccessful: ifSuccessful\n";
-			PostProcessingStateChartValues PerformPostProcessingInstanceFastCarDriverECU =
-					new PostProcessingStateChartValues(VariableHandlerInstance, yamlForFastCarDriverECUStateChartValues);
-			PerformPostProcessingInstanceFastCarDriverECU.execute();
-		}
-		catch(Exception e){
-			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			Activator.getDefault().getLog().log(status);
-		}
-		try {
-			String yamlForSlowCarDriverECUStateChartValues =
-					"in:\n"
-					+ "  arduinoContainersPath: direct /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/arduino-containers\n"
-					+ "  ECUName: direct slowCarDriverECU\n"
-					+ "  distanceLimit: direct 1\n"
-					+ "  desiredVelocity: direct 2\n"
-					+ "  slowVelocity: direct 3\n"
-					+ "  laneDistance: direct 4\n"
-					+ "out:\n"
-					+ "  ifSuccessful: ifSuccessful\n";
-			PostProcessingStateChartValues PerformPostProcessingInstanceSlowCarDriverECU =
-					new PostProcessingStateChartValues(VariableHandlerInstance, yamlForSlowCarDriverECUStateChartValues);
-			PerformPostProcessingInstanceSlowCarDriverECU.execute();
-		}
-		catch(Exception e){
+			ComponentCodeGenerationImprovisation componentCodeGenerationHandlerInstance = new ComponentCodeGenerationImprovisation(step);
+			componentCodeGenerationHandlerInstance.performComponentCodeGeneration(targetProject, sourceElementsComponentInstance, progressMonitor);
+		} catch (VariableNotDefinedException | StructureException e) {
 			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			Activator.getDefault().getLog().log(status);
 		}
@@ -546,8 +446,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		try {
 			selectedFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
 		}
 	}
 

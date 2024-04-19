@@ -4,15 +4,7 @@
 	<extension point="org.eclipse.ui.exportWizards">
 		<wizard
 			category="org.muml.core.export"
-            class="pipelineexecution.ui.AutoDefaultGenerateAndPostProcess"
-            id="org.muml.container.transformation.ui.AutoDefaultGenerateAndPostProcess"
-            name="Automatic Arduino code generation and post processing by default values">
-		</wizard>
-	</extension>
-	<extension point="org.eclipse.ui.exportWizards">
-		<wizard
-			category="org.muml.core.export"
-            class="pipelineexecution.ui.PipeLineExecutionAsExport"
+            class="pipelineexecution.ui.exports.PipeLineExecutionAsExport"
             id="org.muml.container.transformation.ui.PipeLineExecutionAsExport"
             name="Execute pipeline">
 		</wizard>

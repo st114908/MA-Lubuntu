@@ -32,7 +32,7 @@ public class ArduinoCLICommandLineHandler implements DefaultConfigDirectoryAndFi
 							);
 		}
 		
-		Path completeConfigFilePath = projectPathOfSelectedFile.resolve(configDirectoryFolderName).resolve(configFileName);
+		Path completeConfigFilePath = projectPathOfSelectedFile.resolve(CONFIG_DIRECTORY_FOLDER_NAME).resolve(CONFIG_FILE_NAME);
 		if(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
 			
 		}

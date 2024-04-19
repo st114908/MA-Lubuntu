@@ -9,9 +9,9 @@ import org.yaml.snakeyaml.Yaml;
 
 import arduinocliutilizer.paths.CompiledFilesFolderNameInterface;
 import arduinocliutilizer.paths.FQBNStorageFileName;
+import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
 import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
-import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
@@ -28,7 +28,7 @@ public class CompilationCall extends ACLIWorkstep implements SaveResponseInfoLoc
 		
 		String targetINOFilePathString = targetINOFilePath.toString();
 		Path parentPath =  targetINOFilePath.getParent();
-		String compiledFilesDirIfUsed = parentPath.resolve(CompiledFilesFolderName).toString();
+		String compiledFilesDirIfUsed = parentPath.resolve(COMPILED_FILES_FOLDER_NAME).toString();
 		if(saveCompiledFilesNearby){
 			// arduino-cli compile --fqbn [BOARD] [INOFILE] --output-dir [OUT]
 			compilationCommand = "arduino-cli compile --fqbn " + foundFqbn + " " + targetINOFilePathString + " --output-dir " + compiledFilesDirIfUsed + " --format yaml";
@@ -57,7 +57,7 @@ public class CompilationCall extends ACLIWorkstep implements SaveResponseInfoLoc
 		
 		if(saveCompiledFilesNearby){
 			// Save fqbn as additional safeguard against Uploads on different board types and for looking it up.
-			FileWriter myWriter = new FileWriter(compiledFilesDirIfUsed + "/" + fqbnStorageFileName);
+			FileWriter myWriter = new FileWriter(compiledFilesDirIfUsed + "/" + FQBN_STORAGE_FILE_NAME);
 			myWriter.write(foundFqbn);
 			myWriter.close();
 		}
