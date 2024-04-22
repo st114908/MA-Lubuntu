@@ -262,6 +262,15 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	// For the improvisation:
+	/**
+	 * ;Makes the called step interpret the entry under the parameter key as path and return the resolved result path. 
+	 * Please note: This is an helper method  that is only intended for the improvised pipeline execution, more specifically to be used for PipelineExecution/pipelineexecution.ui.exports/*Improvisation.java helper classes.
+	 * Please remove as soon as a misused export is no longer used for the pipeline execution.
+	 * @param key The input parameter name the step shall look for.  
+	 * @return
+	 * @throws VariableNotDefinedException
+	 * @throws StructureException
+	 */
 	public Path getResolvedPathContentOfInput(String key) throws VariableNotDefinedException, StructureException{
 		Path result = resolveFullOrLocalPath(getContentOfInput(key).getContent());
 		return result;

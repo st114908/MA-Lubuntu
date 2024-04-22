@@ -1,4 +1,4 @@
-package arduinocliutilizer.popup.actions.common;
+package arduinocliutilizer.popup.actions;
 
 import java.io.IOException;
 import java.nio.file.Path;

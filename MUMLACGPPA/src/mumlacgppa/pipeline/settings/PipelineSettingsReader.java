@@ -50,27 +50,34 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 		// Variable definitions are directly given to the VariableHandler.
 		if( rawSettings.keySet().contains(variableDefsFlag) ){
 			// Map<String, String>  for Map<Variable, Entry>.
-			Map<String, Object> rawVariableDefs = (Map<String, Object>) rawSettings.get(variableDefsFlag);
+			Map<String, String> rawVariableDefs = (Map<String, String>) rawSettings.get(variableDefsFlag);
 			for(String currentVariableKey:rawVariableDefs.keySet()){
-				VariableContent entry;
+				String currentContentDeclaration = rawVariableDefs.get(currentVariableKey).trim();
+				if(!currentContentDeclaration.startsWith(directValueFlag + " ")){
+					throw new StructureException("Structure error: \"direct \" before the content itself is missing in the content declaration for " + currentVariableKey);
+				}
+				String currentContent = currentContentDeclaration.replaceFirst( (directValueFlag + " "), "");
+				VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
+				
+				/*VariableContent foundContent;
 				try{ // Automatic interpretation of boolean values causes this trouble.
-					entry = new VariableContent( (String) rawVariableDefs.get(currentVariableKey));
+					foundContent = new VariableContent( (String) rawVariableDefs.get(currentVariableKey));
 				}
 				catch(java.lang.ClassCastException e){
 					if(e.getMessage().contains("java.lang.Boolean cannot be cast to java.lang.String")){
 						boolean readBoolean = (boolean) rawVariableDefs.get(currentVariableKey);
-						entry = new VariableContent(readBoolean);
+						foundContent = new VariableContent(readBoolean);
 					}
 					else if(e.getMessage().contains("java.lang.Integer cannot be cast to java.lang.String")){
 						int readInteger = (Integer) rawVariableDefs.get(currentVariableKey);
-						entry = new VariableContent(readInteger);
+						foundContent = new VariableContent(readInteger);
 					}
 					else{
 						throw new ClassCastException("Unparseable value encountered at variable definition " + currentVariableKey + "!\n"
 								+ "Original error message:\n" + e.getMessage());
 					}
 				}
-				VariableHandlerInstance.setVariableValue(currentVariableKey, entry);
+				VariableHandlerInstance.setVariableValue(currentVariableKey, foundContent);*/
 			}
 		}
 		

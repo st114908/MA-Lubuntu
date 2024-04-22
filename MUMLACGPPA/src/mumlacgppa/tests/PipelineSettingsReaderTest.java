@@ -83,8 +83,8 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testVariablesOnly() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
 		String testYamlText = 
 				variableDefsFlag + ": { "
-				+ "dummybool: true, "
-				+ "dummypathString: AttemptedDummyPath"
+				+ "dummybool: direct true, "
+				+ "dummypathString: direct AttemptedDummyPath"
 				+ "}\n"
 				//+ standaloneUsageDefsFlag + ": {}\n"
 				//+ pipelineSequenceDefFlag + ": []\n"
@@ -181,12 +181,12 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testAllFieldsUsedOnlyMinimalBracketsAndSoOn() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
 		String testYamlText = 
 				  variableDefsFlag + ": \n"
-				+ "  dummySerialVar: dummySerial\n"
+				+ "  dummySerialVar: direct dummySerial\n"
 				+ standaloneUsageDefsFlag + ": \n"
 				+ "  " + ContainerTransformation.nameFlag + ": \n"
 				+ "    " + inFlag + ": \n"
 				+ "      roboCar_mumlSourceFile: direct dummyPath1\n"
-				+ "      MiddlewareOption: direct dummySerialVar\n"
+				+ "      middlewareOption: direct dummySerialVar\n"
 				+ "      muml_containerFileDestination: direct dummyPath2\n"
 				+ "    " + outFlag + ": \n"
 				+ "      ifSuccessful: dummyBool\n"

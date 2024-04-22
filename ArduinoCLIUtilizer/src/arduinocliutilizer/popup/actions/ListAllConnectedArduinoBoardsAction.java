@@ -47,7 +47,7 @@ public class ListAllConnectedArduinoBoardsAction implements IObjectActionDelegat
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
 		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
 		try{
 			//Search board(s) this way, because this way the text is directly formated easy to read and to copy from.

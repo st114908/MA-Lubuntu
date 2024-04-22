@@ -48,6 +48,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 	
 	
+	public Path getCompleteSettingsFilePath() {
+		return completeSettingsFilePath;
+	}
+
+
 	private Map<String, Map<String, Map<String, String>>> pipelineSegmentHelper(Yaml yaml, String key, Map<String, Map<String, String>> settings){
 		Map<String, Map<String, Map<String, String>>> exampleUsageDef = new LinkedHashMap<String, Map<String, Map<String, String>>>();
 		exampleUsageDef.put(key, settings);
@@ -55,9 +60,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 	
 	
-	public boolean generatePipelineConfigFile()
-			throws IOException, StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA,
-			VariableNotDefinedException, FaultyDataException, ParameterMismatchException{
+	public boolean generatePipelineConfigFile() throws IOException{
 		File directoryCheck = completeSettingsDirectoryPath.toFile();
 		if (!directoryCheck.exists()){
 		    directoryCheck.mkdirs();
@@ -78,7 +81,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	    Yaml yaml = new Yaml(options);
 		FileWriter settingsWriter = new FileWriter(completeSettingsFilePath.toFile());
 		
-	    
+	    // Settings changes of the generated default/example settings here in order to make the written entries and sequences more readable.
 		Map<String, Map<String, String>> postProcessingStateChartValuesFastDriver = PostProcessingStateChartValues.generateDefaultOrExampleValues();
 		Map<String, String> compileSettingsFastDriverPostProcessingStateChartValuesIns = postProcessingStateChartValuesFastDriver.get(inFlag);
 		//compileSettingsFastDriverPostProcessingStateChartValuesIns.put("arduinoContainersPath", "from arduinoContainersFolderName");
@@ -117,28 +120,29 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		compileSettingsSlowDriver.put(inFlag, compileSettingsSlowDriverIns);
 		
 
+		// Now the pipeline settings and sequence itself.
 		Map<String, Object> mapForPipelineSettings = new LinkedHashMap<String, Object>();
 		
 		// Use default values and generate the config file with default values.
 		Map<String, String> exampleVariableDefs = new LinkedHashMap<String, String>();
-		exampleVariableDefs.put("ExampleNumberVariableName", "12");
-		exampleVariableDefs.put("ExampleStringVariableName", "ExampleString");
-		exampleVariableDefs.put("ExampleBooleanVariableName", "true");
+		exampleVariableDefs.put("ExampleNumberVariableName", "direct 12");
+		exampleVariableDefs.put("ExampleStringVariableName", "direct ExampleString");
+		exampleVariableDefs.put("ExampleBooleanVariableName", "direct true");
 		//exampleVariableDefs.put("arduinoContainersFolderName", "arduinoContainers");
-		exampleVariableDefs.put("usedDriverBoardIdentifierFQBN_Example", "arduino:avr:mega");
-		exampleVariableDefs.put("usedCoordinatorBoardIdentifierFQBN_Example", "arduino:avr:nano");
-		exampleVariableDefs.put("fastCarDriverECUFolderName", "fastCarDriverECU");
-		exampleVariableDefs.put("fastCarCoordinatorECUINOFilePath", "arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino");
-		exampleVariableDefs.put("fastCarDriverECUINOFilePath", "arduino-containers/fastCarDriverECU/fastCarDriverECU.ino");
-		exampleVariableDefs.put("slowCarDriverECUFolderName", "slowCarDriverECU");
-		exampleVariableDefs.put("slowCarCoordinatorECUINOFilePath", "arduino-containers/slowCarCoordinatorECU/slowCarDriverECU.ino");
-		exampleVariableDefs.put("slowCarDriverECUINOFilePath", "arduino-containers/slowCarDriverECU/slowCarDriverECU.ino");
+		exampleVariableDefs.put("usedDriverBoardIdentifierFQBN_Example", "direct arduino:avr:mega");
+		exampleVariableDefs.put("usedCoordinatorBoardIdentifierFQBN_Example", "direct arduino:avr:nano");
+		exampleVariableDefs.put("fastCarDriverECUFolderName", "direct fastCarDriverECU");
+		exampleVariableDefs.put("fastCarCoordinatorECUINOFilePath", "direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino");
+		exampleVariableDefs.put("fastCarDriverECUINOFilePath", "direct arduino-containers/fastCarDriverECU/fastCarDriverECU.ino");
+		exampleVariableDefs.put("slowCarDriverECUFolderName", "direct slowCarDriverECU");
+		exampleVariableDefs.put("slowCarCoordinatorECUINOFilePath", "direct arduino-containers/slowCarCoordinatorECU/slowCarDriverECU.ino");
+		exampleVariableDefs.put("slowCarDriverECUINOFilePath", "direct arduino-containers/slowCarDriverECU/slowCarDriverECU.ino");
 		mapForPipelineSettings.put(variableDefsFlag, exampleVariableDefs);
 
 		// For better/easier readability blank lines inbetween:
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
-		settingsWriter.write("\n\n");
 		mapForPipelineSettings.clear();
+		settingsWriter.write("\n\n");
 		
 		Map<String, Map<String, Map<String, String>>> defaultStandaloneUsageDefs = new LinkedHashMap<String, Map<String, Map<String, String>>>();
 		defaultStandaloneUsageDefs.put(ContainerTransformation.nameFlag, ContainerTransformation.generateDefaultOrExampleValues());
@@ -149,8 +153,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		// For better/easier readability blank lines inbetween:
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
-		settingsWriter.write("\n\n");
 		mapForPipelineSettings.clear();
+		settingsWriter.write("\n\n");
 		
 		ArrayList<Object> defaultPipelineSequenceDefs = new ArrayList<Object>();
 		defaultPipelineSequenceDefs.add(fromValueFlag + " " + standaloneUsageDefsFlag + ": " + ContainerTransformation.nameFlag);
@@ -193,8 +197,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	    workCopy.close();
 	    Files.move(Paths.get(intermediateFileName), completeSettingsFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(completeSettingsFilePath);
-		PSRInstance.validateOrder();
+		//
 		
 		return true;
 	}
@@ -206,6 +209,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		ProjectFolderPathStorage.projectFolderPath = Paths.get("/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk");
 		PipelineSettingsGenerator PipelineSettingsGeneratorInstance = new PipelineSettingsGenerator();
 		PipelineSettingsGeneratorInstance.generatePipelineConfigFile();
-		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(PipelineSettingsGeneratorInstance.getCompleteSettingsFilePath());
+		PSRInstance.validateOrder();
 	}
 }

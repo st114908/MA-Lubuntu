@@ -30,14 +30,11 @@ import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
 
-class ContainerTransformationHandler{
+class ContainerTransformationImprovisation{
 	private EObject[] sourceElementsSystemAllocation;
-	//private final URI destinationContainerTransformationURI;
-	//private Path destinationContainerTransformationPath;
-	//final MiddlewareOption selectedMiddleware;
 	private ContainerTransformation step;
 	
-	public ContainerTransformationHandler(EObject[] sourceElementsSystemAllocation, ContainerTransformation step)
+	public ContainerTransformationImprovisation(EObject[] sourceElementsSystemAllocation, ContainerTransformation step)
 			throws VariableNotDefinedException, StructureException{
 		// Because I didn't manage to get the resource selection working:
 		this.sourceElementsSystemAllocation = sourceElementsSystemAllocation;
@@ -58,8 +55,8 @@ class ContainerTransformationHandler{
 			try {
 				Files.createDirectory(destinationContainerTransformationPath);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+				Activator.getDefault().getLog().log(status);
 			}
 		}
 

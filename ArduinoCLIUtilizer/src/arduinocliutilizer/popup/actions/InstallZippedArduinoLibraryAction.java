@@ -43,7 +43,7 @@ public class InstallZippedArduinoLibraryAction implements IObjectActionDelegate,
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
 		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
 		try {
 			ZippedArduinoLibraryInstaller ZippedArduinoLibraryInstallerInstance = new ZippedArduinoLibraryInstaller(targetFilePath);

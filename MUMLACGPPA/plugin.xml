@@ -5,23 +5,41 @@
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            id="MUMLArduinoAutomatisation.contribution1"
+            adaptable="true"
+            id="MUMLACGPPA.contributionPipeline"
             nameFilter="*.muml"
             objectClass="org.eclipse.core.resources.IFile">
          <menu
-               label="Pipeline"
+               label="MUMLACGPPA"
                path="additions"
-               id="MUMLArduinoAutomatisation.menuPipeline">
+               id="MUMLACGPPA.menuPipeline">
             <separator
-                  name="group1">
+                  name="groupPipelineExecution">
+            </separator>
+            <separator
+                  name="groupPipelineSettingsAndExamples">
             </separator>
          </menu>
          <action
                label="Run Pipeline"
                class="mumlacgppa.popup.actions.RunPipelineAction"
-               menubarPath="MUMLArduinoAutomatisation.menuPipeline/groupPipeline"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineExecution"
                enablesFor="1"
-               id="MUMLArduinoAutomatisation.RunPipelineAction">
+               id="MUMLACGPPA.RunPipelineAction">
+         </action>
+         <action
+               label="Generate default/example pipeline settings"
+               class="mumlacgppa.popup.actions.GenerateDefaultOrExamplePipelineSettingsAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateDefaultOrExamplePipelineSettingsAction">
+         </action>
+         <action
+               label="Generate all pipeline step example settings"
+               class="mumlacgppa.popup.actions.GenerateAllPipelineStepExamplesAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateAllPipelineStepExamplesAction">
          </action>
       </objectContribution>
    </extension>

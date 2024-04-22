@@ -1,6 +1,7 @@
 package arduinocliutilizer.popup.actions;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -13,6 +14,7 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import arduinocliutilizer.configgenerator.ArduinoCLIUtilizerConfigGenerator;
+import arduinocliutilizer.paths.DefaultConfigDirectoryAndFilePath;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -49,34 +51,71 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 		//IProject project = selectedFile.getProject();
 		
 		try {
-			ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFile();
-			ArduinoCLIUtilizerConfigGenerator generator = new ArduinoCLIUtilizerConfigGenerator(); 
-			String result = generator.generateConfigFileAndHandleMessageTexts();
-			MessageDialog.openInformation(
-				shell,
-				"ArduinoCLIUtilizer",
-				result);
-		}
-		catch (IOException e) {
-			MessageDialog.openInformation(
-				shell,
-				"ArduinoCLIUtilizer",
-				"IOException occured!\n"+
-					"Please make sure that nothing blocks the generation of\n"+
-						"the directory automatisationConfig and the file arduinoCLIUtilizerConfig.yaml"+
-							"and then try again.");
-			e.printStackTrace();
+			ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+			ArduinoCLIUtilizerConfigGenerator generator = new ArduinoCLIUtilizerConfigGenerator();
+			String completeConfigFilePath = generator.getCompleteConfigFilePath().toString();
+			if(generator.checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
+				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				MessageDialog.openInformation(
+						shell,
+						"ArduinoCLIUtilizer",
+						"The ArduinoCLIUtilizer config file already exists!\n"
+						+ "See " + completeConfigFilePath
+						);
+				return;
+			}
+			
+			try{
+				boolean generated = generator.generateArduinoCLIUtilizerConfigFile();
+				if(generated){
+					if(generator.checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
+						MessageDialog.openInformation(
+								shell,
+								"ArduinoCLIUtilizer",
+								"Successfully generated the ArduinoCLIUtilizer config file!\n"
+								+ "You can find it at " + completeConfigFilePath
+								);
+					}
+					else{
+						MessageDialog.openInformation(
+							shell,
+							"ArduinoCLIUtilizer",
+							"Successfully generated the ArduinoCLIUtilizer config file!\n"
+							+ "You can find it at " + completeConfigFilePath + "\n"
+							+ "But the ArduinoCLI file (arduino-cli) can neither be found at the default path nor\n"
+							+ "be accessed.\n"
+							+ "Either install the ArduinoCLI there or\n"
+							+ "adjust the setting arduinoCLIDirectory!"
+							);
+					}
+					
+				}
+			}
+			catch (IOException e) {
+				MessageDialog.openInformation(
+					shell,
+					"ArduinoCLIUtilizer",
+					"IOException occured!\n"
+					+ "Please make sure that nothing blocks the generation of\n"
+					+ generator.getCompleteConfigFilePath().toString() + "\n"
+					+ "and then try again."
+					);
+				e.printStackTrace();
+			}
 		} catch (ProjectFolderPathNotSetException e) {
 			MessageDialog.openInformation(
 					shell,
 					"ArduinoCLIUtilizer",
 					e.getMessage());
 			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getProjectOfSelectedFile().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

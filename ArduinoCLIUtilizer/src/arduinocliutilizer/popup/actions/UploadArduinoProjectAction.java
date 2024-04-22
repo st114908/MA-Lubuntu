@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import arduinocliutilizer.popup.actions.common.BoardAutoSelectionAndInstallation;
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import arduinocliutilizer.worksteps.functions.UploadCall;
@@ -42,7 +41,7 @@ public class UploadArduinoProjectAction implements IObjectActionDelegate, Select
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
 		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
 		try {
 			BoardAutoSelectionAndInstallation BoardAutoSelectionAndInstallationInstance = new BoardAutoSelectionAndInstallation(); 

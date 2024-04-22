@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import arduinocliutilizer.popup.actions.common.BoardAutoSelectionAndInstallation;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import arduinocliutilizer.worksteps.functions.CompilationCall;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
@@ -41,7 +40,7 @@ public class CompileArduinoProjectAction implements IObjectActionDelegate, Selec
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
 		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
 		
 		try {

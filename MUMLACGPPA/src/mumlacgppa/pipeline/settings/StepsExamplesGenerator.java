@@ -38,8 +38,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFilePaths, Keywords{
 	private Path completeSettingsDirectoryPath;
-	private Path completeSettingsFilePath;
-	
+	private Path completeExamplesFilePath;
 	
 	public StepsExamplesGenerator() throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super();
@@ -50,7 +49,7 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 							);
 		}
 		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
-		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(STEP_EXAMPLES_FILE_NAME);
+		completeExamplesFilePath = completeSettingsDirectoryPath.resolve(STEP_EXAMPLES_FILE_NAME);
 	}
 	
 	
@@ -61,21 +60,18 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 	}
 	
 	
-	public boolean generateExampleListFile()
-			throws IOException, StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA,
-			VariableNotDefinedException, FaultyDataException, ParameterMismatchException{
+	public boolean generateExampleListFile() throws IOException{
 		File directoryCheck = completeSettingsDirectoryPath.toFile();
 		if (!directoryCheck.exists()){
 		    directoryCheck.mkdirs();
 		}
 		
-		File configExistenceCheck = completeSettingsFilePath.toFile();
+		File configExistenceCheck = completeExamplesFilePath.toFile();
 		if(configExistenceCheck.exists() && !configExistenceCheck.isDirectory()) {
 			return false;
 		}
 		
 		
-	    
 	    // For DumperOptions examples see 
 	    // https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak
 	    DumperOptions options = new DumperOptions();
@@ -84,9 +80,7 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 	    options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
 	    Yaml yaml = new Yaml(options);
 	    
-	    
-	    
-		FileWriter myWriter = new FileWriter(completeSettingsFilePath.toFile());
+		FileWriter myWriter = new FileWriter(completeExamplesFilePath.toFile());
 		myWriter.write("These are all the steps, each represented by one example.\n\n\n");
 		
 		myWriter.write(exampleSegment(yaml, ContainerTransformation.nameFlag, ContainerTransformation.generateDefaultOrExampleValues()));
@@ -126,8 +120,11 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 	}
 	
 	
-	
-	
+	public Path getCompleteExamplesFilePath() {
+		return completeExamplesFilePath;
+	}
+
+
 	public static void main(String[] args)
 			throws ProjectFolderPathNotSetExceptionMUMLACGPPA, IOException, StructureException, StepNotMatched,
 			VariableNotDefinedException, FaultyDataException, ParameterMismatchException {

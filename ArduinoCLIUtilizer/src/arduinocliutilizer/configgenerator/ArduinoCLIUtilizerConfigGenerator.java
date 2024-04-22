@@ -20,8 +20,8 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 	private Path completeConfigDirectoryPath;
 	//private String completeConfigFilePath;
 	private Path completeConfigFilePath;
-	private boolean checkedForArduinoCLIFile;
-	private boolean arduinoCLIFileFound;
+	private boolean hasCheckedForArduinoCLI;
+	private boolean canAccessArduinoCLI;
 	
 	
 	public ArduinoCLIUtilizerConfigGenerator() throws ProjectFolderPathNotSetException {
@@ -31,28 +31,22 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 					+ "to be set to a complete file system path to the project's folder!"
 							);
 		}
-		completeConfigDirectoryPath = ProjectFolderPathStorage.projectFolderPath;
+		completeConfigDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(CONFIG_DIRECTORY_FOLDER_NAME);
 		completeConfigFilePath = completeConfigDirectoryPath.resolve(CONFIG_FILE_NAME);
-		checkedForArduinoCLIFile = false;
-		arduinoCLIFileFound = false;
+		hasCheckedForArduinoCLI = false;
+		canAccessArduinoCLI = false;
 	}
 
 	
-	public boolean checkForArduinoCLIFile() throws IOException{
-		checkedForArduinoCLIFile = true;
+	public boolean checkForArduinoCLI() throws IOException, InterruptedException{
+		hasCheckedForArduinoCLI = true;
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command("bash", "-c", "export PATH=" + DEFAULT_ARDUINO_CLI_PATH + ":$PATH && arduino-cli config dump");
 		Process proc = processBuilder.start();
-		try {
-			int exitCode = proc.waitFor();
-			boolean testSuccessful = (exitCode == 0); 
-			arduinoCLIFileFound = testSuccessful;
-			return testSuccessful;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+		int exitCode = proc.waitFor();
+		boolean testSuccessful = (exitCode == 0); 
+		canAccessArduinoCLI = testSuccessful;
+		return testSuccessful;
 	}
 	
 	
@@ -61,7 +55,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 			Files.createDirectory(completeConfigDirectoryPath);
 		}
 		
-		if(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
+		if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
 			return false;
 		}
 		
@@ -69,10 +63,11 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
 	    data.put("arduinoCLIPathSetInPathEnvironment", false);
 	    data.put("arduinoCLIDirectory", DEFAULT_ARDUINO_CLI_PATH);
+	    
 	    // For DumperOptions examples see 
 	    // https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak
 	    DumperOptions options = new DumperOptions();
-	    //options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+	    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 	    options.setPrettyFlow(true);
 	    options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
 	    Yaml yaml = new Yaml(options);
@@ -82,38 +77,41 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		
 		return true;
 	}
-	
-	
-	public String generateConfigFileAndHandleMessageTexts() throws IOException{
-		boolean configFileCreated = generateArduinoCLIUtilizerConfigFile();
-		if(!configFileCreated){
-			return "The ArduinoCLIUtilizer config file already exists!";
-		}
-		
-		if(!checkedForArduinoCLIFile){
-			checkForArduinoCLIFile();
-		}
-		
-		if(arduinoCLIFileFound){
-			return "Successfully generated the ArduinoCLIUtilizer config file!\n"
-				+ "You can find it at " + completeConfigFilePath;
+
+
+	/**
+	 * 
+	 */
+	public boolean checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation() {
+		if(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
+			return true;
 		}
 		else{
-			return "Successfully generated the ArduinoCLIUtilizer config file!\n"
-				+ "You can find it at " + completeConfigFilePath + "\n"
-					+ "But the ArduinoCLI file (arduino-cli) hasn't been found.\n"
-						+ "Either install the ArduinoCLI there or\n"
-							+ "adjust the setting arduinoCLIDirectory!";
+			return false;
+		}
+	}
+	
+	
+	public boolean canAccessArduinoCLI() {
+		if(hasCheckedForArduinoCLI){
+			return canAccessArduinoCLI;
+		}
+		else if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
+			hasCheckedForArduinoCLI = true;
+			canAccessArduinoCLI = true;
+			return true;
+		}
+		else{
+			try {
+				return checkForArduinoCLI();
+			} catch (InterruptedException | IOException e) {
+				return false;
+			} 
 		}
 	}
 
-	
-	public boolean isCheckedForArduinoCLIFile() {
-		return checkedForArduinoCLIFile;
-	}
 
-	
-	public boolean isArduinoCLIFileFound() {
-		return arduinoCLIFileFound;
+	public Path getCompleteConfigFilePath() {
+		return completeConfigFilePath;
 	}
 }

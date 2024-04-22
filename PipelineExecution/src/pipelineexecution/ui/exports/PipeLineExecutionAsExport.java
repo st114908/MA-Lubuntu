@@ -69,7 +69,6 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	public void addPages() {
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IStructuredSelection selection = (IStructuredSelection) window.getSelectionService().getSelection();
-		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		final IResource selectedResource = (IResource) selection.getFirstElement();
 		
 		final IProject targetProject = selectedResource.getProject();
@@ -97,7 +96,6 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
 		for(PipelineStep currentStep: PSRInstance.getPipelineSequence()){
-			System.out.println(currentStep.toString());
 			if(currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)){
 				// T3.2: Deployment Configuration aka Container Transformation:
 				containerTransformationToBePerformed = true;
@@ -133,6 +131,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 				}
     		}
 		}
+		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		refreshWorkSpace(selectedFile);
 	}
 
@@ -224,12 +223,10 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 									| ProjectFolderPathNotSetException | AbortPipelineException e) {
 								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 								Activator.getDefault().getLog().log(status);
-								
 							}
 						}
 						refreshWorkSpace(selectedFile);
 					}
-					refreshWorkSpace(selectedFile);
 					return Status.OK_STATUS;
 				}
 			};
@@ -398,7 +395,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 	private void doExecuteContainerTransformationPart(final EObject[] sourceElementsSystemAllocation,
 			ContainerTransformation step, IProgressMonitor progressMonitor) {
 		try {
-			ContainerTransformationHandler ContainerTransformationHandlerInstance = new ContainerTransformationHandler(
+			ContainerTransformationImprovisation ContainerTransformationHandlerInstance = new ContainerTransformationImprovisation(
 					sourceElementsSystemAllocation, step);
 			ContainerTransformationHandlerInstance.performContainerTransformation(progressMonitor, editingDomain);
 		} catch (VariableNotDefinedException | StructureException e) {
