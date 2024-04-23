@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
+
 import mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
@@ -17,7 +18,22 @@ import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUML
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
-import mumlacgppa.pipeline.parts.steps.functions.*;
+import mumlacgppa.pipeline.parts.steps.functions.Compile;
+import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
+import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFulfilledElseAbort;
+import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
+import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
+import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
+import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStepsUntilConfig;
+import mumlacgppa.pipeline.parts.steps.functions.ReplaceLineContent;
+import mumlacgppa.pipeline.parts.steps.functions.SaveToTextFile;
+import mumlacgppa.pipeline.parts.steps.functions.SelectableTextWindow;
+import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;
+import mumlacgppa.pipeline.parts.steps.functions.Upload;
+
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -75,7 +91,7 @@ public class StepsGeneratedDefaultsAndExamplesTest implements Keywords{
 
 	@Test
 	public void testOnlyContinueIfFullfilledElseAbort() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
-		OnlyContinueIfFullfilledElseAbort Instance = new OnlyContinueIfFullfilledElseAbort(VariableHandlerInstance, OnlyContinueIfFullfilledElseAbort.generateDefaultOrExampleValues());
+		OnlyContinueIfFulfilledElseAbort Instance = new OnlyContinueIfFulfilledElseAbort(VariableHandlerInstance, OnlyContinueIfFulfilledElseAbort.generateDefaultOrExampleValues());
 		Instance.checkForDetectableErrors();
 	}
 

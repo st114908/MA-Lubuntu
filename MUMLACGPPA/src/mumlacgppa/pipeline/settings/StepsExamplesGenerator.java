@@ -18,12 +18,13 @@ import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
+
 import mumlacgppa.pipeline.parts.steps.functions.Compile;
 import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
 import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
-import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFullfilledElseAbort;
+import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFulfilledElseAbort;
 import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
@@ -33,6 +34,7 @@ import mumlacgppa.pipeline.parts.steps.functions.SaveToTextFile;
 import mumlacgppa.pipeline.parts.steps.functions.SelectableTextWindow;
 import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;
 import mumlacgppa.pipeline.parts.steps.functions.Upload;
+
 import mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -103,7 +105,7 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, Upload.nameFlag, Upload.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
-		myWriter.write(exampleSegment(yaml, OnlyContinueIfFullfilledElseAbort.nameFlag, OnlyContinueIfFullfilledElseAbort.generateDefaultOrExampleValues()));
+		myWriter.write(exampleSegment(yaml, OnlyContinueIfFulfilledElseAbort.nameFlag, OnlyContinueIfFulfilledElseAbort.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, PopupWindowMessage.nameFlag, PopupWindowMessage.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");

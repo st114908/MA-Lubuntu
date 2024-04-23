@@ -58,26 +58,6 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 				}
 				String currentContent = currentContentDeclaration.replaceFirst( (directValueFlag + " "), "");
 				VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
-				
-				/*VariableContent foundContent;
-				try{ // Automatic interpretation of boolean values causes this trouble.
-					foundContent = new VariableContent( (String) rawVariableDefs.get(currentVariableKey));
-				}
-				catch(java.lang.ClassCastException e){
-					if(e.getMessage().contains("java.lang.Boolean cannot be cast to java.lang.String")){
-						boolean readBoolean = (boolean) rawVariableDefs.get(currentVariableKey);
-						foundContent = new VariableContent(readBoolean);
-					}
-					else if(e.getMessage().contains("java.lang.Integer cannot be cast to java.lang.String")){
-						int readInteger = (Integer) rawVariableDefs.get(currentVariableKey);
-						foundContent = new VariableContent(readInteger);
-					}
-					else{
-						throw new ClassCastException("Unparseable value encountered at variable definition " + currentVariableKey + "!\n"
-								+ "Original error message:\n" + e.getMessage());
-					}
-				}
-				VariableHandlerInstance.setVariableValue(currentVariableKey, foundContent);*/
 			}
 		}
 		

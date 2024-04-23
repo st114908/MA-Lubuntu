@@ -19,7 +19,7 @@ import mumlacgppa.pipeline.parts.steps.Keywords;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
 import mumlacgppa.pipeline.parts.storage.VariableHandler;
 
-public class OnlyContinueIfFullfilledElseAbort extends PipelineStep implements Keywords{
+public class OnlyContinueIfFulfilledElseAbort extends PipelineStep implements Keywords {
 
 	public static final String nameFlag = "OnlyContinueIfFullfilledElseAbort";
 
@@ -27,62 +27,61 @@ public class OnlyContinueIfFullfilledElseAbort extends PipelineStep implements K
 	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
-	protected void setRequiredInsAndOuts(){
-		requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();
-		
+	protected void setRequiredInsAndOuts() {
+		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("condition");
+		ins.add("message");
 		requiredInsAndOuts.put(inFlag, ins);
-		
+
 		HashSet<String> outs = new LinkedHashSet<String>();
-		
+
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
 		// Map<String, Map<String, String>> for
 		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
-		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
+		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String, String>>();
 
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
-		ins.put("condition", "direct true");
+		ins.put("condition", "direct false");
+		ins.put("message", "Pipeline aborted!\nThe condition has been evaluated to false.");
 		exampleSettings.put(inFlag, ins);
-		
+
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		exampleSettings.put(outFlag, outs);
-		
+
 		return exampleSettings;
 	}
-	
-	
-	public OnlyContinueIfFullfilledElseAbort(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+
+	public OnlyContinueIfFulfilledElseAbort(VariableHandler VariableHandlerInstance,
+			Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
-	
 
 	/**
 	 * @param yamlData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
 	 */
 	@SuppressWarnings("unchecked")
-	public OnlyContinueIfFullfilledElseAbort(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public OnlyContinueIfFulfilledElseAbort(VariableHandler VariableHandlerInstance, String yamlData)
+			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
 	@Override
-	public void execute() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, AbortPipelineException {
+	public void execute() throws VariableNotDefinedException, StructureException, FaultyDataException,
+			ParameterMismatchException, AbortPipelineException {
 		boolean condition = handleInputByKey("condition").getBooleanContent();
-		if(!condition){
-		
+		if (!condition) {
 			Display display = Display.getCurrent();
 			final Shell shellPopupWindowMessage = new Shell(display);
-			MessageDialog.openInformation(
-				shellPopupWindowMessage,
-				"Pipeline message",
-				"Pipeline aborted!\n"
-				+ "Input " + in.get("condition") + " has been evaluated to false.");
+			MessageDialog.openInformation(shellPopupWindowMessage, "Pipeline message",
+					handleInputByKey("message").getContent());
 			throw new AbortPipelineException("The pipeline has been aborted.");
 		}
 	}

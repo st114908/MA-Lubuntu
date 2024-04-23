@@ -12,7 +12,7 @@ import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
 import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
 import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
-import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFullfilledElseAbort;
+import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFulfilledElseAbort;
 import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
 import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
@@ -59,8 +59,8 @@ public interface StepDictionary {
 			case LookupBoardBySerialNumber.nameFlag:
 				return new LookupBoardBySerialNumber(VariableHandlerInstance, parameters);
 
-			case OnlyContinueIfFullfilledElseAbort.nameFlag:
-				return new OnlyContinueIfFullfilledElseAbort(VariableHandlerInstance, parameters);
+			case OnlyContinueIfFulfilledElseAbort.nameFlag:
+				return new OnlyContinueIfFulfilledElseAbort(VariableHandlerInstance, parameters);
 			
 			case PopupWindowMessage.nameFlag:
 				return new PopupWindowMessage(VariableHandlerInstance, parameters);

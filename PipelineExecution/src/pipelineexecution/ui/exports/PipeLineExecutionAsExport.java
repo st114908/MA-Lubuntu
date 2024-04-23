@@ -43,7 +43,10 @@ import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
-import mumlacgppa.pipeline.parts.steps.functions.*;
+import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
 import mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import mumlacgppa.pipeline.settings.PipelineSettingsReader;
 
@@ -61,7 +64,6 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 
 	@Override
 	public String wizardGetId() {
-		// TODO Auto-generated method stub
 		return "pipelineexecution.ui.exports.PipeLineExecutionAsExport";
 	}
 
@@ -199,6 +201,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		IFolder containerModelsFolder = targetProject.getFolder(containerModelsFolderName);
 		IFile muml_containerFile = containerModelsFolder.getFile("MUML_Container.muml_container");
 		
+		LookupBoardBySerialNumber.resetSearchState();
 		refreshWorkSpace(selectedFile);
 		
 		// Due to doExecute requiring the requested values to be "final or effecively final" (or with other words not maybe given values),

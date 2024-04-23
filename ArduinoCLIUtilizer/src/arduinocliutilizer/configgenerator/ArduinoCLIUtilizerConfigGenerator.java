@@ -16,12 +16,8 @@ import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectoryAndFilePath, DefaultArduinoCLIPath {
-	//private String completeConfigDirectoryPath;
 	private Path completeConfigDirectoryPath;
-	//private String completeConfigFilePath;
 	private Path completeConfigFilePath;
-	private boolean hasCheckedForArduinoCLI;
-	private boolean canAccessArduinoCLI;
 	
 	
 	public ArduinoCLIUtilizerConfigGenerator() throws ProjectFolderPathNotSetException {
@@ -33,21 +29,8 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		}
 		completeConfigDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(CONFIG_DIRECTORY_FOLDER_NAME);
 		completeConfigFilePath = completeConfigDirectoryPath.resolve(CONFIG_FILE_NAME);
-		hasCheckedForArduinoCLI = false;
-		canAccessArduinoCLI = false;
 	}
 
-	
-	public boolean checkForArduinoCLI() throws IOException, InterruptedException{
-		hasCheckedForArduinoCLI = true;
-		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("bash", "-c", "export PATH=" + DEFAULT_ARDUINO_CLI_PATH + ":$PATH && arduino-cli config dump");
-		Process proc = processBuilder.start();
-		int exitCode = proc.waitFor();
-		boolean testSuccessful = (exitCode == 0); 
-		canAccessArduinoCLI = testSuccessful;
-		return testSuccessful;
-	}
 	
 	
 	public boolean generateArduinoCLIUtilizerConfigFile() throws IOException{
@@ -78,10 +61,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		return true;
 	}
 
-
-	/**
-	 * 
-	 */
+	
 	public boolean checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation() {
 		if(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
 			return true;
@@ -91,19 +71,28 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 		}
 	}
 	
+	public boolean checkForArduinoCLIByCall() throws IOException, InterruptedException{
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		processBuilder.command("bash", "-c", "export PATH=" + DEFAULT_ARDUINO_CLI_PATH + ":$PATH && arduino-cli config dump");
+		Process proc = processBuilder.start();
+		int exitCode = proc.waitFor();
+		boolean testSuccessful = (exitCode == 0); 
+		return testSuccessful;
+	}
 	
+	
+	/**
+	 * Checks if the ArduinoCLI can be accessed.
+	 * First it checks if it can find the file at the default location (this is just the config generator) and then if it can be called.
+	 * @return If the ArduinoCLI can be accessed or not.
+	 */
 	public boolean canAccessArduinoCLI() {
-		if(hasCheckedForArduinoCLI){
-			return canAccessArduinoCLI;
-		}
-		else if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
-			hasCheckedForArduinoCLI = true;
-			canAccessArduinoCLI = true;
+		if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
 			return true;
 		}
 		else{
 			try {
-				return checkForArduinoCLI();
+				return checkForArduinoCLIByCall();
 			} catch (InterruptedException | IOException e) {
 				return false;
 			} 

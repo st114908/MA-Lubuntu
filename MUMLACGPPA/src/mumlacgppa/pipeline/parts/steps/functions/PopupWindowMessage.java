@@ -78,7 +78,9 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 		
 		Display display = Display.getCurrent();
 		final Shell shellPopupWindowMessage = new Shell(display);
-		/*GridLayout gridLayout = new GridLayout(1, true);
+		/*
+		//Maybe this will become useful, so it won't be removed.
+		GridLayout gridLayout = new GridLayout(1, true);
 		gridLayout.marginWidth = 5;
 		gridLayout.marginHeight = 5;
 		shellListWindow.setLayout(gridLayout);

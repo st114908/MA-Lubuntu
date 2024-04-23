@@ -237,7 +237,7 @@ public abstract class PipelineStep implements Keywords{
 	/**
 	 * Resolves the potentially relative path givenPathString to a full/absolute path.
 	 * @param givenPathString
-	 * Returns a full/absolute path to the intended directory or file.
+	 * @return A full/absolute path to the intended directory or file.
 	 */
 	protected Path resolveFullOrLocalPath(String givenPathString){
 		if(givenPathString.startsWith("/")){ // Full path.
