@@ -1,7 +1,7 @@
 /**
  * 
  */
-package mumlacgppa.pipeline.parts.steps.functions;
+package mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -33,28 +33,30 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class PostProcessingStateChartValuesFlexible extends PipelineStep{
+public class PostProcessingStateChartValues extends PipelineStep{
 
-	public static final String nameFlag = "PostProcessingStateChartValuesFlexible";
+	public static final String nameFlag = "PostProcessingStateChartValues";
 
-	
+
 	/**
 	 * @param readData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public PostProcessingStateChartValuesFlexible(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public PostProcessingStateChartValues(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 
+	
 	/**
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public PostProcessingStateChartValuesFlexible(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public PostProcessingStateChartValues(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -64,9 +66,10 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("arduinoContainersPath");
 		ins.add("ECUName");
-		ins.add("fileName");
-		ins.add("targetStateChartValueName");
-		ins.add("valueToSet");
+		ins.add("distanceLimit");
+		ins.add("desiredVelocity");
+		ins.add("slowVelocity");
+		ins.add("laneDistance");
 		requiredInsAndOuts.put(inFlag, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -74,18 +77,20 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	// Map<String, Map<String, String>> for
-	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
+
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
+		// Map<String, Map<String, String>> for
+		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", "direct arduino-containers");
-		ins.put("ECUName", "direct FastCarDriverECU");
-		ins.put("fileName", "direct courseControlCourseControlComponentStateChart.c");
-		ins.put("targetStateChartValueName", "direct desiredVelocity");
-		ins.put("valueToSet", "direct 12");
+		ins.put("ECUName", "direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino");
+		ins.put("distanceLimit", "direct 1");
+		ins.put("desiredVelocity", "direct 2");
+		ins.put("slowVelocity", "direct 3");
+		ins.put("laneDistance", "direct 4");
 		exampleSettings.put(inFlag, ins);
 		
 		// Out:
@@ -111,9 +116,9 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
 		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
 		
-		// For all the previous steps see PerformPostProcessingPartsUntilExceptConfig.
+		// For all the previous steps see PerformPostProcessingPartsUntilConfig.
 		
-		setValueForStates(arduinoContainersPath);
+		setVelocitiesAndDistancesForStates(arduinoContainersPath);
 		
         /*
         18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
@@ -123,7 +128,7 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		handleOutputByKey("ifSuccessful", true);
 	}
 
-	
+
 	/**
 	 * @param arduinoContainersPathString
 	 * @throws IOException
@@ -131,9 +136,8 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 	 * @throws StructureException 
 	 * @throws VariableNotDefinedException 
 	 */
-	private void setValueForStates(Path arduinoContainersPath)
+	private void setVelocitiesAndDistancesForStates(Path arduinoContainersPath)
 			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException {
-
         /*
         17. the values for the ```desiredVelocity``` and ```slowVelocity``` can be set individually in
         the ```driveControlDriveControlComponentStateChart.c``` of the ```...DriverECU``` directories.
@@ -141,22 +145,25 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
         For our modifications: The targeted file is "courseControlCourseControlComponentStateChart.c".
         */
 		Path targetECUFolderPath = arduinoContainersPath.resolve( handleInputByKey("ECUName").getContent() );
-		Path targetStateChartFilePath = targetECUFolderPath.resolve( handleInputByKey("fileName").getContent() );
+		Path targetStateChartFilePath = targetECUFolderPath.resolve("courseControlCourseControlComponentStateChart.c");
 		String intermediateFileName = targetStateChartFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
-		
-		String targetStateChartValueName = handleInputByKey("targetStateChartValueName").getContent();
-		// Such structures don't appear anywhere else in that file, so it should be safe to search by this.
-		String sequenceToLookFor = "stateChart->"+targetStateChartValueName+" = stateChart->"+targetStateChartValueName+" = 0;";
-		String sequenceToReplaceWith =
-				"stateChart->"+targetStateChartValueName+" = stateChart->"+targetStateChartValueName
-				+" = "+handleInputByKey("valueToSet").getIntContent()+";\n";
 		
 		Scanner targetSomethingStateChartFileScanner = new Scanner(targetStateChartFilePath.toFile());
 		while (targetSomethingStateChartFileScanner.hasNextLine()) {
     		String currentLine = targetSomethingStateChartFileScanner.nextLine();
-			if(currentLine.contains(sequenceToLookFor)){
-				workCopy.write( currentLine.replace(sequenceToLookFor, sequenceToReplaceWith) ); // To keep the indentation.
+    		// Such structures don't appear anywhere else in that file, so it should be safe. 
+			if(currentLine.contains("stateChart->distanceLimit = stateChart->distanceLimit = 0;")){
+    			workCopy.write("			stateChart->distanceLimit = stateChart->distanceLimit = " + handleInputByKey("distanceLimit").getIntContent() + ";\n");
+    		}
+    		else if(currentLine.contains("stateChart->desiredVelocity = stateChart->desiredVelocity = 0;")){
+    			workCopy.write("			stateChart->desiredVelocity = stateChart->desiredVelocity = " + handleInputByKey("desiredVelocity").getIntContent() + ";\n");
+    		}
+    		else if(currentLine.contains("stateChart->slowVelocity = stateChart->slowVelocity = 0;")){
+    			workCopy.write("			stateChart->slowVelocity = stateChart->slowVelocity = " + handleInputByKey("slowVelocity").getIntContent() + ";\n");
+    		}
+    		else if(currentLine.contains("stateChart->laneDistance = stateChart->laneDistance = 0;")){
+    			workCopy.write("			stateChart->laneDistance = stateChart->laneDistance = " + handleInputByKey("laneDistance").getIntContent() + ";\n");
     		}
     		else{
     			workCopy.write(currentLine + "\n");
@@ -174,15 +181,16 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 				inFlag + ":\n"
 				+ "  arduinoContainersPath: direct /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/arduino-containers\n"
 				+ "  ECUName: direct fastCarDriverECU\n"
-				+ "  fileName: direct courseControlCourseControlComponentStateChart.c\n"
-				+ "  targetStateChartValueName: direct desiredVelocity\n"
-				+ "  valueToSet: direct 12\n"
+				+ "  distanceLimit: direct 1\n"
+				+ "  desiredVelocity: direct 2\n"
+				+ "  slowVelocity: direct 3\n"
+				+ "  laneDistance: direct 4\n"
 				+ outFlag + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n";
 		Yaml yaml = new Yaml(); // For yaml validity check.
 		Map <String, Map <String, String>> testMap = yaml.load(testYaml);
 		VariableHandler VariableHandlerInstance = new VariableHandler();
-		PostProcessingStateChartValuesFlexible debugTest = new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, testYaml);
+		PostProcessingStateChartValues debugTest = new PostProcessingStateChartValues(VariableHandlerInstance, testYaml);
 		debugTest.execute();
 	}
 }

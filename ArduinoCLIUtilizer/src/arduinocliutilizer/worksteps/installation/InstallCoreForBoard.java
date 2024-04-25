@@ -5,11 +5,11 @@ import java.nio.file.Path;
 
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class InstallCoreForBoard extends ACLIWorkstep implements SaveResponseInfoLocation{
+public class InstallCoreForBoard extends ACLIWorkstep implements SaveResponseInfo{
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Core installation";
 	
@@ -20,8 +20,8 @@ public class InstallCoreForBoard extends ACLIWorkstep implements SaveResponseInf
 		String coreInstallationCommand = "arduino-cli core install " + candidateID + " --format yaml";
 		ReceivedFeedback = commandLineDoer.doShellCommand(coreInstallationCommand);
 		Path parentPath =  targetFilePath.getParent();
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-			parentPath.toString(), "CoreDownloadInfo.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+			parentPath, "CoreDownloadInfo.txt",
 			coreInstallationCommand, ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.exitCode == 0);

@@ -13,13 +13,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
+import mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration.StepsExamplesGenerator;
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import mumlacgppa.pipeline.settings.StepsExamplesGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class GenerateAllPipelineStepExamplesAction implements IObjectActionDelegate {

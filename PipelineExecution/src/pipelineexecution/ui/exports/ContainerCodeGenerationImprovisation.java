@@ -22,7 +22,7 @@ import org.muml.codegen.componenttype.export.ui.Activator;
 
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 class ContainerCodeGenerationImprovisation{
@@ -46,7 +46,7 @@ class ContainerCodeGenerationImprovisation{
 		
 		if(! Files.isDirectory(arduinoCodeDestinationPath) ){
 			try {
-				Files.createDirectory(arduinoCodeDestinationPath);
+				Files.createDirectories(arduinoCodeDestinationPath);
 			} catch (IOException e) {
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);

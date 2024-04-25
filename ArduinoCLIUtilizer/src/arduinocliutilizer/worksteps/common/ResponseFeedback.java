@@ -1,5 +1,10 @@
 package arduinocliutilizer.worksteps.common;
 
+/**
+ * @author muml
+ * The Results (exit code, normal response and error response)
+ * get stored together in a ResponseFeedback object.
+ */
 public class ResponseFeedback {
 	public int exitCode;
 	public String normalFeedback;

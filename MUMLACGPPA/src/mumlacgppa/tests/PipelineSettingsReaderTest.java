@@ -17,10 +17,11 @@ import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
-import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
-import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
-import mumlacgppa.pipeline.settings.PipelineSettingsReader;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
+import mumlacgppa.pipeline.reader.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
@@ -63,7 +64,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ standaloneUsageDefsFlag + ": {}\n"
 				+ pipelineSequenceDefFlag + ": []\n";
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -73,7 +74,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testEmptyFileMinimal() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
 		String testYamlText = "\n";
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -90,7 +91,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				//+ pipelineSequenceDefFlag + ": []\n"
 				;
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -111,7 +112,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				//+ pipelineSequenceDefFlag + ": []\n"
 				;
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -129,7 +130,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      message: direct HelloTest\n"
 				+ "\n";
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -152,7 +153,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      condition: from dummyBool \n"
 				+ "      message: from dummyPort\n";
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -172,7 +173,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "        condition: from dummyBool \n"
 				+ "        message: from dummyPort\n";
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
@@ -203,7 +204,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "        message: from dummyPort\n"
 				+ "  - " + fromValueFlag + " " + standaloneUsageDefsFlag + ": " + ContainerTransformation.nameFlag;
 		
-		PipelineSettingsReader PSRInstance = new PipelineSettingsReader();
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}

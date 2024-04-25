@@ -15,10 +15,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: snakeyaml-2.2.jar,
  .
-Export-Package: mumlacgppa.pipeline.parts.exceptions,
+Export-Package: mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration,
+ mumlacgppa.pipeline.parts.exceptions,
  mumlacgppa.pipeline.parts.steps,
- mumlacgppa.pipeline.parts.steps.functions,
+ mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli,
  mumlacgppa.pipeline.parts.storage,
  mumlacgppa.pipeline.paths,
- mumlacgppa.pipeline.settings,
- mumlacgppa.popup.actions
+ mumlacgppa.pipeline.reader

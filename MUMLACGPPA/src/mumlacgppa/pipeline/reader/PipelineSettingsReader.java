@@ -1,4 +1,4 @@
-package mumlacgppa.pipeline.settings;
+package mumlacgppa.pipeline.reader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,15 +19,17 @@ import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
-import mumlacgppa.pipeline.parts.steps.StepDictionary;
+import mumlacgppa.pipeline.parts.steps.PipelineStepDictionary;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
 import mumlacgppa.pipeline.parts.storage.VariableContent;
 import mumlacgppa.pipeline.parts.storage.VariableHandler;
 
-public class PipelineSettingsReader implements Keywords, StepDictionary{
+public class PipelineSettingsReader implements Keywords{
 	// private Map<String, String> VariableDefs; //Variables are stored static in the class VariableHandler.
 	private Map<String, PipelineStep> standaloneUsageDefs;
 	private ArrayList<PipelineStep> pipelineSequence;
 	private VariableHandler VariableHandlerInstance;
+	private PipelineStepDictionary stepDictionaryToUse;
 	
 	/**
 	 * @param rawSettings
@@ -70,7 +72,7 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 					(Map<String, Map<String, Map<String, String>>>) rawSettings.get(standaloneUsageDefsFlag);
 			for(String currentStepKey:rawStandaloneUsageDefs.keySet()){
 				String className = currentStepKey;
-				PipelineStep InterpretedStep = StepDictionary.lookupStepNameAndGenerateInstance(
+				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
 						VariableHandlerInstance, className, rawStandaloneUsageDefs.get(currentStepKey));
 				standaloneUsageDefs.put(currentStepKey, InterpretedStep);
 			}
@@ -102,7 +104,7 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 					Map<String, Map<String, String>> rawStepDef = 
 							(Map<String, Map<String, String>>) currentPipelineStepDef.get(currentPipelineStepKey);
 					String className = currentPipelineStepKey.replace(directValueFlag, "").trim();
-					PipelineStep InterpretedStep = StepDictionary.lookupStepNameAndGenerateInstance(
+					PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
 							VariableHandlerInstance, className, rawStepDef);
 					pipelineSequence.add(InterpretedStep);
 				}
@@ -125,16 +127,18 @@ public class PipelineSettingsReader implements Keywords, StepDictionary{
 	}
 	
 	
-	public PipelineSettingsReader(){ // Mainly for the tests.
+	public PipelineSettingsReader(PipelineStepDictionary stepDictionaryToUse){ // Mainly for the tests.
 		standaloneUsageDefs = new HashMap<String, PipelineStep>();
 		pipelineSequence = new ArrayList<PipelineStep>();
+		this.stepDictionaryToUse = stepDictionaryToUse;
 	}
 
 	
-	public PipelineSettingsReader(Path settingsFilePath)
+	public PipelineSettingsReader(PipelineStepDictionary stepDictionaryToUse, Path settingsFilePath)
 			throws FileNotFoundException, StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
 		standaloneUsageDefs = new HashMap<String, PipelineStep>();
 		pipelineSequence = new ArrayList<PipelineStep>();
+		this.stepDictionaryToUse = stepDictionaryToUse;
 		
 		Yaml yaml = new Yaml();
 		/*InputStream inputStream = this.getClass()

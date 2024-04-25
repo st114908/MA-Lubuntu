@@ -9,12 +9,12 @@ import java.nio.file.Path;
 import arduinocliutilizer.paths.FQBNStorageFileName;
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class UploadCall extends ACLIWorkstep implements SaveResponseInfoLocation, FQBNStorageFileName{
+public class UploadCall extends ACLIWorkstep implements SaveResponseInfo, FQBNStorageFileName{
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Upload step";
 	
@@ -46,8 +46,8 @@ public class UploadCall extends ACLIWorkstep implements SaveResponseInfoLocation
 			}
 		}
 		ReceivedFeedback = commandLineDoer.doShellCommand(uploadCommand);
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-			targetFilePath.getParent().toString(), "UploadInfo.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+			targetFilePath.getParent(), "UploadInfo.txt",
 			uploadCommand, ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.exitCode == 0);

@@ -5,11 +5,11 @@ import java.nio.file.Path;
 
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class ZippedArduinoLibraryInstaller extends ACLIWorkstep implements SaveResponseInfoLocation{
+public class ZippedArduinoLibraryInstaller extends ACLIWorkstep implements SaveResponseInfo{
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer";
 	
@@ -22,8 +22,8 @@ public class ZippedArduinoLibraryInstaller extends ACLIWorkstep implements SaveR
 		ReceivedFeedback = commandLineDoer.doShellCommand(libraryInstallationCommand);
 		commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
 		
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-			targetFilePath.getParent().toString(), "ZippedArduinoInstallerInfo.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+			targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt",
 			libraryInstallationCommand, ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.exitCode == 0);

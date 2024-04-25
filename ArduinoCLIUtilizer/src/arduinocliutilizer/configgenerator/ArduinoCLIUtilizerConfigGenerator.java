@@ -32,9 +32,8 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 	}
 
 	
-	
 	public boolean generateArduinoCLIUtilizerConfigFile() throws IOException{
-		if (!Files.isDirectory(completeConfigDirectoryPath)){
+		if (!Files.exists(completeConfigDirectoryPath) && Files.isDirectory(completeConfigDirectoryPath)){
 			Files.createDirectory(completeConfigDirectoryPath);
 		}
 		

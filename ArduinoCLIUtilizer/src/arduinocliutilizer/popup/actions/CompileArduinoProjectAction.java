@@ -63,7 +63,7 @@ public class CompileArduinoProjectAction implements IObjectActionDelegate, Selec
 				"ArduinoCLIUtilizer: Compiling step",
 				"Code compiled successfully!\n"+
 				"The folder \"CompiledFiles\" (the result files are in it) has been generated "+
-				"in the same directory as the used .ino file.");
+				"in the same directory as the used/targeted .ino file.");
 		}
 		
 		catch (IOException e) {

@@ -18,22 +18,21 @@ import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUML
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
-import mumlacgppa.pipeline.parts.steps.functions.Compile;
-import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
-import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
-import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFulfilledElseAbort;
-import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStepsUntilConfig;
-import mumlacgppa.pipeline.parts.steps.functions.ReplaceLineContent;
-import mumlacgppa.pipeline.parts.steps.functions.SaveToTextFile;
-import mumlacgppa.pipeline.parts.steps.functions.SelectableTextWindow;
-import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;
-import mumlacgppa.pipeline.parts.steps.functions.Upload;
-
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValuesFlexible;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ReplaceLineContent;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SaveToTextFile;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.TerminalCommand;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 

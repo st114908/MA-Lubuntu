@@ -79,13 +79,7 @@ public class UploadArduinoProjectAction implements IObjectActionDelegate, Select
 					"ArduinoCLIUtilizer",
 					"The process has been interrupted!");
 			e.printStackTrace();
-		} catch (FQBNErrorEception e) {
-			MessageDialog.openInformation(
-					shell,
-					"ArduinoCLIUtilizer",
-					e.getMessage());
-			e.printStackTrace();
-		} catch (NoArduinoCLIConfigFileException | ProjectFolderPathNotSetException e) {
+		} catch (FQBNErrorEception | NoArduinoCLIConfigFileException | ProjectFolderPathNotSetException e) {
 			MessageDialog.openInformation(
 				shell,
 				"ArduinoCLIUtilizer",

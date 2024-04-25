@@ -11,11 +11,11 @@ import arduinocliutilizer.paths.CompiledFilesFolderNameInterface;
 import arduinocliutilizer.paths.FQBNStorageFileName;
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class CompilationCall extends ACLIWorkstep implements SaveResponseInfoLocation, CompiledFilesFolderNameInterface, FQBNStorageFileName{
+public class CompilationCall extends ACLIWorkstep implements SaveResponseInfo, CompiledFilesFolderNameInterface, FQBNStorageFileName{
 
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Compiling step";
 	
@@ -39,8 +39,8 @@ public class CompilationCall extends ACLIWorkstep implements SaveResponseInfoLoc
 		}
 		ReceivedFeedback = commandLineDoer.doShellCommand(compilationCommand);
 		
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-				parentPath.toString(), "CompilationInfo.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+				parentPath, "CompilationInfo.txt",
 			compilationCommand, ReceivedFeedback);
 		
 		if(ReceivedFeedback.exitCode != 0){

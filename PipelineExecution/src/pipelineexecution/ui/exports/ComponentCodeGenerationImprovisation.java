@@ -17,7 +17,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 
 class ComponentCodeGenerationImprovisation{
 	private ComponentCodeGeneration step;

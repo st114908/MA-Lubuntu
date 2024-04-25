@@ -9,12 +9,12 @@ import org.yaml.snakeyaml.Yaml;
 
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import arduinocliutilizer.worksteps.installation.InstallCoreForBoard;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class FQBNAndCoresHandler extends ACLIWorkstep implements SaveResponseInfoLocation{
+public class FQBNAndCoresHandler extends ACLIWorkstep implements SaveResponseInfo{
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Core search";
 	
@@ -47,8 +47,8 @@ public class FQBNAndCoresHandler extends ACLIWorkstep implements SaveResponseInf
 		String searchCommand = "arduino-cli core search " + searchID + " --format yaml";
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-			parentPath.toString(), "CoreSearch.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+			parentPath, "CoreSearch.txt",
 			searchCommand, ReceivedFeedback);
 		if(ReceivedFeedback.exitCode != 0){
 			successful = false;

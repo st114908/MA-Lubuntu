@@ -9,11 +9,11 @@ import org.yaml.snakeyaml.Yaml;
 
 import arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import arduinocliutilizer.worksteps.common.SaveResponseInfoLocation;
+import arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class ConnectedBoardsFinder extends ACLIWorkstep implements SaveResponseInfoLocation{
+public class ConnectedBoardsFinder extends ACLIWorkstep implements SaveResponseInfo{
 	private ArrayList<Map<String, Object>> resultList;
 	private int numberOfBoards;
 	
@@ -25,8 +25,8 @@ public class ConnectedBoardsFinder extends ACLIWorkstep implements SaveResponseI
 		String searchCommand = "arduino-cli board list --format yaml";
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
-		responseLocation = SaveResponseInfoLocation.saveShellResponseInfo(
-			parentPath.toString(), "ConnectedBoardsFinder.txt",
+		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+			parentPath, "ConnectedBoardsFinder.txt",
 			searchCommand, ReceivedFeedback);
 		Yaml yaml = new Yaml();
 		resultList = (ArrayList<Map<String, Object>>) yaml.load(ReceivedFeedback.normalFeedback);

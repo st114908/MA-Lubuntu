@@ -34,7 +34,7 @@ public class BoardAutoSelectionAndInstallation {
 			MessageDialog.openInformation(
 				shell,
 				"ArduinoCLIUtilizer: Board search",
-				"ArduinoCLIUtilizer can't handle more than one connected board at once yet!");
+				"When used directly from the context menu the ArduinoCLIUtilizer can't handle more than one connected board at once!");
 			return false;
 		}
 		

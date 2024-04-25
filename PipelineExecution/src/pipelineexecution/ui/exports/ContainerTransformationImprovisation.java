@@ -28,7 +28,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 
 class ContainerTransformationImprovisation{
 	private EObject[] sourceElementsSystemAllocation;
@@ -53,7 +53,7 @@ class ContainerTransformationImprovisation{
 
 		if(! Files.isDirectory(destinationContainerTransformationPath) ){
 			try {
-				Files.createDirectory(destinationContainerTransformationPath);
+				Files.createDirectories(destinationContainerTransformationPath);
 			} catch (IOException e) {
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);

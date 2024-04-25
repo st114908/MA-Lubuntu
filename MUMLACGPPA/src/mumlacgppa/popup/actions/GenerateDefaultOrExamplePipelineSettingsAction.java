@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
+import mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration.PipelineSettingsGenerator;
 import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
-import mumlacgppa.pipeline.settings.PipelineSettingsGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectActionDelegate {

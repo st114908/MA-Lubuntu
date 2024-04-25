@@ -1,7 +1,7 @@
 /**
  * 
  */
-package mumlacgppa.pipeline.parts.steps.functions;
+package mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -23,27 +23,26 @@ import mumlacgppa.pipeline.parts.storage.VariableHandler;
  * @author muml
  *
  */
-public class ComponentCodeGeneration extends PipelineStep {
+public class ContainerTransformation extends PipelineStep {
 
-	public static final String nameFlag = "ComponentCodeGeneration";
-
+	public static final String nameFlag = "ContainerTransformation";
+	
 	/**
 	 * @param readData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public ComponentCodeGeneration(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData)
-			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public ContainerTransformation(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 
 	/**
 	 * @param yamlData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public ComponentCodeGeneration(VariableHandler VariableHandlerInstance, String yamlData)
-			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public ContainerTransformation(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
+
 
 	/**
 	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
@@ -54,34 +53,36 @@ public class ComponentCodeGeneration extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("roboCar_mumlSourceFile");
-		ins.add("arduino_containersDestinationFolder");
+		ins.add("middlewareOption");
+		ins.add("muml_containerFileDestination");
 		requiredInsAndOuts.put(inFlag, ins);
-
+		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
-	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
+	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
 		// Map<String, Map<String, String>> for
 		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
-		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String, String>>();
-
+		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
+		
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
-		ins.put("arduino_containersDestinationFolder", "direct arduino-containers");
+		ins.put("middlewareOption", "direct MQTT_I2C_CONFIG # Or DDS_CONFIG");
+		ins.put("muml_containerFileDestination", "direct container-models/MUML_Container.muml_container");
 		exampleSettings.put(inFlag, ins);
-
+		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
 		exampleSettings.put(outFlag, outs);
-
+		
 		return exampleSettings;
 	}
-
-	/**
+	
+	/* (non-Javadoc)
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
 	 */
 	@Override

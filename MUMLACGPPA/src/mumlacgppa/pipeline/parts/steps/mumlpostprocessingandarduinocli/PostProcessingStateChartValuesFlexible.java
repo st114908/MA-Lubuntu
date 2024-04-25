@@ -1,7 +1,7 @@
 /**
  * 
  */
-package mumlacgppa.pipeline.parts.steps.functions;
+package mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -33,16 +33,16 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class ReplaceLineContent extends PipelineStep{
+public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 
-	public static final String nameFlag = "ReplaceLineContent";
+	public static final String nameFlag = "PostProcessingStateChartValuesFlexible";
 
 	
 	/**
 	 * @param readData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public ReplaceLineContent(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public PostProcessingStateChartValuesFlexible(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 
@@ -50,11 +50,11 @@ public class ReplaceLineContent extends PipelineStep{
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public ReplaceLineContent(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public PostProcessingStateChartValuesFlexible(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
-	/**
+	/* (non-Javadoc)
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
@@ -62,9 +62,11 @@ public class ReplaceLineContent extends PipelineStep{
 		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("filePath");
-		ins.add("targetLineContent");
-		ins.add("contentReplacement");
+		ins.add("arduinoContainersPath");
+		ins.add("ECUName");
+		ins.add("fileName");
+		ins.add("targetStateChartValueName");
+		ins.add("valueToSet");
 		requiredInsAndOuts.put(inFlag, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -72,16 +74,18 @@ public class ReplaceLineContent extends PipelineStep{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
+	// Map<String, Map<String, String>> for
+	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
-		// Map<String, Map<String, String>> for
-		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
-		
+
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
-		ins.put("filePath", "direct arduino-containers/fastCarDriverECU/courseControlCourseControlComponentStateChart.c");
-		ins.put("targetLineContent", "direct stateChart->distanceLimit = stateChart->distanceLimit = 1;");
-		ins.put("contentReplacement", "direct stateChart->distanceLimit = stateChart->distanceLimit = 0;");
+		ins.put("arduinoContainersPath", "direct arduino-containers");
+		ins.put("ECUName", "direct FastCarDriverECU");
+		ins.put("fileName", "direct courseControlCourseControlComponentStateChart.c");
+		ins.put("targetStateChartValueName", "direct desiredVelocity");
+		ins.put("valueToSet", "direct 12");
 		exampleSettings.put(inFlag, ins);
 		
 		// Out:
@@ -91,7 +95,7 @@ public class ReplaceLineContent extends PipelineStep{
 		
 		return exampleSettings;
 	}
-	
+
 	
 	/* (non-Javadoc)
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
@@ -102,13 +106,14 @@ public class ReplaceLineContent extends PipelineStep{
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
 
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
+		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
 		
 		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
 		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
 		
 		// For all the previous steps see PerformPostProcessingPartsUntilExceptConfig.
 		
-		replaceContent();
+		setValueForStates(arduinoContainersPath);
 		
         /*
         18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
@@ -126,7 +131,7 @@ public class ReplaceLineContent extends PipelineStep{
 	 * @throws StructureException 
 	 * @throws VariableNotDefinedException 
 	 */
-	private void replaceContent()
+	private void setValueForStates(Path arduinoContainersPath)
 			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException {
 
         /*
@@ -135,19 +140,23 @@ public class ReplaceLineContent extends PipelineStep{
             1. Also set distance und lanedistance.
         For our modifications: The targeted file is "courseControlCourseControlComponentStateChart.c".
         */
-		Path targetFilePath = resolveFullOrLocalPath( handleInputByKey("filePath").getContent() );
-		String intermediateFileName = targetFilePath.toString() + ".editing";
+		Path targetECUFolderPath = arduinoContainersPath.resolve( handleInputByKey("ECUName").getContent() );
+		Path targetStateChartFilePath = targetECUFolderPath.resolve( handleInputByKey("fileName").getContent() );
+		String intermediateFileName = targetStateChartFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
 		
+		String targetStateChartValueName = handleInputByKey("targetStateChartValueName").getContent();
 		// Such structures don't appear anywhere else in that file, so it should be safe to search by this.
-		String sequenceToLookFor = handleInputByKey("targetLineContent").getContent();
-		String sequenceToReplaceWith = handleInputByKey("contentReplacement").getContent();
+		String sequenceToLookFor = "stateChart->"+targetStateChartValueName+" = stateChart->"+targetStateChartValueName+" = 0;";
+		String sequenceToReplaceWith =
+				"stateChart->"+targetStateChartValueName+" = stateChart->"+targetStateChartValueName
+				+" = "+handleInputByKey("valueToSet").getIntContent()+";\n";
 		
-		Scanner targetSomethingStateChartFileScanner = new Scanner(targetFilePath.toFile());
+		Scanner targetSomethingStateChartFileScanner = new Scanner(targetStateChartFilePath.toFile());
 		while (targetSomethingStateChartFileScanner.hasNextLine()) {
     		String currentLine = targetSomethingStateChartFileScanner.nextLine();
 			if(currentLine.contains(sequenceToLookFor)){
-				workCopy.write( currentLine.replace(sequenceToLookFor, sequenceToReplaceWith) + "\n"); // To keep the indentation.
+				workCopy.write( currentLine.replace(sequenceToLookFor, sequenceToReplaceWith) ); // To keep the indentation.
     		}
     		else{
     			workCopy.write(currentLine + "\n");
@@ -155,7 +164,7 @@ public class ReplaceLineContent extends PipelineStep{
     	}
 		targetSomethingStateChartFileScanner.close();
 	    workCopy.close();
-		Files.move(Paths.get(intermediateFileName), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(intermediateFileName), targetStateChartFilePath, StandardCopyOption.REPLACE_EXISTING);
 	}
 
 
@@ -163,15 +172,17 @@ public class ReplaceLineContent extends PipelineStep{
 		ProjectFolderPathStorage.projectFolderPath = Paths.get("/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk");
 		String testYaml =
 				inFlag + ":\n"
-				+ "  filePath: direct arduino-containers/fastCarDriverECU/courseControlCourseControlComponentStateChart.c\n"
-				+ "  targetLineContent: direct stateChart->distanceLimit = stateChart->distanceLimit = 1;\n"
-				+ "  contentReplacement: direct stateChart->distanceLimit = stateChart->distanceLimit = 0;\n"
+				+ "  arduinoContainersPath: direct /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/arduino-containers\n"
+				+ "  ECUName: direct fastCarDriverECU\n"
+				+ "  fileName: direct courseControlCourseControlComponentStateChart.c\n"
+				+ "  targetStateChartValueName: direct desiredVelocity\n"
+				+ "  valueToSet: direct 12\n"
 				+ outFlag + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n";
 		Yaml yaml = new Yaml(); // For yaml validity check.
 		Map <String, Map <String, String>> testMap = yaml.load(testYaml);
 		VariableHandler VariableHandlerInstance = new VariableHandler();
-		ReplaceLineContent debugTest = new ReplaceLineContent(VariableHandlerInstance, testYaml);
+		PostProcessingStateChartValuesFlexible debugTest = new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, testYaml);
 		debugTest.execute();
 	}
 }

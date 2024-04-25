@@ -21,7 +21,7 @@ import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.Keywords;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
-import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.TerminalCommand;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 

@@ -1,13 +1,16 @@
-package mumlacgppa.pipeline.parts.steps.functions;
+package mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
@@ -18,9 +21,9 @@ import mumlacgppa.pipeline.parts.steps.Keywords;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
 import mumlacgppa.pipeline.parts.storage.VariableHandler;
 
-public class PopupWindowMessage extends PipelineStep implements Keywords{
+public class SelectableTextWindow extends PipelineStep implements Keywords{
 
-	public static final String nameFlag = "PopupWindowMessage";
+	public static final String nameFlag = "SelectableTextWindow";
 
 	/**
 	 * @see mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
@@ -39,9 +42,9 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 		requiredInsAndOuts.put(outFlag, outs);
 	}
 
+	// Map<String, Map<String, String>> for
+	// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
-		// Map<String, Map<String, String>> for
-		// Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>
 		Map<String, Map<String, String>> exampleSettings = new LinkedHashMap<String, Map<String,String>>();
 
 		// Ins:
@@ -54,7 +57,7 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 	}
 	
 	
-	public PopupWindowMessage(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public SelectableTextWindow(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 	
@@ -64,7 +67,7 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
 	@SuppressWarnings("unchecked")
-	public PopupWindowMessage(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public SelectableTextWindow(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
@@ -77,9 +80,7 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 		String message = handleInputByKey("message").getContent();
 		
 		Display display = Display.getCurrent();
-		final Shell shellPopupWindowMessage = new Shell(display);
-		/*
-		//Maybe this will become useful, so it won't be removed.
+		final Shell shellListWindow = new Shell(display);
 		GridLayout gridLayout = new GridLayout(1, true);
 		gridLayout.marginWidth = 5;
 		gridLayout.marginHeight = 5;
@@ -100,10 +101,5 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 				display.sleep();
 		}
 		//display.dispose(); // Causes crash, but if commented out no problems.
-		*/
-		MessageDialog.openInformation(
-				shellPopupWindowMessage,
-				"Pipeline message",
-				message);
 	}
 }

@@ -40,16 +40,6 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		
-		//IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		//ISelection selection = window.getSelectionService().getSelection("org.eclipse.jdt.ui.PackageExplorer");
-		
-		// See mechatronicuml-cadapter-component-container/org.muml.arduino.adapter.container.ui/src/org/muml/arduino/adapter/container/ui/popupMenus/AcceleoGenerateArduinoContainerCodeAction.java
-		//IFile selectedFile = (IFile) ((IStructuredSelection) selection).toList().get(0);
-		//URI modelURI = URI.createPlatformResourceURI(selectedFile.getFullPath().toString(), true);
-		//IContainer parent = selectedFile.getParent();
-		//IProject project = selectedFile.getProject();
-		
 		try {
 			ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
 			ArduinoCLIUtilizerConfigGenerator generator = new ArduinoCLIUtilizerConfigGenerator();

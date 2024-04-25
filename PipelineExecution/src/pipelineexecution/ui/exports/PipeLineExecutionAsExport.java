@@ -43,12 +43,13 @@ import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import mumlacgppa.pipeline.parts.exceptions.StructureException;
 import mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import mumlacgppa.pipeline.parts.steps.PipelineStep;
-import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
-import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
+import mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
 import mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
-import mumlacgppa.pipeline.settings.PipelineSettingsReader;
+import mumlacgppa.pipeline.reader.PipelineSettingsReader;
 
 
 public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
@@ -81,7 +82,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
 		
 		try {
-			PSRInstance = new PipelineSettingsReader(pipelineSettingsPath);
+			PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer(), pipelineSettingsPath);
 			PSRInstance.validateOrder();
 		} catch (FileNotFoundException | StructureException | StepNotMatched
 				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException
@@ -365,7 +366,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		final Path arduinoCodeDestinationPath = Paths.get( arduinoContainersFolder.getRawLocation().toString() );
 		if(! Files.isDirectory(arduinoCodeDestinationPath) ){
 			try {
-				Files.createDirectory(arduinoCodeDestinationPath);
+				Files.createDirectories(arduinoCodeDestinationPath);
 			} catch (IOException e) {
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);
@@ -380,7 +381,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard{
 		Path destinationContainerTransformationPath = Paths.get( containerModelsFolder.getRawLocation().toString() );
 		if(! Files.isDirectory(destinationContainerTransformationPath) ){
 			try {
-				Files.createDirectory(destinationContainerTransformationPath);
+				Files.createDirectories(destinationContainerTransformationPath);
 			} catch (IOException e) {
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);

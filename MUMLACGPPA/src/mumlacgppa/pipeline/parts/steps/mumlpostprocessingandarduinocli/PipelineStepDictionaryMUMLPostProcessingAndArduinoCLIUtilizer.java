@@ -1,45 +1,34 @@
 /**
  * 
  */
-package mumlacgppa.pipeline.parts.steps;
+package mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.util.Map;
 
 import mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
-import mumlacgppa.pipeline.parts.steps.functions.Compile;
-import mumlacgppa.pipeline.parts.steps.functions.ComponentCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerCodeGeneration;
-import mumlacgppa.pipeline.parts.steps.functions.ContainerTransformation;
-import mumlacgppa.pipeline.parts.steps.functions.LookupBoardBySerialNumber;
-import mumlacgppa.pipeline.parts.steps.functions.OnlyContinueIfFulfilledElseAbort;
-import mumlacgppa.pipeline.parts.steps.functions.PopupWindowMessage;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValues;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStateChartValuesFlexible;
-import mumlacgppa.pipeline.parts.steps.functions.PostProcessingStepsUntilConfig;
-import mumlacgppa.pipeline.parts.steps.functions.ReplaceLineContent;
-import mumlacgppa.pipeline.parts.steps.functions.SaveToTextFile;
-import mumlacgppa.pipeline.parts.steps.functions.SelectableTextWindow;
-import mumlacgppa.pipeline.parts.steps.functions.TerminalCommand;
-import mumlacgppa.pipeline.parts.steps.functions.Upload;
+import mumlacgppa.pipeline.parts.steps.PipelineStep;
+import mumlacgppa.pipeline.parts.steps.PipelineStepDictionary;
 import mumlacgppa.pipeline.parts.storage.VariableHandler;
 
 /**
  * @author muml
  *
  */
-public interface StepDictionary {
-	// Failed, because no working solution as source attachment could be found..
-	// https://stackoverflow.com/questions/1268817/create-new-object-from-a-string-in-java
-	//Class cl = Class.forName(//className);
-	//Class<?> cl = Class.forName("mumlarduinopipelineautomatisation.pipeline.parts.steps.functions." + className);
-	//Constructor<?> con = cl.getConstructor(Map.class);
-	//PipelineStep InterpretedStep = (PipelineStep) con.newInstance(parameters);
+public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer extends PipelineStepDictionary {
 	
 	
-	public static PipelineStep lookupStepNameAndGenerateInstance(VariableHandler VariableHandlerInstance, String className, Map<String, Map<String, String>> parameters)
+	public PipelineStep lookupStepNameAndGenerateInstance(VariableHandler VariableHandlerInstance, String className, Map<String, Map<String, String>> parameters)
 			throws StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
-		// This time a switch case usage is better to read than a long sequence of if(...){...}else ...
+		// The following flexible code failed, because no working solution as source attachment could be found.
+		// But maybe there is a workaround for this problem.
+		// https://stackoverflow.com/questions/1268817/create-new-object-from-a-string-in-java
+		//Class cl = Class.forName(//className);
+		//Class<?> cl = Class.forName("mumlarduinopipelineautomatisation.pipeline.parts.steps.functions." + className);
+		//Constructor<?> con = cl.getConstructor(Map.class);
+		//PipelineStep InterpretedStep = (PipelineStep) con.newInstance(parameters);
+		
+		// So this time a switch case usage is better to read than a long sequence of if(...){...}else ...
 		// Class names have to be written in as Strings, because [class' name].class.getSimpleName() is for neither as field value nor as case entry allowed.
 		// Attempts like case TerminalCommand.class.getName() aren't accepted either.
 		
