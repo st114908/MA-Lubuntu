@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ArduinoCLIUtilizer
 Bundle-SymbolicName: ArduinoCLIUtilizer;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: arduinocliutilizer.Activator
+Bundle-Activator: de.ust.arduinocliutilizer.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -13,7 +13,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: snakeyaml-2.1.jar,
  .
-Export-Package: arduinocliutilizer.paths,
- arduinocliutilizer.worksteps.common,
- arduinocliutilizer.worksteps.exceptions,
- arduinocliutilizer.worksteps.functions
+Export-Package: de.ust.arduinocliutilizer.configgenerator,
+ de.ust.arduinocliutilizer.paths,
+ de.ust.arduinocliutilizer.worksteps.common,
+ de.ust.arduinocliutilizer.worksteps.exceptions,
+ de.ust.arduinocliutilizer.worksteps.functions

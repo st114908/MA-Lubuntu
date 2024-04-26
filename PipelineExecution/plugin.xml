@@ -4,7 +4,7 @@
 	<extension point="org.eclipse.ui.exportWizards">
 		<wizard
 			category="org.muml.core.export"
-            class="pipelineexecution.ui.exports.PipeLineExecutionAsExport"
+            class="de.ust.pipelineexecution.ui.exports.PipeLineExecutionAsExport"
             id="org.muml.container.transformation.ui.PipeLineExecutionAsExport"
             name="Execute pipeline">
 		</wizard>

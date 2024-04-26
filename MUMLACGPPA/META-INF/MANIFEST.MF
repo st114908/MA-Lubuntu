@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MUMLACGPPA
 Bundle-SymbolicName: MUMLACGPPA;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: mumlacgppa.Activator
+Bundle-Activator: de.ust.mumlacgppa.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -15,10 +15,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: snakeyaml-2.2.jar,
  .
-Export-Package: mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration,
- mumlacgppa.pipeline.parts.exceptions,
- mumlacgppa.pipeline.parts.steps,
- mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli,
- mumlacgppa.pipeline.parts.storage,
- mumlacgppa.pipeline.paths,
- mumlacgppa.pipeline.reader
+Export-Package: de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration,
+ de.ust.mumlacgppa.pipeline.parts.exceptions,
+ de.ust.mumlacgppa.pipeline.parts.steps,
+ de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli,
+ de.ust.mumlacgppa.pipeline.parts.storage,
+ de.ust.mumlacgppa.pipeline.paths,
+ de.ust.mumlacgppa.pipeline.reader

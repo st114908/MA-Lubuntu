@@ -21,14 +21,14 @@
          </menu>
          <action
                label="Install zipped arduino library"
-               class="arduinocliutilizer.popup.actions.InstallZippedArduinoLibraryAction"
+               class="de.ust.arduinocliutilizer.popup.actions.InstallZippedArduinoLibraryAction"
                menubarPath="ArduinoCLIUtilizer.menuInstallZippedArduinoLibrary/groupInstallZippedArduinoLibrary"
                enablesFor="1"
                id="ArduinoCLIUtilizer.InstallZippedArduinoLibraryAction">
          </action>
          <action
                label="Generate ArduinoCLIUtilizer config file"
-               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               class="de.ust.arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
                menubarPath="ArduinoCLIUtilizer.menuInstallZippedArduinoLibrary/groupInstallZippedArduinoLibrary"
                enablesFor="1"
                id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
@@ -49,21 +49,21 @@
             </separator>
          </menu>
          <action
-               class="arduinocliutilizer.popup.actions.VerifyArduinoProjectAction"
+               class="de.ust.arduinocliutilizer.popup.actions.VerifyArduinoProjectAction"
                enablesFor="1"
                id="ArduinoCLIUtilizer.VerifyArduinoProjectAction"
                label="Verify Arduino project"
                menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload">
          </action>
          <action
-               class="arduinocliutilizer.popup.actions.CompileArduinoProjectAction"
+               class="de.ust.arduinocliutilizer.popup.actions.CompileArduinoProjectAction"
                enablesFor="1"
                id="ArduinoCLIUtilizer.CompileArduinoProjectAction"
                label="Compile Arduino project"
                menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload">
          </action>
          <action
-               class="arduinocliutilizer.popup.actions.CompileAndUploadArduinoProjectAction"
+               class="de.ust.arduinocliutilizer.popup.actions.CompileAndUploadArduinoProjectAction"
                enablesFor="1"
                id="ArduinoCLIUtilizer.CompileAndUploadArduinoProjectAction"
                label="Compile and Upload Arduino project"
@@ -71,13 +71,13 @@
          </action>
          <action
                label="Generate ArduinoCLIUtilizer config file"
-               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               class="de.ust.arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
                menubarPath="ArduinoCLIUtilizer.menuVerifyCompileUpload/groupVerifyCompileUpload"
                enablesFor="1"
                id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
          </action>
          <action
-               class="arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsAction"
+               class="de.ust.arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsAction"
                enablesFor="1"
                id="ArduinoCLIUtilizer.ListConnectedArduinoBoards"
                label="List connected Arduino boards"
@@ -100,20 +100,20 @@
          </menu>
          <action
                label="Upload .ino.hex file"
-               class="arduinocliutilizer.popup.actions.UploadInoHexFileAction"
+               class="de.ust.arduinocliutilizer.popup.actions.UploadInoHexFileAction"
                menubarPath="ArduinoCLIUtilizer.menuUploadInoHexFile/groupUploadInoHexFile"
                enablesFor="1"
                id="ArduinoCLIUtilizer.UploadInoHexFileAction">
          </action>
          <action
                label="Generate ArduinoCLIUtilizer config file"
-               class="arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
+               class="de.ust.arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction"
                menubarPath="ArduinoCLIUtilizer.menuUploadInoHexFile/groupUploadInoHexFile"
                enablesFor="1"
                id="ArduinoCLIUtilizer.GenerateArduinoCLIUtilizerConfigAction">
          </action>
          <action
-               class="arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsAction"
+               class="de.ust.arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsAction"
                enablesFor="1"
                id="ArduinoCLIUtilizer.ListConnectedArduinoBoards"
                label="List connected Arduino boards"

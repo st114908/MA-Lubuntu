@@ -22,24 +22,32 @@
          </menu>
          <action
                label="Run Pipeline"
-               class="mumlacgppa.popup.actions.RunPipelineAction"
+               class="de.ust.mumlacgppa.popup.actions.RunPipelineAction"
                menubarPath="MUMLACGPPA.menuPipeline/groupPipelineExecution"
                enablesFor="1"
                id="MUMLACGPPA.RunPipelineAction">
          </action>
          <action
                label="Generate default/example pipeline settings"
-               class="mumlacgppa.popup.actions.GenerateDefaultOrExamplePipelineSettingsAction"
+               class="de.ust.mumlacgppa.popup.actions.GenerateDefaultOrExamplePipelineSettingsAction"
                menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
                enablesFor="1"
                id="MUMLACGPPA.GenerateDefaultOrExamplePipelineSettingsAction">
          </action>
          <action
                label="Generate all pipeline step example settings"
-               class="mumlacgppa.popup.actions.GenerateAllPipelineStepExamplesAction"
+               class="de.ust.mumlacgppa.popup.actions.GenerateAllPipelineStepExamplesAction"
                menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
                enablesFor="1"
                id="MUMLACGPPA.GenerateAllPipelineStepExamplesAction">
+         </action>
+         
+         <action
+               label="Generate ArduinoCLIUtilizer config file"
+               class="de.ust.mumlacgppa.popup.actions.CallArduinoCLIUtilizerConfigGenerationAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.CallArduinoCLIUtilizerConfigGenerationAction">
          </action>
       </objectContribution>
    </extension>
