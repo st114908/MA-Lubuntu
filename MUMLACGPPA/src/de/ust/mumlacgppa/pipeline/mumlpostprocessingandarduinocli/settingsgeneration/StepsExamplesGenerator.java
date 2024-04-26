@@ -22,6 +22,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
@@ -84,6 +85,8 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 		FileWriter myWriter = new FileWriter(completeExamplesFilePath.toFile());
 		myWriter.write("These are all the steps, each represented by one example.\n\n\n");
 
+		myWriter.write(exampleSegment(yaml, CopyFolder.nameFlag, CopyFolder.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, DeleteFolder.nameFlag, DeleteFolder.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, ContainerTransformation.nameFlag, ContainerTransformation.generateDefaultOrExampleValues()));
