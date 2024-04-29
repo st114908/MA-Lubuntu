@@ -13,7 +13,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: snakeyaml-2.1.jar,
  .
-Export-Package: de.ust.arduinocliutilizer.configgenerator,
+Export-Package: de.ust.arduinocliutilizer.popup.actions,
  de.ust.arduinocliutilizer.paths,
  de.ust.arduinocliutilizer.worksteps.common,
  de.ust.arduinocliutilizer.worksteps.exceptions,

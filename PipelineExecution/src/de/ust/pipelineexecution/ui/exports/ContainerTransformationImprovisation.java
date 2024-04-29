@@ -5,8 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
@@ -41,16 +45,14 @@ class ContainerTransformationImprovisation{
 		this.step = step;
 	}
 	
-	public void performContainerTransformation(IProgressMonitor progressMonitor, EditingDomain editingDomain)
+	public void performContainerTransformation(IProject targetProject, IProgressMonitor progressMonitor, EditingDomain editingDomain)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
 		step.setContentOfOutput("ifSuccessful", false);
-		
-		Path referenceFolderForURIPathGeneration = ProjectFolderPathStorage.projectFolderPath.getParent();
-		Path muml_containerFolderPath = step.getResolvedPathContentOfInput("muml_containerFileDestination").getParent();
-		Path subPathForPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(muml_containerFolderPath);
-		
-		final URI destinationContainerTransformationURI = URI.createPlatformResourceURI(subPathForPlatformRessourseURI.toString(), true);
-		Path destinationContainerTransformationPath = Paths.get( muml_containerFolderPath.toString() );
+
+		final SystemAllocation systemAllocation = (SystemAllocation) sourceElementsSystemAllocation[0];
+		AdapterFactoryEditingDomain.getEditingDomainFor(systemAllocation);
+
+		Path destinationContainerTransformationPath = step.getResolvedPathContentOfInput("muml_containerFileDestination").getParent();
 
 		if(! Files.isDirectory(destinationContainerTransformationPath) ){
 			try {
@@ -60,6 +62,26 @@ class ContainerTransformationImprovisation{
 				Activator.getDefault().getLog().log(status);
 			}
 		}
+		
+		// Necessary, because else there would be 
+		// org.eclipse.emf.ecore.resource.Resource$IOWrappedException: A resource already exists on disk
+		// error if the folder got deleted in a previous step. Eclipse has misleading error messages in such cases.
+		try {
+			targetProject.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		Path referenceFolderForURIPathGeneration = ProjectFolderPathStorage.projectFolderPath.getParent();
+		Path subPathForPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(destinationContainerTransformationPath);
+		//final URI destinationContainerTransformationURI = URI.createPlatformResourceURI(subPathForPlatformRessourseURI.toString(), true);
+		final URI destinationContainerTransformationURI = URI.createPlatformResourceURI("/" + subPathForPlatformRessourseURI.toString(), true);
+		System.out.println("!!!!");
+		System.out.println("subPathForPlatformRessourseURI");
+		System.out.println("/" + subPathForPlatformRessourseURI);
+		System.out.println("destinationContainerTransformationURI");
+		System.out.println(destinationContainerTransformationURI.toString());
 
 		MiddlewareOption selectedMiddleware;
 		if(step.getContentOfInput("middlewareOption").getContent().equals("MQTT_I2C_CONFIG")){
@@ -69,10 +91,6 @@ class ContainerTransformationImprovisation{
 			selectedMiddleware = MiddlewareOption.DDS_CONFIG;
 		}
 		
-		
-		final SystemAllocation systemAllocation = (SystemAllocation) sourceElementsSystemAllocation[0];
-		AdapterFactoryEditingDomain.getEditingDomainFor(systemAllocation);
-
 		Job containerJob = new ContainerGenerationJob(systemAllocation, destinationContainerTransformationURI, editingDomain, selectedMiddleware);
 		containerJob.schedule();
 
@@ -97,6 +115,8 @@ class ContainerTransformationImprovisation{
 			Activator.getDefault().getLog().log(status);
 		} 
 	
+		System.out.println("Container transformation done.");
+		
 		// Handling of existing old MUML_Container.muml_container via deletion of the old and moving/renaming of the new one.
 		Path muml_containerPath = destinationContainerTransformationPath.resolve("MUML_Container.muml_container");
 		Path muml_container2Path = destinationContainerTransformationPath.resolve("MUML_Container2.muml_container");

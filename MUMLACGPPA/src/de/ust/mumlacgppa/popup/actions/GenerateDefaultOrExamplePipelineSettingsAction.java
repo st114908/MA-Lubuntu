@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration.PipelineSettingsGenerator;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli.PipelineSettingsGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectActionDelegate {
@@ -48,8 +48,11 @@ public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectAc
 						shell,
 						"MUML Arduino Code Generation and Post Processing Automatisation",
 						"The file with the default/example pipeline settings has been generated at"
-						+ generator.getCompleteSettingsFilePath() + "."
-						);
+						+ generator.getCompleteSettingsFilePath() + ".\n\n"
+						+ "Please replace the DummySerial* values with the serial numbers of the board you are using.\n"
+						+ "You can list them this way:\n"
+						+ "(Right click on a .muml file)/\n"
+						+ "\"MUMLACGPPA\"/ \"List connected Arduino boards\"");
 				}
 				else{
 					MessageDialog.openInformation(

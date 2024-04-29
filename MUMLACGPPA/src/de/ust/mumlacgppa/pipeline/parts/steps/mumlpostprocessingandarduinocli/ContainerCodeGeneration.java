@@ -46,7 +46,7 @@ public class ContainerCodeGeneration extends PipelineStep {
     	// As per tutorial: platform:/resource/[Project]/container-models,
 		// so only the folder within the project will set and
 		// internally platform:/resource/[Project]/ will be appended in front of it. 
-		ins.add("arduino_containersDestinationFolder");
+		ins.add("arduinoContainersDestinationFolder");
 		
 		// The Overwrite option shown by the export wizard doesn't work. 
 		
@@ -65,7 +65,7 @@ public class ContainerCodeGeneration extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("muml_containerSourceFile", "direct container-models/MUML_Container.muml_container");
-		ins.put("arduino_containersDestinationFolder", "direct arduino-containers");
+		ins.put("arduinoContainersDestinationFolder", "direct arduino-containers");
 		exampleSettings.put(inFlag, ins);
 		
 		// Out:

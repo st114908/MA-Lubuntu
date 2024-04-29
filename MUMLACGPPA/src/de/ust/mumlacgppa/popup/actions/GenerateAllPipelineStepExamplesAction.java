@@ -12,9 +12,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration.PipelineSettingsGenerator;
-import de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration.StepsExamplesGenerator;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli.PipelineSettingsGenerator;
+import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli.StepsExamplesGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class GenerateAllPipelineStepExamplesAction implements IObjectActionDelegate {

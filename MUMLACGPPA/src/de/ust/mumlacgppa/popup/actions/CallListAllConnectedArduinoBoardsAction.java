@@ -9,17 +9,19 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.ust.arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction;
+import de.ust.arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsAction;
+
+
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class CallArduinoCLIUtilizerConfigGenerationAction implements IObjectActionDelegate {
+public class CallListAllConnectedArduinoBoardsAction implements IObjectActionDelegate {
 
 	private Shell shell;
 	
 	/**
 	 * Constructor for Action1.
 	 */
-	public CallArduinoCLIUtilizerConfigGenerationAction() {
+	public CallListAllConnectedArduinoBoardsAction() {
 		super();
 	}
 
@@ -35,7 +37,7 @@ public class CallArduinoCLIUtilizerConfigGenerationAction implements IObjectActi
 	 */
 	public void run(IAction action) {
 		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
-		GenerateArduinoCLIUtilizerConfigAction actionCall = new GenerateArduinoCLIUtilizerConfigAction();
+		ListAllConnectedArduinoBoardsAction actionCall = new ListAllConnectedArduinoBoardsAction();
 		actionCall.run(action);
 		// Refresh Project
 		try {

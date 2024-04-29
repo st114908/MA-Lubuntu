@@ -156,7 +156,7 @@ public class PipelineSettingsReader implements Keywords{
 			try {
 				standaloneUsageDefs.get(currentKey).checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(e.getMessage() + " at " + currentKey + " in " + standaloneUsageDefsFlag + ".");
+				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentKey + " in \n" + standaloneUsageDefsFlag + ".");
 			}
 		}
 		
@@ -165,7 +165,7 @@ public class PipelineSettingsReader implements Keywords{
 			try{
 				currentStep.checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(e.getMessage() + " at " + currentStep + " in " + pipelineSequenceDefFlag + ".");
+				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentStep + " in \n" + pipelineSequenceDefFlag + ".");
 			}
 		}
 	}

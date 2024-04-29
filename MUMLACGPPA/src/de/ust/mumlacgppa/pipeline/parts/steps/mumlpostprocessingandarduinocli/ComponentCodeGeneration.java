@@ -54,7 +54,7 @@ public class ComponentCodeGeneration extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("roboCar_mumlSourceFile");
-		ins.add("arduino_containersDestinationFolder");
+		ins.add("arduinoContainersDestinationFolder");
 		requiredInsAndOuts.put(inFlag, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -70,7 +70,7 @@ public class ComponentCodeGeneration extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
-		ins.put("arduino_containersDestinationFolder", "direct arduino-containers");
+		ins.put("arduinoContainersDestinationFolder", "direct arduino-containers");
 		exampleSettings.put(inFlag, ins);
 
 		// Out:

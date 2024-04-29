@@ -1,4 +1,4 @@
-package de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration;
+package de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli;
 
 import java.io.File;
 import java.io.FileWriter;

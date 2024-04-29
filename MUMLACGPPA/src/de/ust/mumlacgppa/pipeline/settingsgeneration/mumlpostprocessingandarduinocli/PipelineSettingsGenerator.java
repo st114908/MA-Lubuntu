@@ -1,4 +1,4 @@
-package de.ust.mumlacgppa.pipeline.mumlpostprocessingandarduinocli.settingsgeneration;
+package de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,6 +26,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
@@ -56,6 +57,15 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 	public Path getCompleteSettingsFilePath() {
 		return completeSettingsFilePath;
+	}
+
+	private Map<String, Map<String, String>> generateDeleteFolder(String path) {
+		Map<String, Map<String, String>> deleteDirectoryArduinoContainers = DeleteFolder
+				.generateDefaultOrExampleValues();
+		Map<String, String> deleteDirectoryArduinoContainersSettingsIns = deleteDirectoryArduinoContainers.get(inFlag);
+		deleteDirectoryArduinoContainersSettingsIns.put("path", path);
+		deleteDirectoryArduinoContainers.put(inFlag, deleteDirectoryArduinoContainersSettingsIns);
+		return deleteDirectoryArduinoContainers;
 	}
 
 	public Map<String, Map<String, String>> generatePostProcessingStateChartValuesStepAndAdjustSettings(
@@ -140,119 +150,230 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		Yaml yaml = new Yaml(options);
 		FileWriter settingsWriter = new FileWriter(completeSettingsFilePath.toFile());
 
+		// Variable names and potentially their values:
+
+		String generatedCodeFolderNameVariableName = "generatedRawFilesFolderPath";
+		String generatedCodeFolderNameVariableValue = directValueFlag + " generated-files";
+		String muml_containerFilePathVariableName = "muml_containerFilePath";
+		String muml_containerFilePathVariableValue = generatedCodeFolderNameVariableValue + "/MUML_Container.muml_container";
+		String deployableCodeFolderNameVariableName = "deployableFilesFolderPath";
+		String deployableCodeFolderNameVariableValue = directValueFlag + " deployable-files";
+		String componentCodeFolderNameVariableName = "componentCodeFilesFolderPath";
+		String componentCodeFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/fastAndSlowCar_v2";
+		String apiMappingsFolderNameVariableName = "apiMappingsFolderPath";
+		String apiMappingsFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/APImappings";
+
+		String usedDriverBoardIdentifierFQBNVariableName = "usedDriverBoardIdentifierFQBN";
+		String usedDriverBoardIdentifierFQBNVariableValue = directValueFlag + " arduino:avr:mega";
+
+		String usedCoordinatorBoardIdentifierFQBNVariableName = "usedCoordinatorBoardIdentifierFQBN";
+		String usedCoordinatorBoardIdentifierFQBNVariableValue = directValueFlag + " arduino:avr:nano";
+
+		String fastCarCoordinatorECUName = "fastCarCoordinatorECU";
+		String fastCarCoordinatorECUFolderPathVariableName = fastCarCoordinatorECUName + "FolderPath";
+		String fastCarCoordinatorECUFolderPathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarCoordinatorECUName;
+		String fastCarCoordinatorECUINOFilePathVariableName = fastCarCoordinatorECUName + "INOFilePath";
+		String fastCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarCoordinatorECUName + "/" + fastCarCoordinatorECUName + ".ino";
+		String fastCarCoordinatorECUBoardSerialNumberVariableName = "fastCarCoordinatorECUBoardSerialNumber";
+		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueFlag + " DummySerialFastCarCoordinator";
+
+		String fastCarDriverECUName = "fastCarDriverECU";
+		String fastCarDriverECUFolderPathVariableName = fastCarDriverECUName + "FolderPath";
+		String fastCarDriverECUFolderPathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarDriverECUName;
+		String fastCarDriverECUINOFilePathVariableName = fastCarDriverECUName + "INOFilePath";
+		String fastCarDriverECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarDriverECUName + "/" + fastCarDriverECUName + ".ino";
+		String fastCarDriverECUBoardSerialNumberVariableName = "fastCarDriverECUBoardSerialNumber";
+		String fastCarDriverECUBoardSerialNumberVariableValue = directValueFlag + " DummySerialFastCarDriver";
+
+		String slowCarCoordinatorECUName = "slowCarCoordinatorECU";
+		String slowCarCoordinatorECUFolderPathVariableName = slowCarCoordinatorECUName + "FolderPath";
+		String slowCarCoordinatorECUFolderPathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarCoordinatorECUName;
+		String slowCarCoordinatorECUINOFilePathVariableName = slowCarCoordinatorECUName + "INOFilePath";
+		String slowCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarCoordinatorECUName + "/" + slowCarCoordinatorECUName + ".ino";
+		String slowCarCoordinatorECUBoardSerialNumberVariableName = "slowCarCoordinatorECUBoardSerialNumber";
+		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueFlag + " DummySerialSlowCarCoordinator";
+
+		String slowCarDriverECUName = "slowCarDriverECU";
+		String slowCarDriverECUFolderPathVariableName = slowCarDriverECUName + "FolderPath";
+		String slowCarDriverECUFolderPathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarDriverECUName;
+		String slowCarDriverECUINOFilePathVariableName = slowCarDriverECUName + "INOFilePath";
+		String slowCarDriverECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarDriverECUName + "/" + slowCarDriverECUName + ".ino";
+		String slowCarDriverECUBoardSerialNumberVariableName = "slowCarDriverECUBoardSerialNumber";
+		String slowCarDriverECUBoardSerialNumberVariableValue = directValueFlag + " DummySerialSlowCarDriver";
+
 		// Settings changes of the generated default/example settings here in
 		// order to make the written entries and sequences more readable.
 
-		Map<String, Map<String, String>> deleteDirectoryArduinoContainers = DeleteFolder
-				.generateDefaultOrExampleValues();
-		Map<String, String> deleteDirectoryArduinoContainersSettingsIns = deleteDirectoryArduinoContainers.get(inFlag);
-		deleteDirectoryArduinoContainersSettingsIns.put("path", fromValueFlag + " arduinoContainersFolderName");
-		deleteDirectoryArduinoContainers.put(inFlag, deleteDirectoryArduinoContainersSettingsIns);
+		Map<String, Map<String, String>> deleteDirectoryGeneratedFiles = generateDeleteFolder(
+				fromValueFlag + " " + generatedCodeFolderNameVariableName);
+		Map<String, Map<String, String>> deleteDirectoryDeployableFiles = generateDeleteFolder(
+				fromValueFlag + " " + deployableCodeFolderNameVariableName);
 
+		Map<String, Map<String, String>> containerTransformationSettings = ContainerTransformation
+				.generateDefaultOrExampleValues();
+		Map<String, String> containerTransformationSettingsIns = containerTransformationSettings.get(inFlag);
+		containerTransformationSettingsIns.put("muml_containerFileDestination",
+				fromValueFlag + " " + muml_containerFilePathVariableName);
+		containerTransformationSettings.put(inFlag, containerTransformationSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortContainerTransformation = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
 				directValueFlag + " " + ContainerTransformation.nameFlag + " has failed!");
+
+		Map<String, Map<String, String>> containerCodeGenerationSettings = ContainerCodeGeneration
+				.generateDefaultOrExampleValues();
+		Map<String, String> containerCodeGenerationSettingsIns = containerCodeGenerationSettings.get(inFlag);
+		containerCodeGenerationSettingsIns.put("muml_containerSourceFile",
+				fromValueFlag + " " + muml_containerFilePathVariableName);
+		containerCodeGenerationSettingsIns.put("arduinoContainersDestinationFolder",
+				fromValueFlag + " " + generatedCodeFolderNameVariableName);
+		containerCodeGenerationSettings.put(inFlag, containerCodeGenerationSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortContainerCodeGeneration = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
 				directValueFlag + " " + ContainerCodeGeneration.nameFlag + " has failed!");
-		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortSettingsComponentCode = generateOnlyContinueIfFulfilledElseAbortSettings(
+
+		Map<String, Map<String, String>> componentCodeGenerationSettings = ComponentCodeGeneration
+				.generateDefaultOrExampleValues();
+		Map<String, String> componentCodeGenerationSettingsIns = componentCodeGenerationSettings.get(inFlag);
+		componentCodeGenerationSettingsIns.put("arduinoContainersDestinationFolder",
+				fromValueFlag + " " + generatedCodeFolderNameVariableName);
+		componentCodeGenerationSettings.put(inFlag, componentCodeGenerationSettingsIns);
+		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortComponentCode = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
 				directValueFlag + " " + ComponentCodeGeneration.nameFlag + " has failed!");
+
+		Map<String, Map<String, String>> copyFolderSettings = CopyFolder.generateDefaultOrExampleValues();
+		Map<String, String> copyFolderSettingsIns = copyFolderSettings.get(inFlag);
+		copyFolderSettingsIns.put("sourcePath", fromValueFlag + " " + generatedCodeFolderNameVariableName);
+		copyFolderSettingsIns.put("destinationPath", fromValueFlag + " " + deployableCodeFolderNameVariableName);
+		copyFolderSettings.put(inFlag, copyFolderSettingsIns);
+		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCopyFolder = generateOnlyContinueIfFulfilledElseAbortSettings(
+				fromValueFlag + " ifSuccessful",
+				directValueFlag + " " + CopyFolder.nameFlag + " has failed!");
+
+		Map<String, Map<String, String>> postProcessingStepsUntilConfigSettings = PostProcessingStepsUntilConfig
+				.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingStepsUntilConfigSettingsIns = postProcessingStepsUntilConfigSettings
+				.get(inFlag);
+		postProcessingStepsUntilConfigSettingsIns.put("arduinoContainersPath",
+				fromValueFlag + " " + deployableCodeFolderNameVariableName);
+		postProcessingStepsUntilConfigSettingsIns.put("componentCodePath",
+				fromValueFlag + " " + componentCodeFolderNameVariableName );
+		postProcessingStepsUntilConfigSettings.put(inFlag, postProcessingStepsUntilConfigSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
 				directValueFlag + " " + PostProcessingStepsUntilConfig.nameFlag + " has failed!");
 
 		Map<String, Map<String, String>> postProcessingStateChartValuesFastDriver = generatePostProcessingStateChartValuesStepAndAdjustSettings(
-				fromValueFlag + " arduinoContainersFolderName", fromValueFlag + " fastCarDriverECUFolderName");
+				fromValueFlag + " " + deployableCodeFolderNameVariableName,
+				directValueFlag + " " + fastCarDriverECUName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + PostProcessingStateChartValues.nameFlag + " for FastCarDriver has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + PostProcessingStateChartValues.nameFlag
+						+ " for " + fastCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> postProcessingStateChartValuesSlowDriver = generatePostProcessingStateChartValuesStepAndAdjustSettings(
-				fromValueFlag + " arduinoContainersFolderName", fromValueFlag + " slowCarDriverECUFolderName");
+				fromValueFlag + " " + deployableCodeFolderNameVariableName,
+				directValueFlag + " " + slowCarDriverECUName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + PostProcessingStateChartValues.nameFlag + " for SlowCarDriver has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + PostProcessingStateChartValues.nameFlag
+						+ " for " + slowCarDriverECUName + " has failed!");
 
+
+		Map<String, Map<String, String>> deleteFolderComponentCodeFolder = generateDeleteFolder(
+				fromValueFlag + " " + componentCodeFolderNameVariableName);
+		Map<String, Map<String, String>> deleteFolderAPImappings = generateDeleteFolder(
+				fromValueFlag + " " + apiMappingsFolderNameVariableName);
+
+		
 		Map<String, Map<String, String>> compileSettingsFastCoordinator = generateCompileStepAndAdjustSettings(
-				fromValueFlag + " usedCoordinatorBoardIdentifierFQBN",
-				fromValueFlag + " fastCarCoordinatorECUINOFilePath");
+				fromValueFlag + " " + usedCoordinatorBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + fastCarCoordinatorECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCompileFastCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Compile.nameFlag + " for FastCarCoordinator has failed!");
+				directValueFlag + " " + Compile.nameFlag + " for " + fastCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> compileSettingsFastDriver = generateCompileStepAndAdjustSettings(
-				fromValueFlag + " usedDriverBoardIdentifierFQBN", fromValueFlag + " fastCarDriverECUINOFilePath");
+				fromValueFlag + " " + usedDriverBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + fastCarDriverECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCompileFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Compile.nameFlag + " for FastCarDriver has failed!");
+				directValueFlag + " " + Compile.nameFlag + " for " + fastCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> compileSettingsSlowCoordinator = generateCompileStepAndAdjustSettings(
-				fromValueFlag + " usedCoordinatorBoardIdentifierFQBN",
-				fromValueFlag + " slowCarCoordinatorECUINOFilePath");
+				fromValueFlag + " " + usedCoordinatorBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + slowCarCoordinatorECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCompileSlowCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Compile.nameFlag + " for SlowCarCoordinator has failed!");
+				directValueFlag + " " + Compile.nameFlag + " for " + slowCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> compileSettingsSlowDriver = generateCompileStepAndAdjustSettings(
-				fromValueFlag + " usedDriverBoardIdentifierFQBN", fromValueFlag + " slowCarDriverECUINOFilePath");
+				fromValueFlag + " " + usedDriverBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + slowCarDriverECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCompileSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Compile.nameFlag + " for SlowCarDriver has failed!");
+				directValueFlag + " " + Compile.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsFastCoordinator = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromValueFlag + " fastCarCoordinatorECUBoardSerialNumber");
+				fromValueFlag + " " + fastCarCoordinatorECUBoardSerialNumberVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsFastCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for FastCarCoordinator has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for "
+						+ fastCarCoordinatorECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsFastCoordinator = generateUploadStepAndAdjustSettings(
 				fromValueFlag + " foundPortAddress", fromValueFlag + " usedCoordinatorBoardIdentifierFQBN",
 				fromValueFlag + " fastCarCoordinatorECUINOFilePath");
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadFastCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Upload.nameFlag + " for FastCarCoordinator has failed!");
+				directValueFlag + " " + Upload.nameFlag + " for " + fastCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsFastDriver = generateLookupBoardBySerialNumberStepAndAdjustSettings(
 				fromValueFlag + " fastCarDriverECUBoardSerialNumber");
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for FastCarDriver has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for "
+						+ fastCarDriverECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsFastDriver = generateUploadStepAndAdjustSettings(
-				fromValueFlag + " foundPortAddress", fromValueFlag + " usedDriverBoardIdentifierFQBN",
-				fromValueFlag + " fastCarDriverECUINOFilePath");
+				fromValueFlag + " foundPortAddress", fromValueFlag + " " + usedDriverBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + fastCarDriverECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Upload.nameFlag + " for FastCarDriver has failed!");
+				directValueFlag + " " + Upload.nameFlag + " for " + fastCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsSlowCoordinator = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromValueFlag + " slowCarCoordinatorECUBoardSerialNumber");
+				fromValueFlag + " " + slowCarCoordinatorECUBoardSerialNumberVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsSlowCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for SlowCarCoordinator has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for "
+						+ slowCarCoordinatorECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsSlowCoordinator = generateUploadStepAndAdjustSettings(
 				fromValueFlag + " foundPortAddress", fromValueFlag + " usedCoordinatorBoardIdentifierFQBN",
-				fromValueFlag + " slowCarCoordinatorECUINOFilePath");
+				fromValueFlag + " " + slowCarCoordinatorECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadSlowCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Upload.nameFlag + " for SlowCarCoordinator has failed!");
+				directValueFlag + " " + Upload.nameFlag + " for " + slowCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsSlowDriver = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromValueFlag + " slowCarDriverECUBoardSerialNumber");
+				fromValueFlag + " " + slowCarDriverECUBoardSerialNumberVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for SlowCarDriver has failed!");
+				fromValueFlag + " ifSuccessful", directValueFlag + " " + LookupBoardBySerialNumber.nameFlag + " for "
+						+ slowCarDriverECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsSlowDriver = generateUploadStepAndAdjustSettings(
-				fromValueFlag + " foundPortAddress", fromValueFlag + " usedDriverBoardIdentifierFQBN",
-				fromValueFlag + " slowCarDriverECUINOFilePath");
+				fromValueFlag + " foundPortAddress", fromValueFlag + " " + usedDriverBoardIdentifierFQBNVariableName,
+				fromValueFlag + " " + slowCarDriverECUINOFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromValueFlag + " ifSuccessful",
-				directValueFlag + " " + Upload.nameFlag + " for SlowCarDriver has failed!");
+				directValueFlag + " " + Upload.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> popupWindowMessageFinishedPipeline = PopupWindowMessage
 				.generateDefaultOrExampleValues();
 		Map<String, String> popupWindowMessageFinishedPipelineSettingsIns = popupWindowMessageFinishedPipeline
 				.get(inFlag);
-		popupWindowMessageFinishedPipelineSettingsIns.put("message", directValueFlag + " Pipeline execution completed!");
+		popupWindowMessageFinishedPipelineSettingsIns.put("message",
+				directValueFlag + " Pipeline execution completed!");
 		popupWindowMessageFinishedPipeline.put(inFlag, popupWindowMessageFinishedPipelineSettingsIns);
 
 		// Now the pipeline settings and sequence itself.
@@ -260,34 +381,43 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		// Use default values and generate the config file with default values.
 		Map<String, String> exampleVariableDefs = new LinkedHashMap<String, String>();
-		exampleVariableDefs.put("ExampleNumberVariableName", "direct 12");
-		exampleVariableDefs.put("ExampleStringVariableName", "direct ExampleString");
-		exampleVariableDefs.put("ExampleBooleanVariableName", "direct true");
+		exampleVariableDefs.put("ExampleNumberVariableName", directValueFlag + " 12");
+		exampleVariableDefs.put("ExampleStringVariableName", directValueFlag + " ExampleString");
+		exampleVariableDefs.put("ExampleBooleanVariableName", directValueFlag + " true");
 
-		exampleVariableDefs.put("arduinoContainersFolderName", "direct arduino-containers");
+		exampleVariableDefs.put(generatedCodeFolderNameVariableName, generatedCodeFolderNameVariableValue);
+		exampleVariableDefs.put(muml_containerFilePathVariableName, muml_containerFilePathVariableValue);
+		exampleVariableDefs.put(componentCodeFolderNameVariableName, componentCodeFolderNameVariableValue);
+		exampleVariableDefs.put(apiMappingsFolderNameVariableName, apiMappingsFolderNameVariableValue);
+		exampleVariableDefs.put(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue);
 
-		exampleVariableDefs.put("usedDriverBoardIdentifierFQBN", "direct arduino:avr:mega");
-		exampleVariableDefs.put("usedCoordinatorBoardIdentifierFQBN", "direct arduino:avr:nano");
+		exampleVariableDefs.put(usedDriverBoardIdentifierFQBNVariableName, usedDriverBoardIdentifierFQBNVariableValue);
+		exampleVariableDefs.put(usedCoordinatorBoardIdentifierFQBNVariableName,
+				usedCoordinatorBoardIdentifierFQBNVariableValue);
 
-		exampleVariableDefs.put("fastCarCoordinatorECUFolderName", "direct fastCarCoordinatorECU");
-		exampleVariableDefs.put("fastCarCoordinatorECUINOFilePath",
-				"direct arduino-containers/fastCarCoordinatorECU/fastCarCoordinatorECU.ino");
-		exampleVariableDefs.put("fastCarCoordinatorECUBoardSerialNumber", "direct DummySerialFastCarCoordinator");
+		exampleVariableDefs.put(fastCarCoordinatorECUFolderPathVariableName,
+				fastCarCoordinatorECUFolderPathVariableValue);
+		exampleVariableDefs.put(fastCarCoordinatorECUINOFilePathVariableName,
+				fastCarCoordinatorECUINOFilePathVariableValue);
+		exampleVariableDefs.put(fastCarCoordinatorECUBoardSerialNumberVariableName,
+				fastCarCoordinatorECUBoardSerialNumberVariableValue);
 
-		exampleVariableDefs.put("fastCarDriverECUFolderName", "direct fastCarDriverECU");
-		exampleVariableDefs.put("fastCarDriverECUINOFilePath",
-				"direct arduino-containers/fastCarDriverECU/fastCarDriverECU.ino");
-		exampleVariableDefs.put("fastCarDriverECUBoardSerialNumber", "direct DummySerialFastCarDriver");
+		exampleVariableDefs.put(fastCarDriverECUFolderPathVariableName, fastCarDriverECUFolderPathVariableValue);
+		exampleVariableDefs.put(fastCarDriverECUINOFilePathVariableName, fastCarDriverECUINOFilePathVariableValue);
+		exampleVariableDefs.put(fastCarDriverECUBoardSerialNumberVariableName,
+				fastCarDriverECUBoardSerialNumberVariableValue);
 
-		exampleVariableDefs.put("slowCarCoordinatorECUFolderName", "direct slowCarCoordinatorECU");
-		exampleVariableDefs.put("slowCarCoordinatorECUINOFilePath",
-				"direct arduino-containers/slowCarCoordinatorECU/slowCarCoordinatorECU.ino");
-		exampleVariableDefs.put("slowCarCoordinatorECUBoardSerialNumber", "direct DummySerialSlowCarCoordinator");
+		exampleVariableDefs.put(slowCarCoordinatorECUFolderPathVariableName,
+				slowCarCoordinatorECUFolderPathVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUINOFilePathVariableName,
+				slowCarCoordinatorECUINOFilePathVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUBoardSerialNumberVariableName,
+				slowCarCoordinatorECUBoardSerialNumberVariableValue);
 
-		exampleVariableDefs.put("slowCarDriverECUFolderName", "direct slowCarDriverECU");
-		exampleVariableDefs.put("slowCarDriverECUINOFilePath",
-				"direct arduino-containers/slowCarDriverECU/slowCarDriverECU.ino");
-		exampleVariableDefs.put("slowCarDriverECUBoardSerialNumber", "direct DummySerialSlowCarDriver");
+		exampleVariableDefs.put(slowCarDriverECUFolderPathVariableName, slowCarDriverECUFolderPathVariableValue);
+		exampleVariableDefs.put(slowCarDriverECUINOFilePathVariableName, slowCarDriverECUINOFilePathVariableValue);
+		exampleVariableDefs.put(slowCarDriverECUBoardSerialNumberVariableName,
+				slowCarDriverECUBoardSerialNumberVariableValue);
 
 		mapForPipelineSettings.put(variableDefsFlag, exampleVariableDefs);
 
@@ -315,28 +445,36 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		ArrayList<Object> defaultPipelineSequenceDefs = new ArrayList<Object>();
 
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueFlag + " " + DeleteFolder.nameFlag,
-				deleteDirectoryArduinoContainers));
+				deleteDirectoryDeployableFiles));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueFlag + " " + DeleteFolder.nameFlag,
+				deleteDirectoryGeneratedFiles));
 
-		defaultPipelineSequenceDefs
-				.add(fromValueFlag + " " + standaloneUsageDefsFlag + ": " + ContainerTransformation.nameFlag);
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueFlag + " " + ContainerTransformation.nameFlag, containerTransformationSettings));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerTransformation));
 
-		defaultPipelineSequenceDefs
-				.add(fromValueFlag + " " + standaloneUsageDefsFlag + ": " + ContainerCodeGeneration.nameFlag);
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueFlag + " " + ContainerCodeGeneration.nameFlag, containerCodeGenerationSettings));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerCodeGeneration));
 
-		defaultPipelineSequenceDefs
-				.add(fromValueFlag + " " + standaloneUsageDefsFlag + ": " + ComponentCodeGeneration.nameFlag);
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueFlag + " " + ComponentCodeGeneration.nameFlag, componentCodeGenerationSettings));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortSettingsComponentCode));
+						onlyContinueIfFulfilledElseAbortComponentCode));
 
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueFlag + " " + CopyFolder.nameFlag, copyFolderSettings));
 		defaultPipelineSequenceDefs
-				.add(fromValueFlag + " " + standaloneUsageDefsFlag + ": " + PostProcessingStepsUntilConfig.nameFlag);
+				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
+						onlyContinueIfFulfilledElseAbortCopyFolder));
+		
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueFlag + " " + PostProcessingStepsUntilConfig.nameFlag, postProcessingStepsUntilConfigSettings));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));
@@ -355,6 +493,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				.add(pipelineSegmentHelper(yaml, directValueFlag + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesSlowDriver));
 
+		defaultPipelineSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueFlag + " " + DeleteFolder.nameFlag, deleteFolderAPImappings));
+		defaultPipelineSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueFlag + " " + DeleteFolder.nameFlag, deleteFolderComponentCodeFolder));
+		
 		defaultPipelineSequenceDefs.add(
 				pipelineSegmentHelper(yaml, directValueFlag + " " + Compile.nameFlag, compileSettingsFastCoordinator));
 		defaultPipelineSequenceDefs
@@ -461,4 +604,5 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		return true;
 	}
+
 }

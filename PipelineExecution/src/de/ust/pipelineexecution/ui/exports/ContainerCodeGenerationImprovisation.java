@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.muml.arduino.adapter.container.ui.common.GenerateAll;
@@ -42,20 +43,30 @@ class ContainerCodeGenerationImprovisation{
 		Path subPathForSourceContainerPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(sourceContainerFilePath);
 		final URI sourceContainerURI = URI.createPlatformResourceURI(subPathForSourceContainerPlatformRessourseURI.toString(), true);
 		
-		Path arduinoContainersDestinationFolder = step.getResolvedPathContentOfInput("arduino_containersDestinationFolder");
-		Path subPathArduinoContainersDestinationFolder = ProjectFolderPathStorage.projectFolderPath.relativize(arduinoContainersDestinationFolder);
-		IFolder destinationFolder = targetProject.getFolder(subPathArduinoContainersDestinationFolder.toString());
-		final IContainer arduinoCodeDestination = destinationFolder;
-		final Path arduinoCodeDestinationPath = Paths.get( arduinoCodeDestination.getRawLocation().toString() );
+		Path arduinoContainersDestinationFolderPath = step.getResolvedPathContentOfInput("arduinoContainersDestinationFolder");
 		
-		if(! Files.isDirectory(arduinoCodeDestinationPath) ){
+		if(! Files.isDirectory(arduinoContainersDestinationFolderPath) ){
 			try {
-				Files.createDirectories(arduinoCodeDestinationPath);
+				Files.createDirectories(arduinoContainersDestinationFolderPath);
 			} catch (IOException e) {
 				IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 				Activator.getDefault().getLog().log(status);
 			}
 		}
+
+		// Necessary, because else there would be 
+		// org.eclipse.emf.ecore.resource.Resource$IOWrappedException: A resource already exists on disk
+		// error if the folder got deleted in a previous step. Eclipse has misleading error messages in such cases.
+		try {
+			targetProject.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		Path subPathArduinoContainersDestinationFolder = ProjectFolderPathStorage.projectFolderPath.relativize(arduinoContainersDestinationFolderPath);
+		IFolder destinationFolder = targetProject.getFolder(subPathArduinoContainersDestinationFolder.toString());
+		final IContainer arduinoCodeDestination = destinationFolder;
 		
 		try {
 			GenerateAll generator = new GenerateAll(sourceContainerURI, arduinoCodeDestination, ((List<? extends Object>) new ArrayList<String>()) );

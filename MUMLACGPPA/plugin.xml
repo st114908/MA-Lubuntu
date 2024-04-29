@@ -19,6 +19,9 @@
             <separator
                   name="groupPipelineSettingsAndExamples">
             </separator>
+            <separator
+                  name="MUMLACGPPA.groupArduinoCLIUtilizerAccess">
+            </separator>
          </menu>
          <action
                label="Run Pipeline"
@@ -45,9 +48,16 @@
          <action
                label="Generate ArduinoCLIUtilizer config file"
                class="de.ust.mumlacgppa.popup.actions.CallArduinoCLIUtilizerConfigGenerationAction"
-               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               menubarPath="MUMLACGPPA.menuPipeline/groupArduinoCLIUtilizerAccess"
                enablesFor="1"
                id="MUMLACGPPA.CallArduinoCLIUtilizerConfigGenerationAction">
+         </action>
+         <action
+               label="List connected Arduino boards"
+               class="de.ust.mumlacgppa.popup.actions.CallListAllConnectedArduinoBoardsAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupArduinoCLIUtilizerAccess"
+               enablesFor="1"
+               id="MUMLACGPPA.actioncall.CallListAllConnectedArduinoBoardsAction">
          </action>
       </objectContribution>
    </extension>

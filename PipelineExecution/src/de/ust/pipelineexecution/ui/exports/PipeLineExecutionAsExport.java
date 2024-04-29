@@ -37,6 +37,7 @@ import org.muml.core.export.wizard.AbstractFujabaExportWizard;
 import org.muml.pim.instance.ComponentInstanceConfiguration;
 import org.muml.psm.allocation.SystemAllocation;
 
+import de.ust.arduinocliutilizer.paths.DefaultConfigDirectoryAndFilePath;
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
@@ -67,6 +68,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 	private AbstractFujabaExportSourcePage sourceComponentInstancePage;
 	private Path completePipelineSettingsFilePath;
 	private boolean pipelineSettingsFileNotFound;
+	private boolean pipelineSettingsErrorDetected;
 
 	private PipelineSettingsReader PSRInstance;
 	private boolean containerTransformationToBePerformed;
@@ -107,14 +109,36 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 			return;
 		}
 		
+		Path completeConfigFilePath = projectPath.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_DIRECTORY_FOLDER_NAME)
+				.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_FILE_NAME);
+		if (! (Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) ) {
+			InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow(
+					"The ArduinoCLI settings file is missing!", "The ArduinoCLI settings file is missing!", 
+					"The ArduinoCLI settings file is missing.\n"
+					+ "So if you are using a stet that relies on the ArduinoCLIUtilizer project,\n"
+					+ "then you have to generate one this way:\n"
+					+ "(Right click on a .muml file)/\"MUMLACGPPA\"/\n"
+					+ "\"Generate ArduinoCLIUtilizer config file\""); 
+			addPage(arduinoCLISettingsMissingInfoWindow);
+		}
+		
 		try {
 			PSRInstance = new PipelineSettingsReader(
 					new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer(), completePipelineSettingsFilePath);
 			PSRInstance.validateOrder();
+			pipelineSettingsErrorDetected = false;
 		} catch (FileNotFoundException | StructureException | StepNotMatched
 				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException | FaultyDataException
 				| ParameterMismatchException e) {
-			exceptionFeedback(e, false);
+			pipelineSettingsErrorDetected = true;
+			InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow(
+					"Errors in the pipeline!", "Errors in the pipeline settings!", 
+					"The validation detected errors in the pipeline or while reading it.\n"
+					+ "This is the generated error message:\n"
+					+ e.getMessage()); 
+			addPage(arduinoCLISettingsMissingInfoWindow);
+			e.printStackTrace();
+			return;
 		}
 		// Search for some steps that require some preparations but
 		// neither allow that they get done right before they are needed
@@ -141,7 +165,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				// T3.6 and T3.7: Container Code Generation
 				containerCodeGenerationToBePerformed = true;
 				try {
-					generateFolderIfNecessary(currentStep.getResolvedPathContentOfInput("arduino_containersDestinationFolder").getParent());
+					generateFolderIfNecessary(currentStep.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
 				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
 					exceptionFeedback(e, false);
 				}
@@ -151,7 +175,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				sourceComponentInstancePage = generateSourceComponentInstancePage();
 				addPage(sourceComponentInstancePage);
 				try {
-					generateFolderIfNecessary(currentStep.getResolvedPathContentOfInput("arduino_containersDestinationFolder").getParent());
+					generateFolderIfNecessary(currentStep.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
 				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
 					exceptionFeedback(e, false);
 				}
@@ -226,7 +250,7 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 	public IFujabaExportOperation wizardCreateExportOperation() {
 		
 		// Do nothing if the settings file couldn't be found.
-		if(pipelineSettingsFileNotFound){
+		if(pipelineSettingsFileNotFound || pipelineSettingsErrorDetected){
 			return new AbstractFujabaExportOperation() {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {
@@ -256,6 +280,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {
 					for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+						System.out.println("Performing step: " + currentStep.getClass().getSimpleName());
+						System.out.println("Data: " + currentStep.toString());
 						try {
 							if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
 								// T3.6 and T3.7: Container Code Generation
@@ -286,11 +312,13 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {
 					for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+						System.out.println("Performing step: " + currentStep.getClass().getSimpleName());
+						System.out.println("Data: " + currentStep.toString());
 						try {
 							if (currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)) {
 								// T3.2: Deployment Configuration aka Container
 								// Transformation
-								doExecuteContainerTransformationPart(sourceElementsSystemAllocation,
+								doExecuteContainerTransformationPart(targetProject, sourceElementsSystemAllocation,
 										(ContainerTransformation) currentStep, progressMonitor);
 							} else if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
 								// T3.6 and T3.7: Container Code Generation
@@ -321,6 +349,8 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {
 					for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+						System.out.println("Performing step: " + currentStep.getClass().getSimpleName());
+						System.out.println("Data: " + currentStep.toString());
 						try {
 							if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
 								// T3.6 and T3.7: Container Code Generation
@@ -361,11 +391,13 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {
 					for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+						System.out.println("Performing step: " + currentStep.getClass().getSimpleName());
+						System.out.println("Data: " + currentStep.toString());
 						try {
 							if (currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)) {
 								// T3.2: Deployment Configuration aka Container
 								// Transformation
-								doExecuteContainerTransformationPart(sourceElementsSystemAllocation,
+								doExecuteContainerTransformationPart(targetProject, sourceElementsSystemAllocation,
 										(ContainerTransformation) currentStep, progressMonitor);
 							} else if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
 								// T3.6 and T3.7: Container Code Generation
@@ -406,11 +438,11 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 		}
 	}
 
-	private void doExecuteContainerTransformationPart(final EObject[] sourceElementsSystemAllocation,
+	private void doExecuteContainerTransformationPart(final IProject targetProject, final EObject[] sourceElementsSystemAllocation,
 			ContainerTransformation step, IProgressMonitor progressMonitor) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
 		ContainerTransformationImprovisation ContainerTransformationHandlerInstance = new ContainerTransformationImprovisation(
 				sourceElementsSystemAllocation, step);
-		ContainerTransformationHandlerInstance.performContainerTransformation(progressMonitor, editingDomain);
+		ContainerTransformationHandlerInstance.performContainerTransformation(targetProject, progressMonitor, editingDomain);
 	}
 
 	private void doExecuteContainerCodeGeneration(final IProject targetProject, ContainerCodeGeneration step, IProgressMonitor progressMonitor) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {

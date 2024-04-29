@@ -226,12 +226,12 @@ public abstract class PipelineStep implements Keywords{
 	 */
 	public void checkForDetectableErrors() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
 		if(! (in.keySet()).equals(requiredInsAndOuts.get(inFlag)) ){
-			throw new ParameterMismatchException("Input parameter mismatch! Expected "+
-					requiredInsAndOuts.get(inFlag).toString() + ", got " + in.keySet().toString());
+			throw new ParameterMismatchException("Input parameter mismatch! Expected \n"+
+					requiredInsAndOuts.get(inFlag).toString() + ", got \n" + in.keySet().toString());
 		}
 		if(! (out.keySet()).equals(requiredInsAndOuts.get(outFlag)) ){
 			throw new ParameterMismatchException("Output parameter mismatch! Expected "+
-					requiredInsAndOuts.get(outFlag).toString() + ", got " + out.keySet().toString());
+					requiredInsAndOuts.get(outFlag).toString() + ", got \n" + out.keySet().toString());
 		}
 		
 		for(String currentKey:in.keySet()){
