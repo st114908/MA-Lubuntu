@@ -14,7 +14,7 @@ import de.ust.arduinocliutilizer.popup.actions.ListAllConnectedArduinoBoardsActi
 
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class CallListAllConnectedArduinoBoardsAction implements IObjectActionDelegate {
+public class CallListAllConnectedArduinoBoardsAction implements IObjectActionDelegate, SelectedFilePathAndContextFinder {
 
 	private Shell shell;
 	
@@ -36,12 +36,12 @@ public class CallListAllConnectedArduinoBoardsAction implements IObjectActionDel
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
 		ListAllConnectedArduinoBoardsAction actionCall = new ListAllConnectedArduinoBoardsAction();
 		actionCall.run(action);
 		// Refresh Project
 		try {
-			SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

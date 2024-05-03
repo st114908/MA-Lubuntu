@@ -60,11 +60,11 @@ public class DeleteFolder extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("path");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -75,12 +75,12 @@ public class DeleteFolder extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("path", "direct exampleFolderPath");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

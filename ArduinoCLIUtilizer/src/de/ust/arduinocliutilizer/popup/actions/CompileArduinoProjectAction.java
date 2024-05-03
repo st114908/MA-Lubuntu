@@ -40,8 +40,8 @@ public class CompileArduinoProjectAction implements IObjectActionDelegate, Selec
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
-		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
+		Path targetFilePath = getPathOfSelectedFile();
 		
 		try {
 			BoardAutoSelectionAndInstallation BoardAutoSelectionAndInstallationInstance = new BoardAutoSelectionAndInstallation();
@@ -90,7 +90,7 @@ public class CompileArduinoProjectAction implements IObjectActionDelegate, Selec
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

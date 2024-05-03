@@ -71,11 +71,11 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("arduinoContainersPath");
 		ins.add("componentCodePath");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -87,12 +87,12 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", "direct arduino-containers");
 		ins.put("componentCodePath", "direct arduino-containers/fastAndSlowCar_v2");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

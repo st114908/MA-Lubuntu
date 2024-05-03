@@ -34,11 +34,11 @@ public class OnlyContinueIfFulfilledElseAbort extends PipelineStep implements Ke
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("condition");
 		ins.add("message");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -50,7 +50,7 @@ public class OnlyContinueIfFulfilledElseAbort extends PipelineStep implements Ke
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("condition", "direct false");
 		ins.put("message", "direct Pipeline aborted!\nThe condition has been evaluated to false.");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		//Map<String, String> outs = new LinkedHashMap<String, String>();

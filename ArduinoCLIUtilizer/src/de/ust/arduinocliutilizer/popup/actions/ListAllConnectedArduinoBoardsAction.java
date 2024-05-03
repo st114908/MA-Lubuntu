@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Text;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class ListAllConnectedArduinoBoardsAction implements IObjectActionDelegate {
+public class ListAllConnectedArduinoBoardsAction implements IObjectActionDelegate, SelectedFilePathAndContextFinder {
 
 	private Shell shell;
 	
@@ -47,8 +47,8 @@ public class ListAllConnectedArduinoBoardsAction implements IObjectActionDelegat
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
-		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
+		Path targetFilePath = getPathOfSelectedFile();
 		try{
 			//Search board(s) this way, because this way the text is directly formated easy to read and to copy from.
 			ConnectedBoardsFinder ConnectedBoardsFinderInstance = new ConnectedBoardsFinder(targetFilePath);
@@ -112,7 +112,7 @@ public class ListAllConnectedArduinoBoardsAction implements IObjectActionDelegat
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

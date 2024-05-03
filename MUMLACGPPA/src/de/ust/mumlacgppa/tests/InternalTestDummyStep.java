@@ -24,12 +24,12 @@ class InternalTestDummyStep extends PipelineStep {
 		HashSet<String> ins = new HashSet<String>();
 		ins.add("input1");
 		ins.add("input2");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new HashSet<String>();
 		outs.add("output1");
 		outs.add("output2");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 	
 
@@ -53,7 +53,17 @@ class InternalTestDummyStep extends PipelineStep {
 		super(VariableHandlerInstance, yamlData);
 	}
 	
-	
+
+	public Map<String, String> getIn() {
+		return in;
+	}
+
+
+	public Map<String, String> getOut() {
+		return out;
+	}
+
+
 	@Override
 	public void execute(){
 		//throw new Exception("This test dummy is not supposed to be used outside of unit tests!");

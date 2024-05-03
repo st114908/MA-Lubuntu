@@ -68,11 +68,11 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		ins.add("fileName");
 		ins.add("targetStateChartValueName");
 		ins.add("valueToSet");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	// Map<String, Map<String, String>> for
@@ -87,12 +87,12 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		ins.put("fileName", "direct courseControlCourseControlComponentStateChart.c");
 		ins.put("targetStateChartValueName", "direct desiredVelocity");
 		ins.put("valueToSet", "direct 12");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

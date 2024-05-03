@@ -3,7 +3,6 @@ package de.ust.pipelineexecution.ui.exports;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -35,17 +34,14 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 class ContainerTransformationImprovisation{
-	private EObject[] sourceElementsSystemAllocation;
 	private ContainerTransformation step;
 	
-	public ContainerTransformationImprovisation(EObject[] sourceElementsSystemAllocation, ContainerTransformation step)
+	public ContainerTransformationImprovisation(ContainerTransformation step)
 			throws VariableNotDefinedException, StructureException{
-		// Because I didn't manage to get the resource selection working:
-		this.sourceElementsSystemAllocation = sourceElementsSystemAllocation;
 		this.step = step;
 	}
 	
-	public void performContainerTransformation(IProject targetProject, IProgressMonitor progressMonitor, EditingDomain editingDomain)
+	public void performContainerTransformation(IProject targetProject, EObject[] sourceElementsSystemAllocation, IProgressMonitor progressMonitor, EditingDomain editingDomain)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
 		step.setContentOfOutput("ifSuccessful", false);
 

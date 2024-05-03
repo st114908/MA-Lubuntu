@@ -46,12 +46,12 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("boardSerialNumber");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		outs.add("foundPortAddress");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -62,13 +62,13 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("boardSerialNumber", "direct 85935333337351A0B051");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
 		outs.put("foundPortAddress", "foundPortAddress");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 
 		return exampleSettings;
 	}

@@ -12,7 +12,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.ust.arduinocliutilizer.popup.actions.GenerateArduinoCLIUtilizerConfigAction;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class CallArduinoCLIUtilizerConfigGenerationAction implements IObjectActionDelegate {
+public class CallArduinoCLIUtilizerConfigGenerationAction implements IObjectActionDelegate, SelectedFilePathAndContextFinder {
 
 	private Shell shell;
 	
@@ -34,12 +34,12 @@ public class CallArduinoCLIUtilizerConfigGenerationAction implements IObjectActi
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
 		GenerateArduinoCLIUtilizerConfigAction actionCall = new GenerateArduinoCLIUtilizerConfigAction();
 		actionCall.run(action);
 		// Refresh Project
 		try {
-			SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+			getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

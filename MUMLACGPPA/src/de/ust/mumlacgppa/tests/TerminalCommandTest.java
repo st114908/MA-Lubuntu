@@ -51,10 +51,10 @@ public class TerminalCommandTest implements Keywords{
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException {
 		String testYamlTextCompleteDefinitionContent =
-				inFlag + ":\n"
+				inKeyword + ":\n"
 				+ "  terminalCommand: direct echo test\n"
 				+ "  exitCodeNumberForSuccessfulExecution: direct 0\n"
-				+ outFlag + ":\n"
+				+ outKeyword + ":\n"
 				+ "  ifSuccessful: ifSuccessful\n"
 				+ "  exitCode: exitCode\n"
 				+ "  normalFeedback: normalFeedback\n"

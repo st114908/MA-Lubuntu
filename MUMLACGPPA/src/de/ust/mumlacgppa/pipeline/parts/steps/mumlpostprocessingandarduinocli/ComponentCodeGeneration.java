@@ -55,11 +55,11 @@ public class ComponentCodeGeneration extends PipelineStep {
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("roboCar_mumlSourceFile");
 		ins.add("arduinoContainersDestinationFolder");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -71,12 +71,12 @@ public class ComponentCodeGeneration extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
 		ins.put("arduinoContainersDestinationFolder", "direct arduino-containers");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 
 		return exampleSettings;
 	}

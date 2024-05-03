@@ -16,7 +16,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExcept
 import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli.PipelineSettingsGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectActionDelegate {
+public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectActionDelegate, SelectedFilePathAndContextFinder {
 
 	private Shell shell;
 	
@@ -38,7 +38,7 @@ public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectAc
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
 		try {
 			PipelineSettingsGenerator generator = new PipelineSettingsGenerator();
 			try {
@@ -80,7 +80,7 @@ public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectAc
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

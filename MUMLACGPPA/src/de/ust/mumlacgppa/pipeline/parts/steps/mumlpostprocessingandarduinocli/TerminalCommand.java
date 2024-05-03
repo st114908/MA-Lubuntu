@@ -40,14 +40,14 @@ public class TerminalCommand extends PipelineStep {
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("terminalCommand");
 		ins.add("exitCodeNumberForSuccessfulExecution");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		outs.add("exitCode");
 		outs.add("normalFeedback");
 		outs.add("errorFeedback");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -59,7 +59,7 @@ public class TerminalCommand extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("terminalCommand", "direct echo example");
 		ins.put("exitCodeNumberForSuccessfulExecution", "direct 0");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
@@ -67,7 +67,7 @@ public class TerminalCommand extends PipelineStep {
 		outs.put("exitCode", "exitCode");
 		outs.put("normalFeedback", "normalFeedback");
 		outs.put("errorFeedback", "errorFeedback");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 
 		return exampleSettings;
 	}

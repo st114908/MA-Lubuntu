@@ -14,7 +14,7 @@ import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class UploadCall extends ACLIWorkstep implements SaveResponseInfo, FQBNStorageFileName{
+public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Upload step";
 	
@@ -46,7 +46,7 @@ public class UploadCall extends ACLIWorkstep implements SaveResponseInfo, FQBNSt
 			}
 		}
 		ReceivedFeedback = commandLineDoer.doShellCommand(uploadCommand);
-		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+		responseLocation = saveShellResponseInfo(
 			targetFilePath.getParent(), "UploadInfo.txt",
 			uploadCommand, ReceivedFeedback);
 		

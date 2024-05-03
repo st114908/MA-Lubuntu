@@ -41,11 +41,11 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 	 */
 	public void run(IAction action) {
 		try {
-			ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+			ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
 			ArduinoCLIUtilizerConfigGenerator generator = new ArduinoCLIUtilizerConfigGenerator();
 			String completeConfigFilePath = generator.getCompleteConfigFilePath().toString();
 			if(generator.checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
-				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 				MessageDialog.openInformation(
 						shell,
 						"ArduinoCLIUtilizer",
@@ -105,7 +105,7 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

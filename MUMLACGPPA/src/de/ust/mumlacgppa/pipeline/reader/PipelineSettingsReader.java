@@ -50,15 +50,15 @@ public class PipelineSettingsReader implements Keywords{
 		VariableHandlerInstance = new VariableHandler();
 		
 		// Variable definitions are directly given to the VariableHandler.
-		if( rawSettings.keySet().contains(variableDefsFlag) ){
+		if( rawSettings.keySet().contains(variableDefsKeyword) ){
 			// Map<String, String>  for Map<Variable, Entry>.
-			Map<String, String> rawVariableDefs = (Map<String, String>) rawSettings.get(variableDefsFlag);
+			Map<String, String> rawVariableDefs = (Map<String, String>) rawSettings.get(variableDefsKeyword);
 			for(String currentVariableKey:rawVariableDefs.keySet()){
 				String currentContentDeclaration = rawVariableDefs.get(currentVariableKey).trim();
-				if(!currentContentDeclaration.startsWith(directValueFlag + " ")){
+				if(!currentContentDeclaration.startsWith(directValueKeyword + " ")){
 					throw new StructureException("Structure error: \"direct \" before the content itself is missing in the content declaration for " + currentVariableKey);
 				}
-				String currentContent = currentContentDeclaration.replaceFirst( (directValueFlag + " "), "");
+				String currentContent = currentContentDeclaration.replaceFirst( (directValueKeyword + " "), "");
 				VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
 			}
 		}
@@ -67,9 +67,9 @@ public class PipelineSettingsReader implements Keywords{
 		
 		// Map<String, Map<String, Map<String, String>>> for
 		// Map<Step, Map<InOrOut, Map<ParameterOrOneOutput, SourceOrSaveTarget>>>
-		if( rawSettings.keySet().contains(standaloneUsageDefsFlag) ){
+		if( rawSettings.keySet().contains(standaloneUsageDefsKeyword) ){
 			Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = 
-					(Map<String, Map<String, Map<String, String>>>) rawSettings.get(standaloneUsageDefsFlag);
+					(Map<String, Map<String, Map<String, String>>>) rawSettings.get(standaloneUsageDefsKeyword);
 			for(String currentStepKey:rawStandaloneUsageDefs.keySet()){
 				String className = currentStepKey;
 				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
@@ -88,22 +88,22 @@ public class PipelineSettingsReader implements Keywords{
 		// or
 		//
 		// ArrayList<Map<"from:", NameOfReferencedStepFromStandaloneUsageDefsAsObject>>
-		if( rawSettings.keySet().contains(pipelineSequenceDefFlag) ){
+		if( rawSettings.keySet().contains(pipelineSequenceDefKeyword) ){
 			ArrayList<Map<String, Object>> rawPipelineDef = 
-					(ArrayList<Map<String, Object>>) rawSettings.get(pipelineSequenceDefFlag);
+					(ArrayList<Map<String, Object>>) rawSettings.get(pipelineSequenceDefKeyword);
 			for(Map<String, Object> currentPipelineStepDef:rawPipelineDef){
 				// There should be only one key: [direct/from] [stepName] ...
 				String currentPipelineStepKey = (String) currentPipelineStepDef.keySet().toArray()[0];
-				boolean loadFromStandaloneUsage = currentPipelineStepKey.contains(fromValueFlag); // from: ...
-				boolean directDefinitionUsage = currentPipelineStepKey.contains(directValueFlag); // direct: ...
+				boolean loadFromStandaloneUsage = currentPipelineStepKey.contains(fromKeyword); // from: ...
+				boolean directDefinitionUsage = currentPipelineStepKey.contains(directValueKeyword); // direct: ...
 				
 				if( loadFromStandaloneUsage && !directDefinitionUsage ){ // from: ...
-					pipelineSequence.add( standaloneUsageDefs.get( currentPipelineStepDef.get(fromValueFlag + " " + standaloneUsageDefsFlag) ) );
+					pipelineSequence.add( standaloneUsageDefs.get( currentPipelineStepDef.get(fromKeyword + " " + standaloneUsageDefsKeyword) ) );
 				}
 				else if(directDefinitionUsage && !loadFromStandaloneUsage){ // direct: ...
 					Map<String, Map<String, String>> rawStepDef = 
 							(Map<String, Map<String, String>>) currentPipelineStepDef.get(currentPipelineStepKey);
-					String className = currentPipelineStepKey.replace(directValueFlag, "").trim();
+					String className = currentPipelineStepKey.replace(directValueKeyword, "").trim();
 					PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
 							VariableHandlerInstance, className, rawStepDef);
 					pipelineSequence.add(InterpretedStep);
@@ -156,7 +156,7 @@ public class PipelineSettingsReader implements Keywords{
 			try {
 				standaloneUsageDefs.get(currentKey).checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentKey + " in \n" + standaloneUsageDefsFlag + ".");
+				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentKey + " in \n" + standaloneUsageDefsKeyword + ".");
 			}
 		}
 		
@@ -165,7 +165,7 @@ public class PipelineSettingsReader implements Keywords{
 			try{
 				currentStep.checkForDetectableErrors();
 			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentStep + " in \n" + pipelineSequenceDefFlag + ".");
+				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentStep + " in \n" + pipelineSequenceDefKeyword + ".");
 			}
 		}
 	}

@@ -14,7 +14,7 @@ import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileExce
 import de.ust.arduinocliutilizer.worksteps.installation.InstallCoreForBoard;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class FQBNAndCoresHandler extends ACLIWorkstep implements SaveResponseInfo{
+public class FQBNAndCoresHandler extends ACLIWorkstep{
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Core search";
 	
@@ -47,7 +47,7 @@ public class FQBNAndCoresHandler extends ACLIWorkstep implements SaveResponseInf
 		String searchCommand = "arduino-cli core search " + searchID + " --format yaml";
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
-		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+		responseLocation = saveShellResponseInfo(
 			parentPath, "CoreSearch.txt",
 			searchCommand, ReceivedFeedback);
 		if(ReceivedFeedback.getExitCode() != 0){

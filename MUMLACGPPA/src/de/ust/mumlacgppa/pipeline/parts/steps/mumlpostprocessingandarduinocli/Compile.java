@@ -33,6 +33,15 @@ public class Compile extends PipelineStep {
 		super(VariableHandlerInstance, readData);
 	}
 	
+
+	/**
+	 * @param yamlData
+	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
+	 */
+	public Compile(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+		super(VariableHandlerInstance, yamlData);
+	}
+
 	
 	/**
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
@@ -46,12 +55,12 @@ public class Compile extends PipelineStep {
 		ins.add("targetInoFile");
     	ins.add("saveCompiledFilesNearby");
     	//ins.add("directoryContainingInoFile");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
     	outs.add("resultMessage");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -64,27 +73,18 @@ public class Compile extends PipelineStep {
 		ins.put("boardTypeIdentifierFQBN", "direct arduino:avr:uno");
 		ins.put("targetInoFile", "direct arduino-containers/fastCarDriverECU/fastCarDriverECU.ino");
 		ins.put("saveCompiledFilesNearby", "direct true");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
 		outs.put("resultMessage", "resultMessage");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}
 	
 
-	/**
-	 * @param yamlData
-	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
-	 */
-	public Compile(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
-		super(VariableHandlerInstance, yamlData);
-	}
-
-	
 	/**
 	 * @see mumlarduinopipelineautomatisation.pipeline.parts.steps.common.PipelineStep#execute()
 	 */

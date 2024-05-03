@@ -1,16 +1,13 @@
 package de.ust.mumlacgppa.pipeline.parts.steps;
 
 public interface Keywords {
-	public String directValueFlag = "direct";
-	public String fromValueFlag = "from";
-	public String notValueFlag = "not";
-	public String inFlag = "in";
-	public String outFlag = "out";
+	public final String directValueKeyword = "direct";
+	public final String fromKeyword = "from";
+	public final String notKeyword = "not";
+	public final String inKeyword = "in";
+	public final String outKeyword = "out";
 	
-	public String variableDefsFlag = "VariableDefs";
-	public String standaloneUsageDefsFlag = "StandaloneUsageDefs";
-	public String pipelineSequenceDefFlag = "PipelineSequence";
-	
-	public String typeFlag = "type";
-	public String insAndOutsFlag = "insAndOuts";
+	public final String variableDefsKeyword = "VariableDefs";
+	public final String standaloneUsageDefsKeyword = "StandaloneUsageDefs";
+	public final String pipelineSequenceDefKeyword = "PipelineSequence";
 }

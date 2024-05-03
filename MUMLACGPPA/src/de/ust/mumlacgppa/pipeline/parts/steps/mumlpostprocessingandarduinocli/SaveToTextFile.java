@@ -57,11 +57,11 @@ public class SaveToTextFile extends PipelineStep {
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("path");
 		ins.add("text");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -73,12 +73,12 @@ public class SaveToTextFile extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("path", "direct example.txt");
 		ins.put("text", "direct Example text.");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

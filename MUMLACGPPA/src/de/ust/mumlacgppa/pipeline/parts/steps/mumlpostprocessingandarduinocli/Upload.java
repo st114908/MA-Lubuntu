@@ -36,12 +36,12 @@ public class Upload extends PipelineStep {
 		ins.add("portAddress");
 		ins.add("boardTypeIdentifierFQBN");
 		ins.add("targetInoOrHexFile");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		outs.add("resultMessage");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -55,13 +55,13 @@ public class Upload extends PipelineStep {
 		ins.put("boardTypeIdentifierFQBN", "direct arduino:avr:uno");
 		ins.put("targetInoOrHexFile",
 				"direct arduino-containers/fastCarDriverECU/CompiledFiles/fastCarDriverECU.ino.hex");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
 		outs.put("resultMessage", "resultMessage");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 
 		return exampleSettings;
 	}

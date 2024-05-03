@@ -55,11 +55,11 @@ public class ContainerTransformation extends PipelineStep {
 		ins.add("roboCar_mumlSourceFile");
 		ins.add("middlewareOption");
 		ins.add("muml_containerFileDestination");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -72,12 +72,12 @@ public class ContainerTransformation extends PipelineStep {
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
 		ins.put("middlewareOption", "direct MQTT_I2C_CONFIG # Or DDS_CONFIG");
 		ins.put("muml_containerFileDestination", "direct container-models/MUML_Container.muml_container");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

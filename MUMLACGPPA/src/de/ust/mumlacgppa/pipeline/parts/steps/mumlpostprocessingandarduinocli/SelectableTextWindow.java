@@ -36,11 +36,11 @@ public class SelectableTextWindow extends PipelineStep implements Keywords{
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("condition");
 		ins.add("message");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	// Map<String, Map<String, String>> for
@@ -52,7 +52,7 @@ public class SelectableTextWindow extends PipelineStep implements Keywords{
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("condition", "direct true");
 		ins.put("message", "direct The condition is true, so this will be shown.");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		return exampleSettings;
 	}

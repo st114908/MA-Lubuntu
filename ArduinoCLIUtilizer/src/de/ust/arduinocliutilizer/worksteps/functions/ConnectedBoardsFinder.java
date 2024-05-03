@@ -13,7 +13,9 @@ import de.ust.arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class ConnectedBoardsFinder extends ACLIWorkstep implements SaveResponseInfo{
+public class ConnectedBoardsFinder extends ACLIWorkstep {
+	public static final String messageWindowTitle = "ArduinoCLIUtilizer: ConnectedBoardsFinder";
+	
 	private ArrayList<Map<String, Object>> resultList;
 	private int numberOfBoards;
 	
@@ -25,7 +27,7 @@ public class ConnectedBoardsFinder extends ACLIWorkstep implements SaveResponseI
 		String searchCommand = "arduino-cli board list --format yaml";
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
-		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+		responseLocation = saveShellResponseInfo(
 			parentPath, "ConnectedBoardsFinder.txt",
 			searchCommand, ReceivedFeedback);
 		Yaml yaml = new Yaml();

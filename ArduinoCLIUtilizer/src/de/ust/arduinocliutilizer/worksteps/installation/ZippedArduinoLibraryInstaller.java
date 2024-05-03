@@ -9,7 +9,7 @@ import de.ust.arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class ZippedArduinoLibraryInstaller extends ACLIWorkstep implements SaveResponseInfo{
+public class ZippedArduinoLibraryInstaller extends ACLIWorkstep {
 	private boolean alreadyInstalled;
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Zipped arduino library installation";
 	
@@ -22,7 +22,7 @@ public class ZippedArduinoLibraryInstaller extends ACLIWorkstep implements SaveR
 		ReceivedFeedback = commandLineDoer.doShellCommand(libraryInstallationCommand);
 		commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
 		
-		responseLocation = SaveResponseInfo.saveShellResponseInfo(
+		responseLocation = saveShellResponseInfo(
 			targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt",
 			libraryInstallationCommand, ReceivedFeedback);
 		

@@ -50,11 +50,11 @@ public class ContainerCodeGeneration extends PipelineStep {
 		
 		// The Overwrite option shown by the export wizard doesn't work. 
 		
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -66,12 +66,12 @@ public class ContainerCodeGeneration extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("muml_containerSourceFile", "direct container-models/MUML_Container.muml_container");
 		ins.put("arduinoContainersDestinationFolder", "direct arduino-containers");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

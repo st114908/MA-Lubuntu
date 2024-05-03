@@ -55,15 +55,15 @@ public abstract class PipelineStep implements Keywords{
 		in = new LinkedHashMap<String, String>();
 		out = new LinkedHashMap<String, String>();
 		
-		if(readData.containsKey(inFlag)){
-			Map<String, String> inData = (Map<String, String>) readData.get(inFlag); 
+		if(readData.containsKey(inKeyword)){
+			Map<String, String> inData = (Map<String, String>) readData.get(inKeyword); 
 			for(String currentKey: inData.keySet()){
 				in.put(currentKey, inData.get(currentKey));
 			}
 		}
 		
-		if(readData.containsKey(outFlag)){
-			Map<String, String> outData = (Map<String, String>) readData.get(outFlag); 
+		if(readData.containsKey(outKeyword)){
+			Map<String, String> outData = (Map<String, String>) readData.get(outKeyword); 
 			for(String currentKey: outData.keySet()){
 				out.put(currentKey, outData.get(currentKey));
 			}
@@ -89,38 +89,18 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	
-	public Map<String, String> getIn() {
-		return in;
-	}
-
-
-	public Map<String, String> getOut() {
-		return out;
-	}
-
-
-	public void setIn(Map<String, String> in) {
-		this.in = in;
-	}
-
-
-	public void setOut(Map<String, String> out) {
-		this.out = out;
-	}
-	
-
 	private VariableContent resolveInputEntry(String entry) throws VariableNotDefinedException, StructureException{
-		if(entry.startsWith(directValueFlag)){
-			String writtenInValue = entry.substring(directValueFlag.length()).trim();
+		if(entry.startsWith(directValueKeyword)){
+			String writtenInValue = entry.substring(directValueKeyword.length()).trim();
 			VariableContent directlyInsertedValue = new VariableContent(writtenInValue);
 			return directlyInsertedValue;
 		}
-		else if(entry.startsWith(fromValueFlag)){
-			String referencedVariable = entry.substring(fromValueFlag.length()).trim();
+		else if(entry.startsWith(fromKeyword)){
+			String referencedVariable = entry.substring(fromKeyword.length()).trim();
 			return VariableHandlerInstance.getVariableValue(referencedVariable);
 		}
-		else if(entry.startsWith(notValueFlag)){
-			String afterNot = entry.substring(notValueFlag.length()).trim();
+		else if(entry.startsWith(notKeyword)){
+			String afterNot = entry.substring(notKeyword.length()).trim();
 			VariableContent gainedContent = resolveInputEntry(afterNot);
 			boolean received = gainedContent.getBooleanContent();
 			VariableContent invertedBooleanContent = new VariableContent( Boolean.toString(!received) );
@@ -181,17 +161,17 @@ public abstract class PipelineStep implements Keywords{
 	 * @throws FaultyDataException
 	 */
 	private void checkForDetectableErrorsEntryCheck(String entry) throws StructureException, VariableNotDefinedException, FaultyDataException{
-		if(entry.startsWith(directValueFlag)){
-			String afterDirect = entry.substring(directValueFlag.length()).trim();
+		if(entry.startsWith(directValueKeyword)){
+			String afterDirect = entry.substring(directValueKeyword.length()).trim();
 			if(afterDirect.equals("")){
 				throw new FaultyDataException("Value in direct entry missing or not recognized!");
 			}
 			// Currently nothing more to do.
 		}
-		else if(entry.startsWith(fromValueFlag)){
-			String referencedVariable = entry.substring(fromValueFlag.length()).trim();
+		else if(entry.startsWith(fromKeyword)){
+			String referencedVariable = entry.substring(fromKeyword.length()).trim();
 			if(VariableHandlerInstance.isVariableInitialized(referencedVariable)){
-				String afterFrom = entry.substring(fromValueFlag.length()).trim();
+				String afterFrom = entry.substring(fromKeyword.length()).trim();
 				if(afterFrom.equals("")){
 					throw new FaultyDataException("Reference in from entry missing or not recognized!");
 				}
@@ -201,8 +181,8 @@ public abstract class PipelineStep implements Keywords{
 				VariableHandlerInstance.generateVariableNotDefinedException(referencedVariable);
 			}
 		}
-		else if(entry.startsWith(notValueFlag)){
-			String afterNot = entry.substring(notValueFlag.length()).trim();
+		else if(entry.startsWith(notKeyword)){
+			String afterNot = entry.substring(notKeyword.length()).trim();
 			checkForDetectableErrorsEntryCheck(afterNot);
 		}
 		else{
@@ -225,13 +205,13 @@ public abstract class PipelineStep implements Keywords{
 	 * @throws ParameterMismatchException
 	 */
 	public void checkForDetectableErrors() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
-		if(! (in.keySet()).equals(requiredInsAndOuts.get(inFlag)) ){
+		if(! (in.keySet()).equals(requiredInsAndOuts.get(inKeyword)) ){
 			throw new ParameterMismatchException("Input parameter mismatch! Expected \n"+
-					requiredInsAndOuts.get(inFlag).toString() + ", got \n" + in.keySet().toString());
+					requiredInsAndOuts.get(inKeyword).toString() + ", got \n" + in.keySet().toString());
 		}
-		if(! (out.keySet()).equals(requiredInsAndOuts.get(outFlag)) ){
+		if(! (out.keySet()).equals(requiredInsAndOuts.get(outKeyword)) ){
 			throw new ParameterMismatchException("Output parameter mismatch! Expected "+
-					requiredInsAndOuts.get(outFlag).toString() + ", got \n" + out.keySet().toString());
+					requiredInsAndOuts.get(outKeyword).toString() + ", got \n" + out.keySet().toString());
 		}
 		
 		for(String currentKey:in.keySet()){

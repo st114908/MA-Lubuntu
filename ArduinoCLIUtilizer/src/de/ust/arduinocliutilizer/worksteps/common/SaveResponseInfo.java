@@ -11,7 +11,7 @@ import java.nio.file.Path;
  * Saves the data to the command and its Response data in a text file with a given name in an extra folder named SavedResponses.
  */
 public interface SaveResponseInfo{
-	public final static String savedResponsesFolderName = "SavedResponses";
+	public final String savedResponsesFolderName = "SavedResponses";
 	
 	/**
 	 * Saves the data of the command and its Response data in a text file with a given name in an extra folder named SavedResponses.
@@ -22,7 +22,7 @@ public interface SaveResponseInfo{
 	 * @return The complete Path to the generated file.
 	 * @throws IOException
 	 */
-	public static Path saveShellResponseInfo(Path targetFileDirectoryPath, String name, String command, ResponseFeedback feedback) throws IOException{
+	public default Path saveShellResponseInfo(Path targetFileDirectoryPath, String name, String command, ResponseFeedback feedback) throws IOException{
 		Path savedResponsesFolderPath = targetFileDirectoryPath.resolve(savedResponsesFolderName);
 		if (!Files.exists(savedResponsesFolderPath) && !Files.isDirectory(savedResponsesFolderPath)){
 		    Files.createDirectories(savedResponsesFolderPath);

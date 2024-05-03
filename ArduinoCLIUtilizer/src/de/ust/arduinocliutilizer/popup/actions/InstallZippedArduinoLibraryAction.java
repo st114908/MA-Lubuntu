@@ -43,8 +43,8 @@ public class InstallZippedArduinoLibraryAction implements IObjectActionDelegate,
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
-		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
+		Path targetFilePath = getPathOfSelectedFile();
 		try {
 			ZippedArduinoLibraryInstaller ZippedArduinoLibraryInstallerInstance = new ZippedArduinoLibraryInstaller(targetFilePath);
 			if(ZippedArduinoLibraryInstallerInstance.isSuccessful()){
@@ -81,7 +81,7 @@ public class InstallZippedArduinoLibraryAction implements IObjectActionDelegate,
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

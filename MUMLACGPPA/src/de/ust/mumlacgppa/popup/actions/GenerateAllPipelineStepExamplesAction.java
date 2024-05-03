@@ -17,7 +17,7 @@ import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduin
 import de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandarduinocli.StepsExamplesGenerator;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class GenerateAllPipelineStepExamplesAction implements IObjectActionDelegate {
+public class GenerateAllPipelineStepExamplesAction implements IObjectActionDelegate, SelectedFilePathAndContextFinder {
 
 	private Shell shell;
 	
@@ -39,7 +39,7 @@ public class GenerateAllPipelineStepExamplesAction implements IObjectActionDeleg
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
 		try {
 			StepsExamplesGenerator generator = new StepsExamplesGenerator();
 			try {
@@ -78,7 +78,7 @@ public class GenerateAllPipelineStepExamplesAction implements IObjectActionDeleg
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getProjectOfSelectedFileByRessource().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

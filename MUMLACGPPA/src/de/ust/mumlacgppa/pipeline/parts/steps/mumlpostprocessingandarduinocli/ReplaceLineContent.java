@@ -66,11 +66,11 @@ public class ReplaceLineContent extends PipelineStep{
 		ins.add("filePath");
 		ins.add("targetLineContent");
 		ins.add("contentReplacement");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -83,12 +83,12 @@ public class ReplaceLineContent extends PipelineStep{
 		ins.put("filePath", "direct arduino-containers/fastCarDriverECU/courseControlCourseControlComponentStateChart.c");
 		ins.put("targetLineContent", "direct stateChart->distanceLimit = stateChart->distanceLimit = 1;");
 		ins.put("contentReplacement", "direct stateChart->distanceLimit = stateChart->distanceLimit = 0;");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

@@ -62,11 +62,11 @@ public class CopyFolder extends PipelineStep {
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("sourcePath");
 		ins.add("destinationPath");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
@@ -78,12 +78,12 @@ public class CopyFolder extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("sourcePath", "direct exampleFolderPath1");
 		ins.put("destinationPath", "direct exampleFolderPath2");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 		
 		return exampleSettings;
 	}

@@ -41,8 +41,8 @@ public class UploadInoHexFileAction implements IObjectActionDelegate, SelectedFi
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		ProjectFolderPathStorage.projectFolderPath = SelectedFilePathAndContextFinder.getProjectPathOfSelectedFileByRessource();
-		Path targetFilePath = SelectedFilePathAndContextFinder.getPathOfSelectedFile();
+		ProjectFolderPathStorage.projectFolderPath = getProjectPathOfSelectedFileByRessource();
+		Path targetFilePath = getPathOfSelectedFile();
 		try {
 			BoardAutoSelectionAndInstallation BoardAutoSelectionAndInstallationInstance = new BoardAutoSelectionAndInstallation();
 			boolean autoSelectionAndInstallationSuccessful = BoardAutoSelectionAndInstallationInstance.autoSelectAndInstal(shell, targetFilePath);
@@ -89,7 +89,7 @@ public class UploadInoHexFileAction implements IObjectActionDelegate, SelectedFi
 		finally {
 			// Refresh Project
 			try {
-				SelectedFilePathAndContextFinder.getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+				getRessourceOfSelectedFile().getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

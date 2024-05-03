@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
+
 import org.muml.c.adapter.componenttype.ui.export.C99SourceCodeExport;
 import org.muml.codegen.componenttype.export.ui.Activator;
 import org.muml.codegen.componenttype.export.ui.ITargetPlatformGenerator;
@@ -22,6 +23,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
+
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 class ComponentCodeGenerationImprovisation {

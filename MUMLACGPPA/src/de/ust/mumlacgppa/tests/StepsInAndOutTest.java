@@ -63,9 +63,9 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testConstructorVariantsEqualIn()
 			throws VariableNotDefinedException, StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA {
-		String testYamlTextDirectTrue = inFlag + ":\n" + "  input1: direct true\n";
+		String testYamlTextDirectTrue = inKeyword + ":\n" + "  input1: direct true\n";
 		Map<String, Map<String, String>> testMapDirectTrue = yaml.load(testYamlTextDirectTrue);
-		testMapDirectTrue.put(outFlag, new HashMap<String, String>());
+		testMapDirectTrue.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance1 = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextDirectTrue);
@@ -80,13 +80,13 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInDirectTrue() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectTrue = inFlag + ":\n" + "  input1: direct true\n";
+		String testYamlTextDirectTrue = inKeyword + ":\n" + "  input1: direct true\n";
 		Map<String, Map<String, String>> testMapDirectTrue = yaml.load(testYamlTextDirectTrue);
-		testMapDirectTrue.put(outFlag, new HashMap<String, String>());
+		testMapDirectTrue.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance, testYamlTextDirectTrue);
-		assertEquals(testMapDirectTrue.get(inFlag), testInstance.getIn());
-		assertEquals(testMapDirectTrue.get(outFlag), testInstance.getOut());
+		assertEquals(testMapDirectTrue.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapDirectTrue.get(outKeyword), testInstance.getOut());
 
 		assertEquals("true", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -94,14 +94,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInDirectFalse() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectFalse = inFlag + ":\n" + "  input1: direct false\n";
+		String testYamlTextDirectFalse = inKeyword + ":\n" + "  input1: direct false\n";
 		Map<String, Map<String, String>> testMapDirectFalse = yaml.load(testYamlTextDirectFalse);
-		testMapDirectFalse.put(outFlag, new HashMap<String, String>());
+		testMapDirectFalse.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextDirectFalse);
-		assertEquals(testMapDirectFalse.get(inFlag), testInstance.getIn());
-		assertEquals(testMapDirectFalse.get(outFlag), testInstance.getOut());
+		assertEquals(testMapDirectFalse.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapDirectFalse.get(outKeyword), testInstance.getOut());
 
 		assertEquals("false", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -109,14 +109,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInInvertedDirectTrue() throws VariableNotDefinedException, StructureException, FaultyDataException,
 			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextInvertedDirectTrue = inFlag + ":\n" + "  input1: not direct true\n";
+		String testYamlTextInvertedDirectTrue = inKeyword + ":\n" + "  input1: not direct true\n";
 		Map<String, Map<String, String>> testMapInvertedDirectTrue = yaml.load(testYamlTextInvertedDirectTrue);
-		testMapInvertedDirectTrue.put(outFlag, new HashMap<String, String>());
+		testMapInvertedDirectTrue.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextInvertedDirectTrue);
-		assertEquals(testMapInvertedDirectTrue.get(inFlag), testInstance.getIn());
-		assertEquals(testMapInvertedDirectTrue.get(outFlag), testInstance.getOut());
+		assertEquals(testMapInvertedDirectTrue.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapInvertedDirectTrue.get(outKeyword), testInstance.getOut());
 
 		assertEquals("false", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -124,14 +124,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInInvertedDirectFalse() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextInvertedDirectFalse = inFlag + ":\n" + "  input1: not direct false\n";
+		String testYamlTextInvertedDirectFalse = inKeyword + ":\n" + "  input1: not direct false\n";
 		Map<String, Map<String, String>> testMapInvertedDirectFalse = yaml.load(testYamlTextInvertedDirectFalse);
-		testMapInvertedDirectFalse.put(outFlag, new HashMap<String, String>());
+		testMapInvertedDirectFalse.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextInvertedDirectFalse);
-		assertEquals(testMapInvertedDirectFalse.get(inFlag), testInstance.getIn());
-		assertEquals(testMapInvertedDirectFalse.get(outFlag), testInstance.getOut());
+		assertEquals(testMapInvertedDirectFalse.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapInvertedDirectFalse.get(outKeyword), testInstance.getOut());
 
 		assertEquals("true", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -139,14 +139,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInDirectNumber() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectNumber = inFlag + ":\n" + "  numberTest: direct 1\n";
+		String testYamlTextDirectNumber = inKeyword + ":\n" + "  numberTest: direct 1\n";
 		Map<String, Map<String, String>> testMapDirectNumber = yaml.load(testYamlTextDirectNumber);
-		testMapDirectNumber.put(outFlag, new HashMap<String, String>());
+		testMapDirectNumber.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextDirectNumber);
-		assertEquals(testMapDirectNumber.get(inFlag), testInstance.getIn());
-		assertEquals(testMapDirectNumber.get(outFlag), testInstance.getOut());
+		assertEquals(testMapDirectNumber.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapDirectNumber.get(outKeyword), testInstance.getOut());
 
 		assertEquals("1", testInstance.handleInputTestFunction("numberTest").getContent());
 	}
@@ -154,14 +154,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInDirectString() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectString = inFlag + ":\n" + "  stringTest: direct HelloWorld\n";
+		String testYamlTextDirectString = inKeyword + ":\n" + "  stringTest: direct HelloWorld\n";
 		Map<String, Map<String, String>> testMapDirectString = yaml.load(testYamlTextDirectString);
-		testMapDirectString.put(outFlag, new HashMap<String, String>());
+		testMapDirectString.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextDirectString);
-		assertEquals(testMapDirectString.get(inFlag), testInstance.getIn());
-		assertEquals(testMapDirectString.get(outFlag), testInstance.getOut());
+		assertEquals(testMapDirectString.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapDirectString.get(outKeyword), testInstance.getOut());
 
 		assertEquals("HelloWorld", testInstance.handleInputTestFunction("stringTest").getContent());
 	}
@@ -171,14 +171,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInFromTrueVariable() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextFromTrueVariable = inFlag + ":\n" + "  input1: from testTrueVariable\n";
+		String testYamlTextFromTrueVariable = inKeyword + ":\n" + "  input1: from testTrueVariable\n";
 		Map<String, Map<String, String>> testMapFromTrueVariable = yaml.load(testYamlTextFromTrueVariable);
-		testMapFromTrueVariable.put(outFlag, new HashMap<String, String>());
+		testMapFromTrueVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextFromTrueVariable);
-		assertEquals(testMapFromTrueVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapFromTrueVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapFromTrueVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapFromTrueVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals("true", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -186,14 +186,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInFromFalseVariable() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextFromFalseVariable = inFlag + ":\n" + "  input1: from testFalseVariable\n";
+		String testYamlTextFromFalseVariable = inKeyword + ":\n" + "  input1: from testFalseVariable\n";
 		Map<String, Map<String, String>> testMapFromFalseVariable = yaml.load(testYamlTextFromFalseVariable);
-		testMapFromFalseVariable.put(outFlag, new HashMap<String, String>());
+		testMapFromFalseVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextFromFalseVariable);
-		assertEquals(testMapFromFalseVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapFromFalseVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapFromFalseVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapFromFalseVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals("false", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -201,15 +201,15 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testStringBasedConstructorInvertedFromTrueVariable() throws VariableNotDefinedException,
 			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextInvertedFromTrueVariable = inFlag + ":\n" + "  input1: not from testTrueVariable\n";
+		String testYamlTextInvertedFromTrueVariable = inKeyword + ":\n" + "  input1: not from testTrueVariable\n";
 		Map<String, Map<String, String>> testMapInvertedFromTrueVariable = yaml
 				.load(testYamlTextInvertedFromTrueVariable);
-		testMapInvertedFromTrueVariable.put(outFlag, new HashMap<String, String>());
+		testMapInvertedFromTrueVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextInvertedFromTrueVariable);
-		assertEquals(testMapInvertedFromTrueVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapInvertedFromTrueVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapInvertedFromTrueVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapInvertedFromTrueVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals("false", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -217,15 +217,15 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testStringBasedConstructorInvertedFromFalseVariable() throws VariableNotDefinedException,
 			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextInvertedFromFalseVariable = inFlag + ":\n" + "  input1: not from testFalseVariable\n";
+		String testYamlTextInvertedFromFalseVariable = inKeyword + ":\n" + "  input1: not from testFalseVariable\n";
 		Map<String, Map<String, String>> testMapInvertedFromFalseVariable = yaml
 				.load(testYamlTextInvertedFromFalseVariable);
-		testMapInvertedFromFalseVariable.put(outFlag, new HashMap<String, String>());
+		testMapInvertedFromFalseVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextInvertedFromFalseVariable);
-		assertEquals(testMapInvertedFromFalseVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapInvertedFromFalseVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapInvertedFromFalseVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapInvertedFromFalseVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals("true", testInstance.handleInputTestFunction("input1").getContent());
 	}
@@ -233,14 +233,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInFromNumberVariable() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextFromNumberVariable = inFlag + ":\n" + "  numberTest: from testNumberVariable\n";
+		String testYamlTextFromNumberVariable = inKeyword + ":\n" + "  numberTest: from testNumberVariable\n";
 		Map<String, Map<String, String>> testMapFromNumberVariable = yaml.load(testYamlTextFromNumberVariable);
-		testMapFromNumberVariable.put(outFlag, new HashMap<String, String>());
+		testMapFromNumberVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextFromNumberVariable);
-		assertEquals(testMapFromNumberVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapFromNumberVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapFromNumberVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapFromNumberVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals(VariableHandlerInstance.getVariableValue("testNumberVariable").getContent(),
 				testInstance.handleInputTestFunction("numberTest").getContent());
@@ -249,14 +249,14 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testInFromTextVariable() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextFromTextVariable = inFlag + ":\n" + "  textTest: from testTextVariable\n";
+		String testYamlTextFromTextVariable = inKeyword + ":\n" + "  textTest: from testTextVariable\n";
 		Map<String, Map<String, String>> testMapFromTextVariable = yaml.load(testYamlTextFromTextVariable);
-		testMapFromTextVariable.put(outFlag, new HashMap<String, String>());
+		testMapFromTextVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextFromTextVariable);
-		assertEquals(testMapFromTextVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapFromTextVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapFromTextVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapFromTextVariable.get(outKeyword), testInstance.getOut());
 
 		assertEquals(VariableHandlerInstance.getVariableValue("testTextVariable").getContent(),
 				testInstance.handleInputTestFunction("textTest").getContent());
@@ -267,9 +267,9 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testConstructorVariantsEqualOut() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectTrue = outFlag + ":\n" + "  outTest: dummy\n";
+		String testYamlTextDirectTrue = outKeyword + ":\n" + "  outTest: dummy\n";
 		Map<String, Map<String, String>> testMapDirectTrue = yaml.load(testYamlTextDirectTrue);
-		testMapDirectTrue.put(inFlag, new HashMap<String, String>());
+		testMapDirectTrue.put(inKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance1 = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextDirectTrue);
@@ -284,14 +284,14 @@ public class StepsInAndOutTest implements Keywords {
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
 		String newVariableName = "newVariable";
 		String newVariableValue = "newValue";
-		String testYamlTextSetNewVariable = outFlag + ":\n" + "  outTest: " + newVariableName + "\n";
+		String testYamlTextSetNewVariable = outKeyword + ":\n" + "  outTest: " + newVariableName + "\n";
 		Map<String, Map<String, String>> testMapSetNewVariable = yaml.load(testYamlTextSetNewVariable);
-		testMapSetNewVariable.put(inFlag, new HashMap<String, String>());
+		testMapSetNewVariable.put(inKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextSetNewVariable);
-		assertEquals(testMapSetNewVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapSetNewVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapSetNewVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapSetNewVariable.get(outKeyword), testInstance.getOut());
 
 		assertFalse(VariableHandlerInstance.isVariableInitialized(newVariableName));
 
@@ -308,16 +308,16 @@ public class StepsInAndOutTest implements Keywords {
 		String alreadyExistingVariableName = "testTextVariable";
 		String newVariableValue = "newText";
 
-		String testYamlTextSetAlreadyExistingVariable = outFlag + ":\n" + "  outTest: " + alreadyExistingVariableName
+		String testYamlTextSetAlreadyExistingVariable = outKeyword + ":\n" + "  outTest: " + alreadyExistingVariableName
 				+ "\n";
 		Map<String, Map<String, String>> testMapSetAlreadyExistingVariable = yaml
 				.load(testYamlTextSetAlreadyExistingVariable);
-		testMapSetAlreadyExistingVariable.put(inFlag, new HashMap<String, String>());
+		testMapSetAlreadyExistingVariable.put(inKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextSetAlreadyExistingVariable);
-		assertEquals(testMapSetAlreadyExistingVariable.get(inFlag), testInstance.getIn());
-		assertEquals(testMapSetAlreadyExistingVariable.get(outFlag), testInstance.getOut());
+		assertEquals(testMapSetAlreadyExistingVariable.get(inKeyword), testInstance.getIn());
+		assertEquals(testMapSetAlreadyExistingVariable.get(outKeyword), testInstance.getOut());
 
 		assertTrue(VariableHandlerInstance.isVariableInitialized(alreadyExistingVariableName));
 
@@ -334,7 +334,7 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testConstructorVariantsEqualInAndOut() throws VariableNotDefinedException, StructureException,
 			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextDirectTrue = inFlag + ":\n" + "  input1: direct true\n" + outFlag + ":\n"
+		String testYamlTextDirectTrue = inKeyword + ":\n" + "  input1: direct true\n" + outKeyword + ":\n"
 				+ "  outTest: dummy\n";
 		Map<String, Map<String, String>> testMapDirectTrue = yaml.load(testYamlTextDirectTrue);
 
@@ -351,17 +351,17 @@ public class StepsInAndOutTest implements Keywords {
 		String newVariableName = "newVariable";
 		String newVariableValue = "newValue";
 
-		String testYamlTextSetNewVariable = outFlag + ":\n" + "  outTest: " + newVariableName + "\n";
+		String testYamlTextSetNewVariable = outKeyword + ":\n" + "  outTest: " + newVariableName + "\n";
 		Map<String, Map<String, String>> testMapSetNewVariable = yaml.load(testYamlTextSetNewVariable);
-		testMapSetNewVariable.put(inFlag, new HashMap<String, String>());
+		testMapSetNewVariable.put(inKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstanceSetter = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextSetNewVariable);
 		testInstanceSetter.handleOutputTestFunction("outTest", new VariableContent(newVariableValue));
 
-		String testYamlTextGetNewVariable = inFlag + ":\n" + "  inTest: from " + newVariableName + "\n";
+		String testYamlTextGetNewVariable = inKeyword + ":\n" + "  inTest: from " + newVariableName + "\n";
 		Map<String, Map<String, String>> testMapGetNewVariable = yaml.load(testYamlTextGetNewVariable);
-		testMapGetNewVariable.put(outFlag, new HashMap<String, String>());
+		testMapGetNewVariable.put(outKeyword, new HashMap<String, String>());
 
 		InternalTestDummyStep testInstanceGetter = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextGetNewVariable);
@@ -372,8 +372,8 @@ public class StepsInAndOutTest implements Keywords {
 	@Test
 	public void testValidation() throws VariableNotDefinedException, StructureException, FaultyDataException,
 			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
-		String testYamlTextCompleteDefinitionContent = inFlag + ":\n" + "  input1: from testTrueVariable\n"
-				+ "  input2: from testFalseVariable\n" + outFlag + ":\n" + "  output1: testNumberVariable\n"
+		String testYamlTextCompleteDefinitionContent = inKeyword + ":\n" + "  input1: from testTrueVariable\n"
+				+ "  input2: from testFalseVariable\n" + outKeyword + ":\n" + "  output1: testNumberVariable\n"
 				+ "  output2: testTextVariable\n";
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,

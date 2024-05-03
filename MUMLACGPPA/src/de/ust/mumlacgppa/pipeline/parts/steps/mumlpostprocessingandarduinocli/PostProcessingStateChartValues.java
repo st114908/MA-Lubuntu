@@ -70,11 +70,11 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		ins.add("desiredVelocity");
 		ins.add("slowVelocity");
 		ins.add("laneDistance");
-		requiredInsAndOuts.put(inFlag, ins);
+		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
-		requiredInsAndOuts.put(outFlag, outs);
+		requiredInsAndOuts.put(outKeyword, outs);
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {
@@ -90,12 +90,12 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		ins.put("desiredVelocity", "direct 2");
 		ins.put("slowVelocity", "direct 3");
 		ins.put("laneDistance", "direct 4");
-		exampleSettings.put(inFlag, ins);
+		exampleSettings.put(inKeyword, ins);
 
 		// Out:
 		Map<String, String> outs = new LinkedHashMap<String, String>();
 		outs.put("ifSuccessful", "ifSuccessful");
-		exampleSettings.put(outFlag, outs);
+		exampleSettings.put(outKeyword, outs);
 
 		return exampleSettings;
 	}
