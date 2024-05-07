@@ -32,6 +32,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
+import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
@@ -40,7 +41,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class PostProcessingStepsUntilConfig extends PipelineStep{
+public class PostProcessingStepsUntilConfig extends PipelineStep implements Keywords{
 
 	public static final String nameFlag = "PostProcessingStepsUntilConfig";
 
@@ -71,6 +72,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("arduinoContainersPath");
 		ins.add("componentCodePath");
+		ins.add("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt");
 		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -85,8 +87,9 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
-		ins.put("arduinoContainersPath", "direct arduino-containers");
-		ins.put("componentCodePath", "direct arduino-containers/fastAndSlowCar_v2");
+		ins.put("arduinoContainersPath", directValueKeyword + " arduino-containers");
+		ins.put("componentCodePath", directValueKeyword + " arduino-containers/fastAndSlowCar_v2");
+		ins.put("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt", directValueKeyword + "true");
 		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
@@ -127,7 +130,12 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 		// So nothing to do.
 		
 		copyAPImappingsAndAdjust(arduinoContainersPath);
-		fetchAndNotYetAdjustConfig_hpp(arduinoContainersPath); // TODO: Werte!!!
+		if(handleInputByKey("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt").getBooleanContent()){
+			placeAndNotYetAdjustInternallyStoredConfig_hpp(arduinoContainersPath);
+		}
+		else{
+			downloadAndNotYetAdjustConfig_hpp(arduinoContainersPath);
+		}
 		addHALPartsIntoCarDriverInoFiles(arduinoContainersPath);
 		fillOutMethodStubs(arduinoContainersPath);
 		// Moved to PerformPostProcessingStateChartValues and PerformPostProcessingStateChartValueFlexible.
@@ -520,11 +528,12 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 	}
 
 	/**
+	 * Please note that the results of this sub step/function can break after an update of the library that changed the Config.hpp file.
 	 * @param arduinoContainersPathString
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	private void fetchAndNotYetAdjustConfig_hpp(Path arduinoContainersPath)
+	private void downloadAndNotYetAdjustConfig_hpp(Path arduinoContainersPath)
 			throws IOException, MalformedURLException {
 		
         // Download https://github.com/SQA-Robo-Lab/Sofdcar-HAL/blob/main/examples/SimpleHardwareController/Config.hpp into the *CarDriverECU folders.
@@ -538,10 +547,63 @@ public class PostProcessingStepsUntilConfig extends PipelineStep{
 			if(currentArduinoContainersEntryPath.getFileName().toString().endsWith("CarDriverECU")){
 				Files.copy(downloadStoragePath, currentArduinoContainersEntryPath.resolve("Config.hpp"), StandardCopyOption.REPLACE_EXISTING);
 				System.out.println("TODO: Adjust config values in " + currentArduinoContainersEntryPath.resolve("Config.hpp").toString() + "!!!");
-				//TODO: Anpassungen vornehmen
+				//TODO: Do adjustments.
 			}
 		}
 		Files.deleteIfExists(downloadStoragePath);
+	}
+
+	/**
+	 * This function has been added to ensure that the pipeline can keep working with older local versions. 
+	 * @param arduinoContainersPathString
+	 * @throws IOException
+	 * @throws MalformedURLException
+	 */
+	private void placeAndNotYetAdjustInternallyStoredConfig_hpp(Path arduinoContainersPath)
+			throws IOException, MalformedURLException {
+		
+        // Download https://github.com/SQA-Robo-Lab/Sofdcar-HAL/blob/main/examples/SimpleHardwareController/Config.hpp into the *CarDriverECU folders.
+		// Raw URL: https://raw.githubusercontent.com/SQA-Robo-Lab/Sofdcar-HAL/main/examples/SimpleHardwareController/Config.hpp
+        // And adjust configurations.
+		DirectoryStream<Path> arduinoContainersContent = Files.newDirectoryStream(arduinoContainersPath);
+		for(Path currentArduinoContainersEntryPath: arduinoContainersContent){
+			if(currentArduinoContainersEntryPath.getFileName().toString().endsWith("CarDriverECU")){
+				Path completePath = currentArduinoContainersEntryPath.resolve("Config.hpp");
+				FileWriter myWriter = new FileWriter(completePath.toFile());
+				
+				myWriter.write("#ifndef SIMPLE_HARDWARE_COINTROLLER_EXAMPLE_CONFIG_HPP");
+				myWriter.write("#define SIMPLE_HARDWARE_COINTROLLER_EXAMPLE_CONFIG_HPP");
+				myWriter.write("");
+				myWriter.write("#include <SimpleHardwareController.hpp>");
+				myWriter.write("");
+				myWriter.write("TurnSteeringCarConfig config = {");
+				myWriter.write("    {8, 9, 10},                // rearLeft");
+				myWriter.write("    {13, 12, 11},              // rearRight");
+				myWriter.write("    {52, 40, 39, 19, 66, 109}, // steering");
+				myWriter.write("    120,");
+				myWriter.write("    100,      // width, length");
+				myWriter.write("    {48, 49}, // frontDistance");
+				myWriter.write("    {48, 49}  // rearDistance");
+				myWriter.write("};");
+				myWriter.write("");
+				myWriter.write("uint8_t brightnessPins[3] = {A0, A1, A2};");
+				myWriter.write("BrightnessThresholds thresholds[3] = {{41, 114},");
+				myWriter.write("                                      {61, 140},");
+				myWriter.write("                                      {31, 81}};");
+				myWriter.write("");
+				myWriter.write("LineSensorConfig lineConfig = {");
+				myWriter.write("    16,             // sensor distance");
+				myWriter.write("    3,              // number of sesnor");
+				myWriter.write("    brightnessPins, // sensor pins");
+				myWriter.write("    thresholds      // sensor thretholds");
+				myWriter.write("};");
+				myWriter.write("");
+				myWriter.write("#endif");
+				
+				System.out.println("TODO: Adjust config values in " + currentArduinoContainersEntryPath.resolve("Config.hpp").toString() + "!!!");
+				//TODO: Do adjustments.
+			}
+		}
 	}
 
 	/**
