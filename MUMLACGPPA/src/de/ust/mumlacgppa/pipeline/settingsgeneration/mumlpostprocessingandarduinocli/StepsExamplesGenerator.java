@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.AutoGitCommitAllAndPushCommand;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
@@ -112,6 +113,8 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 		myWriter.write(exampleSegment(yaml, SaveToTextFile.nameFlag, SaveToTextFile.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, TerminalCommand.nameFlag, TerminalCommand.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
+		myWriter.write(exampleSegment(yaml, AutoGitCommitAllAndPushCommand.nameFlag, AutoGitCommitAllAndPushCommand.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		
 		myWriter.close();
