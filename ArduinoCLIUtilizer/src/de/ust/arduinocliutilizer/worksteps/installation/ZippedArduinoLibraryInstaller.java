@@ -5,7 +5,6 @@ import java.nio.file.Path;
 
 import de.ust.arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import de.ust.arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import de.ust.arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
@@ -41,6 +40,8 @@ public class ZippedArduinoLibraryInstaller extends ACLIWorkstep {
 		else{
 			if(alreadyInstalled){
 				return "The targeted library got identified as alread installed.\n"
+						+ "If you installed it using the ArduinoCLIUtilizer plugin,\n"
+						+ "then you can find it under /home/muml/Arduino/libraries and delete it from there."
 						+ "For more details see\n" + responseLocation;
 			}
 			else{

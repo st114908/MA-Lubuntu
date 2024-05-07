@@ -15,12 +15,7 @@ import java.util.Scanner;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
@@ -30,18 +25,16 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
-import de.ust.mumlacgppa.pipeline.reader.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFilePaths, Keywords {
-	private Path completeSettingsDirectoryPath;
-	private Path completeSettingsFilePath;
+	private Path completeMUMLACGPPASettingsDirectoryPath;
+	private Path completeMUMLACGPPASettingsFilePath;
 
 	public PipelineSettingsGenerator() throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super();
@@ -50,13 +43,13 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 					"The static field projectFolderPath in ProjectFolderPathStorage has "
 							+ "to be set to a complete file system path to the project's folder!");
 		}
-		completeSettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath
+		completeMUMLACGPPASettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath
 				.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
-		completeSettingsFilePath = completeSettingsDirectoryPath.resolve(PIPELINE_SETTINGS_FILE_NAME);
+		completeMUMLACGPPASettingsFilePath = completeMUMLACGPPASettingsDirectoryPath.resolve(PIPELINE_SETTINGS_FILE_NAME);
 	}
 
 	public Path getCompleteSettingsFilePath() {
-		return completeSettingsFilePath;
+		return completeMUMLACGPPASettingsFilePath;
 	}
 
 	private Map<String, Map<String, String>> generateDeleteFolder(String path) {
@@ -131,13 +124,13 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 
 	public boolean generatePipelineConfigFile() throws IOException {
-		File directoryCheck = completeSettingsDirectoryPath.toFile();
+		File directoryCheck = completeMUMLACGPPASettingsDirectoryPath.toFile();
 		if (!directoryCheck.exists()) {
 			directoryCheck.mkdirs();
 		}
 
-		File configExistenceCheck = completeSettingsFilePath.toFile();
-		if (configExistenceCheck.exists() && !configExistenceCheck.isDirectory()) {
+		File configExistenceCheck = completeMUMLACGPPASettingsFilePath.toFile();
+		if (configExistenceCheck.exists() && configExistenceCheck.isFile()) {
 			return false;
 		}
 
@@ -148,7 +141,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		options.setPrettyFlow(true);
 		options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
 		Yaml yaml = new Yaml(options);
-		FileWriter settingsWriter = new FileWriter(completeSettingsFilePath.toFile());
+		FileWriter settingsWriter = new FileWriter(completeMUMLACGPPASettingsFilePath.toFile());
 
 		// Variable names and potentially their values:
 
@@ -579,9 +572,9 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		// pipeline sequence and after the "in:" flags the &id...s and *id...s.
 		String inSequenceForCleanup = " " + inKeyword + ":";
 
-		String intermediateFileName = completeSettingsFilePath.toString() + ".editing";
+		String intermediateFileName = completeMUMLACGPPASettingsFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
-		Scanner currentFileReader = new Scanner(completeSettingsFilePath.toFile());
+		Scanner currentFileReader = new Scanner(completeMUMLACGPPASettingsFilePath.toFile());
 		while (currentFileReader.hasNextLine()) {
 			String currentLine = currentFileReader.nextLine();
 			if (currentLine.contains("'")) {
@@ -600,7 +593,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		}
 		currentFileReader.close();
 		workCopy.close();
-		Files.move(Paths.get(intermediateFileName), completeSettingsFilePath, StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(intermediateFileName), completeMUMLACGPPASettingsFilePath, StandardCopyOption.REPLACE_EXISTING);
 
 		return true;
 	}

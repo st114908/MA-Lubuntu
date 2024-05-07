@@ -11,7 +11,6 @@ import de.ust.arduinocliutilizer.paths.CompiledFilesFolderNameInterface;
 import de.ust.arduinocliutilizer.paths.FQBNStorageFileName;
 import de.ust.arduinocliutilizer.worksteps.common.ACLIWorkstep;
 import de.ust.arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import de.ust.arduinocliutilizer.worksteps.common.SaveResponseInfo;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 

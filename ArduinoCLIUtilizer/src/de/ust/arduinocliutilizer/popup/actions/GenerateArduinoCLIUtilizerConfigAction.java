@@ -1,8 +1,6 @@
 package de.ust.arduinocliutilizer.popup.actions;
 
 import java.io.IOException;
-import java.nio.file.Path;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -14,7 +12,6 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.ust.arduinocliutilizer.configgenerator.ArduinoCLIUtilizerConfigGenerator;
-import de.ust.arduinocliutilizer.paths.DefaultConfigDirectoryAndFilePath;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 

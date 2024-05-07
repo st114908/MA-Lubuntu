@@ -48,7 +48,6 @@ class InternalTestDummyStep extends PipelineStep {
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	@SuppressWarnings("unchecked")
 	public InternalTestDummyStep(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}

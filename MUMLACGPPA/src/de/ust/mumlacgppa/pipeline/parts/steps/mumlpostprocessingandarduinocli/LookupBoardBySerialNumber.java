@@ -78,7 +78,6 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		super(VariableHandlerInstance, readData);
 	}
 
-	@SuppressWarnings("unchecked")
 	public LookupBoardBySerialNumber(VariableHandler VariableHandlerInstance, String yamlData)
 			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);

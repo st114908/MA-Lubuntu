@@ -63,7 +63,6 @@ public class SelectableTextWindow extends PipelineStep implements Keywords{
 	}
 	
 
-	@SuppressWarnings("unchecked")
 	public SelectableTextWindow(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}

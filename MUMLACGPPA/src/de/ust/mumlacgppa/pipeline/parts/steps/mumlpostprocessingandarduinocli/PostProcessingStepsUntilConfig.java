@@ -22,8 +22,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.yaml.snakeyaml.Yaml;
-
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
@@ -35,13 +33,14 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
  * @author muml
  *
  */
-public class PostProcessingStepsUntilConfig extends PipelineStep implements Keywords{
+public class PostProcessingStepsUntilConfig extends PipelineStep implements Keywords, PipelineSettingsDirectoryAndFilePaths{
 
 	public static final String nameFlag = "PostProcessingStepsUntilConfig";
 
@@ -72,7 +71,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("arduinoContainersPath");
 		ins.add("componentCodePath");
-		ins.add("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt");
+		ins.add("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt");
 		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -89,7 +88,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", directValueKeyword + " arduino-containers");
 		ins.put("componentCodePath", directValueKeyword + " arduino-containers/fastAndSlowCar_v2");
-		ins.put("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt", directValueKeyword + "true");
+		ins.put("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt", directValueKeyword + "true");
 		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
@@ -100,55 +99,6 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 		return exampleSettings;
 	}
 	
-	
-	/**
-	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
-	 */
-	@Override
-	public void execute()
-			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
-			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception, InOrOutKeyNotDefinedException {
-
-		handleOutputByKey("ifSuccessful", false); // In case of exception.
-		
-		// Only load once.
-		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
-		Path componentCodePath = resolveFullOrLocalPath( handleInputByKey("componentCodePath").getContent() );
-		
-		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
-		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
-		
-		adjustIncludes(componentCodePath);
-		copyFilesFromComponentsFolderItself(arduinoContainersPath, componentCodePath);
-		copyFilesFromLibFolder(arduinoContainersPath, componentCodePath);
-		copyFilesFromMessagesFolder(arduinoContainersPath, componentCodePath);
-		copyFilesFromOperationsFolder(arduinoContainersPath, componentCodePath);
-		copyFilesFromRTSCsFolder(arduinoContainersPath, componentCodePath);
-		copyFilesFromTypesFolder(arduinoContainersPath, componentCodePath);
-		
-		// fastAndSlowCar_v2: Files „CmakeLists.txt“ und „Doxyfile“ will not be used.
-		// So nothing to do.
-		
-		copyAPImappingsAndAdjust(arduinoContainersPath);
-		if(handleInputByKey("useInternallyStoredConfig_hppFileInsteadOfDownloadingIt").getBooleanContent()){
-			placeAndNotYetAdjustInternallyStoredConfig_hpp(arduinoContainersPath);
-		}
-		else{
-			downloadAndNotYetAdjustConfig_hpp(arduinoContainersPath);
-		}
-		addHALPartsIntoCarDriverInoFiles(arduinoContainersPath);
-		fillOutMethodStubs(arduinoContainersPath);
-		// Moved to PerformPostProcessingStateChartValues and PerformPostProcessingStateChartValueFlexible.
-		//setVelocitiesAndDistancesForStates(arduinoContainersPathString); 
-
-        /*
-        18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
-        This is done separately.
-		*/
-		
-		handleOutputByKey("ifSuccessful", true);
-	}
-
 	
 	/**
 	 * @param componentCodePath
@@ -497,7 +447,6 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 					Scanner currentCFileReader = new Scanner(currentFileIn);
 			    	while (currentCFileReader.hasNextLine()) {
 			    		String currentLine = currentCFileReader.nextLine();
-			    		String currentLineTrimmed = currentLine.trim();
 
 			    		if(frontDistance && currentLine.contains("// Start of user code API") ){
 			    			workCopy.write(currentLine + "\n");
@@ -559,47 +508,28 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	private void placeAndNotYetAdjustInternallyStoredConfig_hpp(Path arduinoContainersPath)
-			throws IOException, MalformedURLException {
+	private void copyAndNotYetAdjustInternallyStoredConfig_hpp(Path arduinoContainersPath)
+			throws IOException{
 		
         // Download https://github.com/SQA-Robo-Lab/Sofdcar-HAL/blob/main/examples/SimpleHardwareController/Config.hpp into the *CarDriverECU folders.
 		// Raw URL: https://raw.githubusercontent.com/SQA-Robo-Lab/Sofdcar-HAL/main/examples/SimpleHardwareController/Config.hpp
         // And adjust configurations.
 		DirectoryStream<Path> arduinoContainersContent = Files.newDirectoryStream(arduinoContainersPath);
+		Path completeMUMLACGPPASettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath
+				.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
+		Path completeSofdcarHalConfigFilePath = completeMUMLACGPPASettingsDirectoryPath.resolve(SOFDCAR_HAL_LOCAL_CONFIG_FILE_NAME);
+		
+		File configExistenceCheck = completeSofdcarHalConfigFilePath.toFile();
+		if(! (configExistenceCheck.exists() && configExistenceCheck.isFile()) ) {
+			throw new IOException(completeSofdcarHalConfigFilePath + " not found!\n"
+					+ "Generate it this way:\n"
+					+ "(Right click on a .muml file)/\"MUMLACGPPA\"/\n"
+					+ "\"Generate local settings for Sofdcar-Hal\"");
+		}
+		
 		for(Path currentArduinoContainersEntryPath: arduinoContainersContent){
 			if(currentArduinoContainersEntryPath.getFileName().toString().endsWith("CarDriverECU")){
-				Path completePath = currentArduinoContainersEntryPath.resolve("Config.hpp");
-				FileWriter myWriter = new FileWriter(completePath.toFile());
-				
-				myWriter.write("#ifndef SIMPLE_HARDWARE_COINTROLLER_EXAMPLE_CONFIG_HPP");
-				myWriter.write("#define SIMPLE_HARDWARE_COINTROLLER_EXAMPLE_CONFIG_HPP");
-				myWriter.write("");
-				myWriter.write("#include <SimpleHardwareController.hpp>");
-				myWriter.write("");
-				myWriter.write("TurnSteeringCarConfig config = {");
-				myWriter.write("    {8, 9, 10},                // rearLeft");
-				myWriter.write("    {13, 12, 11},              // rearRight");
-				myWriter.write("    {52, 40, 39, 19, 66, 109}, // steering");
-				myWriter.write("    120,");
-				myWriter.write("    100,      // width, length");
-				myWriter.write("    {48, 49}, // frontDistance");
-				myWriter.write("    {48, 49}  // rearDistance");
-				myWriter.write("};");
-				myWriter.write("");
-				myWriter.write("uint8_t brightnessPins[3] = {A0, A1, A2};");
-				myWriter.write("BrightnessThresholds thresholds[3] = {{41, 114},");
-				myWriter.write("                                      {61, 140},");
-				myWriter.write("                                      {31, 81}};");
-				myWriter.write("");
-				myWriter.write("LineSensorConfig lineConfig = {");
-				myWriter.write("    16,             // sensor distance");
-				myWriter.write("    3,              // number of sesnor");
-				myWriter.write("    brightnessPins, // sensor pins");
-				myWriter.write("    thresholds      // sensor thretholds");
-				myWriter.write("};");
-				myWriter.write("");
-				myWriter.write("#endif");
-				
+				Files.copy(completeSofdcarHalConfigFilePath, currentArduinoContainersEntryPath.resolve("Config.hpp"), StandardCopyOption.REPLACE_EXISTING);
 				System.out.println("TODO: Adjust config values in " + currentArduinoContainersEntryPath.resolve("Config.hpp").toString() + "!!!");
 				//TODO: Do adjustments.
 			}
@@ -719,6 +649,55 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Keyw
 				Files.move(Paths.get(intermediateFileName), currentCarDriverECU_inoFile, StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
+	}
+
+
+	/**
+	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#execute()
+	 */
+	@Override
+	public void execute()
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
+			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception, InOrOutKeyNotDefinedException {
+
+		handleOutputByKey("ifSuccessful", false); // In case of exception.
+		
+		// Only load once.
+		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
+		Path componentCodePath = resolveFullOrLocalPath( handleInputByKey("componentCodePath").getContent() );
+		
+		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
+		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
+		
+		adjustIncludes(componentCodePath);
+		copyFilesFromComponentsFolderItself(arduinoContainersPath, componentCodePath);
+		copyFilesFromLibFolder(arduinoContainersPath, componentCodePath);
+		copyFilesFromMessagesFolder(arduinoContainersPath, componentCodePath);
+		copyFilesFromOperationsFolder(arduinoContainersPath, componentCodePath);
+		copyFilesFromRTSCsFolder(arduinoContainersPath, componentCodePath);
+		copyFilesFromTypesFolder(arduinoContainersPath, componentCodePath);
+		
+		// fastAndSlowCar_v2: Files „CmakeLists.txt“ und „Doxyfile“ will not be used.
+		// So nothing to do.
+		
+		copyAPImappingsAndAdjust(arduinoContainersPath);
+		if(handleInputByKey("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt").getBooleanContent()){
+			copyAndNotYetAdjustInternallyStoredConfig_hpp(arduinoContainersPath);
+		}
+		else{
+			downloadAndNotYetAdjustConfig_hpp(arduinoContainersPath);
+		}
+		addHALPartsIntoCarDriverInoFiles(arduinoContainersPath);
+		fillOutMethodStubs(arduinoContainersPath);
+		// Moved to PerformPostProcessingStateChartValues and PerformPostProcessingStateChartValueFlexible.
+		//setVelocitiesAndDistancesForStates(arduinoContainersPathString); 
+
+        /*
+        18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
+        This is done separately.
+		*/
+		
+		handleOutputByKey("ifSuccessful", true);
 	}
 
 }

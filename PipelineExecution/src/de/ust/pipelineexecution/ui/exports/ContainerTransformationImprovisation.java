@@ -73,12 +73,7 @@ class ContainerTransformationImprovisation{
 		Path subPathForPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(destinationContainerTransformationPath);
 		//final URI destinationContainerTransformationURI = URI.createPlatformResourceURI(subPathForPlatformRessourseURI.toString(), true);
 		final URI destinationContainerTransformationURI = URI.createPlatformResourceURI("/" + subPathForPlatformRessourseURI.toString(), true);
-		System.out.println("!!!!");
-		System.out.println("subPathForPlatformRessourseURI");
-		System.out.println("/" + subPathForPlatformRessourseURI);
-		System.out.println("destinationContainerTransformationURI");
-		System.out.println(destinationContainerTransformationURI.toString());
-
+		
 		MiddlewareOption selectedMiddleware;
 		if(step.getContentOfInput("middlewareOption").getContent().equals("MQTT_I2C_CONFIG")){
 			selectedMiddleware = MiddlewareOption.MQTT_I2C_CONFIG;

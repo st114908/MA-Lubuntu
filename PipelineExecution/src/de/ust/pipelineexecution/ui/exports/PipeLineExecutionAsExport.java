@@ -40,6 +40,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
@@ -91,25 +92,12 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 			pipelineSettingsFileNotFound = true;
 			InfoWindow pipelineSettingsMissingInfoWindow = new InfoWindow("The pipeline settings file is missing!",
 					"The pipeline settings file is missing!",
-					"The pipeline settings file is missing!\n" + "Generate one this way:\n"
+					"The pipeline settings file is missing!\n"
+							+ "Generate one this way:\n"
 							+ "(Right click on a .muml file)/\"MUMLACGPPA\"/\n"
 							+ "\"Generate default/example pipeline settings\"");
 			addPage(pipelineSettingsMissingInfoWindow);
 			return;
-		}
-
-		Path completeConfigFilePath = projectPath
-				.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_DIRECTORY_FOLDER_NAME)
-				.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_FILE_NAME);
-		if (!(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath))) {
-			InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow("The ArduinoCLI settings file is missing!",
-					"The ArduinoCLI settings file is missing!",
-					"The ArduinoCLI settings file is missing.\n"
-							+ "So if you are using a stet that relies on the ArduinoCLIUtilizer project,\n"
-							+ "then you have to generate one this way:\n"
-							+ "(Right click on a .muml file)/\"MUMLACGPPA\"/\n"
-							+ "\"Generate ArduinoCLIUtilizer config file\"");
-			addPage(arduinoCLISettingsMissingInfoWindow);
 		}
 
 		try {
@@ -130,16 +118,48 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 			e.printStackTrace();
 			return;
 		}
+
+		// Search for steps that require the ArduinoCLIUtilizer to be able to
+		// work.
+		// (It is assumed to be loaded, so this will just check for the
+		// ArduinoCLI settings file.
+		boolean checkForACLIUSettingsFile = false;
+		for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+			if ((currentStep.getClass().getSimpleName().equals(Compile.nameFlag))
+					|| (currentStep.getClass().getSimpleName().equals(Compile.nameFlag))
+					|| (currentStep.getClass().getSimpleName().equals(Compile.nameFlag))) {
+				checkForACLIUSettingsFile = true;
+				break;
+			}
+		}
+		if (checkForACLIUSettingsFile) {
+			Path completeACLIUSettingsFilePath = projectPath
+					.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_DIRECTORY_FOLDER_NAME)
+					.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_FILE_NAME);
+			if (!(Files.exists(completeACLIUSettingsFilePath) && Files.isRegularFile(completeACLIUSettingsFilePath))) {
+				InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow(
+						"The ArduinoCLI settings file is missing!", "The ArduinoCLI settings file is missing!",
+						"The ArduinoCLI settings file is missing and at least step that requires it has been found.\n"
+								+ "So if you are using a stet that relies on the ArduinoCLIUtilizer project,\n"
+								+ "Generate one this way:\n"
+								+ "(Right click on a .muml file)/\"MUMLACGPPA\"/\n"
+								+ "\"Generate ArduinoCLIUtilizer config file\"");
+				addPage(arduinoCLISettingsMissingInfoWindow);
+				return;
+			}
+		}
+
 		// Search for some steps that require some preparations but
 		// neither allow that they get done right before they are needed
 		// nor that their values are regardless of the execution logic just
 		// maybe initialized
 		// due to doExecute requiring the requested values to be "final or
-		// effecively final" (or with other words not maybe given values).
+		// effectively final" (or with other words not maybe given values).
 		// .getClass().getSimpleName()
 		containerTransformationToBePerformed = false;
 		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
+
 		for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
 			if (currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)) {
 				// T3.2: Deployment Configuration aka Container Transformation:
@@ -175,14 +195,32 @@ public class PipeLineExecutionAsExport extends AbstractFujabaExportWizard {
 			}
 		}
 
-		InfoWindow selectableTextWindowsIfoWindow = new InfoWindow("Messages won't work!",
-				"PopupWindowMessages and SelectableTextWindows won't work!",
-				"Due to Access restrictions no windows PopupWindowMessages and SelectableTextWindows\n"
-						+ "can be created from the export wizard process.\n" + "(Or at least no way could be found.)\n"
-						+ "So please check the console of the Eclipse window that\n"
-						+ "you used to run the MUML-Plug-Ins as Eclipse application.\n");
-		addPage(selectableTextWindowsIfoWindow);
-
+		// Information about steps with windows that appear.
+		boolean stepWithWindowFound = false;
+		for (PipelineStep currentStep : PSRInstance.getPipelineSequence()) {
+			if ((currentStep.getClass().getSimpleName().equals(PopupWindowMessage.nameFlag))
+					|| (currentStep.getClass().getSimpleName().equals(SelectableTextWindow.nameFlag))
+					|| (currentStep.getClass().getSimpleName().equals(OnlyContinueIfFulfilledElseAbort.nameFlag))) {
+				stepWithWindowFound = true;
+				break;
+			}
+		}
+		if (stepWithWindowFound) {
+			InfoWindow selectableTextWindowsInfoWindow = new InfoWindow("Messages won't work!",
+					"PopupWindowMessages and SelectableTextWindows won't work!",
+					"Due to Access restrictions no windows PopupWindowMessages and SelectableTextWindows\n"
+							+ "can be created from the export wizard process.\n" + "(Or at least no way could be found.)\n"
+							+ "So please check the console of the Eclipse window that\n"
+							+ "you used to run the MUML-Plug-Ins as Eclipse application.\n");
+			addPage(selectableTextWindowsInfoWindow);
+		}
+		
+		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Pipeline execution",
+				"Pipeline execution ready to start.",
+				"The execution of the pipeline is ready to start.\n"
+				+ "Click \"Finish\" to start it.");
+		addPage(readyToStartPipelineIfoWindow);
+		
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {
 			refreshWorkSpace(selectedFile);

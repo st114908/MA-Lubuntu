@@ -71,7 +71,6 @@ public class Upload extends PipelineStep {
 		super(VariableHandlerInstance, readData);
 	}
 
-	@SuppressWarnings("unchecked")
 	public Upload(VariableHandler VariableHandlerInstance, String yamlData)
 			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);

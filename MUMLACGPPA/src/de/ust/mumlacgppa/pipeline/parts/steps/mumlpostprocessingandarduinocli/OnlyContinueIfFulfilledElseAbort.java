@@ -68,7 +68,6 @@ public class OnlyContinueIfFulfilledElseAbort extends PipelineStep implements Ke
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA
 	 */
-	@SuppressWarnings("unchecked")
 	public OnlyContinueIfFulfilledElseAbort(VariableHandler VariableHandlerInstance, String yamlData)
 			throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);

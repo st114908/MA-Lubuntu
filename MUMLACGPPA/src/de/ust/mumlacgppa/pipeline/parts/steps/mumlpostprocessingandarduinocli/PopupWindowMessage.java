@@ -64,7 +64,6 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	@SuppressWarnings("unchecked")
 	public PopupWindowMessage(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}

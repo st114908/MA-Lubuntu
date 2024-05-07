@@ -16,8 +16,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.yaml.snakeyaml.Yaml;
-
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
@@ -28,7 +26,6 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
-import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
  * @author muml

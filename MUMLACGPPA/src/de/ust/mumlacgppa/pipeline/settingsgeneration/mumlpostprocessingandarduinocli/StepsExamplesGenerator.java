@@ -4,19 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
@@ -69,7 +63,7 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 		}
 		
 		File configExistenceCheck = completeExamplesFilePath.toFile();
-		if(configExistenceCheck.exists() && !configExistenceCheck.isDirectory()) {
+		if(configExistenceCheck.exists() && configExistenceCheck.isFile()) {
 			return false;
 		}
 		

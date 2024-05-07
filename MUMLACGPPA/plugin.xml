@@ -44,6 +44,13 @@
                enablesFor="1"
                id="MUMLACGPPA.GenerateAllPipelineStepExamplesAction">
          </action>
+         <action
+               label="Generate local settings for Sofdcar-Hal"
+               class="de.ust.mumlacgppa.popup.actions.GenerateSofdcarHalConfig_hppFileAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateSofdcarHalConfig_hppFileAction">
+         </action>
          
          <action
                label="Generate ArduinoCLIUtilizer config file"
