@@ -1,0 +1,85 @@
+[comment encoding = UTF-8 /]
+[module main('http://www.muml.org/psm/muml_container/0.5.0', 
+	'http://www.muml.org/pm/hardware/hwresourceinstance/1.0.0',
+	'http://www.muml.org/core/1.0.0')/]
+
+[import org::muml::arduino::adapter::container::main::MainFile /]
+[import org::muml::arduino::adapter::container::container::ECUIdentifier /]
+[import org::muml::arduino::adapter::container::container::ContainerHeader/]
+[import org::muml::arduino::adapter::container::container::Container /]
+
+[import org::muml::arduino::adapter::container::communication::MqttBrokerConfiguration /]
+
+[**
+ * Generate the Arduino container code for each ECU contained in the given @param deploymentConfig.
+ * 
+ * Only applicable to DeploymentConfigurations that make use of MQTT and I2C (DDS is not supported for Arduino).
+*/]
+[template public generateArduinoContainers(deploymentConfig : DeploymentConfiguration)]
+[comment @main/]
+
+[if (deploymentConfig.ecuConfigurations.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_DDS)))]
+	[createErrorReadme()/]
+[else] [comment Else, only MQTT and I2C are used -> start the actual code generation /]
+	[createReadmeAndMqttServer(deploymentConfig)/]
+	[for (ecuConfig : ECUConfiguration | deploymentConfig.ecuConfigurations)]
+		[ecuConfig.createArduinoContainers() /]
+	[/for]
+[/if]
+[/template]
+
+[**
+ * Generate the containers for one single ECU given as @param ecuConfig.
+*/]
+[template private createArduinoContainers(ecuConfig: ECUConfiguration)
+	{
+		path : String = ecuConfig.structuredResourceInstance.name+'/' ;
+		useSubDirectories : Boolean = false;
+	}
+]
+	[ecuConfig.generateMainFile(path, useSubDirectories)/]
+	[ecuConfig.generateECUIdentifier(useSubDirectories, path) /]
+	[for (container : ComponentContainer | ecuConfig.componentContainers)]
+		[container.generateContainerHeader(path, useSubDirectories) /]
+		[container.generateContainer(useSubDirectories, path) /]
+	[/for]
+[/template]
+
+[**
+ * Creates a README indicating that DDS is not supported for Arduino!
+*/]
+[template public createErrorReadme() ]
+	[file ('README.txt', false, 'UTF-8')]
+The given Deployment Configuration must not make use of DDS for the Arduino Code generation!
+Currently, only MQTT and I2C are supported for Arduino.
+	[/file]
+[/template]
+
+
+[**
+ * Creates a README.txt taht explains how to use the generated code.
+ * 
+ * If MQTT is used int he deploymentConfig, then the generation of the MQTT Server Configuration is also triggered.
+*/]
+[template public createReadmeAndMqttServer(deploymentConfig : DeploymentConfiguration) ]
+	[file ('README.txt', false, 'UTF-8')]
+# Code generation from MechatronicUML using MQTT and I2C for Arduino
+
+This directory contains the generated platform-specific container code. Per ECU, you find one directory with an .ino-file.
+
+The following things are required to get a fully working implementation:
+* You need to generate or implement the platform-independent component code (the functional implementation) using the Generate Component Type Code functionality in the MechatronicUML Tool Suite, see https://github.com/SQA-Robo-Lab/MUML-CodeGen-Wiki/tree/main/user-documentation.
+		[if (deploymentConfig.ecuConfigurations.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+			[let mqttPiConfig : PortInstanceConfiguration_MQTT = deploymentConfig.ecuConfigurations.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->any(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_MQTT)).oclAsType(PortInstanceConfiguration_MQTT)]
+				[let path : String = 'mosquitto/']
+* For MQTT communication, you require an MQTT server. Currently, it is expected to be accessible at [mqttPiConfig.MQTT_serverAddress.toString() /]:[mqttPiConfig.MQTT_serverPort.toString() /] (see org.muml.psm.container.transformation). If you can make your local machine available at the given IP address, you can simply us the Docker configuration we generated for you to quickly start-up your MQTT server :-) use ```docker-compose up```! You find the configuration files in the [path /] directory.
+					[generateMosquittoDockerFiles(mqttPiConfig.MQTT_serverPort, path) /]
+* For MQTT communication, you also require a WiFi connection using the ESP8266-01s WiFi Module. See more information in the MqttCustomLib.hpp in the respective ECU's directory.
+				[/let]
+			[/let]
+		[/if]
+		[if (deploymentConfig.ecuConfigurations.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+* For I2C communication, the Arduino is expected to be using its I2C pins. See more information in the I2cCustomLib.hpp in the respective ECU's directory.
+		[/if]
+	[/file]
+[/template]

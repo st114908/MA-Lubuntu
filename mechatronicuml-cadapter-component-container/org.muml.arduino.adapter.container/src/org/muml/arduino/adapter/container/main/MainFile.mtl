@@ -1,0 +1,136 @@
+[comment encoding = UTF-8 /]
+[**
+ * This module contains all templates, that are used to generate the Configuration-files
+ * for a given Container. Duplicated from org.muml.c.adapter.container.container due to necessary adaptions.
+ */]
+[module MainFile('http://www.muml.org/pim/connector/1.0.0', 'http://www.muml.org/pim/behavior/1.0.0',
+				'http://www.muml.org/core/1.0.0',
+				'http://www.muml.org/pim/actionlanguage/1.0.0',
+				'http://www.muml.org/pim/msgtype/1.0.0',
+				'http://www.muml.org/pim/types/1.0.0',
+				'http://www.muml.org/modelinstance/1.0.0',
+				'http://www.muml.org/pim/component/1.0.0',
+				'http://www.muml.org/pim/instance/1.0.0',
+				'http://www.muml.org/pim/realtimestatechart/1.0.0',
+				'http://www.muml.org/psm/1.0.0',
+				'http://www.muml.org/psm/muml_container/0.5.0')/]
+
+[import org::muml::c::adapter::componenttype::queries::stringQueries]
+[import org::muml::c::adapter::componenttype::queries::modelQueries/]
+[import org::muml::c::adapter::componenttype::queries::ContainerQueries/]
+
+
+[import org::muml::c::adapter::container::container::ContainerCommunication/]
+[import org::muml::c::adapter::container::queries::containerStringQueries/]
+[import org::muml::c::adapter::container::container::ContainerBuilder/]
+[import org::muml::c::adapter::container::container::Container/]
+
+[template public generateMainFile(ecuConfig: ECUConfiguration, path : String, useSubDir : Boolean)]
+[comment Arduino sketches' main-files have to be called just as their parent directory - so don't call them main.ino! /]
+[file (path+ecuConfig.structuredResourceInstance.name+'.ino', false, 'UTF-8')]
+
+#include "[if (useSubDir)]lib/[/if]Debug.h"
+
+[comment include the I2C lib if I2C is used by the containers on this ECU /]
+[if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+#include "[if (useSubDir)]container_lib/[/if]I2cCustomLib.hpp"
+[/if]
+
+[comment include the MQTT lib if MQTT is use by the containers on this ECU /]
+[if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConfig | piConfig.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+#include "[if (useSubDir)]container_lib/[/if]MqttCustomLib.hpp"
+#include <WiFiEsp.h>
+
+static struct MqttConfig* mqttConfig;
+[/if]
+
+[for (container : ComponentContainer | ecuConfig.componentContainers)]
+#include "[container.getFileName(container, true, useSubDir)/]"
+[/for]
+
+// [protected ('DEVICEINITINCLUDES')]
+/* TODO: if devices or libraries are used which need an initialization, include the headers here */
+// [/protected]
+
+
+[let cis : OrderedSet(ComponentInstance) = ecuConfig.componentContainers.componentInstanceConfigurations.componentInstance->asOrderedSet()]
+//variable for component Instances
+[for (ci : ComponentInstance | cis)]
+	[if (ci.componentType.oclIsKindOf(AtomicComponent))]
+[ci.componentType.getClassName()/]* atomic_c[i/];
+	[/if]
+[/for]
+
+[for (ci : ComponentInstance | cis->filter(AtomicComponentInstance)->select(c:AtomicComponentInstance |  c.componentType=ComponentKind::SOFTWARE_COMPONENT)->asOrderedSet())]
+[/for]
+void setup(){
+	#ifdef DEBUG
+	Serial.begin(9600);
+	Serial.println("Initialization starting...");
+	#endif
+	// [protected ('DEVICEINIT')]
+	/* TODO: if devices are used which need an initialization, call the functionse here */
+	// [/protected]
+	[for (ci : ComponentInstance | cis)]
+		[if (ci.componentType.oclIsKindOf(AtomicComponent))]
+	atomic_c[i/]= [ci.componentType.getContainerComponentCreateMethodName()/]([ci.getIdentifierVariableName()/]);
+		[/if]
+	[/for]
+	
+	[comment SETUP the I2C lib if I2C is used by the containers on this ECU /]
+	[if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[let piConfig : PortInstanceConfiguration = ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->any(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C))]
+			[let i2cAddress : Integer = piConfig.oclAsType(PortInstanceConfiguration_I2C).ownI2cAddress]
+	i2cCommunication_setup([i2cAddress/]);
+			[/let]
+		[/let]
+	[/if]
+
+	[comment SETUP the MQTT lib if MQTT is used by the containers on this ECU /]
+	[if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConfig | piConfig.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+		[let mqttPiConfig : PortInstanceConfiguration_MQTT = ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->any(piConfig | piConfig.oclIsKindOf(PortInstanceConfiguration_MQTT)).oclAsType(PortInstanceConfiguration_MQTT)]
+	//collect the data required for the WiFi configuration
+	struct WiFiConfig wifiConfig = {
+		"[mqttPiConfig.WiFi_ssid.toString()/]",
+		"[mqttPiConfig.WiFi_pass.toString()/]",
+		WL_IDLE_STATUS
+	};
+
+	//collect the data required for the MQTT configuration
+	struct MqttConfig mConf = {
+		"[mqttPiConfig.MQTT_serverAddress.toString()/]",
+		[mqttPiConfig.MQTT_serverPort/],
+		"[ecuConfig.name.toString() /]"
+	};
+	mqttConfig = &mConf;
+
+	mqttCommunication_setup(&wifiConfig, mqttConfig);
+		[/let]	
+	[/if]
+
+	#ifdef DEBUG
+	Serial.println("Initialization done...start execution.");
+	#endif
+}
+
+void loop(){
+	[comment LOOP the MQTT library if any of the ECU's containers uses MQTT /]
+	[if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConfig | piConfig.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	mqttCommunication_loop(mqttConfig);
+	[/if]
+
+	[for (ci : ComponentInstance | cis)]
+		[if (ci.componentType.oclIsKindOf(AtomicComponent))]
+	[ci.componentType.getProcessMethodName()/](atomic_c[i/]);
+		[/if]
+	[/for]
+}	
+
+[/let]
+
+
+	[/file]
+[/template]	
+
+
+

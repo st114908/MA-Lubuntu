@@ -1,0 +1,84 @@
+[comment encoding = UTF-8 /]
+[**
+ * This module contains all templates, that are used to generate the Header-file
+ * for a given Container. Duplicated from org.muml.c.adapter.container.container due to necessary adaptions.
+ */]
+[module ContainerHeader('http://www.muml.org/pim/connector/1.0.0',
+				'http://www.muml.org/pim/behavior/1.0.0',
+				'http://www.muml.org/core/1.0.0',
+				'http://www.muml.org/pim/actionlanguage/1.0.0',
+				'http://www.muml.org/core/expressions/common/1.0.0',
+				'http://www.muml.org/pim/msgtype/1.0.0',
+				'http://www.muml.org/pim/types/1.0.0',
+				'http://www.muml.org/modelinstance/1.0.0',
+				'http://www.muml.org/pim/component/1.0.0',
+				'http://www.muml.org/pim/instance/1.0.0',
+				'http://www.muml.org/pim/realtimestatechart/1.0.0',
+				'http://www.muml.org/psm/1.0.0',
+				'http://www.muml.org/psm/muml_container/0.5.0')/]
+
+[import org::muml::c::adapter::componenttype::queries::stringQueries/]
+[import org::muml::c::adapter::componenttype::queries::ContainerQueries/]
+[import org::muml::c::adapter::container::queries::containerStringQueries/]
+
+[**
+ * Generates the header file for the component container.
+ * 
+ * The header file includes all libraries, communication middleware, component behavior and API mapping code
+ * that are required for the component type this container can handle.
+*/]
+[template public generateContainerHeader(container:ComponentContainer, path: String, useSubDir:Boolean)]
+	[file (path+getFileNameCpp(container, true, useSubDir), false, 'UTF-8')]
+#ifndef [getHeaderDefine(container)/]
+#define [getHeaderDefine(container)/]
+
+[includes(container, useSubDir)/]
+		
+/**
+ * @file 
+ * @author generated
+ * @brief Specification of Component Container for Component of Type: [container.componentType/]
+ * @details This file contains an implementation of the container interfaces of a components
+ */
+
+[containerOperations(container)/]
+
+#endif /* [getHeaderDefine(container)/] */
+	[/file]
+[/template]	
+
+
+[template private includes(container : ComponentContainer, useSubDir: Boolean)]
+// Library
+#include "[if (useSubDir)]../container_lib/[/if]ContainerTypes.h"
+#include "[if (useSubDir)]../container_lib/[/if]LocalBufferManager.h"
+
+
+//Identifier of this ECU
+#include "[if (useSubDir)]../[/if][getFileNameECU_Identifier()/]"
+
+[if isI2cUsed(container)]
+//I2C Specific includes
+#include "[if (useSubDir)]../container_lib/[/if]I2cCustomLib.hpp"
+[/if]
+[if (isMqttUsed(container))]
+//MQTT specific includes
+#include "[if (useSubDir)]../container_lib/[/if]MqttCustomLib.hpp"
+[/if]
+//include the component_interface header
+#include "[if (useSubDir)]../[/if][getFileNameComponentInterface(container.componentType, useSubDir)/]"
+//include api mapping headers
+[for (cInst : ComponentInstance | container.componentInstances)]
+	[for (cPort : ContinuousPort | container.componentType.ports->filter(ContinuousPort))]
+#include "[if (useSubDir)]../APImappings/[/if][cInst.getIdentifierVariableName()/][cPort.getVariableName()/]accessCommand.h"
+	[/for]
+[/for] 
+[/template]
+
+[template private containerOperations(container:ComponentContainer)]
+/**
+ * @brief Forward Declaration of the method [getContainerComponentCreateMethod(container)/]
+ * @details The method for initializing and creating a component instance of type: [container.componentType/]
+ */
+[container.componentType.getClassName()/]* [getContainerComponentCreateMethod(container)/](uint8_T id);
+[/template]

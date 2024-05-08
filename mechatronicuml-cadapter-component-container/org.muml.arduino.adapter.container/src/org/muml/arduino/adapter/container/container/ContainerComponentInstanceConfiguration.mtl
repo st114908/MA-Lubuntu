@@ -1,0 +1,124 @@
+[comment encoding = UTF-8 /]
+[**
+ * This module contains all templates, that are used to generate the Configuration-files
+ * for a given Container. Duplicated from org.muml.c.adapter.container.container due to necessary adaptions.
+ */]
+[module ContainerComponentInstanceConfiguration('http://www.muml.org/pim/connector/1.0.0',
+				'http://www.muml.org/pim/behavior/1.0.0',
+				'http://www.muml.org/core/1.0.0',
+				'http://www.muml.org/pim/actionlanguage/1.0.0',
+				'http://www.muml.org/core/expressions/common/1.0.0',
+				'http://www.muml.org/pim/msgtype/1.0.0',
+				'http://www.muml.org/pim/types/1.0.0',
+				'http://www.muml.org/modelinstance/1.0.0',
+				'http://www.muml.org/pim/component/1.0.0',
+				'http://www.muml.org/pim/instance/1.0.0',
+				'http://www.muml.org/pim/realtimestatechart/1.0.0',
+				'http://www.muml.org/psm/1.0.0',
+				'http://www.muml.org/psm/muml_container/0.5.0',
+				'http://www.opendds.org/modeling/schemas/DCPS/1.0',
+				'http://www.opendds.org/modeling/schemas/Core/1.0',
+				'http://www.opendds.org/modeling/schemas/Application/1.0',
+				'http://www.opendds.org/modeling/schemas/Topics/1.0')/]
+
+
+[import org::muml::c::adapter::componenttype::queries::stringQueries/]
+[import org::muml::c::adapter::componenttype::queries::modelQueries/]
+[import org::muml::c::adapter::componenttype::queries::ContainerQueries/]
+
+[import org::muml::c::adapter::container::queries::containerStringQueries/]
+[import org::muml::c::adapter::container::container::local::LocalBuilder/]
+[import org::muml::c::adapter::container::container::dds::DDSBuilder/]
+
+[import org::muml::arduino::adapter::container::communication::I2cCommunication /]
+[import org::muml::arduino::adapter::container::communication::MqttCommunication /]
+
+[**
+ * Generates a method to create a component instance via the container.
+*/]
+[template public generateCreateMethodForComponentInstances(container:ComponentContainer, cicfgs:Collection(ContainerComponentInstanceConfiguration))]
+/**
+ * @brief Create a component instance with the given id.
+ * 
+ * @details Creates a component instance using the builder and the configuration options, and also configures the port instances.
+ * 
+ * @param ID the identifier of the component instance
+ */
+[container.componentType.getClassName()/]* [container.componentType.getContainerComponentCreateMethodName()/](uint8_T ID){
+	struct [componentType.getBuilderStructName()/] b = INIT_BUILDER;
+	switch(ID){
+	[for (componentInstanceCfg : ContainerComponentInstanceConfiguration | cicfgs)]
+		case [componentInstanceCfg.componentInstance.getIdentifierVariableName()/]:
+			b.ID = ID;
+		[for (cPort : ContinuousPort | container.componentType.ports->filter(ContinuousPort))]
+			b.[getVariableName(cPort)/]AccessFunction=&[componentInstanceCfg.componentInstance.getIdentifierVariableName()/][getVariableName(cPort)/]accessCommand;
+		[/for]
+		[for (portCfg : PortInstanceConfiguration | componentInstanceCfg.portInstanceConfigurations)]
+		[comment Read all of the configuration data for the Port Instances from the PortInstanceConfigurations /]
+			[if (portCfg.oclIsKindOf(PortInstanceConfiguration_Local))]
+			b.[portCfg.portInstance.portType.name.toUpper()/] = PORT_ACTIVE;
+			b.create[portCfg.portInstance.portType.name.toUpper()/]Handle = &[portCfg.portInstance.portType.getMethodNameForLocalPortBuilder()/];
+			b.[portCfg.portInstance.portType.name.toUpper()/]_op.local_option.pubID = [portCfg.oclAsType(PortInstanceConfiguration_Local).ownID/];
+			b.[portCfg.portInstance.portType.name.toUpper()/]_op.local_option.subID = [portCfg.oclAsType(PortInstanceConfiguration_Local).writersID/];
+			[/if]
+			[if (portCfg.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+			b.[portCfg.portInstance.portType.name.toUpper()/] = PORT_ACTIVE;
+			b.create[portCfg.portInstance.portType.name.toUpper()/]Handle = &[portCfg.portInstance.portType.getMethodNameForMqttPortHandleBuilder()/];
+			b.[portCfg.portInstance.portType.name.toUpper() /]_op.mqtt_option.publishingTopic = "[portCfg.oclAsType(PortInstanceConfiguration_MQTT).publishingTopic.toString() /]";
+			b.[portCfg.portInstance.portType.name.toUpper() /]_op.mqtt_option.subscriptionTopic = "[portCfg.oclAsType(PortInstanceConfiguration_MQTT).subscriptionTopic.toString() /]";
+			[/if]
+			[if (portCfg.oclIsKindOf(PortInstanceConfiguration_I2C))]
+			b.[portCfg.portInstance.portType.name.toUpper()/] = PORT_ACTIVE;
+			b.create[portCfg.portInstance.portType.name.toUpper()/]Handle = &[portCfg.portInstance.portType.getMethodNameForI2cPortHandleBuilder() /];
+			b.[portCfg.portInstance.portType.name.toUpper()/]_op.i2c_option.ownAddress = [portCfg.oclAsType(PortInstanceConfiguration_I2C).ownI2cAddress /];
+			b.[portCfg.portInstance.portType.name.toUpper()/]_op.i2c_option.otherAddress = [portCfg.oclAsType(PortInstanceConfiguration_I2C).otherI2cAddress /];
+			[/if]
+		[/for]
+		break;
+	[/for]	
+	default:
+		break;
+	}
+	return MCC_[container.componentType.getClassName()/]_Builder(&b);
+}
+[/template]	
+
+[**
+ * Generates Files for the device API access. These files may be replaced by using the ApiML and ApiMappingML.
+*/]
+[template public generateAccessCommandStubsAsFiles(container:ComponentContainer, cicfgs:Collection(ContainerComponentInstanceConfiguration), useSubDir : Boolean)]
+[for (componentInstanceCfg : ContainerComponentInstanceConfiguration | cicfgs)]
+	[for (cPort : ContinuousPort | container.componentType.ports->filter(ContinuousPort))]
+	[let filename : String = componentInstanceCfg.componentInstance.getIdentifierVariableName()+getVariableName(cPort)+'accessCommand']
+	[file ('APImappings/'+filename+'.h', false, 'Utf8')]
+#ifdef __cplusplus
+extern "C" {
+#endif
+// [protected ('FORINCLUDES')]
+
+// [/protected]
+#include "[if useSubDir]../types/[/if]standardTypes.h"
+#include "[if useSubDir]../types/[/if]customTypes.h"
+void [componentInstanceCfg.componentInstance.getIdentifierVariableName()/][getVariableName(cPort)/]accessCommand([getTypeName(cPort.dataType)/]* [cPort.name/]);
+// [protected ('API')]
+
+// [/protected]
+#ifdef __cplusplus
+}
+#endif
+	[/file]	
+	[file ('APImappings/'+filename+'.c', false, 'Utf8')]
+#include "[filename+'.h'/]"
+void [componentInstanceCfg.componentInstance.getIdentifierVariableName()/][getVariableName(cPort)/]accessCommand([getTypeName(cPort.dataType)/]* [cPort.name/]){
+	// [protected ('API')]
+
+	// [/protected]
+}
+	[/file]
+	[/let]
+	[/for]
+[/for]
+
+[/template]	
+
+

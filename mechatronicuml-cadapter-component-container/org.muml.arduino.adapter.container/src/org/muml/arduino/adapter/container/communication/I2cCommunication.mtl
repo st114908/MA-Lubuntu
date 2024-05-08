@@ -1,0 +1,175 @@
+[comment encoding = UTF-8 /]
+[**
+ * This module contains all templates, that are used to generate the Configuration-files
+ * for a given Container.
+ */]
+[module I2cCommunication('http://www.muml.org/pim/connector/1.0.0',
+				'http://www.muml.org/pim/behavior/1.0.0',
+				'http://www.muml.org/core/1.0.0',
+				'http://www.muml.org/pim/actionlanguage/1.0.0',
+				'http://www.muml.org/core/expressions/common/1.0.0',
+				'http://www.muml.org/pim/msgtype/1.0.0',
+				'http://www.muml.org/pim/types/1.0.0',
+				'http://www.muml.org/modelinstance/1.0.0',
+				'http://www.muml.org/pim/component/1.0.0',
+				'http://www.muml.org/pim/instance/1.0.0',
+				'http://www.muml.org/pim/realtimestatechart/1.0.0',
+				'http://www.muml.org/psm/1.0.0',
+				'http://www.muml.org/psm/muml_container/0.5.0')/]
+
+[import org::muml::c::adapter::container::queries::containerStringQueries /]
+[import org::muml::c::adapter::componenttype::queries::stringQueries /]
+
+[query public getMethodNameForI2cPortHandleBuilder(port : Port) : String = 
+	'create_' + port.name.toUpper() + 'I2cHandle'
+/]
+
+[**
+ * Generate the Builder function for an I2C Port Handle that is applicable to all PortInstanceConfigurations of the given port.
+*/]
+[template public generateBuilderForI2cPortHandle(port:Port, portInstanceConfigs:Collection(PortInstanceConfiguration_I2C))]
+/**
+ * @brief The Builder for an I2cHandle for port [port.name/]
+ *
+ * @details creates a struct I2cHandle which encapsulates the logic for communication 
+ */
+static PortHandle* [getMethodNameForI2cPortHandleBuilder(port)/]([port.component.getBuilderStructName() /]* b, PortHandle *ptr){
+	ptr->type = PORT_HANDLE_TYPE_I2C;
+	[if (port.oclIsKindOf(DiscretePort))]
+	//create the handle for the discrete port [port.name.toUpper()/] with all its message types
+	I2cHandle* handle = (I2cHandle*) malloc(sizeof(I2cHandle)+[port.oclAsType(DiscretePort).receiverMessageTypes->size()/]*sizeof(I2cReceiver));
+	handle->numOfReceivers = [port.oclAsType(DiscretePort).receiverMessageTypes->size()/];
+	//register a receiver for every message type of the port
+	[for (messageType : MessageType | port.oclAsType(DiscretePort).receiverMessageTypes)]
+		[let j : Integer = i-1 ]
+			[let messageBuffer : MessageBuffer = port.oclAsType(DiscretePort).receiverMessageBuffer->select(buffer : MessageBuffer | buffer.messageType->exists(msgT : MessageType | msgT=messageType))->first()]
+	initAndRegisterI2cReceiver(&(handle->receivers['['/][j/][']'/]), 
+								"[messageType.getName()/]",
+								[messageBuffer.bufferSize.value /],
+								sizeof([messageType.getMessageType()/]),
+								[if messageBuffer.bufferOverflowAvoidanceStrategy=BufferOverflowAvoidanceStrategy::DISCARD_OLDEST_MESSAGE_IN_BUFFER] true [else] false [/if]);
+			[/let]
+		[/let]
+	[/for]
+	[else] [comment if DirectedTypedPort /]
+	//create the handle for the DirectedTypedPort [port.name.toUpper()/] that has only 1 data type
+	I2cHandle* handle = malloc(sizeof(I2cHandle)+[if (port.oclAsType(DirectedTypedPort).inPort)]1[else]0[/if]*sizeof(I2cReceiver));
+	handle->numOfReceivers = 1
+	//The message ID is 0, the buffer holds 1 item
+	initAndRegisterI2cReceiver(&(handle->receivers['['/]0[']'/]), "[port.oclAsType(DirectedTypedPort).dataType.getTypeName()/]", 1, sizeof([port.oclAsType(DirectedTypedPort).dataType.getTypeName()/]), true);
+	[/if]
+	handle->ownI2cAddress = b->[port.name.toUpper()/]_op.i2c_option.ownAddress;
+	handle->otherI2cAddress = b->[port.name.toUpper()/]_op.i2c_option.otherAddress;
+	ptr->concreteHandle = handle;
+	
+	return ptr;
+}
+[/template]
+
+[**
+ * Declares the variables that are required for sending messages using I2C.
+*/]
+[template public generateDeclarationsForI2cSending()]
+I2cHandle* i2cHandle;
+[/template]
+
+[**
+ * Declares the variables that are required for receiving messages using I2C.
+*/]
+[template public generateDeclarationsForI2cReceiving()]
+I2cHandle* i2cHandle;
+int i = 0;
+[/template]
+
+[**
+ * Generates the library function call for sending message using I2C for the given messageType of a DiscretePort.
+*/]
+[template private generateSendI2cMessage(messageType : MessageType)]
+sendI2cMessage(i2cHandle->otherI2cAddress, "[messageType.getName() /]", (byte *) msg, sizeof([messageType.getMessageType()/])); [comment msg is a pointer that is handed to the method as parameter /]
+[/template]
+
+[**
+ * Generates the library function call for sending message using I2C for the given dataType of a DirectedTypedPort.
+*/]
+[template private generateSendI2cMessage(dataType : DataType)]
+sendI2cMessage(i2cHandle->otherI2cAddress, "[dataType.getTypeName()/]", (byte *) msg, sizeof([dataType.getTypeName()/])); [comment msg is a pointer that is handed to the method as parameter /]
+[/template]
+
+[**
+ * Generates the sending of a DiscretePort's message via I2C.
+*/]
+[template public generateSwitchCaseForI2cSending(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), messageType : MessageType)]
+[generateCaseAndI2cHandle() /]
+	[generateSendI2cMessage(messageType) /]
+	break;
+[/template]
+
+[**
+ * Generates the sending of a DirectedTypedPort's data via I2C.
+*/]
+[template public generateSwitchCaseForI2cSending(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), dataType : DataType)]
+[generateCaseAndI2cHandle() /]
+	[generateSendI2cMessage(dataType) /]
+	break;
+[/template]
+
+[**
+ * Generates the loop that iterates through the receivers and finds the right receiver to obtain its buffer.
+*/]
+[template private generateFindMessageBuffer(messageTypeName : String)]
+MessageBuffer* buffer = NULL;
+for (i = 0; i < i2cHandle->numOfReceivers; i++) {
+	if (strcmp(i2cHandle->receivers['['/]i[']'/].messageTypeName, "[messageTypeName/]") == 0){
+		buffer = i2cHandle->receivers['['/]i[']'/].buffer;
+		break;
+	}
+}
+[/template]
+
+[**
+ * Generates the check if an I2C message is available for the corresponding DiscretePort.
+*/]
+[template public generateSwitchCaseForI2cExists(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), messageType: MessageType)]
+[generateCaseAndI2cHandle() /]
+	[generateFindMessageBuffer(messageType.getName()) /]
+	return MessageBuffer_doesMessageExists(buffer);
+	break;
+[/template]
+
+[**
+ * Generates the check if new data of the corresponding DirectedTypedPort is available via I2C.
+*/]
+[template public generateSwitchCaseForI2cExists(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), dataType : DataType)]
+[generateCaseAndI2cHandle() /]
+	[generateFindMessageBuffer(dataType.getTypeName())/]
+	return MessageBuffer_doesMessageExists(buffer);
+	break;	
+[/template]
+
+[**
+ * Generates the receiving of a DiscretePort's message using I2C.
+*/]
+[template public generateSwitchCaseForI2cReceiving(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), messageType : MessageType)]
+[generateCaseAndI2cHandle() /]
+	[generateFindMessageBuffer(messageType.getName()) /]
+	return MessageBuffer_dequeue(buffer, msg); [comment msg is a pointer that is handed to the method as parameter /]
+	break;
+[/template]
+
+[**
+ * Generates the receiving of a DirectedTypedPort's data using I2C.
+*/]
+[template public generateSwitchCaseForI2cReceiving(portInstanceConfigs : Collection(PortInstanceConfiguration_I2C), dataType : DataType)]
+[generateCaseAndI2cHandle() /]
+	[generateFindMessageBuffer(dataType.getTypeName()) /]
+	return MessageBuffer_dequeue(buffer, msg); [comment msg is a pointer that is handed to the method as parameter /]
+	break;
+[/template]
+
+[**
+ * Generates the case statement for I2C ports and the corresponding PortHandle.
+*/]
+[template private generateCaseAndI2cHandle()]
+case PORT_HANDLE_TYPE_I2C:
+	i2cHandle = (I2cHandle*) port->handle->concreteHandle;
+[/template]

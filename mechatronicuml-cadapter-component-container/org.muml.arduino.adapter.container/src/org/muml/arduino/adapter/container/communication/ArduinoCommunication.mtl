@@ -1,0 +1,290 @@
+[comment encoding = UTF-8 /]
+[module ArduinoCommunication('http://www.muml.org/core/1.0.0', 
+	'http://www.muml.org/pim/1.0.0', 
+	'http://www.muml.org/pm/hardware/1.0.0', 
+	'http://www.muml.org/pm/software/1.0.0', 
+	'http://www.muml.org/psm/1.0.0', 
+	'http://www.muml.org/psm/muml_container/0.5.0')]
+
+[import org::muml::arduino::adapter::container::communication::MqttCommunication /]
+[import org::muml::arduino::adapter::container::communication::I2cCommunication /]
+[import org::muml::c::adapter::container::container::local::LocalBuilder /]
+[import org::muml::c::adapter::container::container::local::LocalCommunication /]
+
+[import org::muml::c::adapter::componenttype::queries::ContainerQueries /]
+[import org::muml::c::adapter::componenttype::queries::stringQueries /]
+[import org::muml::c::adapter::container::queries::containerStringQueries/]
+
+[**
+ * Generates Builder functions for MQTT and I2C Port Handles.
+*/]
+[template public generateBuilderForPortHandles(container : ComponentContainer)]
+[for (port : Port | container.componentType.ports)]
+	[let currentPortInstanceConfigs : Sequence(PortInstanceConfiguration) = container.componentInstanceConfigurations.portInstanceConfigurations->select(piConfig : PortInstanceConfiguration | piConfig.portInstance.portType = port)]
+		[if (currentPortInstanceConfigs->size()>0)]
+			[comment Then the port is used by at least one component instance -- ports might be optional /]
+			[if (currentPortInstanceConfigs->exists(p|p.oclIsKindOf(PortInstanceConfiguration_Local)))]
+[port.generateBuilderForPortHandleLocal(currentPortInstanceConfigs.oclAsType(PortInstanceConfiguration_Local)) /]
+			[/if]
+			[if (currentPortInstanceConfigs->exists(p|p.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+[port.generateBuilderForMqttPortHandle(currentPortInstanceConfigs.oclAsType(PortInstanceConfiguration_MQTT)) /]
+			[/if]
+			[if (currentPortInstanceConfigs->exists(p|p.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+[port.generateBuilderForI2cPortHandle(currentPortInstanceConfigs.oclAsType(PortInstanceConfiguration_I2C)) /]
+			[/if]
+		[/if]
+	[/let]
+[/for]
+[/template]
+
+[**
+ * Generates all Communication Methods for a container: All exists, receive and send methods, depending on the containers
+ * PortInstanceConfigurations (their type, direction, messages, cardinality, ...)
+*/]
+[template public generateCommunicationMethods(container : ComponentContainer)]
+[let piConfigs : Sequence(PortInstanceConfiguration) = container.componentInstanceConfigurations.portInstanceConfigurations]
+	[for (currentPort : Port | container.componentType.ports)]
+		[comment select the port configs that belong to the current port /]
+		[let currentPortsConfigs : Sequence(PortInstanceConfiguration) = piConfigs->select(piConfig : PortInstanceConfiguration | piConfig.portInstance.portType = currentPort)]
+			[if (currentPort.oclIsKindOf(DirectedTypedPort))] 
+			[comment continuous or hybrid port: only "primitive" values, not different message types /]
+				[if (currentPort.oclAsType(DirectedTypedPort).inPort)]
+[currentPort.oclAsType(DirectedTypedPort).generateExistsMethod(currentPortsConfigs) /]
+[currentPort.oclAsType(DirectedTypedPort).generateReceiveMethod(currentPortsConfigs)/]
+				[/if]
+				[if (currentPort.oclAsType(DirectedTypedPort).outPort)]
+[currentPort.oclAsType(DirectedTypedPort).generateSendingMethod(currentPortsConfigs)/]
+				[/if]
+			
+			[elseif (currentPort.oclIsKindOf(DiscretePort))] 
+			[comment discrete ports: different message types -> create methods for each message type /]
+				[for (receiverMessageType : MessageType | currentPort.oclAsType(DiscretePort).receiverMessageTypes)]
+[currentPort.oclAsType(DiscretePort).generateExistsMethod(receiverMessageType, currentPortsConfigs) /]
+[currentPort.oclAsType(DiscretePort).generateReceiveMethod(receiverMessageType, currentPortsConfigs)/]
+				[/for]
+				[for (senderMessageType : MessageType | currentPort.oclAsType(DiscretePort).senderMessageTypes)]
+[currentPort.oclAsType(DiscretePort).generateSendingMethod(senderMessageType, currentPortsConfigs)/]
+				[/for]
+			[/if]
+		[/let]
+	[/for]
+[/let]
+[/template]
+
+[**
+ * Generates the exists method for the given DirectedTypedPort that can handle all its PortInstanceConfigurations.
+*/]
+[template private generateExistsMethod(port:DirectedTypedPort, portInstanceConfigurations:Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief method to test if message exists for DirectedTypedPort [port.name/] 
+*@details looksup if the  buffer contains a messages
+*
+*/
+bool_t [port.getContainerCheckForMessageMethodName()/](Port* port){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForReceiving_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttReceiving() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cReceiving() /]
+[/if]
+	switch(port->handle->type) {
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[port.generateSwitchCaseForMessageExists_Local()/]
+[/if]
+[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+	[generateSwitchCaseForMqttExists(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), port.dataType) /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateSwitchCaseForI2cExists(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), port.dataType) /]
+[/if]
+	default:
+		break;	
+	}
+	return false;
+}
+[/template]
+
+[**
+ * Generates the exists method for the given DiscretePort that can handle all its MessageTypes and PortInstanceConfigurations.
+*/]
+[template private generateExistsMethod(port : DiscretePort, messageType : MessageType, portInstanceConfigurations : Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief The Check method for DiscretePort [port.name/]  and message [messageType.getName()/] 
+*@details Checks if  buffer contains a message of type [messageType.getName()/]
+*
+*/	
+bool_t [port.getContainerCheckForMessageMethodName(messageType)/](Port* port){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForReceiving_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttReceiving() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cReceiving() /]
+[/if]
+	switch(port->handle->type) {
+	[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+		[generateSwitchCaseForMessageExists_Local(messageType)/]
+	[/if]
+	[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+		[generateSwitchCaseForMqttExists(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), messageType) /]
+	[/if]
+	[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[generateSwitchCaseForI2cExists(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), messageType) /]
+	[/if]	
+	default:
+		break;	
+	}
+	return false;
+}
+[/template]
+
+[**
+ * Generate the method to receive a message via the given DirectedTypedPort using the given PortInstanceConfigurations.
+*/]
+[template private generateReceiveMethod(port:DirectedTypedPort, portInstanceConfigurations:Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief The receive method for DirectedTypedPort [port.name/] 
+*
+*/	
+bool_t [port.getContainerReceiverMethodName()/](Port* port, [port.dataType.getTypeName()/]* msg){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForReceiving_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttReceiving() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cReceiving() /]
+[/if]
+	switch(port->handle->type) {
+	[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+		[port.generateSwitchCaseForSending_Local() /]
+	[/if]
+	[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+		[generateSwitchCaseForMqttReceiving(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), port.dataType) /]
+	[/if]
+	[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[generateSwitchCaseForI2cExists(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), port.dataType) /]
+	[/if]
+	default:
+		break;
+	}
+	return false;
+}	
+[/template]
+
+[**
+ * Generate the method to receive a message of the given MessageType via the given DiscretePort using the given PortInstanceConfigurations.
+*/]
+[template private generateReceiveMethod(port:DiscretePort, messageType:MessageType, portInstanceConfigurations:Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief The receive method for DiscretePort [port.name/] and message [messageType.getName()/]
+*@details Receives  a message of type [messageType.getName()/]
+*
+*/
+bool_t [port.getContainerReceiverMethodName(messageType)/](Port* port, [messageType.getMessageType()/]* msg){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForReceiving_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttReceiving() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cReceiving() /]
+[/if]
+	switch(port->handle->type) {
+	[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+		[generateSwitchCaseForReceiving_Local(messageType)/]
+	[/if]
+	[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+		[generateSwitchCaseForMqttReceiving(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), messageType) /]
+	[/if]
+	[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[generateSwitchCaseForI2cReceiving(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), messageType) /]
+	[/if]
+	default:
+		break;	
+	}
+	return false;
+}
+[/template]
+
+[**
+ * Creates the method to send a message using the given DirectedTypedPort according to all its configurations.
+*/]
+[template private generateSendingMethod(port:DirectedTypedPort, portInstanceConfigurations:Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief The send method for DirectedTypedPort [port.name/] 
+*
+*/	
+void [port.getContainerSendMethodName()/](Port* port, [port.dataType.getTypeName()/]* msg){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForSending_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttSending() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cSending() /]
+[/if]
+	switch(port->handle->type) {
+	[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+		[generateSwitchCaseForSending_Local(port)/]
+	[/if]
+	[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+		[generateSwitchCaseForMqttSending(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), port.dataType) /]
+	[/if]
+	[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[generateSwitchCaseForI2cSending(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), port.dataType) /]
+	[/if]
+	default:
+		break;	
+	}
+}
+[/template]
+
+[**
+ * Creates the method to send a message of the given MessageType via the given DiscretePort according to all its configurations.
+*/]
+[template private generateSendingMethod(port:DiscretePort, messageType:MessageType, portInstanceConfigurations:Collection(PortInstanceConfiguration))]
+/**
+*
+*@brief The send method for DiscretePort [port.name/] and message [messageType.getName()/]
+*@details Send a message of type [messageType.getName()/]  
+*
+*/	
+void [port.getContainerSendMethodName(messageType)/](Port* port, [messageType.getMessageType()/]* msg){
+[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+	[generateDeclarationsForSending_Local()/]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT)))]
+	[generateDeclarationsForMqttSending() /]
+[/if]
+[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+	[generateDeclarationsForI2cSending() /]
+[/if]
+	switch(port->handle->type) {
+	[if portInstanceConfigurations->exists(c|c.oclIsKindOf(PortInstanceConfiguration_Local))]
+		[generateSwitchCaseForSending_Local(messageType)/]
+	[/if]
+	[if portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_MQTT))]
+		[generateSwitchCaseForMqttSending(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_MQTT), messageType) /]
+	[/if]
+	[if (portInstanceConfigurations->exists(pic|pic.oclIsKindOf(PortInstanceConfiguration_I2C)))]
+		[generateSwitchCaseForI2cSending(portInstanceConfigurations.oclAsType(PortInstanceConfiguration_I2C), messageType) /]
+	[/if]
+	default:
+		break;	
+	}
+}
+[/template]

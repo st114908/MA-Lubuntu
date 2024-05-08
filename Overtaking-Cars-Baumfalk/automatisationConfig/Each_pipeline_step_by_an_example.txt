@@ -1,0 +1,180 @@
+These are all the steps, each represented by one example.
+
+
+CopyFolder:
+  in:
+    sourcePath: direct exampleFolderPath1
+    destinationPath: direct exampleFolderPath2
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+DeleteFolder:
+  in:
+    path: direct exampleFolderPath
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+ContainerTransformation:
+  in:
+    roboCar_mumlSourceFile: direct model/roboCar.muml
+    middlewareOption: 'direct MQTT_I2C_CONFIG # Or DDS_CONFIG'
+    muml_containerFileDestination: direct container-models/MUML_Container.muml_container
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+ContainerCodeGeneration:
+  in:
+    muml_containerSourceFile: direct container-models/MUML_Container.muml_container
+    arduinoContainersDestinationFolder: direct arduino-containers
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+ComponentCodeGeneration:
+  in:
+    roboCar_mumlSourceFile: direct model/roboCar.muml
+    arduinoContainersDestinationFolder: direct arduino-containers
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+PostProcessingStepsUntilConfig:
+  in:
+    arduinoContainersPath: direct arduino-containers
+    componentCodePath: direct arduino-containers/fastAndSlowCar_v2
+    useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: directtrue
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+PostProcessingStateChartValues:
+  in:
+    arduinoContainersPath: direct arduino-containers
+    ECUName: direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino
+    distanceLimit: direct 1
+    desiredVelocity: direct 2
+    slowVelocity: direct 3
+    laneDistance: direct 4
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+PostProcessingStateChartValuesFlexible:
+  in:
+    arduinoContainersPath: direct arduino-containers
+    ECUName: direct FastCarDriverECU
+    fileName: direct courseControlCourseControlComponentStateChart.c
+    targetStateChartValueName: direct desiredVelocity
+    valueToSet: direct 12
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+ReplaceLineContent:
+  in:
+    filePath: direct arduino-containers/fastCarDriverECU/courseControlCourseControlComponentStateChart.c
+    targetLineContent: direct stateChart->distanceLimit = stateChart->distanceLimit
+      = 1;
+    contentReplacement: direct stateChart->distanceLimit = stateChart->distanceLimit
+      = 0;
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+Compile:
+  in:
+    boardTypeIdentifierFQBN: direct arduino:avr:uno
+    targetInoFile: direct arduino-containers/fastCarDriverECU/fastCarDriverECU.ino
+    saveCompiledFilesNearby: direct true
+  out:
+    ifSuccessful: ifSuccessful
+    resultMessage: resultMessage
+
+
+
+LookupBoardBySerialNumber:
+  in:
+    boardSerialNumber: direct 85935333337351A0B051
+  out:
+    ifSuccessful: ifSuccessful
+    foundPortAddress: foundPortAddress
+
+
+
+Upload:
+  in:
+    portAddress: direct COM0
+    boardTypeIdentifierFQBN: direct arduino:avr:uno
+    targetInoOrHexFile: direct arduino-containers/fastCarDriverECU/CompiledFiles/fastCarDriverECU.ino.hex
+  out:
+    ifSuccessful: ifSuccessful
+    resultMessage: resultMessage
+
+
+
+OnlyContinueIfFulfilledElseAbort:
+  in:
+    condition: direct false
+    message: |-
+      direct Pipeline aborted!
+      The condition has been evaluated to false.
+
+
+
+PopupWindowMessage:
+  in:
+    condition: direct true
+    message: direct The condition is true, so this will be shown.
+
+
+
+SelectableTextWindow:
+  in:
+    condition: direct true
+    message: direct The condition is true, so this will be shown.
+
+
+
+SaveToTextFile:
+  in:
+    path: direct example.txt
+    text: direct Example text.
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+TerminalCommand:
+  in:
+    terminalCommand: direct echo example
+    exitCodeNumberForSuccessfulExecution: direct 0
+  out:
+    ifSuccessful: ifSuccessful
+    exitCode: exitCode
+    normalFeedback: normalFeedback
+    errorFeedback: errorFeedback
+
+
+
+AutoGitCommitAllAndPushCommand:
+  in:
+    comment: Triggered automatic adding of all files, committing and uploading.
+    remoteName: origin
+    branchName: master
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
