@@ -1320,27 +1320,6 @@
 			stateChart->currentStateOfCoordinatorCommunicatorCommunicatorPort =
 					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
 		}
-		void CoordinatorOvertakingInitiatorOvertakingInitiatorPortStateChart_exit(
-				CoordinatorCoordinatorComponentStateChart* stateChart) {
-			switch (stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort) {
-			case STATE_COORDINATOROVERTAKINGINITIATORIDLE:
-				// nothing to do
-		
-				break;
-			case STATE_COORDINATOROVERTAKINGINITIATORINITIATING:
-				// nothing to do
-		
-				break;
-			case STATE_COORDINATOROVERTAKINGINITIATORPASSING:
-				// nothing to do
-		
-				break;
-			default:
-				break;
-			}
-			stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort =
-					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
-		}
 		void CoordinatorOvertakingAffiliateOvertakingAffiliatePortStateChart_exit(
 				CoordinatorCoordinatorComponentStateChart* stateChart) {
 			switch (stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort) {
@@ -1362,6 +1341,27 @@
 			stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort =
 					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
 		}
+		void CoordinatorOvertakingInitiatorOvertakingInitiatorPortStateChart_exit(
+				CoordinatorCoordinatorComponentStateChart* stateChart) {
+			switch (stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort) {
+			case STATE_COORDINATOROVERTAKINGINITIATORIDLE:
+				// nothing to do
+		
+				break;
+			case STATE_COORDINATOROVERTAKINGINITIATORINITIATING:
+				// nothing to do
+		
+				break;
+			case STATE_COORDINATOROVERTAKINGINITIATORPASSING:
+				// nothing to do
+		
+				break;
+			default:
+				break;
+			}
+			stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort =
+					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
+		}
 				
 			
 		bool_t CoordinatorCoordinatorComponentStateChart_isInState(
@@ -1369,9 +1369,9 @@
 				CoordinatorCoordinatorComponentState state) {
 			return (stateChart->currentStateOfCoordinatorCommunicatorCommunicatorPort
 					== state
-					|| stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort
-							== state
 					|| stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort
+							== state
+					|| stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort
 							== state);
 		
 		}

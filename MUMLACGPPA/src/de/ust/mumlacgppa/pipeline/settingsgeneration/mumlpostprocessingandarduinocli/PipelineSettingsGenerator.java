@@ -45,7 +45,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		}
 		completeMUMLACGPPASettingsDirectoryPath = ProjectFolderPathStorage.projectFolderPath
 				.resolve(PIPELINE_SETTINGS_DIRECTORY_FOLDER);
-		completeMUMLACGPPASettingsFilePath = completeMUMLACGPPASettingsDirectoryPath.resolve(PIPELINE_SETTINGS_FILE_NAME);
+		completeMUMLACGPPASettingsFilePath = completeMUMLACGPPASettingsDirectoryPath
+				.resolve(PIPELINE_SETTINGS_FILE_NAME);
 	}
 
 	public Path getCompleteSettingsFilePath() {
@@ -55,7 +56,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	private Map<String, Map<String, String>> generateDeleteFolder(String path) {
 		Map<String, Map<String, String>> deleteDirectoryArduinoContainers = DeleteFolder
 				.generateDefaultOrExampleValues();
-		Map<String, String> deleteDirectoryArduinoContainersSettingsIns = deleteDirectoryArduinoContainers.get(inKeyword);
+		Map<String, String> deleteDirectoryArduinoContainersSettingsIns = deleteDirectoryArduinoContainers
+				.get(inKeyword);
 		deleteDirectoryArduinoContainersSettingsIns.put("path", path);
 		deleteDirectoryArduinoContainers.put(inKeyword, deleteDirectoryArduinoContainersSettingsIns);
 		return deleteDirectoryArduinoContainers;
@@ -148,7 +150,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String generatedCodeFolderNameVariableName = "generatedRawFilesFolderPath";
 		String generatedCodeFolderNameVariableValue = directValueKeyword + " generated-files";
 		String muml_containerFilePathVariableName = "muml_containerFilePath";
-		String muml_containerFilePathVariableValue = generatedCodeFolderNameVariableValue + "/MUML_Container.muml_container";
+		String muml_containerFilePathVariableValue = generatedCodeFolderNameVariableValue
+				+ "/MUML_Container.muml_container";
 		String deployableCodeFolderNameVariableName = "deployableFilesFolderPath";
 		String deployableCodeFolderNameVariableValue = directValueKeyword + " deployable-files";
 		String componentCodeFolderNameVariableName = "componentCodeFilesFolderPath";
@@ -170,7 +173,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String fastCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ fastCarCoordinatorECUName + "/" + fastCarCoordinatorECUName + ".ino";
 		String fastCarCoordinatorECUBoardSerialNumberVariableName = "fastCarCoordinatorECUBoardSerialNumber";
-		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarCoordinator";
+		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword
+				+ " DummySerialFastCarCoordinator";
 
 		String fastCarDriverECUName = "fastCarDriverECU";
 		String fastCarDriverECUFolderPathVariableName = fastCarDriverECUName + "FolderPath";
@@ -190,7 +194,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String slowCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ slowCarCoordinatorECUName + "/" + slowCarCoordinatorECUName + ".ino";
 		String slowCarCoordinatorECUBoardSerialNumberVariableName = "slowCarCoordinatorECUBoardSerialNumber";
-		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarCoordinator";
+		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword
+				+ " DummySerialSlowCarCoordinator";
 
 		String slowCarDriverECUName = "slowCarDriverECU";
 		String slowCarDriverECUFolderPathVariableName = slowCarDriverECUName + "FolderPath";
@@ -248,8 +253,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		copyFolderSettingsIns.put("destinationPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
 		copyFolderSettings.put(inKeyword, copyFolderSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCopyFolder = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromKeyword + " ifSuccessful",
-				directValueKeyword + " " + CopyFolder.nameFlag + " has failed!");
+				fromKeyword + " ifSuccessful", directValueKeyword + " " + CopyFolder.nameFlag + " has failed!");
 
 		Map<String, Map<String, String>> postProcessingStepsUntilConfigSettings = PostProcessingStepsUntilConfig
 				.generateDefaultOrExampleValues();
@@ -258,7 +262,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		postProcessingStepsUntilConfigSettingsIns.put("arduinoContainersPath",
 				fromKeyword + " " + deployableCodeFolderNameVariableName);
 		postProcessingStepsUntilConfigSettingsIns.put("componentCodePath",
-				fromKeyword + " " + componentCodeFolderNameVariableName );
+				fromKeyword + " " + componentCodeFolderNameVariableName);
 		postProcessingStepsUntilConfigSettings.put(inKeyword, postProcessingStepsUntilConfigSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
@@ -278,13 +282,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + PostProcessingStateChartValues.nameFlag
 						+ " for " + slowCarDriverECUName + " has failed!");
 
-
 		Map<String, Map<String, String>> deleteFolderComponentCodeFolder = generateDeleteFolder(
 				fromKeyword + " " + componentCodeFolderNameVariableName);
 		Map<String, Map<String, String>> deleteFolderAPImappings = generateDeleteFolder(
 				fromKeyword + " " + apiMappingsFolderNameVariableName);
 
-		
 		Map<String, Map<String, String>> compileSettingsFastCoordinator = generateCompileStepAndAdjustSettings(
 				fromKeyword + " " + usedCoordinatorBoardIdentifierFQBNVariableName,
 				fromKeyword + " " + fastCarCoordinatorECUINOFilePathVariableName);
@@ -369,7 +371,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				directValueKeyword + " Pipeline execution completed!");
 		popupWindowMessageFinishedPipeline.put(inKeyword, popupWindowMessageFinishedPipelineSettingsIns);
 
-		// Now the pipeline settings and sequence itself.
+		// Now the pipeline settings and sequences:
 		Map<String, Object> mapForPipelineSettings = new LinkedHashMap<String, Object>();
 
 		// Use default values and generate the config file with default values.
@@ -419,16 +421,62 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		mapForPipelineSettings.clear();
 		settingsWriter.write("\n\n");
 
-		Map<String, Map<String, Map<String, String>>> defaultStandaloneUsageDefs = new LinkedHashMap<String, Map<String, Map<String, String>>>();
-		defaultStandaloneUsageDefs.put(ContainerTransformation.nameFlag,
-				ContainerTransformation.generateDefaultOrExampleValues());
-		defaultStandaloneUsageDefs.put(ContainerCodeGeneration.nameFlag,
-				ContainerCodeGeneration.generateDefaultOrExampleValues());
-		defaultStandaloneUsageDefs.put(ComponentCodeGeneration.nameFlag,
-				ComponentCodeGeneration.generateDefaultOrExampleValues());
-		defaultStandaloneUsageDefs.put(PostProcessingStepsUntilConfig.nameFlag,
+		// StandaloneTransformationAndGenerationsDefs
+		Map<String, Map<String, Map<String, String>>> defaultStandaloneTransformationAndGenerationsDefsKeyword = new LinkedHashMap<String, Map<String, Map<String, String>>>();
+		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(ContainerTransformation.nameFlag,
+				containerTransformationSettings);
+		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(ContainerCodeGeneration.nameFlag,
+				containerCodeGenerationSettings);
+		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(ComponentCodeGeneration.nameFlag,
+				componentCodeGenerationSettings);
+		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(PostProcessingStepsUntilConfig.nameFlag,
 				PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
-		mapForPipelineSettings.put(standaloneUsageDefsKeyword, defaultStandaloneUsageDefs);
+		mapForPipelineSettings.put(standaloneTransformationAndCodeGenerationsDefsKeyword,
+				defaultStandaloneTransformationAndGenerationsDefsKeyword);
+
+		// For better/easier readability blank lines inbetween:
+		settingsWriter.write(yaml.dump(mapForPipelineSettings));
+		mapForPipelineSettings.clear();
+		settingsWriter.write("\n\n");
+
+		ArrayList<Object> defaultPostProcessingSequenceDefs = new ArrayList<Object>();
+
+		defaultPostProcessingSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueKeyword + " " + DeleteFolder.nameFlag, deleteDirectoryDeployableFiles));
+
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + CopyFolder.nameFlag, copyFolderSettings));
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
+						onlyContinueIfFulfilledElseAbortCopyFolder));
+
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag,
+						postProcessingStepsUntilConfigSettings));
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
+						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));
+
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStateChartValues.nameFlag,
+						postProcessingStateChartValuesFastDriver));
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
+						onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesFastDriver));
+
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStateChartValues.nameFlag,
+						postProcessingStateChartValuesSlowDriver));
+		defaultPostProcessingSequenceDefs
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
+						onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesSlowDriver));
+
+		defaultPostProcessingSequenceDefs.add(
+				pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag, deleteFolderAPImappings));
+		defaultPostProcessingSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
+				deleteFolderComponentCodeFolder));
+
+		mapForPipelineSettings.put(standalonePostProcessingSequenceDefKeyword, defaultPostProcessingSequenceDefs);
 
 		// For better/easier readability blank lines inbetween:
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
@@ -438,76 +486,48 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		ArrayList<Object> defaultPipelineSequenceDefs = new ArrayList<Object>();
 
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
-				deleteDirectoryDeployableFiles));
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
 				deleteDirectoryGeneratedFiles));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
+				deleteDirectoryDeployableFiles));
 
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + ContainerTransformation.nameFlag, containerTransformationSettings));
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+				+ ContainerTransformation.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerTransformation));
 
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + ContainerCodeGeneration.nameFlag, containerCodeGenerationSettings));
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+				+ ContainerCodeGeneration.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerCodeGeneration));
 
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + ComponentCodeGeneration.nameFlag, componentCodeGenerationSettings));
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+				+ ComponentCodeGeneration.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortComponentCode));
 
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + CopyFolder.nameFlag, copyFolderSettings));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortCopyFolder));
-		
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag, postProcessingStepsUntilConfigSettings));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));
-
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStateChartValues.nameFlag,
-						postProcessingStateChartValuesFastDriver));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesFastDriver));
-
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStateChartValues.nameFlag,
-						postProcessingStateChartValuesSlowDriver));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesSlowDriver));
-
-		defaultPipelineSequenceDefs
-		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag, deleteFolderAPImappings));
-		defaultPipelineSequenceDefs
-		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag, deleteFolderComponentCodeFolder));
-		
 		defaultPipelineSequenceDefs.add(
-				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsFastCoordinator));
+				fromKeyword + " " + standalonePostProcessingSequenceDefKeyword + ": " + allKeyword);
+
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
+				compileSettingsFastCoordinator));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastCoordinator));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsFastDriver));
+		defaultPipelineSequenceDefs.add(
+				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsFastDriver));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastDriver));
-		defaultPipelineSequenceDefs.add(
-				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsSlowCoordinator));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
+				compileSettingsSlowCoordinator));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileSlowCoordinator));
-		defaultPipelineSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsSlowDriver));
+		defaultPipelineSequenceDefs.add(
+				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsSlowDriver));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileSlowDriver));
@@ -560,8 +580,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortUploadSlowDriver));
 
-		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PopupWindowMessage.nameFlag,
-				popupWindowMessageFinishedPipeline));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueKeyword + " " + PopupWindowMessage.nameFlag, popupWindowMessageFinishedPipeline));
 
 		mapForPipelineSettings.put(pipelineSequenceDefKeyword, defaultPipelineSequenceDefs);
 
@@ -593,7 +613,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		}
 		currentFileReader.close();
 		workCopy.close();
-		Files.move(Paths.get(intermediateFileName), completeMUMLACGPPASettingsFilePath, StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(intermediateFileName), completeMUMLACGPPASettingsFilePath,
+				StandardCopyOption.REPLACE_EXISTING);
 
 		return true;
 	}

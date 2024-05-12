@@ -6,8 +6,10 @@ public interface Keywords {
 	public final String notKeyword = "not";
 	public final String inKeyword = "in";
 	public final String outKeyword = "out";
+	public final String allKeyword = "all";
 	
 	public final String variableDefsKeyword = "VariableDefs";
-	public final String standaloneUsageDefsKeyword = "StandaloneUsageDefs";
+	public final String standaloneTransformationAndCodeGenerationsDefsKeyword = "StandaloneTransformationAndCodeGenerationsDefs";
+	public final String standalonePostProcessingSequenceDefKeyword = "StandalonePostProcessingSequence";
 	public final String pipelineSequenceDefKeyword = "PipelineSequence";
 }

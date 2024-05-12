@@ -58,10 +58,10 @@ public class PipelineSettingsReaderTest implements Keywords{
 
 	
 	@Test
-	public void testEmptyFile() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testEmptyFile() throws Exception{
 		String testYamlText = 
 				variableDefsKeyword + ": {}\n"
-				+ standaloneUsageDefsKeyword + ": {}\n"
+				+ standaloneTransformationAndCodeGenerationsDefsKeyword + ": {}\n"
 				+ pipelineSequenceDefKeyword + ": []\n";
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
@@ -71,7 +71,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 
 
 	@Test
-	public void testEmptyFileMinimal() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testEmptyFileMinimal() throws Exception{
 		String testYamlText = "\n";
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
@@ -81,14 +81,29 @@ public class PipelineSettingsReaderTest implements Keywords{
 
 	
 	@Test
-	public void testVariablesOnly() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testVariablesOnly() throws Exception{
 		String testYamlText = 
 				variableDefsKeyword + ": { "
 				+ "dummybool: direct true, "
 				+ "dummypathString: direct AttemptedDummyPath"
+				+ "}\n";
+		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
+		PSRInstance.interpretPipelineSettings(testYamlText);
+		PSRInstance.validateOrder();
+	}
+
+	@Test
+	public void testStandaloneUsageDefsOnly() throws Exception{
+		String testYamlText = 
+				standaloneTransformationAndCodeGenerationsDefsKeyword + ": { \n"
+				+   PopupWindowMessage.nameFlag + ": { \n"
+				+     inKeyword + ": {\n"
+				+ "     condition: direct true, \n"
+				+ "     message: direct HelloTest \n"
+				+ "   } \n"
+				+ " }\n"
 				+ "}\n"
-				//+ standaloneUsageDefsFlag + ": {}\n"
-				//+ pipelineSequenceDefFlag + ": []\n"
 				;
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
@@ -97,32 +112,23 @@ public class PipelineSettingsReaderTest implements Keywords{
 	}
 
 	@Test
-	public void testStandaloneUsageDefsOnly() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testPostProcessingOnly() throws Exception{
 		String testYamlText = 
-				//variableDefsFlag + ": {}\n"
-				//+ 
-				standaloneUsageDefsKeyword + ": { \n"
-				+   PopupWindowMessage.nameFlag + ": { \n"
-				+     inKeyword + ": {\n"
-				+ "     condition: direct true, \n"
-				+ "     message: direct HelloTest \n"
-				+ "   } \n"
-				+ " }\n"
-				+ "}\n"
-				//+ pipelineSequenceDefFlag + ": []\n"
-				;
+				standalonePostProcessingSequenceDefKeyword + ": \n" 
+				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "    " + inKeyword + ": \n"
+				+ "      condition: direct true\n"
+				+ "      message: direct HelloTest\n"
+				+ "\n";
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);
 		PSRInstance.validateOrder();
 	}
-	
+
 	@Test
-	public void testPipelineOnly() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testPipelineOnly() throws Exception{
 		String testYamlText = 
-				//variableDefsFlag + ": {}\n"
-				//+ standaloneUsageDefsFlag + ": {}\n"
-				//+ 
 				pipelineSequenceDefKeyword + ": \n" 
 				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
@@ -136,18 +142,16 @@ public class PipelineSettingsReaderTest implements Keywords{
 	}
 
 	@Test
-	public void testPipelineOnly2() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testPipelineOnly2() throws Exception{
 		String testYamlText = 
-				//variableDefsFlag + ": {}\n"
-				//+ standaloneUsageDefsFlag + ": {}\n"
-				//+
-				pipelineSequenceDefKeyword + ": \n"
+				variableDefsKeyword + ": \n  {}\n"
+				+ pipelineSequenceDefKeyword + ": \n"
 				+ "- " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      boardSerialNumber: direct dummy\n"
 				+ "    " + outKeyword + ": \n"
 				+ "      ifSuccessful: dummyBool\n"
-				+ "      portAddress: dummyPort\n"
+				+ "      foundPortAddress: dummyPort\n"
 				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: from dummyBool \n"
@@ -159,7 +163,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	}
 
 	@Test
-	public void testPipelineOnlyMinimalBracketsAndSoOn() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testPipelineOnlyMinimalBracketsAndSoOn() throws Exception{
 		String testYamlText = 
 				pipelineSequenceDefKeyword + ":  \n"
 				+ "  - " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
@@ -167,7 +171,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "        boardSerialNumber: direct dummy\n"
 				+ "      " + outKeyword + ": \n"
 				+ "        ifSuccessful: dummyBool\n"
-				+ "        portAddress: dummyPort\n"
+				+ "        foundPortAddress: dummyPort\n"
 				+ "  - " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        condition: from dummyBool \n"
@@ -179,11 +183,11 @@ public class PipelineSettingsReaderTest implements Keywords{
 	}
 
 	@Test
-	public void testAllFieldsUsedOnlyMinimalBracketsAndSoOn() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
+	public void testAllFieldsUsedOnlyMinimalBracketsAndSoOn() throws Exception{
 		String testYamlText = 
 				  variableDefsKeyword + ": \n"
 				+ "  dummySerialVar: direct dummySerial\n"
-				+ standaloneUsageDefsKeyword + ": \n"
+				+ standaloneTransformationAndCodeGenerationsDefsKeyword + ": \n"
 				+ "  " + ContainerTransformation.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      roboCar_mumlSourceFile: direct dummyPath1\n"
@@ -191,18 +195,26 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      muml_containerFileDestination: direct dummyPath2\n"
 				+ "    " + outKeyword + ": \n"
 				+ "      ifSuccessful: dummyBool\n"
+				+ standalonePostProcessingSequenceDefKeyword + ": \n" 
+				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "    " + inKeyword + ": \n"
+				+ "      condition: direct true\n"
+				+ "      message: direct HelloTest\n"
+				+ "\n"
 				+ pipelineSequenceDefKeyword + ":  \n"
+				+ "  - " + fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": " + ContainerTransformation.nameFlag + "\n"
+				+ "  - " + fromKeyword + " " + standalonePostProcessingSequenceDefKeyword + ": " + allKeyword + "\n"
 				+ "  - " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        boardSerialNumber: from dummySerialVar\n"
 				+ "      " + outKeyword + ": \n"
 				+ "        ifSuccessful: dummyBool\n"
-				+ "        portAddress: dummyPort\n"
+				+ "        foundPortAddress: dummyPort\n"
 				+ "  - " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        condition: from dummyBool \n"
 				+ "        message: from dummyPort\n"
-				+ "  - " + fromKeyword + " " + standaloneUsageDefsKeyword + ": " + ContainerTransformation.nameFlag;
+				+ "  - " + fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": " + ContainerTransformation.nameFlag;
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);

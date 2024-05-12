@@ -24,7 +24,7 @@
             </separator>
          </menu>
          <action
-               label="Run Pipeline"
+               label="Run pipeline"
                class="de.ust.mumlacgppa.popup.actions.RunPipelineAction"
                menubarPath="MUMLACGPPA.menuPipeline/groupPipelineExecution"
                enablesFor="1"

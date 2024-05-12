@@ -1,6 +1,16 @@
 These are all the steps, each represented by one example.
 
 
+AutoGitCommitAllAndPushCommand:
+  in:
+    comment: Triggered automatic adding of all files, committing and uploading.
+    remoteName: origin
+    branchName: master
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
 CopyFolder:
   in:
     sourcePath: direct exampleFolderPath1

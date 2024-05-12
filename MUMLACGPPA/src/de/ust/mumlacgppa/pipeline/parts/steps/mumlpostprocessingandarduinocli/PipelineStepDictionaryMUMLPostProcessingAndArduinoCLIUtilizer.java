@@ -33,6 +33,9 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 		// Attempts like case TerminalCommand.class.getName() aren't accepted either.
 		
 		switch(className){
+			case AutoGitCommitAllAndPushCommand.nameFlag: 
+				return new AutoGitCommitAllAndPushCommand(VariableHandlerInstance, parameters);
+				
 			case Compile.nameFlag:
 				return new Compile(VariableHandlerInstance, parameters);
 			

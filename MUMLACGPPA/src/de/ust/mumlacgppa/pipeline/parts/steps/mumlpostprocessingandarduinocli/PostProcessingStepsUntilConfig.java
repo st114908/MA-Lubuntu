@@ -40,7 +40,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class PostProcessingStepsUntilConfig extends PipelineStep implements Keywords, PipelineSettingsDirectoryAndFilePaths{
+public class PostProcessingStepsUntilConfig extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths{
 
 	public static final String nameFlag = "PostProcessingStepsUntilConfig";
 

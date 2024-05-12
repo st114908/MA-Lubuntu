@@ -80,6 +80,8 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFileP
 		FileWriter myWriter = new FileWriter(completeExamplesFilePath.toFile());
 		myWriter.write("These are all the steps, each represented by one example.\n\n\n");
 
+		myWriter.write(exampleSegment(yaml, AutoGitCommitAllAndPushCommand.nameFlag, AutoGitCommitAllAndPushCommand.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, CopyFolder.nameFlag, CopyFolder.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, DeleteFolder.nameFlag, DeleteFolder.generateDefaultOrExampleValues()));

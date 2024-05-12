@@ -7,8 +7,8 @@
 #include "I2cCustomLib.hpp"
 
 
-#include "MCC_courseControlComponent.h"
 #include "MCC_driveControllerComponent.h"
+#include "MCC_courseControlComponent.h"
 #include "MCC_distanceSensorComponent.h"
 
 // Start of user code DEVICEINITINCLUDES
@@ -17,9 +17,9 @@ SimpleHardwareController fastCarDriverController;
 
 
 //variable for component Instances
-CourseControlComponent* atomic_c1;
+DriveControllerComponent* atomic_c1;
 DistanceSensorComponent* atomic_c2;
-DriveControllerComponent* atomic_c3;
+CourseControlComponent* atomic_c3;
 DistanceSensorComponent* atomic_c4;
 
 void setup(){
@@ -31,9 +31,9 @@ void setup(){
 	initSofdcarHalConnectorFor(&fastCarDriverController);
 	fastCarDriverController.initializeCar(config, lineConfig);
 	// End of user code
-	atomic_c1= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
+	atomic_c1= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
 	atomic_c2= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
-	atomic_c3= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
+	atomic_c3= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
 	atomic_c4= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
 	
 	i2cCommunication_setup(9);
@@ -47,9 +47,9 @@ void setup(){
 void loop(){
 	fastCarDriverController.loop();
 
-	CourseControlComponent_processStep(atomic_c1);
+	DriveControllerComponent_processStep(atomic_c1);
 	DistanceSensorComponent_processStep(atomic_c2);
-	DriveControllerComponent_processStep(atomic_c3);
+	CourseControlComponent_processStep(atomic_c3);
 	DistanceSensorComponent_processStep(atomic_c4);
 }	
 

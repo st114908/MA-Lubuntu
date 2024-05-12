@@ -84,8 +84,8 @@
           <portInstance xsi:type="instance:ContinuousPortInstance" href="../model/roboCar.muml#_hGWCf45HEeyhMvv5xjA9yA"/>
         </portInstanceConfigurations>
       </componentInstanceConfigurations>
-      <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_hGWCcY5HEeyhMvv5xjA9yA"/>
       <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_hGWCfo5HEeyhMvv5xjA9yA"/>
+      <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_hGWCcY5HEeyhMvv5xjA9yA"/>
     </componentContainers>
     <componentContainers name="MCC_DriveControllerComponent">
       <componentType xsi:type="component:StaticAtomicComponent" href="../model/roboCar.muml#_wHY_sH30Eey98LNJ4XeImg"/>
@@ -140,8 +140,8 @@
           <portInstance xsi:type="instance:ContinuousPortInstance" href="../model/roboCar.muml#_83pwz45IEeyhMvv5xjA9yA"/>
         </portInstanceConfigurations>
       </componentInstanceConfigurations>
-      <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_83pwzo5IEeyhMvv5xjA9yA"/>
       <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_83pwwY5IEeyhMvv5xjA9yA"/>
+      <componentInstances xsi:type="instance:AtomicComponentInstance" href="../model/roboCar.muml#_83pwzo5IEeyhMvv5xjA9yA"/>
     </componentContainers>
     <componentContainers name="MCC_DriveControllerComponent">
       <componentType xsi:type="component:StaticAtomicComponent" href="../model/roboCar.muml#_wHY_sH30Eey98LNJ4XeImg"/>

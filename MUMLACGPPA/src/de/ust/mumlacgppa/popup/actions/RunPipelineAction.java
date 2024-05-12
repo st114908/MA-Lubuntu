@@ -35,7 +35,7 @@ public class RunPipelineAction implements IObjectActionDelegate {
 			"The pipeline execution via right click menu couldn't be within the given time.\n"
 			+ "Currently it has been improvisized as export wizard. So please use\n"
 			+ "(Right click on a .muml file)/\"Export\"/\n"
-			+ "\"MechatronicUML\"/ \"Execute pipeline\"");
+			+ "\"MechatronicUML\"/ \"Execute pipeline sequence\"");
 	}
 
 	/**
