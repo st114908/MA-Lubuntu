@@ -14,21 +14,28 @@ public class ZippedArduinoLibraryInstaller extends ACLIWorkstep {
 	
 	
 	public ZippedArduinoLibraryInstaller(Path targetFilePath)
-			throws IOException, InterruptedException, NoArduinoCLIConfigFileException, ProjectFolderPathNotSetException{
+			throws IOException, InterruptedException, NoArduinoCLIConfigFileException, ProjectFolderPathNotSetException
+	{
 		ArduinoCLICommandLineHandler commandLineDoer = new ArduinoCLICommandLineHandler();
 		commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install true");
 		String libraryInstallationCommand = "arduino-cli lib install --zip-path " + targetFilePath.toString() + " --no-overwrite";
-		ReceivedFeedback = commandLineDoer.doShellCommand(libraryInstallationCommand);
-		commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
-		
-		responseLocation = saveShellResponseInfo(
-			targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt",
-			libraryInstallationCommand, ReceivedFeedback);
-		
-		successful = (ReceivedFeedback.getExitCode() == 0);
-		
-		if(ReceivedFeedback.getErrorFeedback().contains("already installed")){
-			alreadyInstalled = true;
+		try {
+			ReceivedFeedback = commandLineDoer.doShellCommand(libraryInstallationCommand);
+			commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
+			
+			responseLocation = saveShellResponseInfo(
+				targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt",
+				libraryInstallationCommand, ReceivedFeedback);
+			
+			successful = (ReceivedFeedback.getExitCode() == 0);
+			
+			if(ReceivedFeedback.getErrorFeedback().contains("already installed")){
+				alreadyInstalled = true;
+			}
+		} catch (IOException | InterruptedException e) {
+			successful = false;
+			commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
+			throw e;
 		}
 	}
 	
