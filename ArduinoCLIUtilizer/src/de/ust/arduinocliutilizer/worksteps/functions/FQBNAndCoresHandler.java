@@ -47,8 +47,7 @@ public class FQBNAndCoresHandler extends ACLIWorkstep{
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
 		responseLocation = saveShellResponseInfo(
-			parentPath, "CoreSearch.txt",
-			searchCommand, ReceivedFeedback);
+			parentPath, "CoreSearch.txt", ReceivedFeedback);
 		if(ReceivedFeedback.getExitCode() != 0){
 			successful = false;
 			return;

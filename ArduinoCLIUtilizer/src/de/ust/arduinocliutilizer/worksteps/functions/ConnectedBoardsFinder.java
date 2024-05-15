@@ -27,8 +27,7 @@ public class ConnectedBoardsFinder extends ACLIWorkstep {
 		ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 		Path parentPath =  targetFilePath.getParent();
 		responseLocation = saveShellResponseInfo(
-			parentPath, "ConnectedBoardsFinder.txt",
-			searchCommand, ReceivedFeedback);
+			parentPath, "ConnectedBoardsFinder.txt", ReceivedFeedback);
 		Yaml yaml = new Yaml();
 		resultList = (ArrayList<Map<String, Object>>) yaml.load(ReceivedFeedback.getNormalFeedback());
 		numberOfBoards = resultList.size();

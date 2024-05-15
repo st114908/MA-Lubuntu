@@ -20,8 +20,7 @@ public class InstallCoreForBoard extends ACLIWorkstep {
 		ReceivedFeedback = commandLineDoer.doShellCommand(coreInstallationCommand);
 		Path parentPath =  targetFilePath.getParent();
 		responseLocation = saveShellResponseInfo(
-			parentPath, "CoreDownloadInfo.txt",
-			coreInstallationCommand, ReceivedFeedback);
+			parentPath, "CoreDownloadInfo.txt", ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.getExitCode() == 0);
 	}

@@ -9,7 +9,7 @@ public abstract class ACLIWorkstep implements SaveResponseInfo{
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer";
 	
 	protected Path responseLocation;
-	protected ResponseFeedback ReceivedFeedback;
+	protected CallAndResponses ReceivedFeedback;
 	protected boolean successful;
 	
 	
@@ -18,7 +18,7 @@ public abstract class ACLIWorkstep implements SaveResponseInfo{
 	}
 	
 	
-	public ResponseFeedback getResponseFeedback(){
+	public CallAndResponses getResponseFeedback(){
 		return ReceivedFeedback;
 	}
 	

@@ -24,8 +24,7 @@ public class ZippedArduinoLibraryInstaller extends ACLIWorkstep {
 			commandLineDoer.doShellCommand("arduino-cli config set library.enable_unsafe_install false");
 			
 			responseLocation = saveShellResponseInfo(
-				targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt",
-				libraryInstallationCommand, ReceivedFeedback);
+				targetFilePath.getParent(), "ZippedArduinoInstallerInfo.txt", ReceivedFeedback);
 			
 			successful = (ReceivedFeedback.getExitCode() == 0);
 			

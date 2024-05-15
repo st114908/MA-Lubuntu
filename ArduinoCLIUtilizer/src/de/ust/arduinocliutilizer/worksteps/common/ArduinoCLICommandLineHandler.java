@@ -76,14 +76,15 @@ public class ArduinoCLICommandLineHandler implements DefaultConfigDirectoryAndFi
 		}
 	}
 
-	public ResponseFeedback doShellCommand(String commandSequence) throws IOException, InterruptedException {
+	public CallAndResponses doShellCommand(String commandSequence) throws IOException, InterruptedException {
 		// Processbuilder is more intuitive to use than Runtime.
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+		String commandSequenceWithPotentialArduinoCLIPathCommand = potentialArduinoCLIPathCommand + commandSequence; 
 		if (isWindows) {
-			processBuilder.command("cmd.exe", "/c", potentialArduinoCLIPathCommand + commandSequence);
+			processBuilder.command("cmd.exe", "/c", commandSequenceWithPotentialArduinoCLIPathCommand);
 		} else {
-			processBuilder.command("bash", "-c", potentialArduinoCLIPathCommand + commandSequence);
+			processBuilder.command("bash", "-c", commandSequenceWithPotentialArduinoCLIPathCommand);
 		}
 		Process proc = processBuilder.start();
 
@@ -105,7 +106,7 @@ public class ArduinoCLICommandLineHandler implements DefaultConfigDirectoryAndFi
 			errorFeedback += currentErrorFeedback + "\n";
 		}
 
-		return new ResponseFeedback(exitCode, normalFeedback, errorFeedback);
+		return new CallAndResponses(commandSequenceWithPotentialArduinoCLIPathCommand, exitCode, normalFeedback, errorFeedback);
 	}
 
 }

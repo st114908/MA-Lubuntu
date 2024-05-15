@@ -39,8 +39,7 @@ public class CompilationCall extends ACLIWorkstep implements CompiledFilesFolder
 		ReceivedFeedback = commandLineDoer.doShellCommand(compilationCommand);
 		
 		responseLocation = saveShellResponseInfo(
-				parentPath, "CompilationInfo.txt",
-			compilationCommand, ReceivedFeedback);
+				parentPath, "CompilationInfo.txt", ReceivedFeedback);
 		
 		if(ReceivedFeedback.getExitCode() != 0){
 			successful = false;

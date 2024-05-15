@@ -46,8 +46,7 @@ public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 		}
 		ReceivedFeedback = commandLineDoer.doShellCommand(uploadCommand);
 		responseLocation = saveShellResponseInfo(
-			targetFilePath.getParent(), "UploadInfo.txt",
-			uploadCommand, ReceivedFeedback);
+			targetFilePath.getParent(), "UploadInfo.txt", ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.getExitCode() == 0);
 	}
