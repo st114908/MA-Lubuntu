@@ -10,7 +10,7 @@ import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
 import de.ust.arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
-import de.ust.arduinocliutilizer.worksteps.common.ResponseFeedback;
+import de.ust.arduinocliutilizer.worksteps.common.CallAndResponses;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
@@ -105,7 +105,7 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		if (!hasSearched) {
 			ArduinoCLICommandLineHandler commandLineDoer = new ArduinoCLICommandLineHandler();
 			String searchCommand = "arduino-cli board list --format yaml";
-			ResponseFeedback ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
+			CallAndResponses ReceivedFeedback = commandLineDoer.doShellCommand(searchCommand);
 			Yaml yaml = new Yaml();
 			foundBoardsStorage = (ArrayList<Map<String, Object>>) yaml.load(ReceivedFeedback.getNormalFeedback());
 		}
