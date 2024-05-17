@@ -33,7 +33,7 @@ public class VerifyArduinoProjectAction implements IObjectActionDelegate {
 			shell,
 			"ArduinoCLIUtilizer: Verify",
 			"Info: the ArduinoIDE and CLI use the compilation step for the verification of the code.\n"+
-			"So use (Right click on a .zip, .ino or .ino.hex file)/\"ArduinoCLIUtilizer\"/\n"+
+			"So use (Right click on a .zip, .ino or .hex file)/\"ArduinoCLIUtilizer\"/\n"+
 			"\"Compile Arduino Project\" or \"Compile and upload Arduino Project\" and\n"+
 			"check (.ino file location)/SavedResponses/CompilationInfo.txt .");
 	}

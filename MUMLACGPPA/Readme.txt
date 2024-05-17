@@ -28,4 +28,4 @@ The entries of this sub menu are like this:
 - "Generate ArduinoCLIUtilizer config file"
 - "List connected Arduino boards"
 
-All the above listed entry names have been chosen to fit/briefly describe the respective entry's function/purpose and if something is missing or fails then a window with the notification pops up and additional info is placed under [Folder of the clicked file]/SavedResponses.
+All the above listed entry labels have been chosen to fit/briefly describe the respective entry's function/purpose and if something is missing or fails then a window with the notification pops up and additional info is placed under [Folder of the clicked file]/SavedResponses.

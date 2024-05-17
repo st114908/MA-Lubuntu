@@ -47,7 +47,7 @@ public class ArduinoCLICommandLineHandler implements DefaultConfigDirectoryAndFi
 
 		} else {
 			throw new NoArduinoCLIConfigFileException("The ArduinoCLIUtilizer config file is missing!\n"
-					+ "Generate one this way:\n" + "(Right click on a .zip, .ino or .ino.hex file)/\n"
+					+ "Generate one this way:\n" + "(Right click on a .zip, .ino or .hex file)/\n"
 					+ "\"ArduinoCLIUtilizer\"/ \"GenerateArduinoCLIUtilizer config file\"");
 		}
 

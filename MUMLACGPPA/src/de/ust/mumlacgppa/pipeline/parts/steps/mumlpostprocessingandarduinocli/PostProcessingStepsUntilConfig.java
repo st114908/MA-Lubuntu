@@ -495,8 +495,6 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Pipe
 		for(Path currentArduinoContainersEntryPath: arduinoContainersContent){
 			if(currentArduinoContainersEntryPath.getFileName().toString().endsWith("CarDriverECU")){
 				Files.copy(downloadStoragePath, currentArduinoContainersEntryPath.resolve("Config.hpp"), StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("TODO: Adjust config values in " + currentArduinoContainersEntryPath.resolve("Config.hpp").toString() + "!!!");
-				//TODO: Do adjustments.
 			}
 		}
 		Files.deleteIfExists(downloadStoragePath);
@@ -530,8 +528,6 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Pipe
 		for(Path currentArduinoContainersEntryPath: arduinoContainersContent){
 			if(currentArduinoContainersEntryPath.getFileName().toString().endsWith("CarDriverECU")){
 				Files.copy(completeSofdcarHalConfigFilePath, currentArduinoContainersEntryPath.resolve("Config.hpp"), StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("TODO: Adjust config values in " + currentArduinoContainersEntryPath.resolve("Config.hpp").toString() + "!!!");
-				//TODO: Do adjustments.
 			}
 		}
 	}

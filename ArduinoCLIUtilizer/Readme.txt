@@ -16,7 +16,7 @@ By default set to /home/muml/ArduinoCLI.
 
 
 Usage:
-If you right click on a .zip, .ino or .ino.hex, then the context menu will have the additional entry "ArduinoCLIUtilizer" (without " characters), which opens a sub menu. The entries of this sub menu depend on the clicked file type:
+If you right click on a .zip, .ino or .hex, then the context menu will have the additional entry "ArduinoCLIUtilizer" (without " characters), which opens a sub menu. The entries of this sub menu depend on the clicked file type:
 
 .zip files:
 - "Generate ArduinoCLIUtilizer config file"
@@ -26,7 +26,7 @@ If you right click on a .zip, .ino or .ino.hex, then the context menu will have 
 .ino files: 
 - "List connected Arduino boards"
 - "Generate ArduinoCLIUtilizer config file"
-- "Compile and upload Arduino project
+- "Compile and upload Arduino project"
 - "Compile Arduino project"
 - "Verify Arduino project"
 
@@ -35,4 +35,4 @@ If you right click on a .zip, .ino or .ino.hex, then the context menu will have 
 - "Generate ArduinoCLIUtilizer config file"
 - "Upload.hex file"
 
-All the above listed entry names have been chosen to fit/briefly describe the respective entry's function/purpose and if something is missing or fails then a window with the notification pops up and additional info is placed under [Folder of the clicked file]/SavedResponses.
+All the above listed entry labels have been chosen to fit/briefly describe the respective entry's function/purpose and if something is missing or fails then a window with the notification pops up and additional info is placed under [Folder of the clicked file]/SavedResponses.
