@@ -47,35 +47,26 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 						shell,
 						"ArduinoCLIUtilizer",
 						"The ArduinoCLIUtilizer config file already exists!\n"
-						+ "See " + completeConfigFilePath
-						);
+						+ "See " + completeConfigFilePath);
 				return;
 			}
 			
 			try{
 				boolean generated = generator.generateArduinoCLIUtilizerConfigFile();
 				if(generated){
-					if(generator.checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
-						MessageDialog.openInformation(
-								shell,
-								"ArduinoCLIUtilizer",
-								"Successfully generated the ArduinoCLIUtilizer config file!\n"
-								+ "You can find it at " + completeConfigFilePath
-								);
+					MessageDialog.openInformation(
+						shell,
+						"ArduinoCLIUtilizer",
+						"Successfully generated the ArduinoCLIUtilizer config file!\n"
+							+ "You can find it at " + completeConfigFilePath + "\n\n"
+							+ "Advice by the generator:\n" + generator.getAdvice());
 					}
-					else{
-						MessageDialog.openInformation(
-							shell,
-							"ArduinoCLIUtilizer",
-							"Successfully generated the ArduinoCLIUtilizer config file!\n"
-							+ "You can find it at " + completeConfigFilePath + "\n"
-							+ "But the ArduinoCLI file (arduino-cli) can neither be found at the default path nor\n"
-							+ "be accessed.\n"
-							+ "Either install the ArduinoCLI there or\n"
-							+ "adjust the setting arduinoCLIDirectory!"
-							);
-					}
-					
+				else{
+					MessageDialog.openInformation(
+						shell,
+						"ArduinoCLIUtilizer",
+						"Generation of the ArduinoCLIUtilizer config file failed!\n\n"
+							+ "Advice by the generator:\n" + generator.getAdvice());
 				}
 			}
 			catch (IOException e) {
@@ -83,11 +74,17 @@ public class GenerateArduinoCLIUtilizerConfigAction implements IObjectActionDele
 					shell,
 					"ArduinoCLIUtilizer",
 					"IOException occured!\n"
-					+ "Please make sure that nothing blocks the generation of\n"
-					+ generator.getCompleteConfigFilePath().toString() + "\n"
-					+ "and then try again."
-					);
+					+ "Please make sure that nothing blocks the generation of\n\n"
+					+ completeConfigFilePath + "\n"
+					+ "and then try again.");
 				e.printStackTrace();
+			} catch (InterruptedException e) {
+				MessageDialog.openInformation(
+						shell,
+						"ArduinoCLIUtilizer",
+						"InterruptedException occured!\n"
+						+ "Please make sure that nothing blocks the terminal calls on the system\n");
+					e.printStackTrace();
 			}
 		} catch (ProjectFolderPathNotSetException e) {
 			MessageDialog.openInformation(

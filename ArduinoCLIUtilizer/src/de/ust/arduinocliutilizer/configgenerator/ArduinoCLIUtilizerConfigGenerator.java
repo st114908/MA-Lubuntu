@@ -15,91 +15,139 @@ import de.ust.arduinocliutilizer.paths.DefaultConfigDirectoryAndFilePath;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
+/**
+ * Handles the generation of the config file. At usage (see
+ * generateArduinoCLIUtilizerConfigFile()) it detects if the Path to the
+ * Arduino-CLI is known to the System by performing a test call. It also checks
+ * if the Arduino-CLI is installed at the default path.
+ */
 public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectoryAndFilePath, DefaultArduinoCLIPath {
 	private Path completeConfigDirectoryPath;
 	private Path completeConfigFilePath;
-	
-	
+	private String advice;
+
 	public ArduinoCLIUtilizerConfigGenerator() throws ProjectFolderPathNotSetException {
-		if(ProjectFolderPathStorage.projectFolderPath == null){
+		if (ProjectFolderPathStorage.projectFolderPath == null) {
 			throw new ProjectFolderPathNotSetException(
 					"The static field projectFolderPath in ProjectFolderPathStorage has "
-					+ "to be set to a complete file system path to the project's folder!"
-							);
+							+ "to be set to a complete file system path to the project's folder!");
 		}
 		completeConfigDirectoryPath = ProjectFolderPathStorage.projectFolderPath.resolve(CONFIG_DIRECTORY_FOLDER_NAME);
 		completeConfigFilePath = completeConfigDirectoryPath.resolve(CONFIG_FILE_NAME);
+		advice = "The generation is yet to be started!";
 	}
 
-	
-	public boolean generateArduinoCLIUtilizerConfigFile() throws IOException{
-		if (! (Files.exists(completeConfigDirectoryPath) && Files.isDirectory(completeConfigDirectoryPath)) ){
+	/**
+	 * At usage (see generateArduinoCLIUtilizerConfigFile()) it detects if the
+	 * Path to the Arduino-CLI is known to the System by performing a test call.
+	 * It also checks if the Arduino-CLI is installed at the default path.
+	 * Generates an advice (see  depending on the results.
+	 * 
+	 * @return If the generation happend.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public boolean generateArduinoCLIUtilizerConfigFile() throws IOException, InterruptedException {
+		if (!(Files.exists(completeConfigDirectoryPath) && Files.isDirectory(completeConfigDirectoryPath))) {
 			Files.createDirectories(completeConfigDirectoryPath);
 		}
-		
-		if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
+
+		if (checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()) {
+			advice = "The ArduinoCLIUtilizer config file already exists!\n"
+					+ "See " + completeConfigFilePath;
 			return false;
 		}
-		
+
+		boolean arduinoCLIKnownToSystem = checkForArduinoCLIKnownToSystem();
+		boolean arduinoCLIAtDefaultPath = checkForArduinoCLIAtDefaultPath();
+
 		// Use default values and generate the config file with default values.
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
-	    data.put("arduinoCLIPathSetInPathEnvironment", false);
-	    data.put("arduinoCLIDirectory", DEFAULT_ARDUINO_CLI_PATH);
-	    
-	    // For DumperOptions examples see 
-	    // https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak
-	    DumperOptions options = new DumperOptions();
-	    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-	    options.setPrettyFlow(true);
-	    options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
-	    Yaml yaml = new Yaml(options);
+		if (arduinoCLIKnownToSystem) {
+			data.put("arduinoCLIPathSetInPathEnvironment", true);
+		} else {
+			data.put("arduinoCLIPathSetInPathEnvironment", false);
+		}
+		data.put("arduinoCLIDirectory", DEFAULT_ARDUINO_CLI_PATH);
+
+		// For DumperOptions examples see
+		// https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak
+		DumperOptions options = new DumperOptions();
+		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+		options.setPrettyFlow(true);
+		options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
+		Yaml yaml = new Yaml(options);
 		FileWriter myWriter = new FileWriter(completeConfigFilePath.toString());
 		myWriter.write(yaml.dump(data));
+		myWriter.write("\n");
+		if (arduinoCLIKnownToSystem) {
+			advice = "The config file generation has detected,\n"
+					+ "that the path to Arduino-CLI is known to the system,\n"
+					+ "so the arduinoCLIDirectory setting won't be read.\n"
+					+ "The generated settings should directly work.";
+			myWriter.write("# Info: The config file generation has detected, that the path to Arduino-CLI is known to the system, so the arduinoCLIDirectory setting won't be read.\n");
+			myWriter.write("# Info: The generated settings should directly work.");
+		} else {
+			if (arduinoCLIAtDefaultPath) {
+				advice = "The config file generation has detected,\n"
+						+ "that the Arduino-CLI is already installed in the folder set by arduinoCLIDirectory.\n"
+						+ "The generated settings should directly work.";
+				myWriter.write("# Info: The config file generation has detected, that the Arduino-CLI is already installed in the folder set by arduinoCLIDirectory.\n");
+				myWriter.write("# Info: The generated settings should directly work.");
+			} else {
+				advice = "The config file generation has detected,\n"
+						+ "that the paths Arduino-CLI is neither known to the system nor\n"
+						+ "in the directory set by arduinoCLIDirectory.\n"
+						+ "Recommendation: Either install the Arduino-CLI in the directory set by arduinoCLIDirectory or\n"
+						+ "adjust the settings to the installation path of the Arduino-CLI.";
+				myWriter.write("# Info: The config file generation has detected, that the paths Arduino-CLI is neither known to the system nor in the directory of arduinoCLIDirectory.\n");
+				myWriter.write("# Recommendation: Install the Arduino-CLI in the directory of arduinoCLIDirectory or adjust the settings to the installation path of the Arduino-CLI.");
+			}
+		}
 		myWriter.close();
-		
+
 		return true;
 	}
 
-	
 	public boolean checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation() {
-		if(Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
+		if (Files.exists(completeConfigFilePath) && Files.isRegularFile(completeConfigFilePath)) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-	
-	public boolean checkForArduinoCLIByCall() throws IOException, InterruptedException{
+
+	public boolean checkForArduinoCLIKnownToSystem() throws IOException, InterruptedException {
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("bash", "-c", "export PATH=" + DEFAULT_ARDUINO_CLI_PATH + ":$PATH && arduino-cli config dump");
+		processBuilder.command("bash", "-c", "arduino-cli config dump");
 		Process proc = processBuilder.start();
 		int exitCode = proc.waitFor();
-		boolean testSuccessful = (exitCode == 0); 
+		boolean testSuccessful = (exitCode == 0);
 		return testSuccessful;
 	}
-	
-	
-	/**
-	 * Checks if the ArduinoCLI can be accessed.
-	 * First it checks if it can find the file at the default location (this is just the config generator) and then if it can be called.
-	 * @return If the ArduinoCLI can be accessed or not.
-	 */
-	public boolean canAccessArduinoCLI() {
-		if(checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()){
+
+	public boolean checkForArduinoCLIAtDefaultPath() {
+		if (checkIfArduinoCLIUtilizerConfigFileExistsAtDefaultLocation()) {
 			return true;
-		}
-		else{
+		} else {
 			try {
-				return checkForArduinoCLIByCall();
+				ProcessBuilder processBuilder = new ProcessBuilder();
+				processBuilder.command("bash", "-c", DEFAULT_ARDUINO_CLI_PATH + "/arduino-cli config dump");
+				Process proc = processBuilder.start();
+				int exitCode = proc.waitFor();
+				boolean testSuccessful = (exitCode == 0);
+				return testSuccessful;
 			} catch (InterruptedException | IOException e) {
 				return false;
-			} 
+			}
 		}
 	}
-
 
 	public Path getCompleteConfigFilePath() {
 		return completeConfigFilePath;
+	}
+	
+	public String getAdvice(){
+		return advice;
 	}
 }
