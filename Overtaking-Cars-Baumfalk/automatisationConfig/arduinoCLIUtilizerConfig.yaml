@@ -1,2 +1,5 @@
 arduinoCLIPathSetInPathEnvironment: false
 arduinoCLIDirectory: /home/muml/ArduinoCLI
+
+# Info: The config file generation has detected, that the Arduino-CLI is already installed in the folder set by arduinoCLIDirectory.
+# Info: The generated settings should directly work.

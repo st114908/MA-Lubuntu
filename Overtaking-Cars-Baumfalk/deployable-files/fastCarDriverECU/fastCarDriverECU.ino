@@ -17,8 +17,8 @@ SimpleHardwareController fastCarDriverController;
 
 
 //variable for component Instances
-DriveControllerComponent* atomic_c1;
-DistanceSensorComponent* atomic_c2;
+DistanceSensorComponent* atomic_c1;
+DriveControllerComponent* atomic_c2;
 DistanceSensorComponent* atomic_c3;
 CourseControlComponent* atomic_c4;
 
@@ -31,8 +31,8 @@ void setup(){
 	initSofdcarHalConnectorFor(&fastCarDriverController);
 	fastCarDriverController.initializeCar(config, lineConfig);
 	// End of user code
-	atomic_c1= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
-	atomic_c2= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
+	atomic_c1= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
+	atomic_c2= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
 	atomic_c3= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
 	atomic_c4= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
 	
@@ -47,8 +47,8 @@ void setup(){
 void loop(){
 	fastCarDriverController.loop();
 
-	DriveControllerComponent_processStep(atomic_c1);
-	DistanceSensorComponent_processStep(atomic_c2);
+	DistanceSensorComponent_processStep(atomic_c1);
+	DriveControllerComponent_processStep(atomic_c2);
 	DistanceSensorComponent_processStep(atomic_c3);
 	CourseControlComponent_processStep(atomic_c4);
 }	
