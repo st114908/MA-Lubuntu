@@ -79,7 +79,7 @@ The following things are required to get a fully working implementation:
 			[/let]
 		[/if]
 		[if (deploymentConfig.ecuConfigurations.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C)))]
-* For I2C communication, the Arduino is expected to be using its I2C pins. See more information in the I2cCustomLib.hpp in the respective ECU's directory.
+* For the serial communication, the Arduino is expected to be using its I2C pins. See more information in the SerialCustomLib.hpp in the respective ECU's directory.
 		[/if]
 	[/file]
 [/template]

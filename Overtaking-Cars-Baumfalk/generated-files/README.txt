@@ -10,4 +10,4 @@ The following things are required to get a fully working implementation:
 					
 					
 * For MQTT communication, you also require a WiFi connection using the ESP8266-01s WiFi Module. See more information in the MqttCustomLib.hpp in the respective ECU's directory.
-* For I2C communication, the Arduino is expected to be using its I2C pins. See more information in the I2cCustomLib.hpp in the respective ECU's directory.
+* For the serial communication, the Arduino is expected to be using its I2C pins. See more information in the SerialCustomLib.hpp in the respective ECU's directory.

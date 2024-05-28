@@ -7,49 +7,14 @@ Exit code: 0
 
 Normal response stream:
 compilerout: |
-    Sketch uses 23108 bytes (75%) of program storage space. Maximum is 30720 bytes.
-    Global variables use 1472 bytes (71%) of dynamic memory, leaving 576 bytes for local variables. Maximum is 2048 bytes.
+    Sketch uses 21160 bytes (68%) of program storage space. Maximum is 30720 bytes.
+    Global variables use 1345 bytes (65%) of dynamic memory, leaving 703 bytes for local variables. Maximum is 2048 bytes.
 compilererr: ""
 builderresult:
     outstream: []
     errstream: []
     buildpath: /tmp/arduino/sketches/2B6D9D2C8E246CFF22DF012C4332A9F6
     usedlibraries:
-        - name: Wire
-          author: Arduino
-          maintainer: Arduino <info@arduino.cc>
-          sentence: This library allows you to communicate with I2C and Two Wire Interface devices.
-          paragraph: It allows the communication with I2C devices like temperature sensors, realtime clocks and many others using SDA (Data Line) and SCL (Clock Line).
-          website: http://www.arduino.cc/en/Reference/Wire
-          category: Communication
-          architectures:
-            - avr
-          types: []
-          installdir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire
-          sourcedir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/src
-          utilitydir: ""
-          containerplatform: arduino:avr@1.8.6
-          dotalinkage: false
-          precompiled: false
-          ldflags: ""
-          islegacy: false
-          version: "1.0"
-          license: Unspecified
-          properties: {}
-          location: 2
-          layout: 1
-          examples:
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/SFRRanger_reader
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/digital_potentiometer
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/i2c_scanner
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/master_reader
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/master_writer
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/slave_receiver
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/slave_sender
-          providesincludes:
-            - Wire.h
-          compatiblewith: {}
-          indevelopment: false
         - name: PubSubClient
           author: Nick O'Leary <nick.oleary@gmail.com>
           maintainer: Nick O'Leary <nick.oleary@gmail.com>
@@ -158,10 +123,10 @@ builderresult:
           indevelopment: false
     executablesectionssize:
         - name: text
-          size: 23108
+          size: 21160
           maxsize: 30720
         - name: data
-          size: 1472
+          size: 1345
           maxsize: 2048
     boardplatform:
         id: arduino:avr
@@ -232,8 +197,8 @@ builderresult:
         - compiler.warning_flags.more=-Wall
         - compiler.warning_flags.none=-w
         - extra.time.dst=3600
-        - extra.time.local=1716472215
-        - extra.time.utc=1716465015
+        - extra.time.local=1716913245
+        - extra.time.utc=1716906045
         - extra.time.zone=3600
         - ide_version=10607
         - menu.cpu.atmega168=ATmega168
@@ -313,7 +278,8 @@ builderresult:
         - runtime.tools.openocd-0.10.0-arduino7.path=/home/muml/.arduino15/packages/arduino/tools/openocd/0.10.0-arduino7
         - runtime.tools.openocd.path=/home/muml/.arduino15/packages/arduino/tools/openocd/0.10.0-arduino7
         - runtime.tools.serial-discovery-1.4.0.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.0
-        - runtime.tools.serial-discovery.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.0
+        - runtime.tools.serial-discovery-1.4.1.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.1
+        - runtime.tools.serial-discovery.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.1
         - runtime.tools.serial-monitor-0.13.0.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.13.0
         - runtime.tools.serial-monitor-0.14.1.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.14.1
         - runtime.tools.serial-monitor.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.14.1

@@ -33,7 +33,7 @@
 
 [comment include the I2C lib if I2C is used by the containers on this ECU /]
 [if (ecuConfig.componentContainers.componentInstanceConfigurations.portInstanceConfigurations->exists(piConifg | piConifg.oclIsKindOf(PortInstanceConfiguration_I2C)))]
-#include "[if (useSubDir)]container_lib/[/if]I2cCustomLib.hpp"
+#include "[if (useSubDir)]container_lib/[/if]SerialCustomLib.hpp"
 [/if]
 
 [comment include the MQTT lib if MQTT is use by the containers on this ECU /]

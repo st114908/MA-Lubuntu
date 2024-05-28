@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="main" name="org.muml.c.adapter.container">
     <property name="ECLIPSE_HOME" value="../../../../MUML_10_ToolSuite"/>
-    <property name="ECLIPSE_WORKSPACE" value="../../../../workspaceMA"/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../workspaceMA2"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.muml.c.adapter.container.libraryclasspath">

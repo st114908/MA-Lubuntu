@@ -59,7 +59,7 @@
 
 [if isI2cUsed(container)]
 //I2C Specific includes
-#include "[if (useSubDir)]../container_lib/[/if]I2cCustomLib.hpp"
+#include "[if (useSubDir)]../container_lib/[/if]SerialCustomLib.hpp"
 [/if]
 [if (isMqttUsed(container))]
 //MQTT specific includes

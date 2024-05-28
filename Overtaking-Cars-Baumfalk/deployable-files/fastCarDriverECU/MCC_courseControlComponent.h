@@ -10,7 +10,7 @@
 #include "ECU_Identifier.h"
 
 //I2C Specific includes
-#include "I2cCustomLib.hpp"
+#include "SerialCustomLib.hpp"
 //include the component_interface header
 #include "courseControlComponent_Interface.h"
 //include api mapping headers

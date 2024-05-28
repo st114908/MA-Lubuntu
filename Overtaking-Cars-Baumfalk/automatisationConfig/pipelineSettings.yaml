@@ -194,7 +194,7 @@ PipelineSequence:
     in:
       condition: from ifSuccessful
       message: direct Compile for slowCarDriverECU has failed!
-# Cropped the the lookups of boards and uploads. 
+
 - direct PopupWindowMessage:
     in:
       condition: direct true
