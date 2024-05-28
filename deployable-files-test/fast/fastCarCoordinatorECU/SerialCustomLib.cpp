@@ -1,4 +1,4 @@
-#include "I2cCustomLib.hpp"
+#include "SerialCustomLib.hpp"
 #define SERIAL_RCV_MAX_TYPE_SIZE 10
 #define SERIAL_RCV_MSG_SIZE 50
 #define SERIAL_RCV_BUF_SIZE SERIAL_RCV_MAX_TYPE_SIZE + 1 + SERIAL_RCV_MSG_SIZE

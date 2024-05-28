@@ -2,54 +2,34 @@ Command:
 export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli compile --fqbn arduino:avr:nano /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino --output-dir /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/CompiledFiles --format yaml
 
 Results:
-Exit code: 0
+Exit code: 1
 
 
 Normal response stream:
-compilerout: |
-    Sketch uses 23100 bytes (75%) of program storage space. Maximum is 30720 bytes.
-    Global variables use 1472 bytes (71%) of dynamic memory, leaving 576 bytes for local variables. Maximum is 2048 bytes.
-compilererr: ""
+compilerout: ""
+compilererr: |+
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/SerialCustomLib.cpp.o (symbol from plugin): In function `lastSerialRecv':
+    (.text+0x0): multiple definition of `lastSerialRecv'
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/I2cCustomLib.cpp.o (symbol from plugin):(.text+0x0): first defined here
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/SerialCustomLib.cpp.o (symbol from plugin): In function `lastSerialRecv':
+    (.text+0x0): multiple definition of `i2cCommunication_setup(unsigned char)'
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/I2cCustomLib.cpp.o (symbol from plugin):(.text+0x0): first defined here
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/SerialCustomLib.cpp.o (symbol from plugin): In function `lastSerialRecv':
+    (.text+0x0): multiple definition of `initAndRegisterI2cReceiver(I2cReceiver*, char*, unsigned int, unsigned int, bool)'
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/I2cCustomLib.cpp.o (symbol from plugin):(.text+0x0): first defined here
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/SerialCustomLib.cpp.o (symbol from plugin): In function `lastSerialRecv':
+    (.text+0x0): multiple definition of `i2cEmulationSerial_loop()'
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/I2cCustomLib.cpp.o (symbol from plugin):(.text+0x0): first defined here
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/SerialCustomLib.cpp.o (symbol from plugin): In function `lastSerialRecv':
+    (.text+0x0): multiple definition of `sendI2cMessage(unsigned char, char*, unsigned char*, unsigned int)'
+    /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/sketch/I2cCustomLib.cpp.o (symbol from plugin):(.text+0x0): first defined here
+    collect2: error: ld returned 1 exit status
+
 builderresult:
     outstream: []
     errstream: []
     buildpath: /tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E
     usedlibraries:
-        - name: Wire
-          author: Arduino
-          maintainer: Arduino <info@arduino.cc>
-          sentence: This library allows you to communicate with I2C and Two Wire Interface devices.
-          paragraph: It allows the communication with I2C devices like temperature sensors, realtime clocks and many others using SDA (Data Line) and SCL (Clock Line).
-          website: http://www.arduino.cc/en/Reference/Wire
-          category: Communication
-          architectures:
-            - avr
-          types: []
-          installdir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire
-          sourcedir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/src
-          utilitydir: ""
-          containerplatform: arduino:avr@1.8.6
-          dotalinkage: false
-          precompiled: false
-          ldflags: ""
-          islegacy: false
-          version: "1.0"
-          license: Unspecified
-          properties: {}
-          location: 2
-          layout: 1
-          examples:
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/SFRRanger_reader
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/digital_potentiometer
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/i2c_scanner
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/master_reader
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/master_writer
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/slave_receiver
-            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/Wire/examples/slave_sender
-          providesincludes:
-            - Wire.h
-          compatiblewith: {}
-          indevelopment: false
         - name: PubSubClient
           author: Nick O'Leary <nick.oleary@gmail.com>
           maintainer: Nick O'Leary <nick.oleary@gmail.com>
@@ -156,13 +136,7 @@ builderresult:
             - SoftwareSerial.h
           compatiblewith: {}
           indevelopment: false
-    executablesectionssize:
-        - name: text
-          size: 23100
-          maxsize: 30720
-        - name: data
-          size: 1472
-          maxsize: 2048
+    executablesectionssize: []
     boardplatform:
         id: arduino:avr
         version: 1.8.6
@@ -232,8 +206,8 @@ builderresult:
         - compiler.warning_flags.more=-Wall
         - compiler.warning_flags.none=-w
         - extra.time.dst=3600
-        - extra.time.local=1716472211
-        - extra.time.utc=1716465011
+        - extra.time.local=1716899255
+        - extra.time.utc=1716892055
         - extra.time.zone=3600
         - ide_version=10607
         - menu.cpu.atmega168=ATmega168
@@ -353,9 +327,9 @@ builderresult:
         - upload_port.0.board=nano
         - version=1.8.6
 uploadresult: null
-success: true
+success: false
 profileout: ""
-error: ""
+error: 'Error during build: exit status 1'
 
 
 

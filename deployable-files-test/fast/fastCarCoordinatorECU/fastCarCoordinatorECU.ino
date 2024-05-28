@@ -1,7 +1,7 @@
 
 #include "Debug.h"
 
-#include "I2cCustomLib.hpp"
+#include "SerialCustomLib.hpp"
 
 #include "MqttCustomLib.hpp"
 #include <WiFiEsp.h>
@@ -32,14 +32,14 @@ void setup(){
 
 	//collect the data required for the WiFi configuration
 	struct WiFiConfig wifiConfig = {
-		"Robocars",
-		"Sofdcar-HAL",
+		"Section Control",
+		"********",
 		WL_IDLE_STATUS
 	};
 
 	//collect the data required for the MQTT configuration
 	struct MqttConfig mConf = {
-		"devonport.informatik.uni-stuttgart.de",
+		"192.168.0.100",
 		1883,
 		"fastCarCoordinatorECU_config"
 	};

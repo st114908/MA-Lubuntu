@@ -1,4 +1,4 @@
-// Serial Port I2cCustomLib emulation
+// Serial Port communication between the Arduino and the ESP.
 
 #ifndef I2C_CUSTOM_LIB_SERIAL_H
 #define I2C_CUSTOM_LIB_SERIAL_H
