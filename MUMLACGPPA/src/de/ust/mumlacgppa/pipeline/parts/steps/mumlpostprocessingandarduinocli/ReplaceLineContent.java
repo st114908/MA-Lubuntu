@@ -117,16 +117,8 @@ public class ReplaceLineContent extends PipelineStep{
 	}
 
 	
-	/**
-	 * @param arduinoContainersPathString
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 * @throws StructureException 
-	 * @throws VariableNotDefinedException 
-	 * @throws InOrOutKeyNotDefinedException 
-	 */
 	private void replaceContent()
-			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 
         /*
         17. the values for the ```desiredVelocity``` and ```slowVelocity``` can be set individually in

@@ -1,5 +1,5 @@
 Command:
-export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli compile --fqbn arduino:avr:nano /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino --output-dir /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/CompiledFiles --format yaml
+export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli compile --fqbn arduino:avr:mega /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino --output-dir /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU/CompiledFiles --format yaml
 
 Results:
 Exit code: 0
@@ -7,8 +7,8 @@ Exit code: 0
 
 Normal response stream:
 compilerout: |
-    Sketch uses 21152 bytes (68%) of program storage space. Maximum is 30720 bytes.
-    Global variables use 1345 bytes (65%) of dynamic memory, leaving 703 bytes for local variables. Maximum is 2048 bytes.
+    Sketch uses 22822 bytes (8%) of program storage space. Maximum is 253952 bytes.
+    Global variables use 1659 bytes (20%) of dynamic memory, leaving 6533 bytes for local variables. Maximum is 8192 bytes.
 compilererr: ""
 builderresult:
     outstream: []
@@ -123,11 +123,11 @@ builderresult:
           indevelopment: false
     executablesectionssize:
         - name: text
-          size: 21152
-          maxsize: 30720
+          size: 22822
+          maxsize: 253952
         - name: data
-          size: 1345
-          maxsize: 2048
+          size: 1659
+          maxsize: 8192
     boardplatform:
         id: arduino:avr
         version: 1.8.6
@@ -140,33 +140,33 @@ builderresult:
         packageurl: ""
     progress: null
     buildproperties:
-        - _id=nano
+        - _id=mega
         - archive_file_path=/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/{archive_file}
         - bootloader.extended_fuses=0xFD
-        - bootloader.file=optiboot/optiboot_atmega328.hex
-        - bootloader.high_fuses=0xDA
+        - bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+        - bootloader.high_fuses=0xD8
         - bootloader.lock_bits=0x0F
         - bootloader.low_fuses=0xFF
         - bootloader.tool=avrdude
         - bootloader.tool.default=avrdude
         - bootloader.unlock_bits=0x3F
         - build.arch=AVR
-        - build.board=AVR_NANO
+        - build.board=AVR_MEGA2560
         - build.core=arduino
         - build.core.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino
         - build.extra_flags=
         - build.f_cpu=16000000L
-        - build.fqbn=arduino:avr:nano
+        - build.fqbn=arduino:avr:mega
         - build.library_discovery_phase=0
-        - build.mcu=atmega328p
+        - build.mcu=atmega2560
         - build.path=/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E
         - build.project_name=fastCarCoordinatorECU.ino
         - build.source.path=/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarCoordinatorECU
         - build.system.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/system
         - build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER="Unknown"' '-DUSB_PRODUCT={build.usb_product}'
         - build.usb_manufacturer="Unknown"
-        - build.variant=eightanaloginputs
-        - build.variant.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/eightanaloginputs
+        - build.variant=mega
+        - build.variant.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/mega
         - compiler.S.extra_flags=
         - compiler.S.flags=-c -g -x assembler-with-cpp -flto -MMD
         - compiler.ar.cmd=avr-gcc-ar
@@ -197,54 +197,51 @@ builderresult:
         - compiler.warning_flags.more=-Wall
         - compiler.warning_flags.none=-w
         - extra.time.dst=3600
-        - extra.time.local=1716913242
-        - extra.time.utc=1716906042
+        - extra.time.local=1717084907
+        - extra.time.utc=1717077707
         - extra.time.zone=3600
         - ide_version=10607
-        - menu.cpu.atmega168=ATmega168
-        - menu.cpu.atmega168.bootloader.extended_fuses=0xF8
-        - menu.cpu.atmega168.bootloader.file=atmega/ATmegaBOOT_168_diecimila.hex
-        - menu.cpu.atmega168.bootloader.high_fuses=0xdd
-        - menu.cpu.atmega168.bootloader.low_fuses=0xff
-        - menu.cpu.atmega168.build.mcu=atmega168
-        - menu.cpu.atmega168.upload.maximum_data_size=1024
-        - menu.cpu.atmega168.upload.maximum_size=14336
-        - menu.cpu.atmega168.upload.speed=19200
-        - menu.cpu.atmega328=ATmega328P
-        - menu.cpu.atmega328.bootloader.extended_fuses=0xFD
-        - menu.cpu.atmega328.bootloader.file=optiboot/optiboot_atmega328.hex
-        - menu.cpu.atmega328.bootloader.high_fuses=0xDA
-        - menu.cpu.atmega328.bootloader.low_fuses=0xFF
-        - menu.cpu.atmega328.build.mcu=atmega328p
-        - menu.cpu.atmega328.upload.maximum_data_size=2048
-        - menu.cpu.atmega328.upload.maximum_size=30720
-        - menu.cpu.atmega328.upload.speed=115200
-        - menu.cpu.atmega328old=ATmega328P (Old Bootloader)
-        - menu.cpu.atmega328old.bootloader.extended_fuses=0xFD
-        - menu.cpu.atmega328old.bootloader.file=atmega/ATmegaBOOT_168_atmega328.hex
-        - menu.cpu.atmega328old.bootloader.high_fuses=0xDA
-        - menu.cpu.atmega328old.bootloader.low_fuses=0xFF
-        - menu.cpu.atmega328old.build.mcu=atmega328p
-        - menu.cpu.atmega328old.upload.maximum_data_size=2048
-        - menu.cpu.atmega328old.upload.maximum_size=30720
-        - menu.cpu.atmega328old.upload.speed=57600
-        - name=Arduino Nano
+        - menu.cpu.atmega1280=ATmega1280
+        - menu.cpu.atmega1280.bootloader.extended_fuses=0xF5
+        - menu.cpu.atmega1280.bootloader.file=atmega/ATmegaBOOT_168_atmega1280.hex
+        - menu.cpu.atmega1280.bootloader.high_fuses=0xDA
+        - menu.cpu.atmega1280.build.board=AVR_MEGA
+        - menu.cpu.atmega1280.build.mcu=atmega1280
+        - menu.cpu.atmega1280.upload.maximum_size=126976
+        - menu.cpu.atmega1280.upload.protocol=arduino
+        - menu.cpu.atmega1280.upload.speed=57600
+        - menu.cpu.atmega2560=ATmega2560 (Mega 2560)
+        - menu.cpu.atmega2560.bootloader.extended_fuses=0xFD
+        - menu.cpu.atmega2560.bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+        - menu.cpu.atmega2560.bootloader.high_fuses=0xD8
+        - menu.cpu.atmega2560.build.board=AVR_MEGA2560
+        - menu.cpu.atmega2560.build.mcu=atmega2560
+        - menu.cpu.atmega2560.upload.maximum_size=253952
+        - menu.cpu.atmega2560.upload.protocol=wiring
+        - menu.cpu.atmega2560.upload.speed=115200
+        - name=Arduino Mega or Mega 2560
+        - pid.0=0x0010
+        - pid.1=0x0042
+        - pid.2=0x0010
+        - pid.3=0x0042
+        - pid.4=0x0210
+        - pid.5=0x0242
         - pluggable_discovery.required.0=builtin:serial-discovery
         - pluggable_discovery.required.1=builtin:mdns-discovery
         - pluggable_monitor.required.serial=builtin:serial-monitor
         - preproc.includes.flags=-w -x c++ -M -MG -MP
         - preproc.macros.flags=-w -x c++ -E -CC
-        - recipe.S.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -x assembler-with-cpp -flto -MMD -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_NANO -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.S.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -x assembler-with-cpp -flto -MMD -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
         - recipe.ar.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc-ar" rcs  "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/{archive_file}" "{object_file}"
-        - recipe.c.combine.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -w -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=atmega328p   -o "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.elf" {object_files}  "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/{archive_file}" "-L/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E" -lm
-        - recipe.c.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -Os -w -std=gnu11 -ffunction-sections -fdata-sections -MMD -flto -fno-fat-lto-objects -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_NANO -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
-        - recipe.cpp.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_NANO -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.c.combine.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -w -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=atmega2560   -o "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.elf" {object_files}  "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/{archive_file}" "-L/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E" -lm
+        - recipe.c.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -Os -w -std=gnu11 -ffunction-sections -fdata-sections -MMD -flto -fno-fat-lto-objects -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.cpp.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
         - recipe.objcopy.eep.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-objcopy" -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.elf" "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.eep"
         - recipe.objcopy.hex.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-objcopy" -O ihex -R .eeprom  "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.elf" "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex"
-        - recipe.output.save_file=fastCarCoordinatorECU.ino.eightanaloginputs.hex
+        - recipe.output.save_file=fastCarCoordinatorECU.ino.mega.hex
         - recipe.output.tmp_file=fastCarCoordinatorECU.ino.hex
-        - recipe.preproc.includes="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -M -MG -MP -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_NANO -DARDUINO_ARCH_AVR   {includes} "{source_file}"
-        - recipe.preproc.macros="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -E -CC -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_NANO -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{preprocessed_file_path}"
+        - recipe.preproc.includes="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -M -MG -MP -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}"
+        - recipe.preproc.macros="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{preprocessed_file_path}"
         - recipe.size.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-size" -A "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.elf"
         - recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
         - recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
@@ -289,35 +286,53 @@ builderresult:
         - tools.arduino_ota.upload.pattern="{cmd}" -address {upload.port.address} -port {upload.port.properties.port} -sketch "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex" -upload {upload.port.properties.endpoint_upload} -sync {upload.port.properties.endpoint_sync} -reset {upload.port.properties.endpoint_reset} -sync_exp {upload.port.properties.sync_return}
         - tools.avrdude.bootloader.params.quiet=-q -q
         - tools.avrdude.bootloader.params.verbose=-v
-        - tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -patmega328p -c{protocol} {program.extra_params} "-Uflash:w:/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/bootloaders/optiboot/optiboot_atmega328.hex:i" -Ulock:w:0x0F:m
+        - tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -patmega2560 -c{protocol} {program.extra_params} "-Uflash:w:/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/bootloaders/stk500v2/stk500boot_v2_mega2560.hex:i" -Ulock:w:0x0F:m
         - tools.avrdude.cmd.path={path}/bin/avrdude
         - tools.avrdude.config.path={path}/etc/avrdude.conf
         - tools.avrdude.erase.params.quiet=-q -q
         - tools.avrdude.erase.params.verbose=-v
-        - tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -patmega328p -c{protocol} {program.extra_params} -e -Ulock:w:0x3F:m -Uefuse:w:0xFD:m -Uhfuse:w:0xDA:m -Ulfuse:w:0xFF:m
+        - tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -patmega2560 -c{protocol} {program.extra_params} -e -Ulock:w:0x3F:m -Uefuse:w:0xFD:m -Uhfuse:w:0xD8:m -Ulfuse:w:0xFF:m
         - tools.avrdude.network_cmd=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.3.0/bin/arduinoOTA
         - tools.avrdude.path=/home/muml/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17
         - tools.avrdude.program.params.noverify=-V
         - tools.avrdude.program.params.quiet=-q -q
         - tools.avrdude.program.params.verbose=-v
-        - tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} {program.verify} -patmega328p -c{protocol} {program.extra_params} "-Uflash:w:/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex:i"
+        - tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} {program.verify} -patmega2560 -c{protocol} {program.extra_params} "-Uflash:w:/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex:i"
         - tools.avrdude.program.verify=
         - tools.avrdude.upload.network_pattern="{network_cmd}" -address {serial.port} -port {upload.network.port} -sketch "/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex" -upload {upload.network.endpoint_upload} -sync {upload.network.endpoint_sync} -reset {upload.network.endpoint_reset} -sync_exp {upload.network.sync_return}
         - tools.avrdude.upload.params.noverify=-V
         - tools.avrdude.upload.params.quiet=-q -q
         - tools.avrdude.upload.params.verbose=-v
-        - tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -patmega328p -carduino "-P{serial.port}" -b115200 -D "-Uflash:w:/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex:i"
+        - tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -patmega2560 -cwiring "-P{serial.port}" -b115200 -D "-Uflash:w:/tmp/arduino/sketches/A9D1CC4DB80F42E6BC557C74E8A4988E/fastCarCoordinatorECU.ino.hex:i"
         - tools.avrdude.upload.verify=
-        - tools.avrdude_remote.upload.pattern=/usr/bin/run-avrdude /tmp/sketch.hex {upload.verbose} -patmega328p
-        - upload.maximum_data_size=2048
-        - upload.maximum_size=30720
-        - upload.protocol=arduino
+        - tools.avrdude_remote.upload.pattern=/usr/bin/run-avrdude /tmp/sketch.hex {upload.verbose} -patmega2560
+        - upload.maximum_data_size=8192
+        - upload.maximum_size=253952
+        - upload.protocol=wiring
         - upload.speed=115200
         - upload.tool=avrdude
         - upload.tool.default=avrdude
         - upload.tool.network=arduino_ota
-        - upload_port.0.board=nano
+        - upload_port.0.pid=0x0010
+        - upload_port.0.vid=0x2341
+        - upload_port.1.pid=0x0042
+        - upload_port.1.vid=0x2341
+        - upload_port.2.pid=0x0010
+        - upload_port.2.vid=0x2A03
+        - upload_port.3.pid=0x0042
+        - upload_port.3.vid=0x2A03
+        - upload_port.4.pid=0x0210
+        - upload_port.4.vid=0x2341
+        - upload_port.5.pid=0x0242
+        - upload_port.5.vid=0x2341
+        - upload_port.6.board=mega
         - version=1.8.6
+        - vid.0=0x2341
+        - vid.1=0x2341
+        - vid.2=0x2A03
+        - vid.3=0x2A03
+        - vid.4=0x2341
+        - vid.5=0x2341
 uploadresult: null
 success: true
 profileout: ""

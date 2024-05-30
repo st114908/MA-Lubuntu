@@ -1,5 +1,7 @@
 package de.ust.mumlacgppa.pipeline.parts.storage;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
+
 /**
  * This class handles the storage of variable content. The possibility of
  * generics The possibility of data types for differentiating between strings
@@ -35,12 +37,22 @@ public class VariableContent {
 		return content;
 	}
 
-	public boolean getBooleanContent() {
-		return Boolean.parseBoolean(content);
+	public boolean getBooleanContent() throws FaultyDataException {
+		try{
+			return Boolean.parseBoolean(content);
+		}
+		catch(Exception e){
+			throw new FaultyDataException("Content " + content + " coulnd't be read as boolean (true or false) value! Check if you are using the correct value type or if you are accidentally using \"direct\" instead of \"from\".");
+		}
 	}
 
-	public int getIntContent() {
-		return Integer.parseInt(content);
+	public int getIntContent() throws FaultyDataException {
+		try{
+			return Integer.parseInt(content);
+		}
+		catch(Exception e){
+			throw new FaultyDataException("Content " + content + " coulnd't be read as integer number value! Check if you are using the correct value type or if you are accidentally using \"direct\" instead of \"from\".");
+		}
 	}
 
 }

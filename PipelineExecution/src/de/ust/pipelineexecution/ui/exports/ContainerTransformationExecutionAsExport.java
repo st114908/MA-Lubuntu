@@ -78,7 +78,7 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 		try {
 			generateFolderIfNecessary(
 					transformation.getResolvedPathContentOfInput("muml_containerFileDestination").getParent());
-		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 			exceptionFeedback(e);
 		}
 
@@ -131,7 +131,7 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 					// Transformation
 					doExecuteContainerTransformationPart(targetProject, sourceElementsSystemAllocation, transformation,
 							progressMonitor);
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					// TODO Auto-generated catch block
 					return exceptionFeedback(e);
 				}

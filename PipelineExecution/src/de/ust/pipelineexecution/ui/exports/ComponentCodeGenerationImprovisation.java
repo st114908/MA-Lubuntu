@@ -19,6 +19,7 @@ import org.muml.c.adapter.componenttype.ui.export.C99SourceCodeExport;
 import org.muml.codegen.componenttype.export.ui.Activator;
 import org.muml.codegen.componenttype.export.ui.ITargetPlatformGenerator;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -35,7 +36,7 @@ class ComponentCodeGenerationImprovisation {
 
 	public void performComponentCodeGeneration(IProject targetProject, EObject[] sourceElementsComponentInstance,
 			IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		step.setContentOfOutput("ifSuccessful", false);
 		
 		Path arduinoContainersDestinationFolder = step

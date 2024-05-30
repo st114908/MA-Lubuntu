@@ -17,17 +17,14 @@ public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 	
 	public static final String messageWindowTitle = "ArduinoCLIUtilizer: Upload step";
 	
+	private boolean notInSyncProblem;
 	
 	public UploadCall(Path targetFilePath, String foundPortAddress, String targetFqbn)
 			throws IOException, InterruptedException, FQBNErrorEception, NoArduinoCLIConfigFileException, ProjectFolderPathNotSetException{
 		ArduinoCLICommandLineHandler commandLineDoer = new ArduinoCLICommandLineHandler();
 		String uploadCommand;
 		String targetFile = targetFilePath.toString();
-		if(targetFile.endsWith(".ino")){
-			// arduino-cli upload --port [PORT] --fqbn [BOARD]  [INOFILE]
-			uploadCommand = "arduino-cli upload --port " + foundPortAddress + " --fqbn " + targetFqbn + " " + targetFile + " --format yaml";
-		}
-		else{
+		if(targetFile.endsWith(".hex")){
 			// arduino-cli upload --port [PORT] --fqbn [BOARD] --input-file [HEXFILE]
 			uploadCommand = "arduino-cli upload --port " + foundPortAddress + " --fqbn " + targetFqbn + " --input-file " + targetFile + " --format yaml";
 			Path parentPath = targetFilePath.getParent();
@@ -41,14 +38,24 @@ public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 				}
 			}
 			else{
-				throw new FQBNErrorEception("Textfile with the used FQBN (board type identifier) not found!");
+				throw new FQBNErrorEception("Textfile with the used FQBN (board type identifier) not found at " + fqbnFilePath.toString() + "!");
 			}
+		}
+		else{
+			// arduino-cli upload --port [PORT] --fqbn [BOARD]  [INOFILE]
+			uploadCommand = "arduino-cli upload --port " + foundPortAddress + " --fqbn " + targetFqbn + " " + targetFile + " --format yaml";
 		}
 		ReceivedFeedback = commandLineDoer.doShellCommand(uploadCommand);
 		responseLocation = saveShellResponseInfo(
 			targetFilePath.getParent(), "UploadInfo.txt", ReceivedFeedback);
 		
 		successful = (ReceivedFeedback.getExitCode() == 0);
+		if(ReceivedFeedback.getErrorFeedback().contains("not in sync")){
+			notInSyncProblem = true;
+		}
+		else{
+			notInSyncProblem = false;
+		}
 	}
 	
 	
@@ -58,9 +65,17 @@ public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 			return "Nothing wrong.";
 		}
 		else{
-			return "Error at the upload!\n"
-					+ "For more details see\n"
-					+ responseLocation;
+			if(notInSyncProblem){
+				return "Error at the upload!\n"
+						+ "The programmer is out of sync or the board at the given address is of a different type/FQBN than given type/FQBN.\n"
+						+ "For more details see\n"
+						+ responseLocation;
+			}
+			else{
+				return "Error at the upload!\n"
+						+ "For more details see\n"
+						+ responseLocation;
+			}
 		}
 	}
 	

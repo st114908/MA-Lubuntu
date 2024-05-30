@@ -18,6 +18,7 @@ import org.eclipse.ui.PlatformUI;
 import org.muml.core.export.operation.AbstractFujabaExportOperation;
 import org.muml.core.export.operation.IFujabaExportOperation;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -63,7 +64,7 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 		
 		try {
 			generateFolderIfNecessary(generation.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
-		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 			exceptionFeedback(e);
 		}
 		
@@ -111,7 +112,7 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 				// T3.6 and T3.7: Container Code Generation
 				try {
 					doExecuteContainerCodeGeneration(targetProject, generation, progressMonitor);
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					// TODO Auto-generated catch block
 					return exceptionFeedback(e);
 				}

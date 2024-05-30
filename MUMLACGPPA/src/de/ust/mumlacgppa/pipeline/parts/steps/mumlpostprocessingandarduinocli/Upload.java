@@ -82,7 +82,7 @@ public class Upload extends PipelineStep {
 			FQBNErrorEception, ProjectFolderPathNotSetException, InOrOutKeyNotDefinedException {
 		String foundPortAddress = handleInputByKey("portAddress").getContent();
 		String targetFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
-		Path targetFilePath = Paths.get(handleInputByKey("targetInoOrHexFile").getContent());
+		Path targetFilePath = resolveFullOrLocalPath( handleInputByKey("targetInoOrHexFile").getContent() );
 
 		UploadCall UploadCallInstance = new UploadCall(targetFilePath, foundPortAddress, targetFqbn);
 		if (UploadCallInstance.isSuccessful()) {

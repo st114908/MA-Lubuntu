@@ -940,6 +940,7 @@
         <hwPortParts xmi:id="_4Yti4Ij7EeyYKPpICO9qfw" hwport="_N3yNMIj0EeyYKPpICO9qfw"/>
         <hwPortParts xmi:id="_KjW48Ij9EeyYKPpICO9qfw" hwport="_SvMmoI5bEeyhMvv5xjA9yA"/>
         <hwPortParts xmi:id="_Z8LO4I5UEeyhMvv5xjA9yA" connectors="_yeGBUI5bEeyhMvv5xjA9yA" hwport="_Up9j0I5TEeyhMvv5xjA9yA"/>
+        <hwPortParts xmi:id="_djqqUB5eEe-i9L_YKBHLqA" hwport="_83N4wNuiEe6tp5DAMx9blg"/>
       </embeddedPlatformParts>
       <delegationPorts xmi:id="_tKuLAIj8EeyYKPpICO9qfw" comment="The delegation port for the Nano's WiFiShield." connectors="_yAdDEI5bEeyhMvv5xjA9yA" name="WiFi" communicationResource="_cuyIkIjyEeyYKPpICO9qfw"/>
       <delegationPorts xmi:id="_dmwDMI5UEeyhMvv5xjA9yA" comment="I2C Delegation Port for the Nano." connectors="_yeGBUI5bEeyhMvv5xjA9yA" name="I2C"/>

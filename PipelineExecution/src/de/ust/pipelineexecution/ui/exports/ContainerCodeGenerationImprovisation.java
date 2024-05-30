@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.muml.arduino.adapter.container.ui.common.GenerateAll;
 import org.muml.codegen.componenttype.export.ui.Activator;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -34,7 +35,7 @@ class ContainerCodeGenerationImprovisation{
 	}
 	
 	public void performContainerCodeGeneration(IProject targetProject, IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		step.setContentOfOutput("ifSuccessful", false);
 		
 		Path referenceFolderForURIPathGeneration = ProjectFolderPathStorage.projectFolderPath.getParent();

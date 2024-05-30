@@ -123,7 +123,7 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 
 	
 	private void setValueForStates(Path arduinoContainersPath)
-			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 
         /*
         17. the values for the ```desiredVelocity``` and ```slowVelocity``` can be set individually in

@@ -89,7 +89,7 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	
-	private VariableContent resolveInputEntry(String entry) throws VariableNotDefinedException, StructureException{
+	private VariableContent resolveInputEntry(String entry) throws VariableNotDefinedException, StructureException, FaultyDataException{
 		if(entry.startsWith(directValueKeyword)){
 			String writtenInValue = entry.substring(directValueKeyword.length()).trim();
 			VariableContent directlyInsertedValue = new VariableContent(writtenInValue);
@@ -102,9 +102,14 @@ public abstract class PipelineStep implements Keywords{
 		else if(entry.startsWith(notKeyword)){
 			String afterNot = entry.substring(notKeyword.length()).trim();
 			VariableContent gainedContent = resolveInputEntry(afterNot);
-			boolean received = gainedContent.getBooleanContent();
-			VariableContent invertedBooleanContent = new VariableContent( Boolean.toString(!received) );
-			return invertedBooleanContent;
+			boolean received;
+			try {
+				received = gainedContent.getBooleanContent();
+				VariableContent invertedBooleanContent = new VariableContent( Boolean.toString(!received) );
+				return invertedBooleanContent;
+			} catch (FaultyDataException e) {
+				throw new FaultyDataException("Value reading error at " + entry + ": " + e.getMessage());
+			}
 		}
 		else{
 			throw new StructureException("Structure error or unexpected element " + entry);
@@ -112,7 +117,7 @@ public abstract class PipelineStep implements Keywords{
 	}
 	
 	
-	protected VariableContent handleInputByKey(String inputParameterKey) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+	protected VariableContent handleInputByKey(String inputParameterKey) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		if(!in.containsKey(inputParameterKey)){
 			throw new InOrOutKeyNotDefinedException("Input parameter key " + inputParameterKey + " can't get matched to the defined input parameter keys.");
 		}
@@ -130,7 +135,7 @@ public abstract class PipelineStep implements Keywords{
 
 	protected void handleOutputByKey(String outputKey, String newValue) throws InOrOutKeyNotDefinedException{
 		if(!out.containsKey(outputKey)){
-			throw new InOrOutKeyNotDefinedException("Output key " + outputKey + " can't get matched to the defined output parameter keys.");
+			throw new InOrOutKeyNotDefinedException("Output key " + outputKey + " can't get matched to the defined output parameter keys (" + out.keySet() + ").");
 		}
 		VariableHandlerInstance.setVariableValue(out.get(outputKey), newValue);
 	}
@@ -267,7 +272,7 @@ public abstract class PipelineStep implements Keywords{
 	// For improvisations that require more access possibilities:
 	
 
-	public VariableContent getContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+	public VariableContent getContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		return handleInputByKey(key);
 	}
 
@@ -298,8 +303,9 @@ public abstract class PipelineStep implements Keywords{
 	 * @throws VariableNotDefinedException
 	 * @throws StructureException
 	 * @throws InOrOutKeyNotDefinedException 
+	 * @throws FaultyDataException 
 	 */
-	public Path getResolvedPathContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+	public Path getResolvedPathContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		Path result = resolveFullOrLocalPath(getContentOfInput(key).getContent());
 		return result;
 	}

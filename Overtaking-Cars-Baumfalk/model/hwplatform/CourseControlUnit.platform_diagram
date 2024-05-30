@@ -131,7 +131,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8DquEY5TEeyhMvv5xjA9yA" x="1428" y="401"/>
     </children>
     <element xmi:type="hwplatform:HWPlatform" href="../roboCar.muml#_piC7gYj5EeyYKPpICO9qfw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pm-e0Yj5EeyYKPpICO9qfw" x="-324" width="1947" height="413"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pm-e0Yj5EeyYKPpICO9qfw" x="-324" width="1813" height="413"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_piC7g4j5EeyYKPpICO9qfw"/>
   <element xmi:type="hwplatform:HWPlatform" href="../roboCar.muml#_piC7gYj5EeyYKPpICO9qfw"/>

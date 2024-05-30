@@ -15,9 +15,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
 import org.muml.core.export.operation.AbstractFujabaExportOperation;
 import org.muml.core.export.operation.IFujabaExportOperation;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -65,7 +67,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 		addPage(sourceComponentInstancePage);
 		try {
 			generateFolderIfNecessary(generation.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
-		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+		} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 			exceptionFeedback(e);
 		}
 		
@@ -116,7 +118,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 				try {
 					doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance,
 							generation, progressMonitor);
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					// TODO Auto-generated catch block
 					return exceptionFeedback(e);
 				}

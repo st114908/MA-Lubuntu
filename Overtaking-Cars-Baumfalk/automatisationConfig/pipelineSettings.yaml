@@ -7,20 +7,26 @@ VariableDefs:
   componentCodeFilesFolderPath: direct deployable-files/fastAndSlowCar_v2
   apiMappingsFolderPath: direct deployable-files/APImappings
   deployableFilesFolderPath: direct deployable-files
+  fastCarDesiredVelocity: direct 65
+  slowCarDesiredVelocity: direct 55
   usedDriverBoardIdentifierFQBN: direct arduino:avr:mega
-  usedCoordinatorBoardIdentifierFQBN: direct arduino:avr:nano
+  usedCoordinatorBoardIdentifierFQBN: direct arduino:avr:mega # nano
+  fastCarCoordinatorECUBoardSerialNumber: direct 8593731333735141A130
+  fastCarDriverECUBoardSerialNumber: direct 8593731333735141A130
+  slowCarCoordinatorECUBoardSerialNumber: direct 8593731333735141A130
+  slowCarDriverECUBoardSerialNumber: direct 8593731333735141A130
   fastCarCoordinatorECUFolderPath: direct deployable-files/fastCarCoordinatorECU
   fastCarCoordinatorECUINOFilePath: direct deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino
-  fastCarCoordinatorECUBoardSerialNumber: direct DummySerialFastCarCoordinator
+  fastCarCoordinatorECUINOHEXFilePath: direct deployable-files/fastCarCoordinatorECU/CompiledFiles/fastCarCoordinatorECU.ino.hex
   fastCarDriverECUFolderPath: direct deployable-files/fastCarDriverECU
   fastCarDriverECUINOFilePath: direct deployable-files/fastCarDriverECU/fastCarDriverECU.ino
-  fastCarDriverECUBoardSerialNumber: direct DummySerialFastCarDriver
+  fastCarDriverECUINOHEXFilePath: direct deployable-files/fastCarDriverECU/CompiledFiles/fastCarDriverECU.ino.hex
   slowCarCoordinatorECUFolderPath: direct deployable-files/slowCarCoordinatorECU
   slowCarCoordinatorECUINOFilePath: direct deployable-files/slowCarCoordinatorECU/slowCarCoordinatorECU.ino
-  slowCarCoordinatorECUBoardSerialNumber: direct DummySerialSlowCarCoordinator
+  slowCarCoordinatorECUINOHEXFilePath: direct deployable-files/slowCarCoordinatorECU/CompiledFiles/slowCarCoordinatorECU.ino.hex
   slowCarDriverECUFolderPath: direct deployable-files/slowCarDriverECU
   slowCarDriverECUINOFilePath: direct deployable-files/slowCarDriverECU/slowCarDriverECU.ino
-  slowCarDriverECUBoardSerialNumber: direct DummySerialSlowCarDriver
+  slowCarDriverECUINOHEXFilePath: direct deployable-files/slowCarDriverECU/CompiledFiles/slowCarDriverECU.ino.hex
 
 
 StandaloneTransformationAndCodeGenerationsDefs:
@@ -47,7 +53,7 @@ StandaloneTransformationAndCodeGenerationsDefs:
     in:
       arduinoContainersPath: direct arduino-containers
       componentCodePath: direct arduino-containers/fastAndSlowCar_v2
-      useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: directtrue
+      useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: direct true
     out:
       ifSuccessful: ifSuccessful
 
@@ -72,7 +78,7 @@ StandalonePostProcessingSequence:
     in:
       arduinoContainersPath: from deployableFilesFolderPath
       componentCodePath: from componentCodeFilesFolderPath
-      useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: directtrue
+      useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: direct true
     out:
       ifSuccessful: ifSuccessful
 - direct OnlyContinueIfFulfilledElseAbort:
@@ -83,10 +89,10 @@ StandalonePostProcessingSequence:
     in:
       arduinoContainersPath: from deployableFilesFolderPath
       ECUName: direct fastCarDriverECU
-      distanceLimit: direct 1
-      desiredVelocity: direct 2
-      slowVelocity: direct 3
-      laneDistance: direct 4
+      distanceLimit: direct 40
+      desiredVelocity: from fastCarDesiredVelocity
+      slowVelocity: direct 0
+      laneDistance: direct 70
     out:
       ifSuccessful: ifSuccessful
 - direct OnlyContinueIfFulfilledElseAbort:
@@ -97,10 +103,10 @@ StandalonePostProcessingSequence:
     in:
       arduinoContainersPath: from deployableFilesFolderPath
       ECUName: direct slowCarDriverECU
-      distanceLimit: direct 1
-      desiredVelocity: direct 2
-      slowVelocity: direct 3
-      laneDistance: direct 4
+      distanceLimit: direct 40
+      desiredVelocity: from slowCarDesiredVelocity
+      slowVelocity: direct 0
+      laneDistance: direct 70
     out:
       ifSuccessful: ifSuccessful
 - direct OnlyContinueIfFulfilledElseAbort:
@@ -194,7 +200,98 @@ PipelineSequence:
     in:
       condition: from ifSuccessful
       message: direct Compile for slowCarDriverECU has failed!
-
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from fastCarCoordinatorECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for fastCarCoordinatorECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+      targetInoOrHexFile: from fastCarCoordinatorECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for fastCarCoordinatorECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from fastCarDriverECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for fastCarDriverECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+      targetInoOrHexFile: from fastCarDriverECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for fastCarDriverECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from slowCarCoordinatorECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for slowCarCoordinatorECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+      targetInoOrHexFile: from slowCarCoordinatorECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for slowCarCoordinatorECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from slowCarDriverECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for slowCarDriverECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+      targetInoOrHexFile: from slowCarDriverECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for slowCarDriverECU has failed!
 - direct PopupWindowMessage:
     in:
       condition: direct true

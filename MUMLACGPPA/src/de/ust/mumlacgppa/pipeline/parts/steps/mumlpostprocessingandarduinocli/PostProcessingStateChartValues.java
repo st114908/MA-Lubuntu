@@ -83,10 +83,10 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", "direct arduino-containers");
 		ins.put("ECUName", "direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino");
-		ins.put("distanceLimit", "direct 1");
-		ins.put("desiredVelocity", "direct 2");
-		ins.put("slowVelocity", "direct 3");
-		ins.put("laneDistance", "direct 4");
+		ins.put("distanceLimit", "direct 40");
+		ins.put("desiredVelocity", "direct 65");
+		ins.put("slowVelocity", "direct 0");
+		ins.put("laneDistance", "direct 70");
 		exampleSettings.put(inKeyword, ins);
 
 		// Out:
@@ -128,7 +128,7 @@ public class PostProcessingStateChartValues extends PipelineStep {
 	}
 
 	private void setVelocitiesAndDistancesForStates(Path arduinoContainersPath) throws IOException,
-			FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		/*
 		 * 17. the values for the ```desiredVelocity``` and ```slowVelocity```
 		 * can be set individually in the

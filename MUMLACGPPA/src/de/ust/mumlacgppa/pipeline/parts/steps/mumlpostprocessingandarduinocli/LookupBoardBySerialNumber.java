@@ -46,6 +46,7 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("boardSerialNumber");
+		ins.add("boardTypeIdentifierFQBN");
 		requiredInsAndOuts.put(inKeyword, ins);
 
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -62,6 +63,7 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("boardSerialNumber", "direct 85935333337351A0B051");
+		ins.put("boardTypeIdentifierFQBN", "direct arduino:avr:uno");
 		exampleSettings.put(inKeyword, ins);
 
 		// Out:
@@ -110,15 +112,23 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 			foundBoardsStorage = (ArrayList<Map<String, Object>>) yaml.load(ReceivedFeedback.getNormalFeedback());
 		}
 
+		String wantedBoardTypeIdentifierFQBN = handleInputByKey("boardTypeIdentifierFQBN").getContent();
 		// Gets skipped if no boards have been found.
-		for (Map<String, Object> currentEntry : foundBoardsStorage) {
-			Map<String, Object> portInfo = (Map<String, Object>) currentEntry.get("port");
-			Map<String, String> foundProperties = (Map<String, String>) portInfo.get("Properties");
-			if (foundProperties.get("serialNumber").equals(wantedBoardSerialNumber)) {
-				String foundAddress = (String) portInfo.get("address");
-				handleOutputByKey("portAddress", foundAddress);
-				handleOutputByKey("ifSuccessful", true);
-				return;
+		for (Map<String, Object> currentBoardEntry : foundBoardsStorage) {
+			Map<String, Object> portInfo = (Map<String, Object>) currentBoardEntry.get("port");
+			Map<String, String> foundProperties = (Map<String, String>) portInfo.get("properties");
+			String foundSerial = foundProperties.get("serialNumber");
+			if (foundSerial.equals(wantedBoardSerialNumber)) {
+				ArrayList<Map<String, String>> matchingboardsInfo = (ArrayList<Map<String, String>>) currentBoardEntry.get("matchingboards");
+				for (Map<String, String> currentMatchData : matchingboardsInfo){
+					String foundFQBN = currentMatchData.get("fqbn");
+					if(foundFQBN.equals(wantedBoardTypeIdentifierFQBN)){
+						String foundAddress = (String) portInfo.get("address");
+						handleOutputByKey("foundPortAddress", foundAddress);
+						handleOutputByKey("ifSuccessful", true);
+						return;
+					}
+				}
 			}
 		}
 

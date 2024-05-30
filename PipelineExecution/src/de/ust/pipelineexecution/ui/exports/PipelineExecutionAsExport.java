@@ -88,7 +88,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				try {
 					generateFolderIfNecessary(
 							currentStep.getResolvedPathContentOfInput("muml_containerFileDestination").getParent());
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					exceptionFeedback(e);
 				}
 			} else if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
@@ -97,7 +97,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				try {
 					generateFolderIfNecessary(currentStep
 							.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					exceptionFeedback(e);
 				}
 			} else if (currentStep.getClass().getSimpleName().equals(ComponentCodeGeneration.nameFlag)) {
@@ -108,7 +108,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				try {
 					generateFolderIfNecessary(currentStep
 							.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException e) {
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					exceptionFeedback(e);
 				}
 			}
@@ -366,7 +366,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected void doExecuteContainerTransformationPart(final IProject targetProject,
 			final EObject[] sourceElementsSystemAllocation, ContainerTransformation step,
 			IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		ContainerTransformationImprovisation ContainerTransformationHandlerInstance = new ContainerTransformationImprovisation(
 				step);
 		ContainerTransformationHandlerInstance.performContainerTransformation(targetProject,
@@ -375,7 +375,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 
 	protected void doExecuteContainerCodeGeneration(final IProject targetProject, ContainerCodeGeneration step,
 			IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		ContainerCodeGenerationImprovisation ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationImprovisation(
 				step);
 		ContainerCodeGenerationHandlerInstance.performContainerCodeGeneration(targetProject, progressMonitor);
@@ -384,7 +384,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected void doExecuteComponentCodeGeneration(final IProject targetProject,
 			final EObject[] sourceElementsComponentInstance, ComponentCodeGeneration step,
 			IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException {
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		ComponentCodeGenerationImprovisation componentCodeGenerationHandlerInstance = new ComponentCodeGenerationImprovisation(
 				step);
 		componentCodeGenerationHandlerInstance.performComponentCodeGeneration(targetProject,

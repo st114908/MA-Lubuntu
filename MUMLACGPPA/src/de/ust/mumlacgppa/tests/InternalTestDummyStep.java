@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
@@ -69,7 +70,7 @@ class InternalTestDummyStep extends PipelineStep {
 	}
 
 	
-	public VariableContent handleInputTestFunction(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+	public VariableContent handleInputTestFunction(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		if(!in.containsKey(key)){
 			throw new VariableNotDefinedException("Error: "+ key + " is unknown to the called step and should not be able to access it!");
 		}

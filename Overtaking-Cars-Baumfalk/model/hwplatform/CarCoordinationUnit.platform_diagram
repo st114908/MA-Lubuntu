@@ -37,6 +37,13 @@
           <element xmi:type="hwplatform:HWPortPart" href="../roboCar.muml#_Z8LO4I5UEeyhMvv5xjA9yA"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Z8NrIY5UEeyhMvv5xjA9yA" x="879" y="129"/>
         </children>
+        <children xmi:type="notation:Shape" xmi:id="_djuUsB5eEe-i9L_YKBHLqA" type="3028" fontName="Ubuntu" fontHeight="13" lineColor="0">
+          <children xmi:type="notation:DecorationNode" xmi:id="_dju7wB5eEe-i9L_YKBHLqA" type="5060">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_dju7wR5eEe-i9L_YKBHLqA" y="5"/>
+          </children>
+          <element xmi:type="hwplatform:HWPortPart" href="../roboCar.muml#_djqqUB5eEe-i9L_YKBHLqA"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_djuUsR5eEe-i9L_YKBHLqA"/>
+        </children>
         <element xmi:type="hwplatform:ResourcePart" href="../roboCar.muml#_4BtYIIj7EeyYKPpICO9qfw"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4Fr5MYj7EeyYKPpICO9qfw" x="6" y="2"/>
       </children>
@@ -50,7 +57,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ds8KwY5UEeyhMvv5xjA9yA" x="900" y="388"/>
     </children>
     <element xmi:type="hwplatform:HWPlatform" href="../roboCar.muml#_zje5UIj7EeyYKPpICO9qfw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2gh5QYj7EeyYKPpICO9qfw" width="1525" height="240"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2gh5QYj7EeyYKPpICO9qfw" width="1885" height="265"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_zje5Uoj7EeyYKPpICO9qfw"/>
   <element xmi:type="hwplatform:HWPlatform" href="../roboCar.muml#_zje5UIj7EeyYKPpICO9qfw"/>

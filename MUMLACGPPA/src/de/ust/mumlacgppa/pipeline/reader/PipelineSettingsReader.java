@@ -135,14 +135,20 @@ public class PipelineSettingsReader implements Keywords {
 			// Map<String, String> for Map<Variable, Entry>.
 			Map<String, String> rawVariableDefs = (Map<String, String>) rawSettings.get(variableDefsKeyword);
 			for (String currentVariableKey : rawVariableDefs.keySet()) {
-				String currentContentDeclaration = rawVariableDefs.get(currentVariableKey).trim();
-				if (!currentContentDeclaration.startsWith(directValueKeyword + " ")) {
-					throw new StructureException(
-							"Structure error: \"direct \" before the content itself is missing in the content declaration for "
-									+ currentVariableKey);
+				try{
+					String currentContentDeclaration = rawVariableDefs.get(currentVariableKey).trim();
+					if (!currentContentDeclaration.startsWith(directValueKeyword + " ")) {
+						throw new StructureException(
+								"Structure error: \"direct \" before the content itself is missing in the content declaration for "
+										+ currentVariableKey);
+					}
+					String currentContent = currentContentDeclaration.replaceFirst((directValueKeyword + " "), "");
+					VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
 				}
-				String currentContent = currentContentDeclaration.replaceFirst((directValueKeyword + " "), "");
-				VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
+				catch(ClassCastException e){
+					throw new StructureException(
+							"Error at reading the pipeline: The value entry for variable " + currentVariableKey + " couldn't get interpreted. This can happen if a number values is written without \"direct \" before the content itself");
+				}
 			}
 		}
 

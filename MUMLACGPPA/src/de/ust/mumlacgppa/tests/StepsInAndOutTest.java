@@ -79,7 +79,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInDirectTrue() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextDirectTrue = inKeyword + ":\n" + "  input1: direct true\n";
 		Map<String, Map<String, String>> testMapDirectTrue = yaml.load(testYamlTextDirectTrue);
 		testMapDirectTrue.put(outKeyword, new HashMap<String, String>());
@@ -93,7 +93,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInDirectFalse() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextDirectFalse = inKeyword + ":\n" + "  input1: direct false\n";
 		Map<String, Map<String, String>> testMapDirectFalse = yaml.load(testYamlTextDirectFalse);
 		testMapDirectFalse.put(outKeyword, new HashMap<String, String>());
@@ -123,7 +123,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInInvertedDirectFalse() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextInvertedDirectFalse = inKeyword + ":\n" + "  input1: not direct false\n";
 		Map<String, Map<String, String>> testMapInvertedDirectFalse = yaml.load(testYamlTextInvertedDirectFalse);
 		testMapInvertedDirectFalse.put(outKeyword, new HashMap<String, String>());
@@ -138,7 +138,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInDirectNumber() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextDirectNumber = inKeyword + ":\n" + "  numberTest: direct 1\n";
 		Map<String, Map<String, String>> testMapDirectNumber = yaml.load(testYamlTextDirectNumber);
 		testMapDirectNumber.put(outKeyword, new HashMap<String, String>());
@@ -153,7 +153,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInDirectString() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextDirectString = inKeyword + ":\n" + "  stringTest: direct HelloWorld\n";
 		Map<String, Map<String, String>> testMapDirectString = yaml.load(testYamlTextDirectString);
 		testMapDirectString.put(outKeyword, new HashMap<String, String>());
@@ -170,7 +170,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInFromTrueVariable() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextFromTrueVariable = inKeyword + ":\n" + "  input1: from testTrueVariable\n";
 		Map<String, Map<String, String>> testMapFromTrueVariable = yaml.load(testYamlTextFromTrueVariable);
 		testMapFromTrueVariable.put(outKeyword, new HashMap<String, String>());
@@ -185,7 +185,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInFromFalseVariable() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextFromFalseVariable = inKeyword + ":\n" + "  input1: from testFalseVariable\n";
 		Map<String, Map<String, String>> testMapFromFalseVariable = yaml.load(testYamlTextFromFalseVariable);
 		testMapFromFalseVariable.put(outKeyword, new HashMap<String, String>());
@@ -200,7 +200,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testStringBasedConstructorInvertedFromTrueVariable() throws VariableNotDefinedException,
-			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextInvertedFromTrueVariable = inKeyword + ":\n" + "  input1: not from testTrueVariable\n";
 		Map<String, Map<String, String>> testMapInvertedFromTrueVariable = yaml
 				.load(testYamlTextInvertedFromTrueVariable);
@@ -216,7 +216,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testStringBasedConstructorInvertedFromFalseVariable() throws VariableNotDefinedException,
-			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			StructureException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextInvertedFromFalseVariable = inKeyword + ":\n" + "  input1: not from testFalseVariable\n";
 		Map<String, Map<String, String>> testMapInvertedFromFalseVariable = yaml
 				.load(testYamlTextInvertedFromFalseVariable);
@@ -232,7 +232,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInFromNumberVariable() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextFromNumberVariable = inKeyword + ":\n" + "  numberTest: from testNumberVariable\n";
 		Map<String, Map<String, String>> testMapFromNumberVariable = yaml.load(testYamlTextFromNumberVariable);
 		testMapFromNumberVariable.put(outKeyword, new HashMap<String, String>());
@@ -248,7 +248,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testInFromTextVariable() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String testYamlTextFromTextVariable = inKeyword + ":\n" + "  textTest: from testTextVariable\n";
 		Map<String, Map<String, String>> testMapFromTextVariable = yaml.load(testYamlTextFromTextVariable);
 		testMapFromTextVariable.put(outKeyword, new HashMap<String, String>());
@@ -347,7 +347,7 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testOneInstanceOutNewVariableAndAnotherReadsIt() throws VariableNotDefinedException, StructureException,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, FaultyDataException {
 		String newVariableName = "newVariable";
 		String newVariableValue = "newValue";
 

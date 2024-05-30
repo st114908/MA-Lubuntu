@@ -64,13 +64,14 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 
 	private Map<String, Map<String, String>> generatePostProcessingStateChartValuesStepAndAdjustSettings(
-			String arduinoContainersPath, String ECUName) {
+			String arduinoContainersPath, String ECUName, String desiredVelocity) {
 		Map<String, Map<String, String>> postProcessingStateChartValuesSettings = PostProcessingStateChartValues
 				.generateDefaultOrExampleValues();
 		Map<String, String> postProcessingStateChartValuesSettingsIns = postProcessingStateChartValuesSettings
 				.get(inKeyword);
 		postProcessingStateChartValuesSettingsIns.put("arduinoContainersPath", arduinoContainersPath);
 		postProcessingStateChartValuesSettingsIns.put("ECUName", ECUName);
+		postProcessingStateChartValuesSettingsIns.put("desiredVelocity", desiredVelocity);
 		postProcessingStateChartValuesSettings.put(inKeyword, postProcessingStateChartValuesSettingsIns);
 		return postProcessingStateChartValuesSettings;
 	}
@@ -86,11 +87,12 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 
 	private Map<String, Map<String, String>> generateLookupBoardBySerialNumberStepAndAdjustSettings(
-			String boardSerialNumber) {
+			String boardSerialNumber, String boardTypeIdentifierFQBN) {
 		Map<String, Map<String, String>> lookupBoardBySerialNumberSettings = LookupBoardBySerialNumber
 				.generateDefaultOrExampleValues();
 		Map<String, String> lookupBoardBySerialNumberSettingsIns = lookupBoardBySerialNumberSettings.get(inKeyword);
 		lookupBoardBySerialNumberSettingsIns.put("boardSerialNumber", boardSerialNumber);
+		lookupBoardBySerialNumberSettingsIns.put("boardTypeIdentifierFQBN", boardTypeIdentifierFQBN);
 		lookupBoardBySerialNumberSettings.put(inKeyword, lookupBoardBySerialNumberSettingsIns);
 		return lookupBoardBySerialNumberSettings;
 	}
@@ -159,11 +161,24 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String apiMappingsFolderNameVariableName = "apiMappingsFolderPath";
 		String apiMappingsFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/APImappings";
 
+		String fastCarDesiredVelocityVariableName = "fastCarDesiredVelocity";
+		String fastCarDesiredVelocityVariableValue =  directValueKeyword + " 65";
+		String slowCarDesiredVelocityVariableName = "slowCarDesiredVelocity";
+		String slowCarDesiredVelocityVariableValue = directValueKeyword + " 55";
+		
 		String usedDriverBoardIdentifierFQBNVariableName = "usedDriverBoardIdentifierFQBN";
 		String usedDriverBoardIdentifierFQBNVariableValue = directValueKeyword + " arduino:avr:mega";
-
 		String usedCoordinatorBoardIdentifierFQBNVariableName = "usedCoordinatorBoardIdentifierFQBN";
 		String usedCoordinatorBoardIdentifierFQBNVariableValue = directValueKeyword + " arduino:avr:nano";
+		
+		String fastCarCoordinatorECUBoardSerialNumberVariableName = "fastCarCoordinatorECUBoardSerialNumber";
+		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarCoordinator";
+		String fastCarDriverECUBoardSerialNumberVariableName = "fastCarDriverECUBoardSerialNumber";
+		String fastCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarDriver";
+		String slowCarCoordinatorECUBoardSerialNumberVariableName = "slowCarCoordinatorECUBoardSerialNumber";
+		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarCoordinator";
+		String slowCarDriverECUBoardSerialNumberVariableName = "slowCarDriverECUBoardSerialNumber";
+		String slowCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarDriver";
 
 		String fastCarCoordinatorECUName = "fastCarCoordinatorECU";
 		String fastCarCoordinatorECUFolderPathVariableName = fastCarCoordinatorECUName + "FolderPath";
@@ -172,9 +187,9 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String fastCarCoordinatorECUINOFilePathVariableName = fastCarCoordinatorECUName + "INOFilePath";
 		String fastCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ fastCarCoordinatorECUName + "/" + fastCarCoordinatorECUName + ".ino";
-		String fastCarCoordinatorECUBoardSerialNumberVariableName = "fastCarCoordinatorECUBoardSerialNumber";
-		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword
-				+ " DummySerialFastCarCoordinator";
+		String fastCarCoordinatorECUINOHEXFilePathVariableName = fastCarCoordinatorECUName + "INOHEXFilePath";
+		String fastCarCoordinatorECUINOHEXFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarCoordinatorECUName + "/CompiledFiles/" + fastCarCoordinatorECUName + ".ino.hex";
 
 		String fastCarDriverECUName = "fastCarDriverECU";
 		String fastCarDriverECUFolderPathVariableName = fastCarDriverECUName + "FolderPath";
@@ -183,8 +198,9 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String fastCarDriverECUINOFilePathVariableName = fastCarDriverECUName + "INOFilePath";
 		String fastCarDriverECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ fastCarDriverECUName + "/" + fastCarDriverECUName + ".ino";
-		String fastCarDriverECUBoardSerialNumberVariableName = "fastCarDriverECUBoardSerialNumber";
-		String fastCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarDriver";
+		String fastCarDriverECUINOHEXFilePathVariableName = fastCarDriverECUName + "INOHEXFilePath";
+		String fastCarDriverECUINOHEXFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ fastCarDriverECUName + "/CompiledFiles/" + fastCarDriverECUName + ".ino.hex";
 
 		String slowCarCoordinatorECUName = "slowCarCoordinatorECU";
 		String slowCarCoordinatorECUFolderPathVariableName = slowCarCoordinatorECUName + "FolderPath";
@@ -193,9 +209,9 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String slowCarCoordinatorECUINOFilePathVariableName = slowCarCoordinatorECUName + "INOFilePath";
 		String slowCarCoordinatorECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ slowCarCoordinatorECUName + "/" + slowCarCoordinatorECUName + ".ino";
-		String slowCarCoordinatorECUBoardSerialNumberVariableName = "slowCarCoordinatorECUBoardSerialNumber";
-		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword
-				+ " DummySerialSlowCarCoordinator";
+		String slowCarCoordinatorECUINOHEXFilePathVariableName = slowCarCoordinatorECUName + "INOHEXFilePath";
+		String slowCarCoordinatorECUINOHEXFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarCoordinatorECUName + "/CompiledFiles/" + slowCarCoordinatorECUName + ".ino.hex";
 
 		String slowCarDriverECUName = "slowCarDriverECU";
 		String slowCarDriverECUFolderPathVariableName = slowCarDriverECUName + "FolderPath";
@@ -204,8 +220,9 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String slowCarDriverECUINOFilePathVariableName = slowCarDriverECUName + "INOFilePath";
 		String slowCarDriverECUINOFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
 				+ slowCarDriverECUName + "/" + slowCarDriverECUName + ".ino";
-		String slowCarDriverECUBoardSerialNumberVariableName = "slowCarDriverECUBoardSerialNumber";
-		String slowCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarDriver";
+		String slowCarDriverECUINOHEXFilePathVariableName = slowCarDriverECUName + "INOHEXFilePath";
+		String slowCarDriverECUINOHEXFilePathVariableValue = deployableCodeFolderNameVariableValue + "/"
+				+ slowCarDriverECUName + "/CompiledFiles/" + slowCarDriverECUName + ".ino.hex";
 
 		// Settings changes of the generated default/example settings here in
 		// order to make the written entries and sequences more readable.
@@ -270,14 +287,16 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		Map<String, Map<String, String>> postProcessingStateChartValuesFastDriver = generatePostProcessingStateChartValuesStepAndAdjustSettings(
 				fromKeyword + " " + deployableCodeFolderNameVariableName,
-				directValueKeyword + " " + fastCarDriverECUName);
+				directValueKeyword + " " + fastCarDriverECUName,
+				fromKeyword + " " + fastCarDesiredVelocityVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + PostProcessingStateChartValues.nameFlag
 						+ " for " + fastCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> postProcessingStateChartValuesSlowDriver = generatePostProcessingStateChartValuesStepAndAdjustSettings(
 				fromKeyword + " " + deployableCodeFolderNameVariableName,
-				directValueKeyword + " " + slowCarDriverECUName);
+				directValueKeyword + " " + slowCarDriverECUName, 
+				fromKeyword + " " + slowCarDesiredVelocityVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingStateChartValuesSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + PostProcessingStateChartValues.nameFlag
 						+ " for " + slowCarDriverECUName + " has failed!");
@@ -316,49 +335,53 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				directValueKeyword + " " + Compile.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsFastCoordinator = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromKeyword + " " + fastCarCoordinatorECUBoardSerialNumberVariableName);
+				fromKeyword + " " + fastCarCoordinatorECUBoardSerialNumberVariableName, 
+				fromKeyword + " " + usedCoordinatorBoardIdentifierFQBNVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsFastCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + " for "
 						+ fastCarCoordinatorECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsFastCoordinator = generateUploadStepAndAdjustSettings(
 				fromKeyword + " foundPortAddress", fromKeyword + " usedCoordinatorBoardIdentifierFQBN",
-				fromKeyword + " fastCarCoordinatorECUINOFilePath");
+				fromKeyword + " "+ fastCarCoordinatorECUINOHEXFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadFastCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + fastCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsFastDriver = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromKeyword + " fastCarDriverECUBoardSerialNumber");
+				fromKeyword + " " + fastCarDriverECUBoardSerialNumberVariableName, 
+				fromKeyword + " " + usedDriverBoardIdentifierFQBNVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + " for "
 						+ fastCarDriverECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsFastDriver = generateUploadStepAndAdjustSettings(
 				fromKeyword + " foundPortAddress", fromKeyword + " " + usedDriverBoardIdentifierFQBNVariableName,
-				fromKeyword + " " + fastCarDriverECUINOFilePathVariableName);
+				fromKeyword + " " + fastCarDriverECUINOHEXFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadFastDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + fastCarDriverECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsSlowCoordinator = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromKeyword + " " + slowCarCoordinatorECUBoardSerialNumberVariableName);
+				fromKeyword + " " + slowCarCoordinatorECUBoardSerialNumberVariableName, 
+				fromKeyword + " " + usedCoordinatorBoardIdentifierFQBNVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsSlowCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + " for "
 						+ slowCarCoordinatorECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsSlowCoordinator = generateUploadStepAndAdjustSettings(
 				fromKeyword + " foundPortAddress", fromKeyword + " usedCoordinatorBoardIdentifierFQBN",
-				fromKeyword + " " + slowCarCoordinatorECUINOFilePathVariableName);
+				fromKeyword + " " + slowCarCoordinatorECUINOHEXFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadSlowCoordinator = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + slowCarCoordinatorECUName + " has failed!");
 
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsSlowDriver = generateLookupBoardBySerialNumberStepAndAdjustSettings(
-				fromKeyword + " " + slowCarDriverECUBoardSerialNumberVariableName);
+				fromKeyword + " " + slowCarDriverECUBoardSerialNumberVariableName, 
+				fromKeyword + " " + usedDriverBoardIdentifierFQBNVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortLookupBoardBySerialNumberStepAndAdjustSettingsSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + " for "
 						+ slowCarDriverECUName + " has failed!");
 		Map<String, Map<String, String>> uploadSettingsSlowDriver = generateUploadStepAndAdjustSettings(
 				fromKeyword + " foundPortAddress", fromKeyword + " " + usedDriverBoardIdentifierFQBNVariableName,
-				fromKeyword + " " + slowCarDriverECUINOFilePathVariableName);
+				fromKeyword + " " + slowCarDriverECUINOHEXFilePathVariableName);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortUploadSlowDriver = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + slowCarDriverECUName + " has failed!");
@@ -386,33 +409,32 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		exampleVariableDefs.put(apiMappingsFolderNameVariableName, apiMappingsFolderNameVariableValue);
 		exampleVariableDefs.put(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue);
 
+		exampleVariableDefs.put(fastCarDesiredVelocityVariableName, fastCarDesiredVelocityVariableValue);
+		exampleVariableDefs.put(slowCarDesiredVelocityVariableName, slowCarDesiredVelocityVariableValue);
+		
 		exampleVariableDefs.put(usedDriverBoardIdentifierFQBNVariableName, usedDriverBoardIdentifierFQBNVariableValue);
-		exampleVariableDefs.put(usedCoordinatorBoardIdentifierFQBNVariableName,
-				usedCoordinatorBoardIdentifierFQBNVariableValue);
+		exampleVariableDefs.put(usedCoordinatorBoardIdentifierFQBNVariableName, usedCoordinatorBoardIdentifierFQBNVariableValue);
 
-		exampleVariableDefs.put(fastCarCoordinatorECUFolderPathVariableName,
-				fastCarCoordinatorECUFolderPathVariableValue);
-		exampleVariableDefs.put(fastCarCoordinatorECUINOFilePathVariableName,
-				fastCarCoordinatorECUINOFilePathVariableValue);
-		exampleVariableDefs.put(fastCarCoordinatorECUBoardSerialNumberVariableName,
-				fastCarCoordinatorECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(fastCarCoordinatorECUBoardSerialNumberVariableName, fastCarCoordinatorECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(fastCarDriverECUBoardSerialNumberVariableName, fastCarDriverECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUBoardSerialNumberVariableName, slowCarCoordinatorECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(slowCarDriverECUBoardSerialNumberVariableName, slowCarDriverECUBoardSerialNumberVariableValue);
+		
+		exampleVariableDefs.put(fastCarCoordinatorECUFolderPathVariableName, fastCarCoordinatorECUFolderPathVariableValue);
+		exampleVariableDefs.put(fastCarCoordinatorECUINOFilePathVariableName, fastCarCoordinatorECUINOFilePathVariableValue);
+		exampleVariableDefs.put(fastCarCoordinatorECUINOHEXFilePathVariableName, fastCarCoordinatorECUINOHEXFilePathVariableValue);
 
 		exampleVariableDefs.put(fastCarDriverECUFolderPathVariableName, fastCarDriverECUFolderPathVariableValue);
 		exampleVariableDefs.put(fastCarDriverECUINOFilePathVariableName, fastCarDriverECUINOFilePathVariableValue);
-		exampleVariableDefs.put(fastCarDriverECUBoardSerialNumberVariableName,
-				fastCarDriverECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(fastCarDriverECUINOHEXFilePathVariableName, fastCarDriverECUINOHEXFilePathVariableValue);
 
-		exampleVariableDefs.put(slowCarCoordinatorECUFolderPathVariableName,
-				slowCarCoordinatorECUFolderPathVariableValue);
-		exampleVariableDefs.put(slowCarCoordinatorECUINOFilePathVariableName,
-				slowCarCoordinatorECUINOFilePathVariableValue);
-		exampleVariableDefs.put(slowCarCoordinatorECUBoardSerialNumberVariableName,
-				slowCarCoordinatorECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUFolderPathVariableName, slowCarCoordinatorECUFolderPathVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUINOFilePathVariableName, slowCarCoordinatorECUINOFilePathVariableValue);
+		exampleVariableDefs.put(slowCarCoordinatorECUINOHEXFilePathVariableName, slowCarCoordinatorECUINOHEXFilePathVariableValue);
 
 		exampleVariableDefs.put(slowCarDriverECUFolderPathVariableName, slowCarDriverECUFolderPathVariableValue);
 		exampleVariableDefs.put(slowCarDriverECUINOFilePathVariableName, slowCarDriverECUINOFilePathVariableValue);
-		exampleVariableDefs.put(slowCarDriverECUBoardSerialNumberVariableName,
-				slowCarDriverECUBoardSerialNumberVariableValue);
+		exampleVariableDefs.put(slowCarDriverECUINOHEXFilePathVariableName, slowCarDriverECUINOHEXFilePathVariableValue);
 
 		mapForPipelineSettings.put(variableDefsKeyword, exampleVariableDefs);
 

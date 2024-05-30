@@ -12,6 +12,7 @@ import java.util.Map;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.arduinocliutilizer.worksteps.functions.CompilationCall;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
@@ -91,7 +92,7 @@ public class Compile extends PipelineStep {
 	@Override
 	public void execute() 
 			throws IOException, InterruptedException, NoArduinoCLIConfigFileException, VariableNotDefinedException,
-			StructureException, ProjectFolderPathNotSetException, InOrOutKeyNotDefinedException{
+			StructureException, ProjectFolderPathNotSetException, InOrOutKeyNotDefinedException, FaultyDataException{
 		handleOutputByKey("ifSuccessful", false); // For Exceptions 
 		String foundFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
 		Path targetINOFilePath = resolveFullOrLocalPath( handleInputByKey("targetInoFile").getContent() );

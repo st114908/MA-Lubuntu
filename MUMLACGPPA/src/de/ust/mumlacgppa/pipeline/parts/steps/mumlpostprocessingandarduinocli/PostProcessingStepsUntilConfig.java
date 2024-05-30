@@ -88,7 +88,7 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Pipe
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", directValueKeyword + " arduino-containers");
 		ins.put("componentCodePath", directValueKeyword + " arduino-containers/fastAndSlowCar_v2");
-		ins.put("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt", directValueKeyword + "true");
+		ins.put("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt", directValueKeyword + " true");
 		exampleSettings.put(inKeyword, ins);
 		
 		// Out:

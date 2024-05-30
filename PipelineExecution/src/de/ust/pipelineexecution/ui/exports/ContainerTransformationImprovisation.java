@@ -27,6 +27,7 @@ import org.muml.container.transformation.job.MiddlewareOption;
 import org.muml.psm.allocation.SystemAllocation;
 import org.muml.psm.muml_container.DeploymentConfiguration;
 
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -42,7 +43,7 @@ class ContainerTransformationImprovisation{
 	}
 	
 	public void performContainerTransformation(IProject targetProject, EObject[] sourceElementsSystemAllocation, IProgressMonitor progressMonitor, EditingDomain editingDomain)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException{
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		step.setContentOfOutput("ifSuccessful", false);
 
 		final SystemAllocation systemAllocation = (SystemAllocation) sourceElementsSystemAllocation[0];
