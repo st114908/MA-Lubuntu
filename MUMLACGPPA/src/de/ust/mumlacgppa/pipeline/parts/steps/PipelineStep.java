@@ -90,17 +90,20 @@ public abstract class PipelineStep implements Keywords{
 	
 	
 	private VariableContent resolveInputEntry(String entry) throws VariableNotDefinedException, StructureException, FaultyDataException{
-		if(entry.startsWith(directValueKeyword)){
-			String writtenInValue = entry.substring(directValueKeyword.length()).trim();
+		String directAndFollowingSpace = directValueKeyword + " ";
+		String fromAndFollowingSpace = fromKeyword + " ";
+		String notAndFollowingSpace = notKeyword + " ";
+		if(entry.startsWith(directAndFollowingSpace)){
+			String writtenInValue = entry.substring(directAndFollowingSpace.length()).trim();
 			VariableContent directlyInsertedValue = new VariableContent(writtenInValue);
 			return directlyInsertedValue;
 		}
-		else if(entry.startsWith(fromKeyword)){
-			String referencedVariable = entry.substring(fromKeyword.length()).trim();
+		else if(entry.startsWith(fromAndFollowingSpace)){
+			String referencedVariable = entry.substring(fromAndFollowingSpace.length()).trim();
 			return VariableHandlerInstance.getVariableValue(referencedVariable);
 		}
-		else if(entry.startsWith(notKeyword)){
-			String afterNot = entry.substring(notKeyword.length()).trim();
+		else if(entry.startsWith(notAndFollowingSpace)){
+			String afterNot = entry.substring(notAndFollowingSpace.length()).trim();
 			VariableContent gainedContent = resolveInputEntry(afterNot);
 			boolean received;
 			try {
@@ -159,24 +162,28 @@ public abstract class PipelineStep implements Keywords{
 	
 	/**
 	 * Helper function for checkForDetectableErrors.
-	 * Handles direct, from and not keywords in the input entries. 
+	 * Handles direct, from and not keywords in the input entries.
+	 * Ensures an following space char to prevent trouble with variable names and values that start directly with them.
 	 * @param entry
 	 * @throws StructureException
 	 * @throws VariableNotDefinedException
 	 * @throws FaultyDataException
 	 */
 	private void checkForDetectableErrorsEntryCheck(String entry) throws StructureException, VariableNotDefinedException, FaultyDataException{
-		if(entry.startsWith(directValueKeyword)){
-			String afterDirect = entry.substring(directValueKeyword.length()).trim();
+		String directAndFollowingSpace = directValueKeyword + " ";
+		String fromAndFollowingSpace = fromKeyword + " ";
+		String notAndFollowingSpace = notKeyword + " ";
+		if(entry.startsWith(directAndFollowingSpace)){
+			String afterDirect = entry.substring(directAndFollowingSpace.length()).trim();
 			if(afterDirect.equals("")){
 				throw new FaultyDataException("Value in direct entry missing or not recognized!");
 			}
 			// Currently nothing more to do.
 		}
-		else if(entry.startsWith(fromKeyword)){
-			String referencedVariable = entry.substring(fromKeyword.length()).trim();
+		else if(entry.startsWith(fromAndFollowingSpace)){
+			String referencedVariable = entry.substring(fromAndFollowingSpace.length()).trim();
 			if(VariableHandlerInstance.isVariableInitialized(referencedVariable)){
-				String afterFrom = entry.substring(fromKeyword.length()).trim();
+				String afterFrom = entry.substring(fromAndFollowingSpace.length()).trim();
 				if(afterFrom.equals("")){
 					throw new FaultyDataException("Reference in from entry missing or not recognized!");
 				}
@@ -186,8 +193,8 @@ public abstract class PipelineStep implements Keywords{
 				VariableHandlerInstance.generateVariableNotDefinedException(referencedVariable);
 			}
 		}
-		else if(entry.startsWith(notKeyword)){
-			String afterNot = entry.substring(notKeyword.length()).trim();
+		else if(entry.startsWith(notAndFollowingSpace)){
+			String afterNot = entry.substring(notAndFollowingSpace.length()).trim();
 			checkForDetectableErrorsEntryCheck(afterNot);
 		}
 		else{
