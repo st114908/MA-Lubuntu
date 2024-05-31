@@ -79,5 +79,7 @@ public class UploadCall extends ACLIWorkstep implements FQBNStorageFileName {
 		}
 	}
 	
-	
+	public boolean hadNotInSyncProblem(){
+		return notInSyncProblem;
+	}
 }
