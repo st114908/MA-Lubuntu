@@ -1,3 +1,7 @@
+/**
+ * Made by Georg Reißner
+ */
+
 #include "SerialCustomLib.hpp"
 #define SERIAL_RCV_MAX_TYPE_SIZE 10
 #define SERIAL_RCV_MSG_SIZE 50
