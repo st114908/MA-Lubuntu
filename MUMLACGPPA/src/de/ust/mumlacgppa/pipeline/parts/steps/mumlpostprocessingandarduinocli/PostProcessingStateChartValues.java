@@ -82,7 +82,7 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", "direct arduino-containers");
-		ins.put("ECUName", "direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino");
+		ins.put("ECUName", "direct arduino-containers/fastCarCoordinatorECU");
 		ins.put("distanceLimit", "direct 40");
 		ins.put("desiredVelocity", "direct 65");
 		ins.put("slowVelocity", "direct 0");
@@ -117,18 +117,6 @@ public class PostProcessingStateChartValues extends PipelineStep {
 
 		// For all the previous steps see PerformPostProcessingPartsUntilConfig.
 
-		setVelocitiesAndDistancesForStates(arduinoContainersPath);
-
-		/*
-		 * 18. Compile and upload for/to the respective desired Arduino micro
-		 * controller via Arduino IDE. This is done separately.
-		 */
-
-		handleOutputByKey("ifSuccessful", true);
-	}
-
-	private void setVelocitiesAndDistancesForStates(Path arduinoContainersPath) throws IOException,
-			FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		/*
 		 * 17. the values for the ```desiredVelocity``` and ```slowVelocity```
 		 * can be set individually in the
@@ -166,6 +154,13 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		targetSomethingStateChartFileScanner.close();
 		workCopy.close();
 		Files.move(Paths.get(intermediateFileName), targetStateChartFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+		/*
+		 * 18. Compile and upload for/to the respective desired Arduino micro
+		 * controller via Arduino IDE. This is done separately.
+		 */
+
+		handleOutputByKey("ifSuccessful", true);
 	}
 	
 }

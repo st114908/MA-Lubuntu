@@ -235,35 +235,42 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 	public void validateOrder()
-			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException {
-		// StandaloneTransformationAndCodeGenerationsDefs
-		for (String currentKey : standaloneTransformationAndCodeGenerationDefs.keySet()) {
-			try {
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException	{
+		String lastStep = "None";
+		String lastPart = standalonePostProcessingSequenceDefKeyword;
+		try {
+			// StandaloneTransformationAndCodeGenerationsDefs
+			for (String currentKey : standaloneTransformationAndCodeGenerationDefs.keySet()) {
+				lastStep = currentKey;
 				standaloneTransformationAndCodeGenerationDefs.get(currentKey).checkForDetectableErrors();
-			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(e.getMessage() + " at \n" + currentKey + " in \n"
-						+ standaloneTransformationAndCodeGenerationsDefsKeyword + ".");
 			}
-		}
 		
-		// StandalonePostProcessingSequence
-		for (PipelineStep currentStep : standalonePostProcessingSequence) {
-			try {
+			// StandalonePostProcessingSequence
+			lastPart = standalonePostProcessingSequenceDefKeyword;
+			for (PipelineStep currentStep : standalonePostProcessingSequence) {
+				lastStep = currentStep.toString();
 				currentStep.checkForDetectableErrors();
-			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(
-						e.getMessage() + " at \n" + currentStep + " in \n" + standalonePostProcessingSequenceDefKeyword + ".");
 			}
-		}
-
-		// PipelineSequence:
-		for (PipelineStep currentStep : pipelineSequence) {
-			try {
+	
+			// PipelineSequence:
+			lastPart = pipelineSequenceDefKeyword;
+			for (PipelineStep currentStep : pipelineSequence) {
+				lastStep = currentStep.toString();
 				currentStep.checkForDetectableErrors();
-			} catch (ParameterMismatchException e) {
-				throw new ParameterMismatchException(
-						e.getMessage() + " at \n" + currentStep + " in \n" + pipelineSequenceDefKeyword + ".");
 			}
+		
+		} catch (ParameterMismatchException e) {
+			throw new ParameterMismatchException(e.getMessage() + " at \n" + lastStep + " in \n"
+					+ lastPart + ".");
+		} catch (VariableNotDefinedException e) {
+			throw new VariableNotDefinedException(e.getMessage() + " at \n" + lastStep + " in \n"
+					+ lastPart + ".");
+		} catch (StructureException e) {
+			throw new StructureException(e.getMessage() + " at \n" + lastStep + " in \n"
+					+ lastPart + ".");
+		} catch (FaultyDataException e) {
+			throw new FaultyDataException(e.getMessage() + " at \n" + lastStep + " in \n"
+					+ lastPart + ".");
 		}
 	}
 

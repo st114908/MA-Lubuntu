@@ -111,21 +111,7 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		
 		// For all the previous steps see PerformPostProcessingPartsUntilExceptConfig.
 		
-		setValueForStates(arduinoContainersPath);
-		
-        /*
-        18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
-        This is done separately.
-		*/
-		
-		handleOutputByKey("ifSuccessful", true);
-	}
-
-	
-	private void setValueForStates(Path arduinoContainersPath)
-			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-
-        /*
+		/*
         17. the values for the ```desiredVelocity``` and ```slowVelocity``` can be set individually in
         the ```driveControlDriveControlComponentStateChart.c``` of the ```...DriverECU``` directories.
             1. Also set distance und lanedistance.
@@ -156,6 +142,13 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 		targetSomethingStateChartFileScanner.close();
 	    workCopy.close();
 		Files.move(Paths.get(intermediateFileName), targetStateChartFilePath, StandardCopyOption.REPLACE_EXISTING);
+		
+        /*
+        18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
+        This is done separately.
+		*/
+		
+		handleOutputByKey("ifSuccessful", true);
 	}
 
 }

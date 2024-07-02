@@ -47,10 +47,16 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			
 			case ContainerTransformation.nameFlag:
 				return new ContainerTransformation(VariableHandlerInstance, parameters);
+
+			case CopyFiles.nameFlag:
+				return new CopyFiles(VariableHandlerInstance, parameters);
 				
 			case CopyFolder.nameFlag:
 				return new CopyFolder(VariableHandlerInstance, parameters);
-				
+
+			case DeleteFile.nameFlag:
+				return new DeleteFile(VariableHandlerInstance, parameters);
+			
 			case DeleteFolder.nameFlag:
 				return new DeleteFolder(VariableHandlerInstance, parameters);
 			
@@ -63,6 +69,36 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			case PopupWindowMessage.nameFlag:
 				return new PopupWindowMessage(VariableHandlerInstance, parameters);
 				
+			case PostProcessingAddHALPartsIntoCarDriverInoFiles.nameFlag:
+				return new PostProcessingAddHALPartsIntoCarDriverInoFiles(VariableHandlerInstance, parameters);
+
+			case PostProcessingAdjustAPIMappingFile.nameFlag:
+				return new PostProcessingAdjustAPIMappingFile(VariableHandlerInstance, parameters);
+
+			case PostProcessingAdjustIncludes.nameFlag:
+				return new PostProcessingAdjustIncludes(VariableHandlerInstance, parameters);
+
+			case PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag:
+				return new PostProcessingCopyFolderContentsToECUsAndExcept(VariableHandlerInstance, parameters);
+
+			case PostProcessingCopyFolderContentsToECUsWhitelist.nameFlag:
+				return new PostProcessingCopyFolderContentsToECUsWhitelist(VariableHandlerInstance, parameters);
+
+			case PostProcessingCopyLocalConfig_hppToCarDeriverECUs.nameFlag:
+				return new PostProcessingCopyLocalConfig_hppToCarDeriverECUs(VariableHandlerInstance, parameters);
+
+			case PostProcessingDownloadConfig_hpp.nameFlag:
+				return new PostProcessingDownloadConfig_hpp(VariableHandlerInstance, parameters);
+
+			case PostProcessingFillOutMethodStubs.nameFlag:
+				return new PostProcessingFillOutMethodStubs(VariableHandlerInstance, parameters);
+
+			case PostProcessingInsertAtLineIndex.nameFlag:
+				return new PostProcessingInsertAtLineIndex(VariableHandlerInstance, parameters);
+
+			case PostProcessingMoveIncludeBefore_ifdef__cplusplus.nameFlag:
+				return new PostProcessingMoveIncludeBefore_ifdef__cplusplus(VariableHandlerInstance, parameters);
+
 			case PostProcessingStateChartValues.nameFlag:
 				return new PostProcessingStateChartValues(VariableHandlerInstance, parameters);
 

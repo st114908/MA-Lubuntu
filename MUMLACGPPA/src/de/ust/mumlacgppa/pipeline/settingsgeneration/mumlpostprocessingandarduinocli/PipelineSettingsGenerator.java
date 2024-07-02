@@ -21,11 +21,20 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFiles;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAddHALPartsIntoCarDriverInoFiles;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustAPIMappingFile;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustIncludes;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyFolderContentsToECUsAndExcept;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyFolderContentsToECUsWhitelist;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyLocalConfig_hppToCarDeriverECUs;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingFillOutMethodStubs;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingMoveIncludeBefore_ifdef__cplusplus;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
@@ -62,7 +71,67 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		deleteDirectoryArduinoContainers.put(inKeyword, deleteDirectoryArduinoContainersSettingsIns);
 		return deleteDirectoryArduinoContainers;
 	}
+	
+	private Map<String, Map<String, String>> generatePostProcessingAdjustIncludes(
+			String componentCodePath, String faulty, String correct){
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesSettings = PostProcessingAdjustIncludes.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingAdjustInlcudesSettingsIns = postProcessingAdjustInlcudesSettings.get(inKeyword);
+		postProcessingAdjustInlcudesSettingsIns.put("componentCodePath", componentCodePath);
+		postProcessingAdjustInlcudesSettingsIns.put("faultyInclude", faulty);
+		postProcessingAdjustInlcudesSettingsIns.put("correctInclude", correct);
+		postProcessingAdjustInlcudesSettings.put(inKeyword, postProcessingAdjustInlcudesSettingsIns);
+		return postProcessingAdjustInlcudesSettings;
+	}
+	
+	private Map<String, Map<String, String>> generatePostProcessingCopyFolderContentsToECUsWhitelist(
+			String sourceFolder, String destinationFolder, String ecuEnding, String whitelist){
+		Map<String, Map<String, String>> instanceSettings = PostProcessingCopyFolderContentsToECUsWhitelist.generateDefaultOrExampleValues();
+		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
+		instanceSettingsIns.put("sourceFolder", sourceFolder);
+		instanceSettingsIns.put("destinationFolder", destinationFolder);
+		instanceSettingsIns.put("ecuEnding", ecuEnding);
+		instanceSettingsIns.put("whitelist", whitelist);
+		instanceSettings.put(inKeyword, instanceSettingsIns);
+		return instanceSettings;
+	}
 
+	private Map<String, Map<String, String>> generatePostProcessingCopyFolderContentsToECUsAndExcept(
+			String sourceFolder, String destinationFolder, String ecuEnding, String except){
+		Map<String, Map<String, String>> instanceSettings = PostProcessingCopyFolderContentsToECUsAndExcept.generateDefaultOrExampleValues();
+		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
+		instanceSettingsIns.put("sourceFolder", sourceFolder);
+		instanceSettingsIns.put("destinationFolder", destinationFolder);
+		instanceSettingsIns.put("ecuEnding", ecuEnding);
+		instanceSettingsIns.put("except", except);
+		instanceSettings.put(inKeyword, instanceSettingsIns);
+		return instanceSettings;
+	}
+	
+	private Map<String, Map<String, String>> generatePostProcessingCopyFiles(
+			String sourceFolder, String destinationFolder, String files){
+		Map<String, Map<String, String>> instanceSettings = CopyFiles.generateDefaultOrExampleValues();
+		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
+		instanceSettingsIns.put("sourceFolder", sourceFolder);
+		instanceSettingsIns.put("destinationFolder", destinationFolder);
+		instanceSettingsIns.put("files", files);
+		instanceSettings.put(inKeyword, instanceSettingsIns);
+		return instanceSettings;
+	}
+	
+
+	private Map<String, Map<String, String>> generatePostProcessingAdjustAPIMappingFile(
+			String sourceFolder, String destinationFolder, String fileName, String library, String instruction){
+		Map<String, Map<String, String>> instanceSettings = PostProcessingAdjustAPIMappingFile.generateDefaultOrExampleValues();
+		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
+		instanceSettingsIns.put("sourceFolder", sourceFolder);
+		instanceSettingsIns.put("destinationFolder", destinationFolder);
+		instanceSettingsIns.put("fileName", fileName);
+		instanceSettingsIns.put("library", library);
+		instanceSettingsIns.put("instruction", instruction);
+		instanceSettings.put(inKeyword, instanceSettingsIns);
+		return instanceSettings;
+	}
+	
 	private Map<String, Map<String, String>> generatePostProcessingStateChartValuesStepAndAdjustSettings(
 			String arduinoContainersPath, String ECUName, String desiredVelocity) {
 		Map<String, Map<String, String>> postProcessingStateChartValuesSettings = PostProcessingStateChartValues
@@ -160,6 +229,18 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String componentCodeFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/fastAndSlowCar_v2";
 		String apiMappingsFolderNameVariableName = "apiMappingsFolderPath";
 		String apiMappingsFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/APImappings";
+		String componentsFolderNameVariableName = "componentsFolderPath";
+		String componentsFolderNameVariableValue = componentCodeFolderNameVariableValue + "/components";
+		String libFolderNameVariableName = "libFolderPath";
+		String libFolderNameVariableValue = componentCodeFolderNameVariableValue + "/lib";
+		String messagesFolderNameVariableName = "messagesFolderPath";
+		String messagesFolderNameVariableValue = componentCodeFolderNameVariableValue + "/messages";
+		String operationsFolderNameVariableName = "operationsFolderPath";
+		String operationsFolderNameVariableValue = componentCodeFolderNameVariableValue + "/operations";
+		String RTSCsFolderNameVariableName = "RTSCsFolderPath";
+		String RTSCsFolderNameVariableValue = componentCodeFolderNameVariableValue + "/RTSCs";
+		String typesFolderNameVariableName = "typesFolderPath";
+		String typesFolderNameVariableValue = componentCodeFolderNameVariableValue + "/types";
 
 		String fastCarDesiredVelocityVariableName = "fastCarDesiredVelocity";
 		String fastCarDesiredVelocityVariableValue =  directValueKeyword + " 65";
@@ -264,27 +345,271 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + ComponentCodeGeneration.nameFlag + " has failed!");
 
-		Map<String, Map<String, String>> copyFolderSettings = CopyFolder.generateDefaultOrExampleValues();
-		Map<String, String> copyFolderSettingsIns = copyFolderSettings.get(inKeyword);
+		
+		
+		
+		//PostProcessing:
+		
+		Map<String, Map<String, String>> copyFolderGeneratedDeployable = CopyFolder.generateDefaultOrExampleValues();
+		Map<String, String> copyFolderSettingsIns = copyFolderGeneratedDeployable.get(inKeyword);
 		copyFolderSettingsIns.put("sourcePath", fromKeyword + " " + generatedCodeFolderNameVariableName);
 		copyFolderSettingsIns.put("destinationPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
-		copyFolderSettings.put(inKeyword, copyFolderSettingsIns);
+		copyFolderGeneratedDeployable.put(inKeyword, copyFolderSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortCopyFolder = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful", directValueKeyword + " " + CopyFolder.nameFlag + " has failed!");
 
-		Map<String, Map<String, String>> postProcessingStepsUntilConfigSettings = PostProcessingStepsUntilConfig
+		// The following steps are oriented on
+		// https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md.
+		// The comments are summaries to have the instructions/actions easier to read as comments in the code.  
+		
+		
+		//TODO: Entfernen:
+		/*Map<String, Map<String, String>> postProcessingUntilConfigSettings = PostProcessingStepsUntilConfig
 				.generateDefaultOrExampleValues();
-		Map<String, String> postProcessingStepsUntilConfigSettingsIns = postProcessingStepsUntilConfigSettings
+		Map<String, String> postProcessingUntilConfigSettingsIns = postProcessingUntilConfigSettings
 				.get(inKeyword);
-		postProcessingStepsUntilConfigSettingsIns.put("arduinoContainersPath",
+		postProcessingUntilConfigSettingsIns.put("arduinoContainersPath",
 				fromKeyword + " " + deployableCodeFolderNameVariableName);
-		postProcessingStepsUntilConfigSettingsIns.put("componentCodePath",
+		postProcessingUntilConfigSettingsIns.put("componentCodePath",
 				fromKeyword + " " + componentCodeFolderNameVariableName);
-		postProcessingStepsUntilConfigSettings.put(inKeyword, postProcessingStepsUntilConfigSettingsIns);
+		postProcessingUntilConfigSettings.put(inKeyword, postProcessingUntilConfigSettingsIns);
 		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig = generateOnlyContinueIfFulfilledElseAbortSettings(
 				fromKeyword + " ifSuccessful",
-				directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag + " has failed!");
+				directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag + " has failed!");*/
+		// <---
+		
+		// For all files in "fastAndSlowCar_v2":
+		// 1: Adjust #include calls for all header files.
+		// 2: Move up "# include clock.h" from C++ check.
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesComponents = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../components/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesLib = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../lib/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesMessages = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../messages/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesOperations = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../operations/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesRTSCs = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../RTSCs/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingAdjustInlcudesTypes = generatePostProcessingAdjustIncludes(
+				fromKeyword + " " + componentCodeFolderNameVariableName, 
+				directValueKeyword + " \"../types/",
+				directValueKeyword + " \"");
+		Map<String, Map<String, String>> postProcessingMoveIncludeBefore_ifdef__cplusplusClock = PostProcessingMoveIncludeBefore_ifdef__cplusplus.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingMoveIncludeBefore_ifdef__cplusplusClockIns = postProcessingMoveIncludeBefore_ifdef__cplusplusClock.get(inKeyword);
+		postProcessingMoveIncludeBefore_ifdef__cplusplusClockIns.put("componentsPath", 
+				fromKeyword + " " + componentsFolderNameVariableName);
+		postProcessingMoveIncludeBefore_ifdef__cplusplusClock.put(inKeyword, postProcessingMoveIncludeBefore_ifdef__cplusplusClockIns);
+		
+		// "fastAndSlowCar_v2/components":
+		// Copy „coordinatorComponent_Interface.h“ and "coordinatorComponent.c" files into each  *CarCoordinatorECU folder.
+		// Copy other files into each *CarDriverECU folder.
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsWhitelistComponents1 = generatePostProcessingCopyFolderContentsToECUsWhitelist(
+				fromKeyword + " " + componentsFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " CarCoordinatorECU",
+				directValueKeyword + " coordinatorComponent_Interface.h, coordinatorComponent.c");
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsAndExceptComponents2 = generatePostProcessingCopyFolderContentsToECUsAndExcept(
+				fromKeyword + " " + componentsFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " CarDriverECU",
+				directValueKeyword + " coordinatorComponent_Interface.h, coordinatorComponent.c");
+		
+		// fastAndSlowCar_v2/lib: Copy all files except „clock.h“ and „standardTypes.h“ into the *ECU folders.
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsAndExceptLib = generatePostProcessingCopyFolderContentsToECUsAndExcept(
+				fromKeyword + " " + libFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " ECU",
+				directValueKeyword + " clock.h, standardTypes.h");
+		
+		// fastAndSlowCar_v2/messages: Copy "messages_types.h" into the *ECU folders.
+		// (Only "messages_types.h" is in the messages folder, but for more flexibility a copy everything search is still done.)
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsAndExceptMessages = generatePostProcessingCopyFolderContentsToECUsAndExcept(
+				fromKeyword + " " + messagesFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " ECU",
+				directValueKeyword + " none");
+		
+		// fastAndSlowCar_v2/operations: Copy all files into the *CarDriverECU folders.
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsAndExceptOperations = generatePostProcessingCopyFolderContentsToECUsAndExcept(
+				fromKeyword + " " + operationsFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " CarDriverECU",
+				directValueKeyword + " none");
+		
+		// fastAndSlowCar_v2/RTSCs:
+	    //1. Copy „coordinatorCoordinatorComponentStateChart.c“  into the *CarCoordinatorECU folders.
+	    //2. Copy „driveControlDriveControlComponentStateChart.c“ into the *CarDriverECU folders.
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsWhitelistRTSCs1 = generatePostProcessingCopyFolderContentsToECUsWhitelist(
+				fromKeyword + " " + RTSCsFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " CarCoordinatorECU",
+				directValueKeyword + " coordinatorCoordinatorComponentStateChart.c");
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsWhitelistRTSCs2 = generatePostProcessingCopyFolderContentsToECUsWhitelist(
+				fromKeyword + " " + RTSCsFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " CarDriverECU",
+				directValueKeyword + " courseControlCourseControlComponentStateChart.c");
+		
+		// fastAndSlowCar_v2/types: Copy all files into the *ECU folders.
+		Map<String, Map<String, String>> postProcessingCopyFolderContentsToECUsAndExceptTypes = generatePostProcessingCopyFolderContentsToECUsAndExcept(
+				fromKeyword + " " + typesFolderNameVariableName,
+				fromKeyword + " " + deployableCodeFolderNameVariableName,
+				directValueKeyword + " ECU",
+				directValueKeyword + " none");
+		
 
+		/*
+		 APImappings: From later: 
+		 Fill the method stubs in the API Mapping files
+           1. In every API-Mapping include: (recommended in the `.c` file, not the `.h` file to only have the import localy) `SimpleHardwareController_Connector.h`:
+           2. frontDistance: ```*distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(0);```
+           3. rearDistance: ```*distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(1);```
+           4. velocity: ```*velocity = SimpleHardwareController_DriveController_GetSpeed();```
+           [For our modifications: 5. angle: "*angle = SimpleHardwareController_DriveController_GetAngle();"]
+		
+		 APImappings:
+		 Old:
+           1. Copy all files with „*F*“ into the folder fastCarDriverECU.
+           CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c
+           CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h
+           CI_POWERTRAINFPOWERTRAINvelocityPortaccessCommand.c
+           CI_POWERTRAINFPOWERTRAINvelocityPortaccessCommand.h
+           CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c
+           CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h
+
+           2. Copy all files with „*S*“ into the folder fastCarDriverECU.
+           CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c
+           CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h
+           CI_POWERTRAINSPOWERTRAINvelocityPortaccessCommand.c
+           CI_POWERTRAINSPOWERTRAINvelocityPortaccessCommand.h
+           CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c
+           CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h
+           
+		 For our modifications on the MUML models:
+           1. Copy all files with „*F*“ into the folder fastCarDriverECU.
+           CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c
+			CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h
+			CI_DRIVECONTROLLERFDRIVECONTROLLERvelocityPortaccessCommand.c
+			CI_DRIVECONTROLLERFDRIVECONTROLLERvelocityPortaccessCommand.h
+			CI_DRIVECONTROLLERFDRIVECONTROLLERanglePortaccessCommand.c
+			CI_DRIVECONTROLLERFDRIVECONTROLLERanglePortaccessCommand.h
+			CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c
+			CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h
+
+           2. Copy all files with „*S*“ into the folder slowCarDriverECU.
+           CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c
+			CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h
+			CI_DRIVECONTROLLERSDRIVECONTROLLERvelocityPortaccessCommand.c
+			CI_DRIVECONTROLLERSDRIVECONTROLLERvelocityPortaccessCommand.h
+			CI_DRIVECONTROLLERSDRIVECONTROLLERanglePortaccessCommand.c
+			CI_DRIVECONTROLLERSDRIVECONTROLLERanglePortaccessCommand.h
+			CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c
+			CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h
+		*/
+		// No automatic *CarDriverECU folders search this time due to the name format used for the Mappings.
+		
+		Map<String, Map<String, String>> postProcessingFrontDistanceSensorFastCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + fastCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(0);");
+
+		Map<String, Map<String, String>> postProcessingRearDistanceSensorFastCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + fastCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(1);");
+
+		Map<String, Map<String, String>> postProcessingDriveControllerVelocityFastCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + fastCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_DRIVECONTROLLERFDRIVECONTROLLERvelocityPortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *velocity = SimpleHardwareController_DriveController_GetSpeed();");
+
+		Map<String, Map<String, String>> postProcessingDriveControllerAngleFastCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + fastCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_DRIVECONTROLLERFDRIVECONTROLLERanglePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *angle = SimpleHardwareController_DriveController_GetAngle();");
+
+		
+		Map<String, Map<String, String>> postProcessingFrontDistanceSensorSlowCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + slowCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(0);");
+
+		Map<String, Map<String, String>> postProcessingRearDistanceSensorSlowCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + slowCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *distance = SimpleHardwareController_DistanceSensor_GetDistanceToClosestMm(1);");
+
+		Map<String, Map<String, String>> postProcessingDriveControllerVelocitySlowCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + slowCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_DRIVECONTROLLERSDRIVECONTROLLERvelocityPortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *velocity = SimpleHardwareController_DriveController_GetSpeed();");
+
+		Map<String, Map<String, String>> postProcessingDriveControllerAngleSlowCarAPI = generatePostProcessingAdjustAPIMappingFile(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + slowCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_DRIVECONTROLLERSDRIVECONTROLLERanglePortaccessCommand.c",
+				directValueKeyword + " SimpleHardwareController_Connector.h", 
+				directValueKeyword + " *angle = SimpleHardwareController_DriveController_GetAngle();");
+		
+		
+		
+		Map<String, Map<String, String>> postProcessingCopyAPIMappingsToFastCarDriverECU = generatePostProcessingCopyFiles(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + fastCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_FRONTDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h, "
+						+ "CI_DRIVECONTROLLERFDRIVECONTROLLERvelocityPortaccessCommand.h, "
+						+ "CI_DRIVECONTROLLERFDRIVECONTROLLERanglePortaccessCommand.h, "
+						+ "CI_REARDISTANCESENSORFDISTANCESENSORdistancePortaccessCommand.h");
+
+		Map<String, Map<String, String>> postProcessingCopyAPIMappingsToSlowCarDriverECU = generatePostProcessingCopyFiles(
+				fromKeyword + " " + apiMappingsFolderNameVariableName,
+				fromKeyword + " " + slowCarDriverECUFolderPathVariableName,
+				directValueKeyword + " CI_FRONTDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h, "
+						+ "CI_DRIVECONTROLLERSDRIVECONTROLLERvelocityPortaccessCommand.h, "
+						+ "CI_DRIVECONTROLLERSDRIVECONTROLLERanglePortaccessCommand.h, "
+						+ "CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h");
+
+		Map<String, Map<String, String>> postProcessingCopyLocalConfig_hppToCarDeriverECUs = PostProcessingCopyLocalConfig_hppToCarDeriverECUs.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingCopyLocalConfig_hppToCarDeriverECUsIns = postProcessingCopyLocalConfig_hppToCarDeriverECUs.get(inKeyword);
+		postProcessingCopyLocalConfig_hppToCarDeriverECUsIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingCopyLocalConfig_hppToCarDeriverECUs.put(inKeyword, postProcessingCopyLocalConfig_hppToCarDeriverECUsIns);
+
+		Map<String, Map<String, String>> postProcessingAddHALPartsIntoCarDriverInoFiles = PostProcessingAddHALPartsIntoCarDriverInoFiles.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingAddHALPartsIntoCarDriverInoFilesIns = postProcessingAddHALPartsIntoCarDriverInoFiles.get(inKeyword);
+		postProcessingAddHALPartsIntoCarDriverInoFilesIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingAddHALPartsIntoCarDriverInoFiles.put(inKeyword, postProcessingAddHALPartsIntoCarDriverInoFilesIns);
+
+		Map<String, Map<String, String>> postProcessingFillOutMethodStubs = PostProcessingFillOutMethodStubs.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingFillOutMethodStubsIns = postProcessingFillOutMethodStubs.get(inKeyword);
+		postProcessingFillOutMethodStubsIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingFillOutMethodStubs.put(inKeyword, postProcessingFillOutMethodStubsIns);
+		
+		
 		Map<String, Map<String, String>> postProcessingStateChartValuesFastDriver = generatePostProcessingStateChartValuesStepAndAdjustSettings(
 				fromKeyword + " " + deployableCodeFolderNameVariableName,
 				directValueKeyword + " " + fastCarDriverECUName,
@@ -305,7 +630,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " " + componentCodeFolderNameVariableName);
 		Map<String, Map<String, String>> deleteFolderAPImappings = generateDeleteFolder(
 				fromKeyword + " " + apiMappingsFolderNameVariableName);
-
+		
+		
+		
+		//PipelineSequence
+		
 		Map<String, Map<String, String>> compileSettingsFastCoordinator = generateCompileStepAndAdjustSettings(
 				fromKeyword + " " + usedCoordinatorBoardIdentifierFQBNVariableName,
 				fromKeyword + " " + fastCarCoordinatorECUINOFilePathVariableName);
@@ -407,6 +736,12 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		exampleVariableDefs.put(muml_containerFilePathVariableName, muml_containerFilePathVariableValue);
 		exampleVariableDefs.put(componentCodeFolderNameVariableName, componentCodeFolderNameVariableValue);
 		exampleVariableDefs.put(apiMappingsFolderNameVariableName, apiMappingsFolderNameVariableValue);
+		exampleVariableDefs.put(componentsFolderNameVariableName, componentsFolderNameVariableValue);
+		exampleVariableDefs.put(libFolderNameVariableName, libFolderNameVariableValue);
+		exampleVariableDefs.put(messagesFolderNameVariableName, messagesFolderNameVariableValue);
+		exampleVariableDefs.put(operationsFolderNameVariableName, operationsFolderNameVariableValue);
+		exampleVariableDefs.put(RTSCsFolderNameVariableName, RTSCsFolderNameVariableValue);
+		exampleVariableDefs.put(typesFolderNameVariableName, typesFolderNameVariableValue);
 		exampleVariableDefs.put(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue);
 
 		exampleVariableDefs.put(fastCarDesiredVelocityVariableName, fastCarDesiredVelocityVariableValue);
@@ -467,18 +802,135 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				directValueKeyword + " " + DeleteFolder.nameFlag, deleteDirectoryDeployableFiles));
 
 		defaultPostProcessingSequenceDefs
-				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + CopyFolder.nameFlag, copyFolderSettings));
+				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + CopyFolder.nameFlag, copyFolderGeneratedDeployable));
 		defaultPostProcessingSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCopyFolder));
 
-		defaultPostProcessingSequenceDefs
+		/*defaultPostProcessingSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag,
-						postProcessingStepsUntilConfigSettings));
+						postProcessingUntilConfigSettings));
 		defaultPostProcessingSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
-						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));
+						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));*/
 
+		//TODO: Entfernen:
+		/*defaultPostProcessingSequenceDefs
+			.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessing1AdjustIncludes.nameFlag,
+					postProcessingUntilConfigSettings));*/
+		
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesComponents));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesLib));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesMessages));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesOperations));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesRTSCs));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
+				postProcessingAdjustInlcudesTypes));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingMoveIncludeBefore_ifdef__cplusplus.nameFlag,
+				postProcessingMoveIncludeBefore_ifdef__cplusplusClock));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsWhitelist.nameFlag,
+				postProcessingCopyFolderContentsToECUsWhitelistComponents1));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag,
+				postProcessingCopyFolderContentsToECUsAndExceptComponents2));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag,
+				postProcessingCopyFolderContentsToECUsAndExceptLib));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag,
+				postProcessingCopyFolderContentsToECUsAndExceptMessages));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag,
+				postProcessingCopyFolderContentsToECUsAndExceptOperations));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsWhitelist.nameFlag,
+				postProcessingCopyFolderContentsToECUsWhitelistRTSCs1));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsWhitelist.nameFlag,
+				postProcessingCopyFolderContentsToECUsWhitelistRTSCs2));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag,
+				postProcessingCopyFolderContentsToECUsAndExceptTypes));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingFrontDistanceSensorFastCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingRearDistanceSensorFastCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingDriveControllerVelocityFastCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingDriveControllerAngleFastCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingFrontDistanceSensorSlowCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingRearDistanceSensorSlowCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingDriveControllerVelocitySlowCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustAPIMappingFile.nameFlag,
+				postProcessingDriveControllerAngleSlowCarAPI));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + CopyFiles.nameFlag,
+				postProcessingCopyAPIMappingsToFastCarDriverECU));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + CopyFiles.nameFlag,
+				postProcessingCopyAPIMappingsToSlowCarDriverECU));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingCopyLocalConfig_hppToCarDeriverECUs.nameFlag,
+				postProcessingCopyLocalConfig_hppToCarDeriverECUs));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAddHALPartsIntoCarDriverInoFiles.nameFlag,
+				postProcessingAddHALPartsIntoCarDriverInoFiles));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingFillOutMethodStubs.nameFlag,
+				postProcessingFillOutMethodStubs));
+		
 		defaultPostProcessingSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingStateChartValues.nameFlag,
 						postProcessingStateChartValuesFastDriver));

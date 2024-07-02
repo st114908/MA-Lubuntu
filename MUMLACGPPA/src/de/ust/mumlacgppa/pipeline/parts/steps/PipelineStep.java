@@ -122,9 +122,25 @@ public abstract class PipelineStep implements Keywords{
 	
 	protected VariableContent handleInputByKey(String inputParameterKey) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		if(!in.containsKey(inputParameterKey)){
-			throw new InOrOutKeyNotDefinedException("Input parameter key " + inputParameterKey + " can't get matched to the defined input parameter keys.");
+			throw new InOrOutKeyNotDefinedException("Input parameter key " + inputParameterKey
+					+ " can't get matched to the defined input parameter keys in "
+					+ toString()
+					+ ".");
 		}
 		return resolveInputEntry(in.get(inputParameterKey));
+	}
+	
+	
+	protected String[] handleInputByKeyAsArray(String inputParameterKey, String split)
+			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
+		if(!in.containsKey(inputParameterKey)){
+			throw new InOrOutKeyNotDefinedException("Input parameter key " + inputParameterKey + " can't get matched to the defined input parameter keys.");
+		}
+		String[] arrayToTrimAndReturn = resolveInputEntry(in.get(inputParameterKey)).getContent().split(split);
+		for(int i = 0; i < arrayToTrimAndReturn.length; i++){
+			arrayToTrimAndReturn[i] = arrayToTrimAndReturn[i].trim();
+		}
+		return arrayToTrimAndReturn;
 	}
 	
 	
@@ -262,16 +278,16 @@ public abstract class PipelineStep implements Keywords{
 	@Override
 	public String toString() {
 		if( (out.size() > 0) && (in.size() > 0) ){
-			return "PipelineStep [in=" + in + ", out=" + out + "]";
+			return getClass().getSimpleName() + " [in=" + in + ", out=" + out + "]";
 		}
 		else if( (out.size() == 0) && (in.size() > 0) ){
-			return "PipelineStep [in=" + in + "]";
+			return getClass().getSimpleName() + " [in=" + in + "]";
 		}
 		else if( (out.size() > 0) && (in.size() == 0) ){
-			return "PipelineStep [out=" + out + "]";
+			return getClass().getSimpleName() + " [out=" + out + "]";
 		}
 		else{
-			return "PipelineStep []";
+			return getClass().getSimpleName() + " []";
 		}
 	}
 	

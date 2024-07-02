@@ -60,7 +60,7 @@ PostProcessingStepsUntilConfig:
   in:
     arduinoContainersPath: direct arduino-containers
     componentCodePath: direct arduino-containers/fastAndSlowCar_v2
-    useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: directtrue
+    useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: direct true
   out:
     ifSuccessful: ifSuccessful
 
@@ -70,10 +70,10 @@ PostProcessingStateChartValues:
   in:
     arduinoContainersPath: direct arduino-containers
     ECUName: direct arduino-containers/fastCarCoordinatorECU/fastCarDriverECU.ino
-    distanceLimit: direct 1
-    desiredVelocity: direct 2
-    slowVelocity: direct 3
-    laneDistance: direct 4
+    distanceLimit: direct 40
+    desiredVelocity: direct 65
+    slowVelocity: direct 0
+    laneDistance: direct 70
   out:
     ifSuccessful: ifSuccessful
 
@@ -117,6 +117,7 @@ Compile:
 LookupBoardBySerialNumber:
   in:
     boardSerialNumber: direct 85935333337351A0B051
+    boardTypeIdentifierFQBN: direct arduino:avr:uno
   out:
     ifSuccessful: ifSuccessful
     foundPortAddress: foundPortAddress
