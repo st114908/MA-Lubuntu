@@ -21,7 +21,7 @@ struct SerialReceiverListElement
 
 static struct SerialReceiverListElement *serialReceiverList = nullptr; /*init an empty list*/
 
-static Stream &serial = Serial;
+static Stream *serial = &Serial;
 static char rcvBuffer[SERIAL_RCV_BUF_SIZE];
 static uint8_t rcvBufPos = 0;
 unsigned long lastSerialRecv = millis();
@@ -33,17 +33,26 @@ static void i2cCommunication_setup(uint8_t serialPortNum)
 #if defined(ARDUINO_AVR_MEGA) or defined(ARDUINO_AVR_MEGA2560)
     case 1:
         Serial1.begin(115200);
-        serial = Serial1;
+        serial = &Serial1;
+#ifdef I2C_EMULATE_SERIAL_DEBUG
+        Serial.println("Using Serial1");
+#endif
         break;
     case 2:
         Serial2.begin(115200);
-        serial = Serial2;
+        serial = &Serial2;
+#ifdef I2C_EMULATE_SERIAL_DEBUG
+        Serial.println("Using Serial2");
+#endif
         break;
 #endif
     case 0:
     default:
         Serial.begin(115200);
-        serial = Serial;
+        serial = &Serial;
+#ifdef I2C_EMULATE_SERIAL_DEBUG
+        Serial.println("Using Serial");
+#endif
         break;
     }
     memset(rcvBuffer, 0, SERIAL_RCV_BUF_SIZE);
@@ -106,12 +115,12 @@ static void i2cEmulationSerial_loop()
 #endif
     }
     lastSerialRecv = now;
-    while (serial.available())
+    while (serial->available())
     {
         if (rcvBuffer[0] == 2)
         {
             // ignore message if started with STX (\0x02) until ETX (\0x03) is found => allows debug messages enclosed in STX/ETX
-            char c = Serial.read();
+            char c = serial->read();
             if (c == 3)
             {
                 rcvBuffer[0] = 0;
@@ -120,7 +129,7 @@ static void i2cEmulationSerial_loop()
         }
         else
         {
-            rcvBuffer[rcvBufPos++] = Serial.read();
+            rcvBuffer[rcvBufPos++] = serial->read();
         }
 
         if (rcvBufPos >= rcvBuffer[0] + 1 || rcvBufPos >= SERIAL_RCV_BUF_SIZE)
@@ -152,8 +161,8 @@ static void sendI2cMessage(uint8_t ignored,
     Serial.print(typeLen + 1 + messageLength);
     Serial.write(3);
 #endif
-    serial.write((uint8_t)(typeLen + 1 + messageLength));
-    serial.write(messageTypeName, typeLen);
-    serial.write((uint8_t)0);
-    serial.write(message, messageLength);
+    serial->write((uint8_t)(typeLen + 1 + messageLength));
+    serial->write(messageTypeName, typeLen);
+    serial->write((uint8_t)0);
+    serial->write(message, messageLength);
 }
