@@ -50,6 +50,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.On
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import de.ust.mumlacgppa.pipeline.reader.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
@@ -163,8 +164,8 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		boolean checkForACLIUSettingsFile = false;
 		for (PipelineStep currentStep : usedSequence) {
 			if ((currentStep.getClass().getSimpleName().equals(Compile.nameFlag))
-					|| (currentStep.getClass().getSimpleName().equals(Compile.nameFlag))
-					|| (currentStep.getClass().getSimpleName().equals(Compile.nameFlag))) {
+					|| (currentStep.getClass().getSimpleName().equals(Upload.nameFlag))
+					|| (currentStep.getClass().getSimpleName().equals(LookupBoardBySerialNumber.nameFlag))) {
 				checkForACLIUSettingsFile = true;
 				break;
 			}
