@@ -30,13 +30,16 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Po
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAddHALPartsIntoCarDriverInoFiles;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustAPIMappingFile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustIncludes;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustSerialCommunicationSizes;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingConfigureMQTTSettings;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingConfigureWLANSettings;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyFolderContentsToECUsAndExcept;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyFolderContentsToECUsWhitelist;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingCopyLocalConfig_hppToCarDeriverECUs;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingFillOutMethodStubs;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingMoveIncludeBefore_ifdef__cplusplus;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
+//import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
@@ -84,24 +87,24 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 	}
 	
 	private Map<String, Map<String, String>> generatePostProcessingCopyFolderContentsToECUsWhitelist(
-			String sourceFolder, String destinationFolder, String ecuEnding, String whitelist){
+			String sourceFolder, String destinationFolder, String ECUNameEnding, String whitelist){
 		Map<String, Map<String, String>> instanceSettings = PostProcessingCopyFolderContentsToECUsWhitelist.generateDefaultOrExampleValues();
 		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
 		instanceSettingsIns.put("sourceFolder", sourceFolder);
 		instanceSettingsIns.put("destinationFolder", destinationFolder);
-		instanceSettingsIns.put("ecuEnding", ecuEnding);
+		instanceSettingsIns.put("ECUNameEnding", ECUNameEnding);
 		instanceSettingsIns.put("whitelist", whitelist);
 		instanceSettings.put(inKeyword, instanceSettingsIns);
 		return instanceSettings;
 	}
 
 	private Map<String, Map<String, String>> generatePostProcessingCopyFolderContentsToECUsAndExcept(
-			String sourceFolder, String destinationFolder, String ecuEnding, String except){
+			String sourceFolder, String destinationFolder, String ECUNameEnding, String except){
 		Map<String, Map<String, String>> instanceSettings = PostProcessingCopyFolderContentsToECUsAndExcept.generateDefaultOrExampleValues();
 		Map<String, String> instanceSettingsIns = instanceSettings.get(inKeyword);
 		instanceSettingsIns.put("sourceFolder", sourceFolder);
 		instanceSettingsIns.put("destinationFolder", destinationFolder);
-		instanceSettingsIns.put("ecuEnding", ecuEnding);
+		instanceSettingsIns.put("ECUNameEnding", ECUNameEnding);
 		instanceSettingsIns.put("except", except);
 		instanceSettings.put(inKeyword, instanceSettingsIns);
 		return instanceSettings;
@@ -218,7 +221,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		// Variable names and potentially their values:
 
-		String generatedCodeFolderNameVariableName = "generatedRawFilesFolderPath";
+		String generatedCodeFolderNameVariableName = "generatedIncompleteFilesFolderPath";
 		String generatedCodeFolderNameVariableValue = directValueKeyword + " generated-files";
 		String muml_containerFilePathVariableName = "muml_containerFilePath";
 		String muml_containerFilePathVariableValue = generatedCodeFolderNameVariableValue
@@ -251,15 +254,20 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String usedDriverBoardIdentifierFQBNVariableValue = directValueKeyword + " arduino:avr:mega";
 		String usedCoordinatorBoardIdentifierFQBNVariableName = "usedCoordinatorBoardIdentifierFQBN";
 		String usedCoordinatorBoardIdentifierFQBNVariableValue = directValueKeyword + " arduino:avr:nano";
-		
+
+		String fastCarCoordinatorECUNameVariableName = "fastCarCoordinatorECUName";
+		String fastCarCoordinatorECUNameVariableValue = directValueKeyword + " fastCarCoordinatorECU";
 		String fastCarCoordinatorECUBoardSerialNumberVariableName = "fastCarCoordinatorECUBoardSerialNumber";
-		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarCoordinator";
+		String fastCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummyFastCarCoordinatorSerialNumber";
 		String fastCarDriverECUBoardSerialNumberVariableName = "fastCarDriverECUBoardSerialNumber";
-		String fastCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialFastCarDriver";
+		String fastCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummyFastCarDriverSerialNumber";
+		
+		String slowCarCoordinatorECUNameVariableName = "slowCarCoordinatorECUName";
+		String slowCarCoordinatorECUNameVariableValue = directValueKeyword + " slowCarCoordinatorECU";
 		String slowCarCoordinatorECUBoardSerialNumberVariableName = "slowCarCoordinatorECUBoardSerialNumber";
-		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarCoordinator";
+		String slowCarCoordinatorECUBoardSerialNumberVariableValue = directValueKeyword + " DummySlowCarCoordinatorSerialNumber";
 		String slowCarDriverECUBoardSerialNumberVariableName = "slowCarDriverECUBoardSerialNumber";
-		String slowCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySerialSlowCarDriver";
+		String slowCarDriverECUBoardSerialNumberVariableValue = directValueKeyword + " DummySlowCarDriverSerialNumber";
 
 		String fastCarCoordinatorECUName = "fastCarCoordinatorECU";
 		String fastCarCoordinatorECUFolderPathVariableName = fastCarCoordinatorECUName + "FolderPath";
@@ -631,6 +639,34 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		Map<String, Map<String, String>> deleteFolderAPImappings = generateDeleteFolder(
 				fromKeyword + " " + apiMappingsFolderNameVariableName);
 		
+		/*
+		 * Additional postprocessing for communication settings.
+		 */
+		
+		Map<String, Map<String, String>> postProcessingAdjustSerialCommunicationSizes = PostProcessingAdjustSerialCommunicationSizes.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingAdjustSerialCommunicationSizesIns = postProcessingAdjustSerialCommunicationSizes.get(inKeyword);
+		postProcessingAdjustSerialCommunicationSizesIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingAdjustSerialCommunicationSizes.put(inKeyword, postProcessingAdjustSerialCommunicationSizesIns);
+		
+		Map<String, Map<String, String>> postProcessingConfigureWLAN = PostProcessingConfigureWLANSettings.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingConfigureWLANIns = postProcessingConfigureWLAN.get(inKeyword);
+		postProcessingConfigureWLANIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingConfigureWLAN.put(inKeyword, postProcessingConfigureWLANIns);
+		
+		Map<String, Map<String, String>> postProcessingConfigureMQTTFastCoordinator = PostProcessingConfigureMQTTSettings.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingConfigureMQTTFastCoordinatorIns = postProcessingConfigureMQTTFastCoordinator.get(inKeyword);
+		postProcessingConfigureMQTTFastCoordinatorIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingConfigureMQTTFastCoordinatorIns.put("ecuName", fromKeyword + " " + fastCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTFastCoordinatorIns.put("clientName", fromKeyword + " " + fastCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTFastCoordinator.put(inKeyword, postProcessingConfigureMQTTFastCoordinatorIns);
+
+		Map<String, Map<String, String>> postProcessingConfigureMQTTSlowCoordinator = PostProcessingConfigureMQTTSettings.generateDefaultOrExampleValues();
+		Map<String, String> postProcessingConfigureMQTTSlowCoordinatorIns = postProcessingConfigureMQTTSlowCoordinator.get(inKeyword);
+		postProcessingConfigureMQTTSlowCoordinatorIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingConfigureMQTTSlowCoordinatorIns.put("ecuName", fromKeyword + " " + slowCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTSlowCoordinatorIns.put("clientName", fromKeyword + " " + slowCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTSlowCoordinator.put(inKeyword, postProcessingConfigureMQTTSlowCoordinatorIns);
+		
 		
 		
 		//PipelineSequence
@@ -663,6 +699,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Compile.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
+		
 		Map<String, Map<String, String>> lookupBoardBySerialNumberStepAndAdjustSettingsFastCoordinator = generateLookupBoardBySerialNumberStepAndAdjustSettings(
 				fromKeyword + " " + fastCarCoordinatorECUBoardSerialNumberVariableName, 
 				fromKeyword + " " + usedCoordinatorBoardIdentifierFQBNVariableName);
@@ -750,8 +787,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		exampleVariableDefs.put(usedDriverBoardIdentifierFQBNVariableName, usedDriverBoardIdentifierFQBNVariableValue);
 		exampleVariableDefs.put(usedCoordinatorBoardIdentifierFQBNVariableName, usedCoordinatorBoardIdentifierFQBNVariableValue);
 
+		exampleVariableDefs.put(fastCarCoordinatorECUNameVariableName, fastCarCoordinatorECUNameVariableValue);
 		exampleVariableDefs.put(fastCarCoordinatorECUBoardSerialNumberVariableName, fastCarCoordinatorECUBoardSerialNumberVariableValue);
 		exampleVariableDefs.put(fastCarDriverECUBoardSerialNumberVariableName, fastCarDriverECUBoardSerialNumberVariableValue);
+		
+		exampleVariableDefs.put(slowCarCoordinatorECUNameVariableName, slowCarCoordinatorECUNameVariableValue);
 		exampleVariableDefs.put(slowCarCoordinatorECUBoardSerialNumberVariableName, slowCarCoordinatorECUBoardSerialNumberVariableValue);
 		exampleVariableDefs.put(slowCarDriverECUBoardSerialNumberVariableName, slowCarDriverECUBoardSerialNumberVariableValue);
 		
@@ -786,8 +826,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				containerCodeGenerationSettings);
 		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(ComponentCodeGeneration.nameFlag,
 				componentCodeGenerationSettings);
-		defaultStandaloneTransformationAndGenerationsDefsKeyword.put(PostProcessingStepsUntilConfig.nameFlag,
-				PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
+		//defaultStandaloneTransformationAndGenerationsDefsKeyword.put(PostProcessingStepsUntilConfig.nameFlag,
+		//		PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
 		mapForPipelineSettings.put(standaloneTransformationAndCodeGenerationsDefsKeyword,
 				defaultStandaloneTransformationAndGenerationsDefsKeyword);
 
@@ -950,6 +990,22 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		defaultPostProcessingSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
 				deleteFolderComponentCodeFolder));
 
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustSerialCommunicationSizes.nameFlag,
+				postProcessingAdjustSerialCommunicationSizes));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingConfigureWLANSettings.nameFlag,
+				postProcessingConfigureWLAN));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingConfigureMQTTSettings.nameFlag,
+				postProcessingConfigureMQTTFastCoordinator));
+
+		defaultPostProcessingSequenceDefs
+		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingConfigureMQTTSettings.nameFlag,
+				postProcessingConfigureMQTTSlowCoordinator));
+		
 		mapForPipelineSettings.put(standalonePostProcessingSequenceDefKeyword, defaultPostProcessingSequenceDefs);
 
 		// For better/easier readability blank lines inbetween:

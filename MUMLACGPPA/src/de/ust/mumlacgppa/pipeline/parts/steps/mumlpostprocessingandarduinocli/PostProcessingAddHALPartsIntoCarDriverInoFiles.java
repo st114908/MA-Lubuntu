@@ -70,6 +70,7 @@ public class PostProcessingAddHALPartsIntoCarDriverInoFiles extends PipelineStep
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("arduinoContainersPath");
+		ins.add("ecuEnding");
 		requiredInsAndOuts.put(inKeyword, ins);
 		
 		HashSet<String> outs = new LinkedHashSet<String>();
@@ -85,6 +86,7 @@ public class PostProcessingAddHALPartsIntoCarDriverInoFiles extends PipelineStep
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", directValueKeyword + " arduino-containers");
+		ins.put("ecuEnding", directValueKeyword + " CarDriverECU");
 		exampleSettings.put(inKeyword, ins);
 		
 		// Out:
@@ -107,19 +109,20 @@ public class PostProcessingAddHALPartsIntoCarDriverInoFiles extends PipelineStep
 
 		// Only load once.
 		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );
+		String ecuEnding = handleInputByKey("ecuEnding").getContent();
 		
 		DirectoryStream<Path> arduinoContainersContent = Files.newDirectoryStream(arduinoContainersPath);
 		for(Path currentArduinoContainersEntryPath: arduinoContainersContent){
-			if(currentArduinoContainersEntryPath.toString().endsWith("CarDriverECU")){
-				// The name of the folder should be the same es the wanted file with the ".ino" ending as sole exception.
+			if(currentArduinoContainersEntryPath.toString().endsWith(ecuEnding)){
+				// The name of the folder should be the same as the wanted file with the ".ino" ending as sole exception.
 				String namePartString = currentArduinoContainersEntryPath.getFileName().toString().replace("ECU", "");
 				
-				Path currentCarDriverECU_inoFile = currentArduinoContainersEntryPath.resolve(currentArduinoContainersEntryPath.getFileName().toString() + ".ino");
-				File currentHFileIn = currentCarDriverECU_inoFile.toFile();
-				String intermediateFileName = currentCarDriverECU_inoFile.toString() + ".editing";
+				Path currentTargetECU_inoFile = currentArduinoContainersEntryPath.resolve(currentArduinoContainersEntryPath.getFileName().toString() + ".ino");
+				File currentInoFileIn = currentTargetECU_inoFile.toFile();
+				String intermediateFileName = currentTargetECU_inoFile.toString() + ".editing";
 				FileWriter workCopy = new FileWriter(intermediateFileName);
 				
-				Scanner currentHFileReader = new Scanner(currentHFileIn);
+				Scanner currentHFileReader = new Scanner(currentInoFileIn);
 		    	while (currentHFileReader.hasNextLine()) {
 		    		String currentLine = currentHFileReader.nextLine();
 		    		if(currentLine.contains("#include \"Debug.h\"")){ // I decided to use this as reference point for inserting the includes.
@@ -145,7 +148,7 @@ public class PostProcessingAddHALPartsIntoCarDriverInoFiles extends PipelineStep
 		    	}
 			    currentHFileReader.close();
 			    workCopy.close();
-				Files.move(Paths.get(intermediateFileName), currentCarDriverECU_inoFile, StandardCopyOption.REPLACE_EXISTING);
+				Files.move(Paths.get(intermediateFileName), currentTargetECU_inoFile, StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 		

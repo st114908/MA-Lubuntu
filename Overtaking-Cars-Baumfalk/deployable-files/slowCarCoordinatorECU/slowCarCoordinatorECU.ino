@@ -32,16 +32,16 @@ void setup(){
 
 	//collect the data required for the WiFi configuration
 	struct WiFiConfig wifiConfig = {
-		"Section Control",
-		"********",
+		"DummyWLANNameOrSSID",
+		"DummyWLANPassword",
 		WL_IDLE_STATUS
 	};
 
 	//collect the data required for the MQTT configuration
 	struct MqttConfig mConf = {
-		"192.168.0.100",
+		"DummyServerIPAddress",
 		1883,
-		"slowCarCoordinatorECU_config"
+		"slowCarCoordinatorECU"
 	};
 	mqttConfig = &mConf;
 

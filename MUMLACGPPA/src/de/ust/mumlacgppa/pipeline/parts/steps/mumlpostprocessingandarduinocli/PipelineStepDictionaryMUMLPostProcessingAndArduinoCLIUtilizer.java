@@ -78,6 +78,15 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			case PostProcessingAdjustIncludes.nameFlag:
 				return new PostProcessingAdjustIncludes(VariableHandlerInstance, parameters);
 
+			case PostProcessingAdjustSerialCommunicationSizes.nameFlag:
+				return new PostProcessingAdjustSerialCommunicationSizes(VariableHandlerInstance, parameters);
+
+			case PostProcessingConfigureWLANSettings.nameFlag:
+				return new PostProcessingConfigureWLANSettings(VariableHandlerInstance, parameters);
+
+			case PostProcessingConfigureMQTTSettings.nameFlag:
+				return new PostProcessingConfigureMQTTSettings(VariableHandlerInstance, parameters);
+
 			case PostProcessingCopyFolderContentsToECUsAndExcept.nameFlag:
 				return new PostProcessingCopyFolderContentsToECUsAndExcept(VariableHandlerInstance, parameters);
 

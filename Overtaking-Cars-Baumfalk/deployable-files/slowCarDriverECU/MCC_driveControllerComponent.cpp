@@ -229,14 +229,14 @@ DriveControllerComponent* MCC_create_DriveControllerComponent(uint8_T ID){
 			b.ID = ID;
 			b.velocityPortAccessFunction=&CI_DRIVECONTROLLERSDRIVECONTROLLERvelocityPortaccessCommand;
 			b.anglePortAccessFunction=&CI_DRIVECONTROLLERSDRIVECONTROLLERanglePortaccessCommand;
-			b.ANGLE = PORT_ACTIVE;
-			b.createANGLEHandle = &create_ANGLELocalHandle;
-			b.ANGLE_op.local_option.pubID = 18413;
-			b.ANGLE_op.local_option.subID = -48;
 			b.VELOCITY = PORT_ACTIVE;
 			b.createVELOCITYHandle = &create_VELOCITYLocalHandle;
 			b.VELOCITY_op.local_option.pubID = -31489;
 			b.VELOCITY_op.local_option.subID = 9589;
+			b.ANGLE = PORT_ACTIVE;
+			b.createANGLEHandle = &create_ANGLELocalHandle;
+			b.ANGLE_op.local_option.pubID = 18413;
+			b.ANGLE_op.local_option.subID = -48;
 		break;
 	default:
 		break;

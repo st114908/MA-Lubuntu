@@ -2,7 +2,7 @@ VariableDefs:
   ExampleNumberVariableName: direct 12
   ExampleStringVariableName: direct ExampleString
   ExampleBooleanVariableName: direct true
-  generatedRawFilesFolderPath: direct generated-files
+  generatedIncompleteFilesFolderPath: direct generated-files
   muml_containerFilePath: direct generated-files/MUML_Container.muml_container
   componentCodeFilesFolderPath: direct deployable-files/fastAndSlowCar_v2
   apiMappingsFolderPath: direct deployable-files/APImappings
@@ -16,11 +16,13 @@ VariableDefs:
   fastCarDesiredVelocity: direct 65
   slowCarDesiredVelocity: direct 55
   usedDriverBoardIdentifierFQBN: direct arduino:avr:mega
-  usedCoordinatorBoardIdentifierFQBN: direct arduino:avr:nano
-  fastCarCoordinatorECUBoardSerialNumber: direct DummySerialFastCarCoordinator
-  fastCarDriverECUBoardSerialNumber: direct DummySerialFastCarDriver
-  slowCarCoordinatorECUBoardSerialNumber: direct DummySerialSlowCarCoordinator
-  slowCarDriverECUBoardSerialNumber: direct DummySerialSlowCarDriver
+  usedCoordinatorBoardIdentifierFQBN: direct arduino:avr:mega
+  fastCarCoordinatorECUName: direct fastCarCoordinatorECU
+  fastCarCoordinatorECUBoardSerialNumber: direct 8593731333735141A130
+  fastCarDriverECUBoardSerialNumber: direct 8593731333735141A130
+  slowCarCoordinatorECUName: direct slowCarCoordinatorECU
+  slowCarCoordinatorECUBoardSerialNumber: direct 8593731333735141A130
+  slowCarDriverECUBoardSerialNumber: direct 8593731333735141A130
   fastCarCoordinatorECUFolderPath: direct deployable-files/fastCarCoordinatorECU
   fastCarCoordinatorECUINOFilePath: direct deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino
   fastCarCoordinatorECUINOHEXFilePath: direct deployable-files/fastCarCoordinatorECU/CompiledFiles/fastCarCoordinatorECU.ino.hex
@@ -46,20 +48,13 @@ StandaloneTransformationAndCodeGenerationsDefs:
   ContainerCodeGeneration:
     in:
       muml_containerSourceFile: from muml_containerFilePath
-      arduinoContainersDestinationFolder: from generatedRawFilesFolderPath
+      arduinoContainersDestinationFolder: from generatedIncompleteFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
   ComponentCodeGeneration:
     in:
       roboCar_mumlSourceFile: direct model/roboCar.muml
-      arduinoContainersDestinationFolder: from generatedRawFilesFolderPath
-    out:
-      ifSuccessful: ifSuccessful
-  PostProcessingStepsUntilConfig:
-    in:
-      arduinoContainersPath: direct arduino-containers
-      componentCodePath: direct arduino-containers/fastAndSlowCar_v2
-      useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: direct true
+      arduinoContainersDestinationFolder: from generatedIncompleteFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
 
@@ -72,7 +67,7 @@ StandalonePostProcessingSequence:
       ifSuccessful: ifSuccessful
 - direct CopyFolder:
     in:
-      sourcePath: from generatedRawFilesFolderPath
+      sourcePath: from generatedIncompleteFilesFolderPath
       destinationPath: from deployableFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
@@ -132,7 +127,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from componentsFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct CarCoordinatorECU
+      ECUNameEnding: direct CarCoordinatorECU
       whitelist: direct coordinatorComponent_Interface.h, coordinatorComponent.c
     out:
       ifSuccessful: ifSuccessful
@@ -140,7 +135,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from componentsFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct CarDriverECU
+      ECUNameEnding: direct CarDriverECU
       except: direct coordinatorComponent_Interface.h, coordinatorComponent.c
     out:
       ifSuccessful: ifSuccessful
@@ -148,7 +143,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from libFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct ECU
+      ECUNameEnding: direct ECU
       except: direct clock.h, standardTypes.h
     out:
       ifSuccessful: ifSuccessful
@@ -156,7 +151,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from messagesFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct ECU
+      ECUNameEnding: direct ECU
       except: direct none
     out:
       ifSuccessful: ifSuccessful
@@ -164,7 +159,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from operationsFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct CarDriverECU
+      ECUNameEnding: direct CarDriverECU
       except: direct none
     out:
       ifSuccessful: ifSuccessful
@@ -172,7 +167,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from RTSCsFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct CarCoordinatorECU
+      ECUNameEnding: direct CarCoordinatorECU
       whitelist: direct coordinatorCoordinatorComponentStateChart.c
     out:
       ifSuccessful: ifSuccessful
@@ -180,7 +175,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from RTSCsFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct CarDriverECU
+      ECUNameEnding: direct CarDriverECU
       whitelist: direct courseControlCourseControlComponentStateChart.c
     out:
       ifSuccessful: ifSuccessful
@@ -188,7 +183,7 @@ StandalonePostProcessingSequence:
     in:
       sourceFolder: from typesFolderPath
       destinationFolder: from deployableFilesFolderPath
-      ecuEnding: direct ECU
+      ECUNameEnding: direct ECU
       except: direct none
     out:
       ifSuccessful: ifSuccessful
@@ -290,6 +285,7 @@ StandalonePostProcessingSequence:
 - direct PostProcessingAddHALPartsIntoCarDriverInoFiles:
     in:
       arduinoContainersPath: from deployableFilesFolderPath
+      ecuEnding: direct CarDriverECU
     out:
       ifSuccessful: ifSuccessful
 - direct PostProcessingFillOutMethodStubs:
@@ -335,12 +331,46 @@ StandalonePostProcessingSequence:
       path: from componentCodeFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
+- direct PostProcessingAdjustSerialCommunicationSizes:
+    in:
+      arduinoContainersPath: from deployableFilesFolderPath
+      ecuEnding: direct ECU
+      topicNameMaxSize: direct 50
+      messageMaxSize: direct 50
+    out:
+      ifSuccessful: ifSuccessful
+- direct PostProcessingConfigureWLANSettings:
+    in:
+      arduinoContainersPath: from deployableFilesFolderPath
+      ecuEnding: direct CarCoordinatorECU
+      nameOrSSID: direct DummyWLANNameOrSSID
+      password: direct DummyWLANPassword
+    out:
+      ifSuccessful: ifSuccessful
+- direct PostProcessingConfigureMQTTSettings:
+    in:
+      arduinoContainersPath: from deployableFilesFolderPath
+      ecuName: from fastCarCoordinatorECUName
+      serverIPAddress: direct DummyServerIPAddress
+      serverPort: direct 1883
+      clientName: from fastCarCoordinatorECUName
+    out:
+      ifSuccessful: ifSuccessful
+- direct PostProcessingConfigureMQTTSettings:
+    in:
+      arduinoContainersPath: from deployableFilesFolderPath
+      ecuName: from slowCarCoordinatorECUName
+      serverIPAddress: direct DummyServerIPAddress
+      serverPort: direct 1883
+      clientName: from slowCarCoordinatorECUName
+    out:
+      ifSuccessful: ifSuccessful
 
 
 PipelineSequence:
 - direct DeleteFolder:
     in:
-      path: from generatedRawFilesFolderPath
+      path: from generatedIncompleteFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
 - direct DeleteFolder:
@@ -412,3 +442,99 @@ PipelineSequence:
     in:
       condition: from ifSuccessful
       message: direct Compile for slowCarDriverECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from fastCarCoordinatorECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for fastCarCoordinatorECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+      targetInoOrHexFile: from fastCarCoordinatorECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for fastCarCoordinatorECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from fastCarDriverECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for fastCarDriverECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+      targetInoOrHexFile: from fastCarDriverECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for fastCarDriverECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from slowCarCoordinatorECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for slowCarCoordinatorECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN
+      targetInoOrHexFile: from slowCarCoordinatorECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for slowCarCoordinatorECU has failed!
+- direct LookupBoardBySerialNumber:
+    in:
+      boardSerialNumber: from slowCarDriverECUBoardSerialNumber
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+    out:
+      ifSuccessful: ifSuccessful
+      foundPortAddress: foundPortAddress
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct LookupBoardBySerialNumber for slowCarDriverECU has failed!
+- direct Upload:
+    in:
+      portAddress: from foundPortAddress
+      boardTypeIdentifierFQBN: from usedDriverBoardIdentifierFQBN
+      targetInoOrHexFile: from slowCarDriverECUINOHEXFilePath
+    out:
+      ifSuccessful: ifSuccessful
+      resultMessage: resultMessage
+- direct OnlyContinueIfFulfilledElseAbort:
+    in:
+      condition: from ifSuccessful
+      message: direct Upload for slowCarDriverECU has failed!
+- direct PopupWindowMessage:
+    in:
+      condition: direct true
+      message: direct Pipeline execution completed!

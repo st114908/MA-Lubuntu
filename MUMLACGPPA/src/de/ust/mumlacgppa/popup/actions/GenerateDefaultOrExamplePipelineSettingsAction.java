@@ -49,8 +49,9 @@ public class GenerateDefaultOrExamplePipelineSettingsAction implements IObjectAc
 						"MUML Arduino Code Generation and Post Processing Automatisation",
 						"The file with the default/example pipeline settings has been generated at"
 						+ generator.getCompleteSettingsFilePath() + ".\n\n"
-						+ "Please replace the DummySerial* values with the serial numbers of the board you are using.\n"
-						+ "You can list them this way:\n"
+						+ "Please replace the Dummy* values with values fitting for your usage.\n"
+						+ "The WLAN and MQTT settings can be looked up.\n"
+						+ "A list of serial numbers of the connected boards can be shown this way:\n"
 						+ "(Right click on a .muml file)/\n"
 						+ "\"MUMLACGPPA\"/ \"List connected Arduino boards\"");
 				}

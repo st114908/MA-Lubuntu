@@ -445,6 +445,15 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		// }
 		// The following will trigger a popupWindow, but this code structure
 		// can't be used for messages during the pipeline execution.
+		
+		// Somehow A manual written "throws ... NoSuchFileException" for java.nio.file.NoSuchFileException won't get accepted in the catch clauses,
+		// so here an improvisation:
+		if(e.getClass().getSimpleName().contains("NoSuchFileException")){
+			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "File not found: " + e.getMessage(), e);
+			Activator.getDefault().getLog().log(status);
+			return status;
+		}
+		
 		IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 		Activator.getDefault().getLog().log(status);
 		return status;

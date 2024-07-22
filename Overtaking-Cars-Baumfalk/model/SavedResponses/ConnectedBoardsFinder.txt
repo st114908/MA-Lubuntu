@@ -7,28 +7,13 @@ Exit code: 0
 
 Normal response stream:
 - matchingboards:
-    - name: Arduino Leonardo
-      fqbn: arduino:avr:leonardo
-      ishidden: false
-      platform: null
-  port:
-    address: /dev/ttyACM0
-    label: /dev/ttyACM0
-    protocol: serial
-    protocollabel: Serial Port (USB)
-    properties:
-        pid: "0x8036"
-        serialNumber: ""
-        vid: "0x2341"
-    hardwareid: ""
-- matchingboards:
     - name: Arduino Mega or Mega 2560
       fqbn: arduino:avr:mega
       ishidden: false
       platform: null
   port:
-    address: /dev/ttyACM1
-    label: /dev/ttyACM1
+    address: /dev/ttyACM0
+    label: /dev/ttyACM0
     protocol: serial
     protocollabel: Serial Port (USB)
     properties:

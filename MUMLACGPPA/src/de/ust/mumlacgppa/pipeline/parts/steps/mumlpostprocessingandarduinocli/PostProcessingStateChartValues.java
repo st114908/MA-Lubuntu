@@ -82,7 +82,7 @@ public class PostProcessingStateChartValues extends PipelineStep {
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("arduinoContainersPath", "direct arduino-containers");
-		ins.put("ECUName", "direct arduino-containers/fastCarCoordinatorECU");
+		ins.put("ECUName", "direct fastCarCoordinatorECU");
 		ins.put("distanceLimit", "direct 40");
 		ins.put("desiredVelocity", "direct 65");
 		ins.put("slowVelocity", "direct 0");

@@ -73,7 +73,7 @@ public class PostProcessingCopyFolderContentsToECUsWhitelist extends PipelineSte
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("sourceFolder");
 		ins.add("destinationFolder");
-		ins.add("ecuEnding");
+		ins.add("ECUNameEnding");
 		ins.add("whitelist");
 		requiredInsAndOuts.put(inKeyword, ins);
 		
@@ -91,7 +91,7 @@ public class PostProcessingCopyFolderContentsToECUsWhitelist extends PipelineSte
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("sourceFolder", directValueKeyword + " arduino-containers/fastAndSlowCar_v2/lib");
 		ins.put("destinationFolder", directValueKeyword + " arduino-containers");
-		ins.put("ecuEnding", directValueKeyword + " ECU");
+		ins.put("ECUNameEnding", directValueKeyword + " ECU");
 		ins.put("whitelist", directValueKeyword + " coordinatorComponent_Interface.h, coordinatorComponent.c");
 		exampleSettings.put(inKeyword, ins);
 		
@@ -117,7 +117,7 @@ public class PostProcessingCopyFolderContentsToECUsWhitelist extends PipelineSte
 		// Only load once.
 		Path sourceFolder = resolveFullOrLocalPath( handleInputByKey("sourceFolder").getContent() );
 		Path destinationPath = resolveFullOrLocalPath( handleInputByKey("destinationFolder").getContent() );
-		String endingFilter = handleInputByKey("ecuEnding").getContent();
+		String endingFilter = handleInputByKey("ECUNameEnding").getContent();
 		String[] whitelistArray = handleInputByKeyAsArray("whitelist", ",");
 		List<String> whitelist = Arrays.asList(whitelistArray);
 		
