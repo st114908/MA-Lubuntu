@@ -19,9 +19,9 @@ import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 
-public class PopupWindowMessage extends PipelineStep implements Keywords{
+public class DialogMessage extends PipelineStep implements Keywords{
 
-	public static final String nameFlag = "PopupWindowMessage";
+	public static final String nameFlag = "DialogMessage";
 
 	/**
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
@@ -55,7 +55,7 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 	}
 	
 	
-	public PopupWindowMessage(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public DialogMessage(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, readData);
 	}
 	
@@ -64,7 +64,7 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 	 * @param yamlData
 	 * @throws ProjectFolderPathNotSetExceptionMUMLACGPPA 
 	 */
-	public PopupWindowMessage(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
+	public DialogMessage(VariableHandler VariableHandlerInstance, String yamlData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		super(VariableHandlerInstance, yamlData);
 	}
 
@@ -77,9 +77,9 @@ public class PopupWindowMessage extends PipelineStep implements Keywords{
 		String message = handleInputByKey("message").getContent();
 		
 		Display display = Display.getCurrent();
-		final Shell shellPopupWindowMessage = new Shell(display);
+		final Shell shellWindowMessage = new Shell(display);
 		MessageDialog.openInformation(
-				shellPopupWindowMessage,
+				shellWindowMessage,
 				"Pipeline message",
 				message);
 	}

@@ -48,7 +48,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
@@ -191,7 +191,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected void handleStepsWithWindowCheck() {
 		boolean stepWithWindowFound = false;
 		for (PipelineStep currentStep : usedSequence) {
-			if ((currentStep.getClass().getSimpleName().equals(PopupWindowMessage.nameFlag))
+			if ((currentStep.getClass().getSimpleName().equals(DialogMessage.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(SelectableTextWindow.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(OnlyContinueIfFulfilledElseAbort.nameFlag))) {
 				stepWithWindowFound = true;
@@ -200,8 +200,8 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		}
 		if (stepWithWindowFound) {
 			InfoWindow selectableTextWindowsInfoWindow = new InfoWindow("Messages won't work!",
-					"PopupWindowMessages and SelectableTextWindows won't work!",
-					"Due to Access restrictions no windows PopupWindowMessages and SelectableTextWindows\n"
+					"DialogMessages and SelectableTextWindows won't work!",
+					"Due to Access restrictions no windows DialogMessages and SelectableTextWindows\n"
 							+ "can be created from the export wizard process.\n"
 							+ "(Or at least no way could be found.)\n"
 							+ "So please check the console of the Eclipse window that\n"
@@ -425,13 +425,13 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected void displayPopupWindow(String message) {
 		/*
 		 * Display display = Display.getDefault();//.getCurrent(); final Shell
-		 * shellPopupWindowMessage = new Shell(display);
-		 * MessageDialog.openInformation( shellPopupWindowMessage,
+		 * shellWindowMessage = new Shell(display);
+		 * MessageDialog.openInformation( shellWindowMessage,
 		 * "Pipeline message", message);
 		 */
 
 		System.out.println(
-				"\n\n\nDue to Access restrictions no PopupWindowMessage can be created from the export wizard process without aborting the pipeline.\n");
+				"\n\n\nDue to Access restrictions no windows for e.g. messages can be created from the export wizard process without aborting the pipeline.\n");
 		System.out.println("(Or at least no way could be found.)");
 		System.out.println("So here the output in the console:\n\n");
 		System.out.println(message);
@@ -463,7 +463,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
 			ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException {
-		if (currentStep.getClass().getSimpleName().equals(PopupWindowMessage.nameFlag)) {
+		if (currentStep.getClass().getSimpleName().equals(DialogMessage.nameFlag)) {
 			if (currentStep.getContentOfInput("condition").getBooleanContent()) {
 				displayPopupWindow(currentStep.getContentOfInput("message").getContent());
 			}

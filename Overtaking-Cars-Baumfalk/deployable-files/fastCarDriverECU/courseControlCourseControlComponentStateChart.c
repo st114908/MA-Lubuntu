@@ -624,27 +624,6 @@
 		}
 		
 		
-		void CourseControlCourseControlCourseControlPortStateChart_exit(
-				CourseControlCourseControlComponentStateChart* stateChart) {
-			switch (stateChart->currentStateOfCourseControlCourseControlCourseControlPort) {
-			case STATE_COURSECONTROLCOURSECONTROLAUTONOMOUSDRIVING:
-				// nothing to do
-		
-				break;
-			case STATE_COURSECONTROLCOURSECONTROLWAITFORPERMISSION:
-				// nothing to do
-		
-				break;
-			case STATE_COURSECONTROLCOURSECONTROLOVERTAKING:
-				// nothing to do
-		
-				break;
-			default:
-				break;
-			}
-			stateChart->currentStateOfCourseControlCourseControlCourseControlPort =
-					COURSECONTROLCOURSECONTROLCOMPONENT_INACTIVE;
-		}
 		void CourseControlCourseControl_mainDrivingStateChart_exit(
 				CourseControlCourseControlComponentStateChart* stateChart) {
 			switch (stateChart->currentStateOfCourseControlCourseControl_mainDriving) {
@@ -666,14 +645,35 @@
 			stateChart->currentStateOfCourseControlCourseControl_mainDriving =
 					COURSECONTROLCOURSECONTROLCOMPONENT_INACTIVE;
 		}
+		void CourseControlCourseControlCourseControlPortStateChart_exit(
+				CourseControlCourseControlComponentStateChart* stateChart) {
+			switch (stateChart->currentStateOfCourseControlCourseControlCourseControlPort) {
+			case STATE_COURSECONTROLCOURSECONTROLAUTONOMOUSDRIVING:
+				// nothing to do
+		
+				break;
+			case STATE_COURSECONTROLCOURSECONTROLWAITFORPERMISSION:
+				// nothing to do
+		
+				break;
+			case STATE_COURSECONTROLCOURSECONTROLOVERTAKING:
+				// nothing to do
+		
+				break;
+			default:
+				break;
+			}
+			stateChart->currentStateOfCourseControlCourseControlCourseControlPort =
+					COURSECONTROLCOURSECONTROLCOMPONENT_INACTIVE;
+		}
 				
 			
 		bool_t CourseControlCourseControlComponentStateChart_isInState(
 				CourseControlCourseControlComponentStateChart* stateChart,
 				CourseControlCourseControlComponentState state) {
-			return (stateChart->currentStateOfCourseControlCourseControlCourseControlPort
+			return (stateChart->currentStateOfCourseControlCourseControl_mainDriving
 					== state
-					|| stateChart->currentStateOfCourseControlCourseControl_mainDriving
+					|| stateChart->currentStateOfCourseControlCourseControlCourseControlPort
 							== state);
 		
 		}

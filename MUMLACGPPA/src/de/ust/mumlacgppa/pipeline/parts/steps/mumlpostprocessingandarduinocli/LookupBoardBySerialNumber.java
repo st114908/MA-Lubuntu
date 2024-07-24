@@ -133,7 +133,7 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		}
 
 		// ifSuccessful will still be set to false, which can be used for
-		// messages (PopupWindowMessage and SelectableTextWindow) and aborting
+		// messages (DialogMessage and SelectableTextWindow) and aborting
 		// the pipeline (OnlyContinueIfFulfilledEsleAbort).
 	}
 

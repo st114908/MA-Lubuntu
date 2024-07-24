@@ -8,7 +8,7 @@ The generatable file LocalSofdcarHalConfig.hpp serves to store pin configuration
 
 Due to a lack of time the selection of the MUML ressources couldn't be understood and implemented, so the export wizard framework has been reused for export wizard "PipeLineExecutionAsExport",which starts the pipeline and performs the respective automatic selection of the used ressources for ContainerTransformation and ComponentCodeGeneration. Please note that these selections are automatically performed by the respective export settings window and only appear if the pipeline sequence contains a step that requires it.
 
-Due to limitations from Eclipse the pipeline execution can't create windows, so "PipeLineExecutionAsExport" takes over for the functionality of the steps PopupWindowMessage, SelectableTextWindow and OnlyContinueIfFulfilledElseAbort and prints out their messages on the console window of the Eclipse instance that is used to run the MUML plugins and so on as application.
+Due to limitations from Eclipse the pipeline execution can't create windows, so "PipeLineExecutionAsExport" takes over for the functionality of the steps DialogMessage, SelectableTextWindow and OnlyContinueIfFulfilledElseAbort and prints out their messages on the console window of the Eclipse instance that is used to run the MUML plugins and so on as application.
 
 Paths get read like this:
 If they don't start with a "/" (without ") then they get interpreted as a path relative to the project root folder.

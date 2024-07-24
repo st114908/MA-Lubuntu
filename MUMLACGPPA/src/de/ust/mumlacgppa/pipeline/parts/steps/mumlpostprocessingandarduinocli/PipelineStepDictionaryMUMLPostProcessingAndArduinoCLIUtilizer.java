@@ -66,8 +66,8 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			case OnlyContinueIfFulfilledElseAbort.nameFlag:
 				return new OnlyContinueIfFulfilledElseAbort(VariableHandlerInstance, parameters);
 			
-			case PopupWindowMessage.nameFlag:
-				return new PopupWindowMessage(VariableHandlerInstance, parameters);
+			case DialogMessage.nameFlag:
+				return new DialogMessage(VariableHandlerInstance, parameters);
 				
 			case PostProcessingAddHALPartsIntoCarDriverInoFiles.nameFlag:
 				return new PostProcessingAddHALPartsIntoCarDriverInoFiles(VariableHandlerInstance, parameters);

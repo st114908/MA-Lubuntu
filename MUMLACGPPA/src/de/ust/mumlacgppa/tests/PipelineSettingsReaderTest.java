@@ -20,7 +20,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
 import de.ust.mumlacgppa.pipeline.reader.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -97,7 +97,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testStandaloneUsageDefsOnly() throws Exception{
 		String testYamlText = 
 				standaloneTransformationAndCodeGenerationsDefsKeyword + ": { \n"
-				+   PopupWindowMessage.nameFlag + ": { \n"
+				+   DialogMessage.nameFlag + ": { \n"
 				+     inKeyword + ": {\n"
 				+ "     condition: direct true, \n"
 				+ "     message: direct HelloTest \n"
@@ -115,7 +115,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testPostProcessingOnly() throws Exception{
 		String testYamlText = 
 				standalonePostProcessingSequenceDefKeyword + ": \n" 
-				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: direct true\n"
 				+ "      message: direct HelloTest\n"
@@ -130,7 +130,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testPipelineOnly() throws Exception{
 		String testYamlText = 
 				pipelineSequenceDefKeyword + ": \n" 
-				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: direct true\n"
 				+ "      message: direct HelloTest\n"
@@ -152,7 +152,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "    " + outKeyword + ": \n"
 				+ "      ifSuccessful: dummyBool\n"
 				+ "      foundPortAddress: dummyPort\n"
-				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: from dummyBool \n"
 				+ "      message: from dummyPort\n";
@@ -172,7 +172,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      " + outKeyword + ": \n"
 				+ "        ifSuccessful: dummyBool\n"
 				+ "        foundPortAddress: dummyPort\n"
-				+ "  - " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "  - " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        condition: from dummyBool \n"
 				+ "        message: from dummyPort\n";
@@ -196,7 +196,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "    " + outKeyword + ": \n"
 				+ "      ifSuccessful: dummyBool\n"
 				+ standalonePostProcessingSequenceDefKeyword + ": \n" 
-				+ "- " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: direct true\n"
 				+ "      message: direct HelloTest\n"
@@ -210,7 +210,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      " + outKeyword + ": \n"
 				+ "        ifSuccessful: dummyBool\n"
 				+ "        foundPortAddress: dummyPort\n"
-				+ "  - " + directValueKeyword + " " + PopupWindowMessage.nameFlag + ": \n"
+				+ "  - " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        condition: from dummyBool \n"
 				+ "        message: from dummyPort\n"

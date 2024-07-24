@@ -79,8 +79,8 @@ public class OnlyContinueIfFulfilledElseAbort extends PipelineStep implements Ke
 		boolean condition = handleInputByKey("condition").getBooleanContent();
 		if (condition) {
 			Display display = Display.getCurrent();
-			final Shell shellPopupWindowMessage = new Shell(display);
-			MessageDialog.openInformation(shellPopupWindowMessage, "Pipeline message",
+			final Shell shellWindowMessage = new Shell(display);
+			MessageDialog.openInformation(shellWindowMessage, "Pipeline message",
 					handleInputByKey("message").getContent());
 			throw new AbortPipelineException("The pipeline has been aborted.");
 		}

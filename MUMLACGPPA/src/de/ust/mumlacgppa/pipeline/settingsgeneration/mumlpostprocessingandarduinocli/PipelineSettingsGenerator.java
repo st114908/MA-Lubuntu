@@ -26,7 +26,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PopupWindowMessage;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAddHALPartsIntoCarDriverInoFiles;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustAPIMappingFile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingAdjustIncludes;
@@ -752,13 +752,13 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
-		Map<String, Map<String, String>> popupWindowMessageFinishedPipeline = PopupWindowMessage
+		Map<String, Map<String, String>> windowMessageFinishedPipeline = DialogMessage
 				.generateDefaultOrExampleValues();
-		Map<String, String> popupWindowMessageFinishedPipelineSettingsIns = popupWindowMessageFinishedPipeline
+		Map<String, String> windowMessageFinishedPipelineSettingsIns = windowMessageFinishedPipeline
 				.get(inKeyword);
-		popupWindowMessageFinishedPipelineSettingsIns.put("message",
+		windowMessageFinishedPipelineSettingsIns.put("message",
 				directValueKeyword + " Pipeline execution completed!");
-		popupWindowMessageFinishedPipeline.put(inKeyword, popupWindowMessageFinishedPipelineSettingsIns);
+		windowMessageFinishedPipeline.put(inKeyword, windowMessageFinishedPipelineSettingsIns);
 
 		// Now the pipeline settings and sequences:
 		Map<String, Object> mapForPipelineSettings = new LinkedHashMap<String, Object>();
@@ -1111,7 +1111,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 						onlyContinueIfFulfilledElseAbortUploadSlowDriver));
 
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml,
-				directValueKeyword + " " + PopupWindowMessage.nameFlag, popupWindowMessageFinishedPipeline));
+				directValueKeyword + " " + DialogMessage.nameFlag, windowMessageFinishedPipeline));
 
 		mapForPipelineSettings.put(pipelineSequenceDefKeyword, defaultPipelineSequenceDefs);
 
