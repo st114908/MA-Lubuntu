@@ -245,8 +245,18 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String typesFolderNameVariableName = "typesFolderPath";
 		String typesFolderNameVariableValue = componentCodeFolderNameVariableValue + "/types";
 
+		String WLANNameOrSSIDVariableName = "WLANNameOrSSID";
+		String WLANNameOrSSIDVariableValue = directValueKeyword + " DummyWLANNameOrSSID";
+		String WLANPasswordVariableName = "WLANPassword_MakeSureThisStaysSafe"; 
+		String WLANPasswordVariableValue = directValueKeyword + " DummyWLANPassword";
+		
+		String MQTTServerIPAddressVariableName = "MQTTServerIPAddress";
+		String MQTTServerIPAddressVariableValue = directValueKeyword + " DummyMQTTServerIPAddress";
+		String MQTTServerPortVariableName = "MQTTServerPort";
+		String MQTTServerPortVariableValue = directValueKeyword + " 1883";
+		
 		String fastCarDesiredVelocityVariableName = "fastCarDesiredVelocity";
-		String fastCarDesiredVelocityVariableValue =  directValueKeyword + " 65";
+		String fastCarDesiredVelocityVariableValue = directValueKeyword + " 65";
 		String slowCarDesiredVelocityVariableName = "slowCarDesiredVelocity";
 		String slowCarDesiredVelocityVariableValue = directValueKeyword + " 55";
 		
@@ -651,12 +661,16 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		Map<String, Map<String, String>> postProcessingConfigureWLAN = PostProcessingConfigureWLANSettings.generateDefaultOrExampleValues();
 		Map<String, String> postProcessingConfigureWLANIns = postProcessingConfigureWLAN.get(inKeyword);
 		postProcessingConfigureWLANIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
+		postProcessingConfigureWLANIns.put("nameOrSSID", fromKeyword + " " + WLANNameOrSSIDVariableName);
+		postProcessingConfigureWLANIns.put("password", fromKeyword + " " + WLANPasswordVariableName);
 		postProcessingConfigureWLAN.put(inKeyword, postProcessingConfigureWLANIns);
 		
 		Map<String, Map<String, String>> postProcessingConfigureMQTTFastCoordinator = PostProcessingConfigureMQTTSettings.generateDefaultOrExampleValues();
 		Map<String, String> postProcessingConfigureMQTTFastCoordinatorIns = postProcessingConfigureMQTTFastCoordinator.get(inKeyword);
 		postProcessingConfigureMQTTFastCoordinatorIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
 		postProcessingConfigureMQTTFastCoordinatorIns.put("ecuName", fromKeyword + " " + fastCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTFastCoordinatorIns.put("serverIPAddress", fromKeyword + " " + MQTTServerIPAddressVariableName);
+		postProcessingConfigureMQTTFastCoordinatorIns.put("serverPort", fromKeyword + " " + MQTTServerPortVariableName);
 		postProcessingConfigureMQTTFastCoordinatorIns.put("clientName", fromKeyword + " " + fastCarCoordinatorECUNameVariableName);
 		postProcessingConfigureMQTTFastCoordinator.put(inKeyword, postProcessingConfigureMQTTFastCoordinatorIns);
 
@@ -781,6 +795,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		exampleVariableDefs.put(typesFolderNameVariableName, typesFolderNameVariableValue);
 		exampleVariableDefs.put(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue);
 
+		exampleVariableDefs.put(WLANNameOrSSIDVariableName, WLANNameOrSSIDVariableValue);
+		exampleVariableDefs.put(WLANPasswordVariableName, WLANPasswordVariableValue);
+		exampleVariableDefs.put(MQTTServerIPAddressVariableName, MQTTServerIPAddressVariableValue);
+		exampleVariableDefs.put(MQTTServerPortVariableName, MQTTServerPortVariableValue);
+		
 		exampleVariableDefs.put(fastCarDesiredVelocityVariableName, fastCarDesiredVelocityVariableValue);
 		exampleVariableDefs.put(slowCarDesiredVelocityVariableName, slowCarDesiredVelocityVariableValue);
 		

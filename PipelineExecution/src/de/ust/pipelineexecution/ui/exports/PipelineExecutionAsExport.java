@@ -65,7 +65,6 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected boolean pipelineSettingsErrorDetected;
 
 	protected PipelineSettingsReader PSRInstance;
-	protected ArrayList<PipelineStep> usedSequence;
 	protected boolean containerTransformationToBePerformed;
 	protected boolean containerCodeGenerationToBePerformed;
 	protected boolean componentCodeGenerationToBePerformed;
@@ -75,12 +74,29 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		return "pipelineexecution.ui.exports.PipelineExecutionAsExport";
 	}
 
+
+	protected PipelineStep getNextStepRespectiveSequence() {
+		return PSRInstance.getNextPipelineSequenceStep();
+	}
+
+	protected boolean hasNextStepRespectiveSequence() {
+		return PSRInstance.hasNextPipelineSequenceStep();
+	}
+
+	protected void resetRespectiveSequence() {
+		PSRInstance.resetPipelineSequenceProgress();
+	}
+
+	
 	protected void checkWhichImprovisationsToPerform() {
 		containerTransformationToBePerformed = false;
 		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
 
-		for (PipelineStep currentStep : usedSequence) {
+		resetRespectiveSequence();
+		PipelineStep currentStep;
+		while(hasNextStepRespectiveSequence()){
+			currentStep = getNextStepRespectiveSequence();
 			if (currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag)) {
 				// T3.2: Deployment Configuration aka Container Transformation:
 				containerTransformationToBePerformed = true;
@@ -162,7 +178,10 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 
 	protected boolean handleArduinoCLIUtilizerCheck(Path projectPath) {
 		boolean checkForACLIUSettingsFile = false;
-		for (PipelineStep currentStep : usedSequence) {
+		resetRespectiveSequence();
+		PipelineStep currentStep;
+		while(hasNextStepRespectiveSequence()){
+			currentStep = getNextStepRespectiveSequence();
 			if ((currentStep.getClass().getSimpleName().equals(Compile.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(Upload.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(LookupBoardBySerialNumber.nameFlag))) {
@@ -170,6 +189,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				break;
 			}
 		}
+		
 		if (checkForACLIUSettingsFile) {
 			Path completeACLIUSettingsFilePath = projectPath
 					.resolve(DefaultConfigDirectoryAndFilePath.CONFIG_DIRECTORY_FOLDER_NAME)
@@ -190,7 +210,10 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 
 	protected void handleStepsWithWindowCheck() {
 		boolean stepWithWindowFound = false;
-		for (PipelineStep currentStep : usedSequence) {
+		resetRespectiveSequence();
+		PipelineStep currentStep;
+		while(hasNextStepRespectiveSequence()){
+			currentStep = getNextStepRespectiveSequence();
 			if ((currentStep.getClass().getSimpleName().equals(DialogMessage.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(SelectableTextWindow.nameFlag))
 					|| (currentStep.getClass().getSimpleName().equals(OnlyContinueIfFulfilledElseAbort.nameFlag))) {
@@ -198,6 +221,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				break;
 			}
 		}
+		
 		if (stepWithWindowFound) {
 			InfoWindow selectableTextWindowsInfoWindow = new InfoWindow("Messages won't work!",
 					"DialogMessages and SelectableTextWindows won't work!",
@@ -229,7 +253,6 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			return;
 		}
 
-		usedSequence = PSRInstance.getPipelineSequence();
 		// Search for steps that require the ArduinoCLIUtilizer to be able to
 		// work.
 		// (It is assumed to be loaded, so this will just check for the
@@ -316,7 +339,10 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		return new AbstractFujabaExportOperation() {
 			@Override
 			protected IStatus doExecute(IProgressMonitor progressMonitor) {
-				for (PipelineStep currentStep : usedSequence) {
+				resetRespectiveSequence();
+				PipelineStep currentStep;
+				while(hasNextStepRespectiveSequence()){
+					currentStep = getNextStepRespectiveSequence();
 					System.out.println("Performing step: " + currentStep.getClass().getSimpleName());
 					System.out.println("Data: " + currentStep.toString());
 					try {

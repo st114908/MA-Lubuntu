@@ -61,7 +61,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 		
-		generation = (ComponentCodeGeneration) PSRInstance.getStandaloneUsageDefs().get(ComponentCodeGeneration.nameFlag);
+		generation = (ComponentCodeGeneration) PSRInstance.getStandaloneUsageDef(ComponentCodeGeneration.nameFlag);
 		
 		sourceComponentInstancePage = generateSourceComponentInstancePage();
 		addPage(sourceComponentInstancePage);

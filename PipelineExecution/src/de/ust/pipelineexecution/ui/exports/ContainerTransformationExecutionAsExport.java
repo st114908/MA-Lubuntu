@@ -70,8 +70,7 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 
-		transformation = (ContainerTransformation) PSRInstance.getStandaloneUsageDefs()
-				.get(ContainerTransformation.nameFlag);
+		transformation = (ContainerTransformation) PSRInstance.getStandaloneUsageDef(ContainerTransformation.nameFlag);
 
 		sourceSystemAllocationPage = generateSourceSystemAllocationPage();
 		addPage(sourceSystemAllocationPage);

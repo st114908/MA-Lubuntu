@@ -33,6 +33,23 @@ public class PostProcessingExecutionAsExport extends PipelineExecutionAsExport {
 	public String wizardGetId() {
 		return "pipelineexecution.ui.exports.PostProcessingExecutionAsExport";
 	}
+	
+
+	@Override
+	protected PipelineStep getNextStepRespectiveSequence() {
+		return PSRInstance.getNextPostProcessingStep();
+	}
+
+	@Override
+	protected boolean hasNextStepRespectiveSequence() {
+		return PSRInstance.hasNextPostProcessingStep();
+	}
+
+	@Override
+	protected void resetRespectiveSequence() {
+		PSRInstance.resetPostProcessingProgress();;
+	}
+
 
 	@Override
 	public void addPages() {
@@ -53,7 +70,6 @@ public class PostProcessingExecutionAsExport extends PipelineExecutionAsExport {
 			return;
 		}
 
-		usedSequence = PSRInstance.getPostProcessingSequence();
 		// Search for steps that require the ArduinoCLIUtilizer to be able to
 		// work.
 		// (It is assumed to be loaded, so this will just check for the

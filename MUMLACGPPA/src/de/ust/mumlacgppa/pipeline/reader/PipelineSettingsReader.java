@@ -32,6 +32,8 @@ public class PipelineSettingsReader implements Keywords {
 	private VariableHandler VariableHandlerInstance;
 	private PipelineStepDictionary stepDictionaryToUse;
 	private boolean interpretPipelineSettingsCalled;
+	private int postProcessingListExecutionIndex;
+	private int pipelineSequenceExecutionIndex;
 
 	@SuppressWarnings("unchecked")
 	private ArrayList<PipelineStep> interpretSequenceDef(ArrayList<Map<String, Object>> rawCurrentSequenceDef,
@@ -114,7 +116,7 @@ public class PipelineSettingsReader implements Keywords {
 
 
 	/**
-	 * Mainly public for testing.
+	 * Public for testing. No other usage intended! 
 	 * @param rawSettingsString
 	 * @throws Exception 
 	 */
@@ -122,7 +124,7 @@ public class PipelineSettingsReader implements Keywords {
 	public void interpretPipelineSettings(Map<String, Object> rawSettings)
 			throws Exception {
 		if(interpretPipelineSettingsCalled){
-			throw new Exception("The interpretaton has already been called!");
+			throw new Exception("The interpretaton has already been called! Also: This is exclusively intended for testing!");
 		}
 		
 		if (rawSettings == null) {
@@ -190,7 +192,8 @@ public class PipelineSettingsReader implements Keywords {
 			// For simplicity at executing the pipeline.
 			pipelineSequence = new ArrayList<PipelineStep>();
 		}
-
+		
+		pipelineSequenceExecutionIndex = 0;
 		interpretPipelineSettingsCalled = true;
 	}
 
@@ -274,16 +277,38 @@ public class PipelineSettingsReader implements Keywords {
 		}
 	}
 
-	public Map<String, PipelineStep> getStandaloneUsageDefs() {
-		return standaloneTransformationAndCodeGenerationDefs;
+	public PipelineStep getStandaloneUsageDef(String stepName) {
+		return standaloneTransformationAndCodeGenerationDefs.get(stepName);
+	}
+	
+	
+	public void resetPostProcessingProgress(){
+		postProcessingListExecutionIndex = 0;
+	}
+	
+	public boolean hasNextPostProcessingStep() {
+		return ( postProcessingListExecutionIndex < pipelineSequence.size() );
 	}
 
-	public ArrayList<PipelineStep> getPostProcessingSequence() {
-		return standalonePostProcessingSequence;
+	public PipelineStep getNextPostProcessingStep() {
+		PipelineStep currentStep = standalonePostProcessingSequence.get(postProcessingListExecutionIndex);
+		postProcessingListExecutionIndex++;
+		return currentStep;
+	}
+	
+
+	public void resetPipelineSequenceProgress(){
+		pipelineSequenceExecutionIndex = 0;
+	}
+	
+	public boolean hasNextPipelineSequenceStep() {
+		return ( pipelineSequenceExecutionIndex < pipelineSequence.size() );
 	}
 
-	public ArrayList<PipelineStep> getPipelineSequence() {
-		return pipelineSequence;
+	public PipelineStep getNextPipelineSequenceStep() {
+		PipelineStep currentStep = pipelineSequence.get(pipelineSequenceExecutionIndex);
+		pipelineSequenceExecutionIndex++;
+		return currentStep;
 	}
 
 }

@@ -60,7 +60,7 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 		
-		generation = (ContainerCodeGeneration) PSRInstance.getStandaloneUsageDefs().get(ContainerCodeGeneration.nameFlag);
+		generation = (ContainerCodeGeneration) PSRInstance.getStandaloneUsageDef(ContainerCodeGeneration.nameFlag);
 		
 		try {
 			generateFolderIfNecessary(generation.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
