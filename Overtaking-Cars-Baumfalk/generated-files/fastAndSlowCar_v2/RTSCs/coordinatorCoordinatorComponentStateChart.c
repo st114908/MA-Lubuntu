@@ -1299,27 +1299,6 @@
 		}
 		
 		
-		void CoordinatorOvertakingAffiliateOvertakingAffiliatePortStateChart_exit(
-				CoordinatorCoordinatorComponentStateChart* stateChart) {
-			switch (stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort) {
-			case STATE_COORDINATOROVERTAKINGAFFILIATEIDLE:
-				// nothing to do
-		
-				break;
-			case STATE_COORDINATOROVERTAKINGAFFILIATECOORDINATING:
-				// nothing to do
-		
-				break;
-			case STATE_COORDINATOROVERTAKINGAFFILIATEGETTINGPASSED:
-				// nothing to do
-		
-				break;
-			default:
-				break;
-			}
-			stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort =
-					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
-		}
 		void CoordinatorOvertakingInitiatorOvertakingInitiatorPortStateChart_exit(
 				CoordinatorCoordinatorComponentStateChart* stateChart) {
 			switch (stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort) {
@@ -1362,16 +1341,37 @@
 			stateChart->currentStateOfCoordinatorCommunicatorCommunicatorPort =
 					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
 		}
+		void CoordinatorOvertakingAffiliateOvertakingAffiliatePortStateChart_exit(
+				CoordinatorCoordinatorComponentStateChart* stateChart) {
+			switch (stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort) {
+			case STATE_COORDINATOROVERTAKINGAFFILIATEIDLE:
+				// nothing to do
+		
+				break;
+			case STATE_COORDINATOROVERTAKINGAFFILIATECOORDINATING:
+				// nothing to do
+		
+				break;
+			case STATE_COORDINATOROVERTAKINGAFFILIATEGETTINGPASSED:
+				// nothing to do
+		
+				break;
+			default:
+				break;
+			}
+			stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort =
+					COORDINATORCOORDINATORCOMPONENT_INACTIVE;
+		}
 				
 			
 		bool_t CoordinatorCoordinatorComponentStateChart_isInState(
 				CoordinatorCoordinatorComponentStateChart* stateChart,
 				CoordinatorCoordinatorComponentState state) {
-			return (stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort
+			return (stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort
 					== state
-					|| stateChart->currentStateOfCoordinatorOvertakingInitiatorOvertakingInitiatorPort
-							== state
 					|| stateChart->currentStateOfCoordinatorCommunicatorCommunicatorPort
+							== state
+					|| stateChart->currentStateOfCoordinatorOvertakingAffiliateOvertakingAffiliatePort
 							== state);
 		
 		}

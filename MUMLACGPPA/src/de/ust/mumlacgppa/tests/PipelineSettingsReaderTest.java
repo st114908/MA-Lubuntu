@@ -61,7 +61,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	public void testEmptyFile() throws Exception{
 		String testYamlText = 
 				variableDefsKeyword + ": {}\n"
-				+ standaloneTransformationAndCodeGenerationsDefsKeyword + ": {}\n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": {}\n"
 				+ pipelineSequenceDefKeyword + ": []\n";
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
@@ -96,7 +96,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	@Test
 	public void testStandaloneUsageDefsOnly() throws Exception{
 		String testYamlText = 
-				standaloneTransformationAndCodeGenerationsDefsKeyword + ": { \n"
+				transformationAndCodeGenerationPreconfigurationsDefKeyword + ": { \n"
 				+   DialogMessage.nameFlag + ": { \n"
 				+     inKeyword + ": {\n"
 				+ "     condition: direct true, \n"
@@ -114,7 +114,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 	@Test
 	public void testPostProcessingOnly() throws Exception{
 		String testYamlText = 
-				standalonePostProcessingSequenceDefKeyword + ": \n" 
+				postProcessingSequenceDefKeyword + ": \n" 
 				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: direct true\n"
@@ -187,7 +187,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 		String testYamlText = 
 				  variableDefsKeyword + ": \n"
 				+ "  dummySerialVar: direct dummySerial\n"
-				+ standaloneTransformationAndCodeGenerationsDefsKeyword + ": \n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": \n"
 				+ "  " + ContainerTransformation.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      roboCar_mumlSourceFile: direct dummyPath1\n"
@@ -195,15 +195,15 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      muml_containerFileDestination: direct dummyPath2\n"
 				+ "    " + outKeyword + ": \n"
 				+ "      ifSuccessful: dummyBool\n"
-				+ standalonePostProcessingSequenceDefKeyword + ": \n" 
+				+ postProcessingSequenceDefKeyword + ": \n" 
 				+ "- " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
 				+ "    " + inKeyword + ": \n"
 				+ "      condition: direct true\n"
 				+ "      message: direct HelloTest\n"
 				+ "\n"
 				+ pipelineSequenceDefKeyword + ":  \n"
-				+ "  - " + fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": " + ContainerTransformation.nameFlag + "\n"
-				+ "  - " + fromKeyword + " " + standalonePostProcessingSequenceDefKeyword + ": " + allKeyword + "\n"
+				+ "  - " + fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": " + ContainerTransformation.nameFlag + "\n"
+				+ "  - " + fromKeyword + " " + postProcessingSequenceDefKeyword + ": " + allKeyword + "\n"
 				+ "  - " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
 				+ "      " + inKeyword + ": \n"
 				+ "        boardSerialNumber: from dummySerialVar\n"
@@ -214,7 +214,7 @@ public class PipelineSettingsReaderTest implements Keywords{
 				+ "      " + inKeyword + ": \n"
 				+ "        condition: from dummyBool \n"
 				+ "        message: from dummyPort\n"
-				+ "  - " + fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": " + ContainerTransformation.nameFlag;
+				+ "  - " + fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": " + ContainerTransformation.nameFlag;
 		
 		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
 		PSRInstance.interpretPipelineSettings(testYamlText);

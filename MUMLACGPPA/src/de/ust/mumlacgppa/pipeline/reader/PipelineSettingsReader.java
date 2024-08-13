@@ -26,8 +26,8 @@ import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 public class PipelineSettingsReader implements Keywords {
 	// private Map<String, String> VariableDefs; //Variables are stored static
 	// in the class VariableHandler.
-	private Map<String, PipelineStep> standaloneTransformationAndCodeGenerationDefs;
-	private ArrayList<PipelineStep> standalonePostProcessingSequence;
+	private Map<String, PipelineStep> transformationAndCodeGenerationPreconfigurationsDefs;
+	private ArrayList<PipelineStep> postProcessingSequence;
 	private ArrayList<PipelineStep> pipelineSequence;
 	private VariableHandler VariableHandlerInstance;
 	private PipelineStepDictionary stepDictionaryToUse;
@@ -37,7 +37,7 @@ public class PipelineSettingsReader implements Keywords {
 
 	@SuppressWarnings("unchecked")
 	private ArrayList<PipelineStep> interpretSequenceDef(ArrayList<Map<String, Object>> rawCurrentSequenceDef,
-			boolean fromStandalonePostProcessingSequenceAllowed)
+			boolean fromPostProcessingSequenceAllowed)
 			throws StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		// ArrayList<Map<String, Object>> for
 		// either
@@ -50,12 +50,12 @@ public class PipelineSettingsReader implements Keywords {
 		//
 		// or
 		//
-		// ArrayList<Map<"from StandaloneTransformationAndCodeGenerationsDefs",
+		// ArrayList<Map<"from TransformationAndCodeGenerationPreconfigurations",
 		// NameOfReferencedStepFromStandaloneUsageDefsAsObject>>
 		//
 		// or
 		//
-		// ArrayList<Map<"from StandaloneTransformationAndCodeGenerationsDefs", "all">>
+		// ArrayList<Map<"from TransformationAndCodeGenerationPreconfigurations", "all">>
 		
 		ArrayList<PipelineStep> interpretedSequence = new ArrayList<PipelineStep>();
 		for (Map<String, Object> currentSequenceStepDef : rawCurrentSequenceDef) {
@@ -65,27 +65,27 @@ public class PipelineSettingsReader implements Keywords {
 			boolean directDefinitionUsage = currentPipelineStepKey.contains(directValueKeyword); // direct
 
 			if (loadFromStandaloneUsage && !directDefinitionUsage) { // from
-				String standaloneTransformationAndCodeGenerationsDefsUsageBeginning = fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword;
-				String standalonePostProcessingSequenceUsageBeginning = fromKeyword + " " + standalonePostProcessingSequenceDefKeyword;
-				boolean standaloneTransformationAndCodeGenerationsDefsUsage = currentPipelineStepKey.contains(standaloneTransformationAndCodeGenerationsDefsUsageBeginning);
-				boolean standalonePostProcessingSequenceUsage = currentPipelineStepKey.contains(standalonePostProcessingSequenceUsageBeginning);
+				String transformationAndCodeGenerationPreconfigurationsUsageBeginning = fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword;
+				String postProcessingSequenceUsageBeginning = fromKeyword + " " + postProcessingSequenceDefKeyword;
+				boolean transformationAndCodeGenerationPreconfigurationsUsage = currentPipelineStepKey.contains(transformationAndCodeGenerationPreconfigurationsUsageBeginning);
+				boolean postProcessingSequenceUsage = currentPipelineStepKey.contains(postProcessingSequenceUsageBeginning);
 				
 
-				if( !fromStandalonePostProcessingSequenceAllowed && standalonePostProcessingSequenceUsage){
-					throw new StructureException("Structure error: Loading \"" + standalonePostProcessingSequenceDefKeyword + "\" isn't allowed at the location of "
+				if( !fromPostProcessingSequenceAllowed && postProcessingSequenceUsage){
+					throw new StructureException("Structure error: Loading \"" + postProcessingSequenceDefKeyword + "\" isn't allowed at the location of "
 							+ currentSequenceStepDef);
 				}
 				
-				if(standaloneTransformationAndCodeGenerationsDefsUsage){
-					interpretedSequence.add(standaloneTransformationAndCodeGenerationDefs.get(currentSequenceStepDef
-							.get(standaloneTransformationAndCodeGenerationsDefsUsageBeginning)));
+				if(transformationAndCodeGenerationPreconfigurationsUsage){
+					interpretedSequence.add(transformationAndCodeGenerationPreconfigurationsDefs.get(currentSequenceStepDef
+							.get(transformationAndCodeGenerationPreconfigurationsUsageBeginning)));
 				}
-				else if(standalonePostProcessingSequenceUsage){
-					if(currentSequenceStepDef.get(standalonePostProcessingSequenceUsageBeginning).equals(allKeyword)){
-						interpretedSequence.addAll(standalonePostProcessingSequence);
+				else if(postProcessingSequenceUsage){
+					if(currentSequenceStepDef.get(postProcessingSequenceUsageBeginning).equals(allKeyword)){
+						interpretedSequence.addAll(postProcessingSequence);
 					}
 					else{
-						throw new StructureException("Structure error: Only the entire sequence of " + standalonePostProcessingSequenceDefKeyword + " can be copied."
+						throw new StructureException("Structure error: Only the entire sequence of " + postProcessingSequenceDefKeyword + " can be copied."
 								+ "Alternatively a spelling mistake happend to what should be " + allKeyword);
 					}
 				}
@@ -160,32 +160,32 @@ public class PipelineSettingsReader implements Keywords {
 		// Map<String, Map<String, Map<String, String>>> for
 		// Map<Step, Map<InOrOut, Map<ParameterOrOneOutput,
 		// SourceOrSaveTarget>>>
-		if (rawSettings.keySet().contains(standaloneTransformationAndCodeGenerationsDefsKeyword)) {
+		if (rawSettings.keySet().contains(transformationAndCodeGenerationPreconfigurationsDefKeyword)) {
 			Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = (Map<String, Map<String, Map<String, String>>>) rawSettings
-					.get(standaloneTransformationAndCodeGenerationsDefsKeyword);
+					.get(transformationAndCodeGenerationPreconfigurationsDefKeyword);
 			for (String currentStepKey : rawStandaloneUsageDefs.keySet()) {
 				String className = currentStepKey;
 				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
 						VariableHandlerInstance, className, rawStandaloneUsageDefs.get(currentStepKey));
-				standaloneTransformationAndCodeGenerationDefs.put(currentStepKey, InterpretedStep);
+				transformationAndCodeGenerationPreconfigurationsDefs.put(currentStepKey, InterpretedStep);
 			}
 		}
 		
-		if (rawSettings.keySet().contains(standalonePostProcessingSequenceDefKeyword)) {
+		if (rawSettings.keySet().contains(postProcessingSequenceDefKeyword)) {
 			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
-					.get(standalonePostProcessingSequenceDefKeyword);
-			// Here loading/copying the results of the interpretation of StandalonePostProcessingSequence is not possible since it is in the process of being generated.
-			standalonePostProcessingSequence = interpretSequenceDef(rawCurrentSequenceDef, false);
+					.get(postProcessingSequenceDefKeyword);
+			// Here loading/copying the results of the interpretation of PostProcessingSequence is not possible since it is in the process of being generated.
+			postProcessingSequence = interpretSequenceDef(rawCurrentSequenceDef, false);
 		}
 		else{
 			// For simplicity at copying this sequence or executing the pipeline.
-			standalonePostProcessingSequence = new ArrayList<PipelineStep>();
+			postProcessingSequence = new ArrayList<PipelineStep>();
 		}
 		
 		if (rawSettings.keySet().contains(pipelineSequenceDefKeyword)) {
 			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
 					.get(pipelineSequenceDefKeyword);
-			// Here loading/copying the results of the interpretation of StandalonePostProcessingSequence is possible
+			// Here loading/copying the results of the interpretation of PostProcessingSequence is possible
 			pipelineSequence = interpretSequenceDef(rawCurrentSequenceDef, true);
 		}
 		else{
@@ -214,16 +214,16 @@ public class PipelineSettingsReader implements Keywords {
 	 * @param stepDictionaryToUse
 	 */
 	public PipelineSettingsReader(PipelineStepDictionary stepDictionaryToUse) {
-		standaloneTransformationAndCodeGenerationDefs = new HashMap<String, PipelineStep>();
+		transformationAndCodeGenerationPreconfigurationsDefs = new HashMap<String, PipelineStep>();
 		this.stepDictionaryToUse = stepDictionaryToUse;
-		standalonePostProcessingSequence = new ArrayList<PipelineStep>();
+		postProcessingSequence = new ArrayList<PipelineStep>();
 		pipelineSequence = new ArrayList<PipelineStep>();
 		interpretPipelineSettingsCalled = false;
 	}
 
 	public PipelineSettingsReader(PipelineStepDictionary stepDictionaryToUse, Path settingsFilePath)
 			throws Exception {
-		standaloneTransformationAndCodeGenerationDefs = new HashMap<String, PipelineStep>();
+		transformationAndCodeGenerationPreconfigurationsDefs = new HashMap<String, PipelineStep>();
 		this.stepDictionaryToUse = stepDictionaryToUse;
 		interpretPipelineSettingsCalled = false;
 
@@ -240,17 +240,17 @@ public class PipelineSettingsReader implements Keywords {
 	public void validateOrder()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException	{
 		String lastStep = "None";
-		String lastPart = standalonePostProcessingSequenceDefKeyword;
+		String lastPart = postProcessingSequenceDefKeyword;
 		try {
-			// StandaloneTransformationAndCodeGenerationsDefs
-			for (String currentKey : standaloneTransformationAndCodeGenerationDefs.keySet()) {
+			// TransformationAndCodeGenerationPreconfigurations
+			for (String currentKey : transformationAndCodeGenerationPreconfigurationsDefs.keySet()) {
 				lastStep = currentKey;
-				standaloneTransformationAndCodeGenerationDefs.get(currentKey).checkForDetectableErrors();
+				transformationAndCodeGenerationPreconfigurationsDefs.get(currentKey).checkForDetectableErrors();
 			}
 		
-			// StandalonePostProcessingSequence
-			lastPart = standalonePostProcessingSequenceDefKeyword;
-			for (PipelineStep currentStep : standalonePostProcessingSequence) {
+			// PostProcessingSequence
+			lastPart = postProcessingSequenceDefKeyword;
+			for (PipelineStep currentStep : postProcessingSequence) {
 				lastStep = currentStep.toString();
 				currentStep.checkForDetectableErrors();
 			}
@@ -278,7 +278,7 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 	public PipelineStep getStandaloneUsageDef(String stepName) {
-		return standaloneTransformationAndCodeGenerationDefs.get(stepName);
+		return transformationAndCodeGenerationPreconfigurationsDefs.get(stepName);
 	}
 	
 	
@@ -291,7 +291,7 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 	public PipelineStep getNextPostProcessingStep() {
-		PipelineStep currentStep = standalonePostProcessingSequence.get(postProcessingListExecutionIndex);
+		PipelineStep currentStep = postProcessingSequence.get(postProcessingListExecutionIndex);
 		postProcessingListExecutionIndex++;
 		return currentStep;
 	}

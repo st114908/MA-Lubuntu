@@ -380,22 +380,6 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		// https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md.
 		// The comments are summaries to have the instructions/actions easier to read as comments in the code.  
 		
-		
-		//TODO: Entfernen:
-		/*Map<String, Map<String, String>> postProcessingUntilConfigSettings = PostProcessingStepsUntilConfig
-				.generateDefaultOrExampleValues();
-		Map<String, String> postProcessingUntilConfigSettingsIns = postProcessingUntilConfigSettings
-				.get(inKeyword);
-		postProcessingUntilConfigSettingsIns.put("arduinoContainersPath",
-				fromKeyword + " " + deployableCodeFolderNameVariableName);
-		postProcessingUntilConfigSettingsIns.put("componentCodePath",
-				fromKeyword + " " + componentCodeFolderNameVariableName);
-		postProcessingUntilConfigSettings.put(inKeyword, postProcessingUntilConfigSettingsIns);
-		Map<String, Map<String, String>> onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig = generateOnlyContinueIfFulfilledElseAbortSettings(
-				fromKeyword + " ifSuccessful",
-				directValueKeyword + " " + PostProcessingStepsUntilConfig.nameFlag + " has failed!");*/
-		// <---
-		
 		// For all files in "fastAndSlowCar_v2":
 		// 1: Adjust #include calls for all header files.
 		// 2: Move up "# include clock.h" from C++ check.
@@ -847,7 +831,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				componentCodeGenerationSettings);
 		//defaultStandaloneTransformationAndGenerationsDefsKeyword.put(PostProcessingStepsUntilConfig.nameFlag,
 		//		PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
-		mapForPipelineSettings.put(standaloneTransformationAndCodeGenerationsDefsKeyword,
+		mapForPipelineSettings.put(transformationAndCodeGenerationPreconfigurationsDefKeyword,
 				defaultStandaloneTransformationAndGenerationsDefsKeyword);
 
 		// For better/easier readability blank lines inbetween:
@@ -873,10 +857,6 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortPostProcessingUntilConfig));*/
 
-		//TODO: Entfernen:
-		/*defaultPostProcessingSequenceDefs
-			.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessing1AdjustIncludes.nameFlag,
-					postProcessingUntilConfigSettings));*/
 		
 		defaultPostProcessingSequenceDefs
 		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingAdjustIncludes.nameFlag,
@@ -1025,7 +1005,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingConfigureMQTTSettings.nameFlag,
 				postProcessingConfigureMQTTSlowCoordinator));
 		
-		mapForPipelineSettings.put(standalonePostProcessingSequenceDefKeyword, defaultPostProcessingSequenceDefs);
+		mapForPipelineSettings.put(postProcessingSequenceDefKeyword, defaultPostProcessingSequenceDefs);
 
 		// For better/easier readability blank lines inbetween:
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
@@ -1039,26 +1019,26 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
 				deleteDirectoryDeployableFiles));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
 				+ ContainerTransformation.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerTransformation));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
 				+ ContainerCodeGeneration.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerCodeGeneration));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + standaloneTransformationAndCodeGenerationsDefsKeyword + ": "
+		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
 				+ ComponentCodeGeneration.nameFlag);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortComponentCode));
 
 		defaultPipelineSequenceDefs.add(
-				fromKeyword + " " + standalonePostProcessingSequenceDefKeyword + ": " + allKeyword);
+				fromKeyword + " " + postProcessingSequenceDefKeyword + ": " + allKeyword);
 
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsFastCoordinator));

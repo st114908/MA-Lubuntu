@@ -39,7 +39,7 @@ void setup(){
 
 	//collect the data required for the MQTT configuration
 	struct MqttConfig mConf = {
-		"DummyServerIPAddress",
+		"DummyMQTTServerIPAddress",
 		1883,
 		"fastCarCoordinatorECU"
 	};

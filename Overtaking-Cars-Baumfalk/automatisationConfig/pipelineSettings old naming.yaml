@@ -41,7 +41,7 @@ VariableDefs:
   slowCarDriverECUINOHEXFilePath: direct deployable-files/slowCarDriverECU/CompiledFiles/slowCarDriverECU.ino.hex
 
 
-TransformationAndCodeGenerationPreconfigurations:
+StandaloneTransformationAndCodeGenerationsDefs:
   ContainerTransformation:
     in:
       roboCar_mumlSourceFile: direct model/roboCar.muml
@@ -63,7 +63,7 @@ TransformationAndCodeGenerationPreconfigurations:
       ifSuccessful: ifSuccessful
 
 
-PostProcessingSequence:
+StandalonePostProcessingSequence:
 - direct DeleteFolder:
     in:
       path: from deployableFilesFolderPath
@@ -382,22 +382,22 @@ PipelineSequence:
       path: from deployableFilesFolderPath
     out:
       ifSuccessful: ifSuccessful
-- from TransformationAndCodeGenerationPreconfigurations: ContainerTransformation
+- from StandaloneTransformationAndCodeGenerationsDefs: ContainerTransformation
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
       message: direct ContainerTransformation has failed!
-- from TransformationAndCodeGenerationPreconfigurations: ContainerCodeGeneration
+- from StandaloneTransformationAndCodeGenerationsDefs: ContainerCodeGeneration
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
       message: direct ContainerCodeGeneration has failed!
-- from TransformationAndCodeGenerationPreconfigurations: ComponentCodeGeneration
+- from StandaloneTransformationAndCodeGenerationsDefs: ComponentCodeGeneration
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
       message: direct ComponentCodeGeneration has failed!
-- from PostProcessingSequence: all
+- from StandalonePostProcessingSequence: all
 - direct Compile:
     in:
       boardTypeIdentifierFQBN: from usedCoordinatorBoardIdentifierFQBN

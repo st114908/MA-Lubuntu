@@ -9,7 +9,7 @@ public interface Keywords {
 	public final String allKeyword = "all";
 	
 	public final String variableDefsKeyword = "VariableDefs";
-	public final String standaloneTransformationAndCodeGenerationsDefsKeyword = "StandaloneTransformationAndCodeGenerationsDefs";
-	public final String standalonePostProcessingSequenceDefKeyword = "StandalonePostProcessingSequence";
+	public final String transformationAndCodeGenerationPreconfigurationsDefKeyword = "TransformationAndCodeGenerationPreconfigurations";
+	public final String postProcessingSequenceDefKeyword = "PostProcessingSequence";
 	public final String pipelineSequenceDefKeyword = "PipelineSequence";
 }
