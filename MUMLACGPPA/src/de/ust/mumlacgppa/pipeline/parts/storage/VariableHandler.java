@@ -24,7 +24,14 @@ public class VariableHandler {
 	
 	// For validation:
 	
-	public void setVariableInitialized(String key){
+	public VariableHandler getCopyForValidations(){
+		VariableHandler copyinstance = new VariableHandler();
+		copyinstance.variableInitialized = new HashSet<String>(variableInitialized);
+		copyinstance.variableValue = new LinkedHashMap<String, VariableContent>(variableValue);
+		return copyinstance;
+	}
+	
+	public void setVariableAsInitialized(String key){
 		if(!variableInitialized.contains(key)){
 			variableInitialized.add(key);
 		}

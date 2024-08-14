@@ -19,8 +19,8 @@ class InternalTestDummyStep extends PipelineStep {
 	public static final String pipelineKeyword = "InternalTestDummyStep";
 	
 
-	protected void setRequiredInsAndOuts(){
-		requiredInsAndOuts = new HashMap<String, HashSet<String>>();
+	protected Map<String, HashSet<String>> getRequiredInsAndOuts(){
+		HashMap<String, HashSet<String>> requiredInsAndOuts = new HashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new HashSet<String>();
 		ins.add("input1");
@@ -31,6 +31,8 @@ class InternalTestDummyStep extends PipelineStep {
 		outs.add("output1");
 		outs.add("output2");
 		requiredInsAndOuts.put(outKeyword, outs);
+		
+		return requiredInsAndOuts;
 	}
 	
 

@@ -36,7 +36,7 @@ public class PipelineSettingsReader implements Keywords {
 	private int pipelineSequenceExecutionIndex;
 
 	@SuppressWarnings("unchecked")
-	private ArrayList<PipelineStep> interpretSequenceDef(ArrayList<Map<String, Object>> rawCurrentSequenceDef,
+	protected ArrayList<PipelineStep> interpretSequenceDef(ArrayList<Map<String, Object>> rawCurrentSequenceDef,
 			boolean fromPostProcessingSequenceAllowed)
 			throws StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA {
 		// ArrayList<Map<String, Object>> for
@@ -115,16 +115,11 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 
-	/**
-	 * Public for testing. No other usage intended! 
-	 * @param rawSettingsString
-	 * @throws Exception 
-	 */
 	@SuppressWarnings("unchecked")
-	public void interpretPipelineSettings(Map<String, Object> rawSettings)
+	protected void interpretPipelineSettings(Map<String, Object> rawSettings)
 			throws Exception {
 		if(interpretPipelineSettingsCalled){
-			throw new Exception("The interpretaton has already been called! Also: This is exclusively intended for testing!");
+			throw new Exception("The interpretaton has already been called!");
 		}
 		
 		if (rawSettings == null) {
@@ -154,8 +149,7 @@ public class PipelineSettingsReader implements Keywords {
 			}
 		}
 
-		// The standalone usage and additional actions definitions as well as
-		// the pipeline are prepared to be validated or executed.
+		// Here the transformation and code generation condigurations:
 
 		// Map<String, Map<String, Map<String, String>>> for
 		// Map<Step, Map<InOrOut, Map<ParameterOrOneOutput,
@@ -171,6 +165,8 @@ public class PipelineSettingsReader implements Keywords {
 			}
 		}
 		
+		// Here the post-processing:
+		
 		if (rawSettings.keySet().contains(postProcessingSequenceDefKeyword)) {
 			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
 					.get(postProcessingSequenceDefKeyword);
@@ -181,6 +177,8 @@ public class PipelineSettingsReader implements Keywords {
 			// For simplicity at copying this sequence or executing the pipeline.
 			postProcessingSequence = new ArrayList<PipelineStep>();
 		}
+		
+		// Here the pipeline sequence:
 		
 		if (rawSettings.keySet().contains(pipelineSequenceDefKeyword)) {
 			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
@@ -198,7 +196,7 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 	/**
-	 * Mainly public for testing.
+	 * Public for testing. No other usage intended! 
 	 * @param rawSettingsString
 	 * @throws Exception 
 	 */
@@ -245,21 +243,24 @@ public class PipelineSettingsReader implements Keywords {
 			// TransformationAndCodeGenerationPreconfigurations
 			for (String currentKey : transformationAndCodeGenerationPreconfigurationsDefs.keySet()) {
 				lastStep = currentKey;
-				transformationAndCodeGenerationPreconfigurationsDefs.get(currentKey).checkForDetectableErrors();
+				VariableHandler ValidationVariableHandlerInstance = VariableHandlerInstance.getCopyForValidations();
+				transformationAndCodeGenerationPreconfigurationsDefs.get(currentKey).checkForDetectableErrors(ValidationVariableHandlerInstance);
 			}
 		
 			// PostProcessingSequence
 			lastPart = postProcessingSequenceDefKeyword;
+			VariableHandler ValidationVariableHandlerInstancePostProcessing = VariableHandlerInstance.getCopyForValidations();
 			for (PipelineStep currentStep : postProcessingSequence) {
 				lastStep = currentStep.toString();
-				currentStep.checkForDetectableErrors();
+				currentStep.checkForDetectableErrors(ValidationVariableHandlerInstancePostProcessing);
 			}
 	
 			// PipelineSequence:
 			lastPart = pipelineSequenceDefKeyword;
+			VariableHandler ValidationVariableHandlerInstancePipelineSequence = VariableHandlerInstance.getCopyForValidations();
 			for (PipelineStep currentStep : pipelineSequence) {
 				lastStep = currentStep.toString();
-				currentStep.checkForDetectableErrors();
+				currentStep.checkForDetectableErrors(ValidationVariableHandlerInstancePipelineSequence);
 			}
 		
 		} catch (ParameterMismatchException e) {

@@ -45,11 +45,11 @@ public class ContainerTransformation extends PipelineStep {
 
 
 	/**
-	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected void setRequiredInsAndOuts() {
-		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("roboCar_mumlSourceFile");
@@ -60,6 +60,8 @@ public class ContainerTransformation extends PipelineStep {
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		requiredInsAndOuts.put(outKeyword, outs);
+		
+		return requiredInsAndOuts;
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){

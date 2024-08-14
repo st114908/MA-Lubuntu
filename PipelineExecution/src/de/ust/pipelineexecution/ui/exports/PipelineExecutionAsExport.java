@@ -225,11 +225,11 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		if (stepWithWindowFound) {
 			InfoWindow selectableTextWindowsInfoWindow = new InfoWindow("Messages won't work!",
 					"DialogMessages and SelectableTextWindows won't work!",
-					"Due to Access restrictions no windows DialogMessages and SelectableTextWindows\n"
-							+ "can be created from the export wizard process.\n"
+					"Due to access restrictions no windows DialogMessages and SelectableTextWindows\n"
+							+ "can be created directly or indireclty from the export wizard process.\n"
 							+ "(Or at least no way could be found.)\n"
-							+ "So please check the console of the Eclipse window that\n"
-							+ "you used to run the MUML-Plug-Ins as Eclipse application.\n");
+							+ "So please check the console of the Eclipse workbench instance that\n"
+							+ "you used to start the MUML-Plug-Ins as Eclipse application.\n");
 			addPage(selectableTextWindowsInfoWindow);
 		}
 	}
@@ -422,25 +422,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		selectedFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 	}
 
-	protected void displayTextWindow(String message) {
-		/*
-		 * Display display = Display.getCurrent(); final Shell shellListWindow =
-		 * new Shell(display); GridLayout gridLayout = new GridLayout(1, true);
-		 * gridLayout.marginWidth = 5; gridLayout.marginHeight = 5;
-		 * shellListWindow.setLayout(gridLayout);
-		 * 
-		 * final Text text = new Text(shellListWindow, SWT.MULTI | SWT.BORDER |
-		 * SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL); text.setText(message);
-		 * GridData gridData = new GridData(GridData.FILL, GridData.FILL, true,
-		 * true); text.setLayoutData(gridData);
-		 * 
-		 * shellListWindow.setText("An Error occured!"); // Sets the title!
-		 * shellListWindow.setBounds(200, 200, 550, 500);
-		 * shellListWindow.open(); while (!shellListWindow.isDisposed()) { if
-		 * (!display.readAndDispatch()) display.sleep(); } //display.dispose();
-		 * // Causes crash, but if commented out no problems.
-		 */
-
+	protected void printTextWindowMessage(String message) {
 		System.out.println(
 				"\n\n\nDue to Access restrictions no SelectableTextWindow can be created from the export wizard process.\n");
 		System.out.println("(Or at least no way could be found.)");
@@ -448,14 +430,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		System.out.println(message);
 	}
 
-	protected void displayPopupWindow(String message) {
-		/*
-		 * Display display = Display.getDefault();//.getCurrent(); final Shell
-		 * shellWindowMessage = new Shell(display);
-		 * MessageDialog.openInformation( shellWindowMessage,
-		 * "Pipeline message", message);
-		 */
-
+	protected void printDialogWindowMessage(String message) {
 		System.out.println(
 				"\n\n\nDue to Access restrictions no windows for e.g. messages can be created from the export wizard process without aborting the pipeline.\n");
 		System.out.println("(Or at least no way could be found.)");
@@ -489,17 +464,22 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
 			ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException {
+		/* 
+		 * Eclipse doesn't allow message dialogs or text windows from an export wizard or a class called by it,
+		 * so the messages get printed on the console of the starting eclipse instance.
+		 */
 		if (currentStep.getClass().getSimpleName().equals(DialogMessage.nameFlag)) {
 			if (currentStep.getContentOfInput("condition").getBooleanContent()) {
-				displayPopupWindow(currentStep.getContentOfInput("message").getContent());
+				printDialogWindowMessage(currentStep.getContentOfInput("message").getContent());
 			}
 		} else if (currentStep.getClass().getSimpleName().equals(SelectableTextWindow.nameFlag)) {
 			if (currentStep.getContentOfInput("condition").getBooleanContent()) {
-				displayTextWindow(currentStep.getContentOfInput("message").getContent());
+				printTextWindowMessage(currentStep.getContentOfInput("message").getContent());
 			}
 		} else if (currentStep.getClass().getSimpleName().equals(OnlyContinueIfFulfilledElseAbort.nameFlag)) {
 			if (!currentStep.getContentOfInput("condition").getBooleanContent()) {
-				displayPopupWindow(currentStep.getContentOfInput("message").getContent());
+				printDialogWindowMessage(currentStep.getContentOfInput("message").getContent());
+				// For some reason export wizards are allowed to cause an error dialog when aborting, so it gets utilized.
 				throw new AbortPipelineException(currentStep.getContentOfInput("message").getContent());
 			}
 		} else {

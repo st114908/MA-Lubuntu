@@ -24,11 +24,11 @@ public class DialogMessage extends PipelineStep implements Keywords{
 	public static final String nameFlag = "DialogMessage";
 
 	/**
-	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected void setRequiredInsAndOuts(){
-		requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();
+	protected Map<String, HashSet<String>> getRequiredInsAndOuts(){
+		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();
 		
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("condition");
@@ -38,6 +38,8 @@ public class DialogMessage extends PipelineStep implements Keywords{
 		HashSet<String> outs = new LinkedHashSet<String>();
 		
 		requiredInsAndOuts.put(outKeyword, outs);
+		
+		return requiredInsAndOuts;
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){

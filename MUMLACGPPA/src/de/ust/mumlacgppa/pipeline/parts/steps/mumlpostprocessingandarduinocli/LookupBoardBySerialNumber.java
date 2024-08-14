@@ -38,11 +38,11 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 	private static ArrayList<Map<String, Object>> foundBoardsStorage;
 
 	/**
-	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#setRequiredInsAndOuts()
+	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected void setRequiredInsAndOuts() {
-		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("boardSerialNumber");
@@ -53,6 +53,8 @@ public class LookupBoardBySerialNumber extends PipelineStep {
 		outs.add("ifSuccessful");
 		outs.add("foundPortAddress");
 		requiredInsAndOuts.put(outKeyword, outs);
+		
+		return requiredInsAndOuts;
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues() {

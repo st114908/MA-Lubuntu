@@ -378,7 +378,7 @@ public class StepsInAndOutTest implements Keywords {
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextCompleteDefinitionContent);
-		testInstance.checkForDetectableErrors();
+		testInstance.checkForDetectableErrors(VariableHandlerInstance);
 	}
 
 	/*

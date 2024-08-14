@@ -29,14 +29,13 @@ public abstract class PipelineStep implements Keywords{
 	protected Map<String, String> in; // <Name>: [not] {from, direct} <VariableNameOrValue>
 	protected Map<String, String> out; // <Name>: <VariableName>
 	
-	protected Map<String, HashSet<String>> requiredInsAndOuts;
-	
 	
 	/**
 	 * To set the required parameters for the inputs (in) and the outputs (out).
 	 * Required to set the field requiredInsAndOuts for checkForDetectableErrorsEntryCheck.
+	 * @return 
 	 */
-	protected abstract void setRequiredInsAndOuts();
+	protected abstract Map<String, HashSet<String>> getRequiredInsAndOuts();
 	
 	
 	//public static abstract Map<String, Map<String, String>> generateDefaultOrExampleValues(); // public static abstract at once don't fit together.
@@ -69,7 +68,7 @@ public abstract class PipelineStep implements Keywords{
 			}
 		}
 
-		setRequiredInsAndOuts();
+		getRequiredInsAndOuts();
 	}
 	
 	/**
@@ -181,11 +180,12 @@ public abstract class PipelineStep implements Keywords{
 	 * Handles direct, from and not keywords in the input entries.
 	 * Ensures an following space char to prevent trouble with variable names and values that start directly with them.
 	 * @param entry
+	 * @param ValidationVariableHandlerInstance 
 	 * @throws StructureException
 	 * @throws VariableNotDefinedException
 	 * @throws FaultyDataException
 	 */
-	private void checkForDetectableErrorsEntryCheck(String entry) throws StructureException, VariableNotDefinedException, FaultyDataException{
+	private void checkForDetectableErrorsEntryCheck(String entry, VariableHandler ValidationVariableHandlerInstance) throws StructureException, VariableNotDefinedException, FaultyDataException{
 		String directAndFollowingSpace = directValueKeyword + " ";
 		String fromAndFollowingSpace = fromKeyword + " ";
 		String notAndFollowingSpace = notKeyword + " ";
@@ -198,7 +198,7 @@ public abstract class PipelineStep implements Keywords{
 		}
 		else if(entry.startsWith(fromAndFollowingSpace)){
 			String referencedVariable = entry.substring(fromAndFollowingSpace.length()).trim();
-			if(VariableHandlerInstance.isVariableInitialized(referencedVariable)){
+			if(ValidationVariableHandlerInstance.isVariableInitialized(referencedVariable)){
 				String afterFrom = entry.substring(fromAndFollowingSpace.length()).trim();
 				if(afterFrom.equals("")){
 					throw new FaultyDataException("Reference in from entry missing or not recognized!");
@@ -206,12 +206,12 @@ public abstract class PipelineStep implements Keywords{
 				// Currently nothing more to do.
 			}
 			else{
-				VariableHandlerInstance.generateVariableNotDefinedException(referencedVariable);
+				ValidationVariableHandlerInstance.generateVariableNotDefinedException(referencedVariable);
 			}
 		}
 		else if(entry.startsWith(notAndFollowingSpace)){
 			String afterNot = entry.substring(notAndFollowingSpace.length()).trim();
-			checkForDetectableErrorsEntryCheck(afterNot);
+			checkForDetectableErrorsEntryCheck(afterNot, ValidationVariableHandlerInstance);
 		}
 		else{
 			throw new StructureException("Structure error or unexpected element " + entry);
@@ -226,13 +226,17 @@ public abstract class PipelineStep implements Keywords{
 	
 	/**
 	 * Checks for errors such as missing parameters or referenced not existing variables.
-	 * If it finds an error, then it throws an exception, else it simply finishes its execution. 
+	 * If it finds an error, then it throws an exception, else it simply finishes its execution.
+	 * It uses an external Variable handler in order to allow more complex tests/checks.
+	 * @param ValidationVariableHandlerInstance 
+	 * @param validationVariableHandlerInstance
 	 * @throws VariableNotDefinedException
 	 * @throws StructureException
 	 * @throws FaultyDataException
 	 * @throws ParameterMismatchException
 	 */
-	public void checkForDetectableErrors() throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
+	public void checkForDetectableErrors(VariableHandler ValidationVariableHandlerInstance) throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
+		Map<String, HashSet<String>> requiredInsAndOuts = getRequiredInsAndOuts();
 		if(! (in.keySet()).equals(requiredInsAndOuts.get(inKeyword)) ){
 			throw new ParameterMismatchException("Input parameter mismatch! Expected \n"+
 					requiredInsAndOuts.get(inKeyword).toString() + ", got \n" + in.keySet().toString());
@@ -244,11 +248,11 @@ public abstract class PipelineStep implements Keywords{
 		
 		for(String currentKey:in.keySet()){
 			String entry = in.get(currentKey);
-			checkForDetectableErrorsEntryCheck(entry);
+			checkForDetectableErrorsEntryCheck(entry, ValidationVariableHandlerInstance);
 		}
 		for(String currentKey:out.keySet()){
 			String entry = out.get(currentKey);
-			VariableHandlerInstance.setVariableInitialized(entry);
+			ValidationVariableHandlerInstance.setVariableAsInitialized(entry);
 		}
 	}
 	
@@ -294,11 +298,11 @@ public abstract class PipelineStep implements Keywords{
 
 	// For improvisations that require more access possibilities:
 	
-
+	
 	public VariableContent getContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		return handleInputByKey(key);
 	}
-
+	
 	
 	public void setContentOfOutput(String key, VariableContent newValue) throws InOrOutKeyNotDefinedException {
 		handleOutputByKey(key, newValue);

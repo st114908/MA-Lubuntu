@@ -60,7 +60,7 @@ public class TerminalCommandTest implements Keywords{
 				+ "  normalFeedback: normalFeedback\n"
 				+ "  errorFeedback: errorFeedback\n";
 		PipelineStep testInstance = new TerminalCommand(VariableHandlerInstance, testYamlTextCompleteDefinitionContent);
-		testInstance.checkForDetectableErrors();
+		testInstance.checkForDetectableErrors(VariableHandlerInstance);
 		testInstance.execute();
 		
 		assertTrue(VariableHandlerInstance.getVariableValue("ifSuccessful").getBooleanContent());

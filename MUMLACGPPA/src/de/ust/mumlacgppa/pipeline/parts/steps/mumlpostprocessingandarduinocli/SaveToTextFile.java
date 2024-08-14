@@ -48,11 +48,11 @@ public class SaveToTextFile extends PipelineStep {
 	}
 
 	/**
-	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
+	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected void setRequiredInsAndOuts() {
-		requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
 
 		HashSet<String> ins = new LinkedHashSet<String>();
 		ins.add("path");
@@ -62,6 +62,8 @@ public class SaveToTextFile extends PipelineStep {
 		HashSet<String> outs = new LinkedHashSet<String>();
 		outs.add("ifSuccessful");
 		requiredInsAndOuts.put(outKeyword, outs);
+		
+		return requiredInsAndOuts;
 	}
 
 	public static Map<String, Map<String, String>> generateDefaultOrExampleValues(){
