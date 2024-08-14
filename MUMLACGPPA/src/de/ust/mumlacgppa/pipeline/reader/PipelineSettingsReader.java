@@ -149,7 +149,7 @@ public class PipelineSettingsReader implements Keywords {
 			}
 		}
 
-		// Here the transformation and code generation condigurations:
+		// Here the transformation and code generation configurations:
 
 		// Map<String, Map<String, Map<String, String>>> for
 		// Map<Step, Map<InOrOut, Map<ParameterOrOneOutput,
@@ -157,6 +157,14 @@ public class PipelineSettingsReader implements Keywords {
 		if (rawSettings.keySet().contains(transformationAndCodeGenerationPreconfigurationsDefKeyword)) {
 			Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = (Map<String, Map<String, Map<String, String>>>) rawSettings
 					.get(transformationAndCodeGenerationPreconfigurationsDefKeyword);
+			
+			if (!(rawStandaloneUsageDefs.keySet().equals(allowedTransformationAndCodeGenerationPreconfigurations))) {
+				throw new StructureException("Error at reading the pipeline: The entries found in "
+						+ transformationAndCodeGenerationPreconfigurationsDefKeyword + " don't match the expected set of entries!\n"
+								+ "Found: " + rawStandaloneUsageDefs.keySet() + "\n"
+										+ "Expected: " + allowedTransformationAndCodeGenerationPreconfigurations);
+			}
+			
 			for (String currentStepKey : rawStandaloneUsageDefs.keySet()) {
 				String className = currentStepKey;
 				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
