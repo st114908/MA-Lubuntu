@@ -45,6 +45,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 public class ContainerTransformationExecutionAsExport extends PipelineExecutionAsExport {
 
 	protected ContainerTransformation transformation;
+	protected boolean settingsMissing;
 
 	@Override
 	public String wizardGetId() {
@@ -70,6 +71,16 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 
+		if(!PSRInstance.IsEntryInTransformationAndCodeGenerationPreconfigurations(ContainerTransformation.nameFlag)){
+			InfoWindow errorInfoWindow = new InfoWindow("Container transformation execution",
+					"Container transformation can't start.",
+					"The container transformation can't be executed because the required configurations are missing or can't be found.");
+			addPage(errorInfoWindow);
+			settingsMissing = true;
+			return;
+		}
+		settingsMissing = false;
+		
 		transformation = (ContainerTransformation) PSRInstance.getStandaloneUsageDef(ContainerTransformation.nameFlag);
 
 		sourceSystemAllocationPage = generateSourceSystemAllocationPage();
@@ -81,10 +92,10 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 			exceptionFeedback(e);
 		}
 
-		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Container transformation execution",
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Container transformation execution",
 				"Container transformation ready to start.",
 				"The execution of the container transformation is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineIfoWindow);
+		addPage(readyToStartPipelineInfoWindow);
 
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {
@@ -97,8 +108,8 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 	@Override
 	public IFujabaExportOperation wizardCreateExportOperation() {
 
-		// Do nothing if the settings file couldn't be found.
-		if (pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
+		// Do nothing if the settings couldn't be found.
+		if (settingsMissing || pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
 			return new AbstractFujabaExportOperation() {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {

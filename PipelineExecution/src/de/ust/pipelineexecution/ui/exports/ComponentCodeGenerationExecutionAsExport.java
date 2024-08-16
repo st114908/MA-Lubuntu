@@ -25,6 +25,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
@@ -36,6 +37,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionAsExport {
 
 	protected ComponentCodeGeneration generation;
+	protected boolean settingsMissing;
 	
 	@Override
 	public String wizardGetId() {
@@ -61,6 +63,16 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 		
+		if(!PSRInstance.IsEntryInTransformationAndCodeGenerationPreconfigurations(ComponentCodeGeneration.nameFlag)){
+			InfoWindow errorInfoWindow = new InfoWindow("Component code generation execution",
+					"Component code generation can't start.",
+					"The component code generation can't be executed because the required configurations are missing or can't be found.");
+			addPage(errorInfoWindow);
+			settingsMissing = true;
+			return;
+		}
+		settingsMissing = false;
+		
 		generation = (ComponentCodeGeneration) PSRInstance.getStandaloneUsageDef(ComponentCodeGeneration.nameFlag);
 		
 		sourceComponentInstancePage = generateSourceComponentInstancePage();
@@ -71,11 +83,11 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 			exceptionFeedback(e);
 		}
 		
-		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Component code generation execution",
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Component code generation execution",
 				"Component code generation ready to start.",
 				"The execution of the component code generation is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineIfoWindow);
-
+		addPage(readyToStartPipelineInfoWindow);
+		
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {
 			refreshWorkSpace(selectedFile);
@@ -89,7 +101,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 	public IFujabaExportOperation wizardCreateExportOperation() {
 
 		// Do nothing if the settings file couldn't be found.
-		if (pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
+		if (settingsMissing || pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
 			return new AbstractFujabaExportOperation() {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {

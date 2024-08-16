@@ -37,6 +37,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
@@ -153,7 +154,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 					completePipelineSettingsFilePath);
 			PSRInstance.checkForDetectableErrors();
 			pipelineSettingsErrorDetected = false;
-		} catch (FileNotFoundException | StructureException | StepNotMatched
+		} catch (FileNotFoundException | StructureException | StepNotMatched | StepNotDefinedException
 				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException | FaultyDataException
 				| ParameterMismatchException | TypeMissmatchException e) {
 			pipelineSettingsErrorDetected = true;
@@ -275,10 +276,10 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		// Information about steps with windows that appear.
 		handleStepsWithWindowCheck();
 
-		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Pipeline execution",
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Pipeline execution",
 				"Pipeline execution ready to start.",
 				"The execution of the pipeline is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineIfoWindow);
+		addPage(readyToStartPipelineInfoWindow);
 
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {

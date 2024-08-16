@@ -82,10 +82,10 @@ public class PostProcessingExecutionAsExport extends PipelineExecutionAsExport {
 		// Information about steps with windows that appear.
 		handleStepsWithWindowCheck();
 
-		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Postprocessing execution",
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Postprocessing execution",
 				"PostProcessing execution ready to start.",
 				"The execution of the postprocessing is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineIfoWindow);
+		addPage(readyToStartPipelineInfoWindow);
 
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {

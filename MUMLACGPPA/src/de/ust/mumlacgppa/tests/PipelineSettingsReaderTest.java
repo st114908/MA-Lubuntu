@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
@@ -414,5 +415,29 @@ public class PipelineSettingsReaderTest implements Keywords{
 			return;
 		}
 		assertTrue("Missing Variable not detected!", false);
+	}
+	
+	// Loading Steps from TransformationAndCodeGenerationPreconfigurations:
+	
+	@Test
+	public void testCheckForMissingStepFromTransformationAndCodeGenerationPreconfigurations() throws Exception{
+		String testYamlText = 
+				  variableDefsKeyword + ": []\n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": {}\n"
+				+ postProcessingSequenceDefKeyword + ": []\n"
+				+ pipelineSequenceDefKeyword + ":  \n"
+				+ "  - " + fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": " + ContainerTransformation.nameFlag + "\n";
+		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
+		
+		
+		try{
+			PSRInstance.interpretPipelineSettings(testYamlText);
+		}
+		catch(StepNotDefinedException e){
+			assertTrue(e.getMessage().contains("Missing step from TransformationAndCodeGenerationPreconfigurations: ContainerTransformation"));
+			return;
+		}
+		assertTrue("Missing Step defintion in TransformationAndCodeGenerationPreconfigurations not detected!", false);
 	}
 }

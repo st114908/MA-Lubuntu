@@ -2,7 +2,6 @@ package de.ust.pipelineexecution.ui.exports;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -11,7 +10,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -22,9 +20,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -35,6 +31,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionAsExport {
 
 	protected ContainerCodeGeneration generation;
+	protected boolean settingsMissing;
 	
 	@Override
 	public String wizardGetId() {
@@ -60,6 +57,16 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 			return;
 		}
 		
+		if(!PSRInstance.IsEntryInTransformationAndCodeGenerationPreconfigurations(ContainerCodeGeneration.nameFlag)){
+			InfoWindow errorInfoWindow = new InfoWindow("Container code generation execution",
+					"Container code generation can't start.",
+					"The container code generation can't be executed because the required configurations are missing or can't be found.");
+			addPage(errorInfoWindow);
+			settingsMissing = true;
+			return;
+		}
+		settingsMissing = false;
+		
 		generation = (ContainerCodeGeneration) PSRInstance.getStandaloneUsageDef(ContainerCodeGeneration.nameFlag);
 		
 		try {
@@ -68,10 +75,10 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 			exceptionFeedback(e);
 		}
 		
-		InfoWindow readyToStartPipelineIfoWindow = new InfoWindow("Container code generation execution",
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Container code generation execution",
 				"Container code generation ready to start.",
 				"The execution of the container code generation is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineIfoWindow);
+		addPage(readyToStartPipelineInfoWindow);
 
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {
@@ -86,7 +93,7 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 	public IFujabaExportOperation wizardCreateExportOperation() {
 
 		// Do nothing if the settings file couldn't be found.
-		if (pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
+		if (settingsMissing || pipelineSettingsFileNotFound || pipelineSettingsErrorDetected) {
 			return new AbstractFujabaExportOperation() {
 				@Override
 				protected IStatus doExecute(IProgressMonitor progressMonitor) {

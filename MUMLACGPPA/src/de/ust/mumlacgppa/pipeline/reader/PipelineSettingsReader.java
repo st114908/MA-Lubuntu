@@ -15,6 +15,7 @@ import org.yaml.snakeyaml.Yaml;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
@@ -41,7 +42,7 @@ public class PipelineSettingsReader implements Keywords {
 	@SuppressWarnings("unchecked")
 	protected ArrayList<PipelineStep> interpretSequenceDef(ArrayList<Map<String, Object>> rawCurrentSequenceDef,
 			boolean fromPostProcessingSequenceAllowed)
-			throws StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA {
+			throws StructureException, StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA, StepNotDefinedException {
 		// ArrayList<Map<String, Object>> for
 		// either
 		//
@@ -80,8 +81,12 @@ public class PipelineSettingsReader implements Keywords {
 				}
 				
 				if(transformationAndCodeGenerationPreconfigurationsUsage){
-					interpretedSequence.add(transformationAndCodeGenerationPreconfigurationsDefs.get(currentSequenceStepDef
-							.get(transformationAndCodeGenerationPreconfigurationsUsageBeginning)));
+					String wantedStep = (String) currentSequenceStepDef.get(transformationAndCodeGenerationPreconfigurationsUsageBeginning);
+					if(!transformationAndCodeGenerationPreconfigurationsDefs.containsKey(wantedStep)){
+						throw new StepNotDefinedException("Missing step from TransformationAndCodeGenerationPreconfigurations: " + wantedStep);
+					}
+					
+					interpretedSequence.add(transformationAndCodeGenerationPreconfigurationsDefs.get(wantedStep));
 				}
 				else if(postProcessingSequenceUsage){
 					if(currentSequenceStepDef.get(postProcessingSequenceUsageBeginning).equals(allKeyword)){
