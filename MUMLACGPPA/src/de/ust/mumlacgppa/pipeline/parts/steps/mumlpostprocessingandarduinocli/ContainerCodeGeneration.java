@@ -15,8 +15,9 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
-public class ContainerCodeGeneration extends PipelineStep {
+public class ContainerCodeGeneration extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "ContainerCodeGeneration";
 	
@@ -33,27 +34,27 @@ public class ContainerCodeGeneration extends PipelineStep {
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
 		
 		// Source/ MUML domain element:
 		// platform:/resource/[Project]/model/roboCar.muml
 		// There "root node"/"Model Element Category manual_allocation"/"System Allocation"
-		ins.add("muml_containerSourceFile");
+		ins.put("muml_containerSourceFile", FilePathType);
 		
     	// As per tutorial: platform:/resource/[Project]/container-models,
 		// so only the folder within the project will set and
 		// internally platform:/resource/[Project]/ will be appended in front of it. 
-		ins.add("arduinoContainersDestinationFolder");
+		ins.put("arduinoContainersDestinationFolder", FolderPathType);
 		
 		// The Overwrite option shown by the export wizard doesn't work. 
 		
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

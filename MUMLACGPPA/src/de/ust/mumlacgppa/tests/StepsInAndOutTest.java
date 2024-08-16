@@ -19,14 +19,16 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 //TODO: Trigger Exceptions intentionally!
 
-public class StepsInAndOutTest implements Keywords {
+public class StepsInAndOutTest implements Keywords, VariableTypes{
 	InternalTestVariableHandlerClearStorageAccess VariableHandlerInstance;
 	private static Yaml yaml;
 
@@ -46,10 +48,21 @@ public class StepsInAndOutTest implements Keywords {
 	@Before
 	public void setUp() {
 		VariableHandlerInstance = new InternalTestVariableHandlerClearStorageAccess();
+		
+		VariableHandlerInstance.setVariableAsInitializedForValidation("testTrueVariable", BooleanType);
 		VariableHandlerInstance.setVariableValue("testTrueVariable", new VariableContent("true"));
+		
+		VariableHandlerInstance.setVariableAsInitializedForValidation("testFalseVariable", BooleanType);
 		VariableHandlerInstance.setVariableValue("testFalseVariable", new VariableContent("false"));
+
+		VariableHandlerInstance.setVariableAsInitializedForValidation("testNumberVariable", NumberType);
 		VariableHandlerInstance.setVariableValue("testNumberVariable", new VariableContent("1"));
+
+		VariableHandlerInstance.setVariableAsInitializedForValidation("testTextVariable", StringType);
 		VariableHandlerInstance.setVariableValue("testTextVariable", new VariableContent("HelloWorld"));
+
+		VariableHandlerInstance.setVariableAsInitializedForValidation("testTextVariable2", StringType);
+		VariableHandlerInstance.setVariableValue("testTextVariable2", new VariableContent("HelloWorld2"));
 
 	}
 
@@ -371,14 +384,14 @@ public class StepsInAndOutTest implements Keywords {
 
 	@Test
 	public void testValidation() throws VariableNotDefinedException, StructureException, FaultyDataException,
-			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException {
+			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, TypeMissmatchException {
 		String testYamlTextCompleteDefinitionContent = inKeyword + ":\n" + "  input1: from testTrueVariable\n"
 				+ "  input2: from testFalseVariable\n" + outKeyword + ":\n" + "  output1: testNumberVariable\n"
 				+ "  output2: testTextVariable\n";
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,
 				testYamlTextCompleteDefinitionContent);
-		testInstance.checkForDetectableErrors(VariableHandlerInstance);
+		testInstance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	/*

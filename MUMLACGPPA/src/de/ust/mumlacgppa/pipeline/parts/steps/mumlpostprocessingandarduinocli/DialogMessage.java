@@ -18,8 +18,9 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
-public class DialogMessage extends PipelineStep implements Keywords{
+public class DialogMessage extends PipelineStep implements Keywords, VariableTypes{
 
 	public static final String nameFlag = "DialogMessage";
 
@@ -27,15 +28,15 @@ public class DialogMessage extends PipelineStep implements Keywords{
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts(){
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String,HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 		
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("condition");
-		ins.add("message");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("condition", BooleanType);
+		ins.put("message", AnyType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
 		
 		requiredInsAndOuts.put(outKeyword, outs);
 		

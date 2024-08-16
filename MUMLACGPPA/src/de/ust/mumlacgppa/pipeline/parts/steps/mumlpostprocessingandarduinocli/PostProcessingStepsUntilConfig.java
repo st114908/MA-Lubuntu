@@ -33,6 +33,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -40,7 +41,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class PostProcessingStepsUntilConfig extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths{
+public class PostProcessingStepsUntilConfig extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths, VariableTypes {
 
 	public static final String nameFlag = "PostProcessingStepsUntilConfig";
 
@@ -65,17 +66,17 @@ public class PostProcessingStepsUntilConfig extends PipelineStep implements Pipe
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("arduinoContainersPath");
-		ins.add("componentCodePath");
-		ins.add("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("arduinoContainersPath", FolderPathType);
+		ins.put("componentCodePath", FolderPathType);
+		ins.put("useLocallyStoredConfig_hppFileInsteadOfDownloadingIt", BooleanType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

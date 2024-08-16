@@ -19,9 +19,10 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 
-public class Upload extends PipelineStep {
+public class Upload extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "Upload";
 
@@ -29,18 +30,18 @@ public class Upload extends PipelineStep {
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("portAddress");
-		ins.add("boardTypeIdentifierFQBN");
-		ins.add("targetInoOrHexFile");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("portAddress", ConnectionPortType);
+		ins.put("boardTypeIdentifierFQBN", BoardIdentifierFQBNType);
+		ins.put("targetInoOrHexFile", FilePathType);
 		requiredInsAndOuts.put(inKeyword, ins);
 
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
-		outs.add("resultMessage");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
+		outs.put("resultMessage", StringType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

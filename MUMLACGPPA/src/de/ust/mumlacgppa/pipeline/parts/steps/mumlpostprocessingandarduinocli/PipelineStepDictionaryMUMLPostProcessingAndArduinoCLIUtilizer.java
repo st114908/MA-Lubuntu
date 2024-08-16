@@ -3,7 +3,10 @@
  */
 package de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
@@ -17,7 +20,14 @@ import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
  */
 public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer extends PipelineStepDictionary {
 	
-	
+	@Override
+	public Set<String> getAllowedTransformationAndCodeGenerationPreconfigurations(){
+		Set<String> result = new HashSet<>(
+			Arrays.asList(ContainerTransformation.nameFlag, ContainerCodeGeneration.nameFlag, ComponentCodeGeneration.nameFlag));
+		return result;
+	}
+
+	@Override
 	public PipelineStep lookupStepNameAndGenerateInstance(VariableHandler VariableHandlerInstance, String className, Map<String, Map<String, String>> parameters)
 			throws StepNotMatched, ProjectFolderPathNotSetExceptionMUMLACGPPA{
 		// The following flexible code failed, because no working solution as source attachment could be found.

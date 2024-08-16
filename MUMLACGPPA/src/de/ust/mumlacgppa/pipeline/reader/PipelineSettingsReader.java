@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -16,12 +17,14 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStepDictionary;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
 public class PipelineSettingsReader implements Keywords {
 	// private Map<String, String> VariableDefs; //Variables are stored static
@@ -125,26 +128,52 @@ public class PipelineSettingsReader implements Keywords {
 		if (rawSettings == null) {
 			return;
 		}
-		VariableHandlerInstance = new VariableHandler();
 
 		// Variable definitions are directly given to the VariableHandler.
 		if (rawSettings.keySet().contains(variableDefsKeyword)) {
-			// Map<String, String> for Map<Variable, Entry>.
-			Map<String, String> rawVariableDefs = (Map<String, String>) rawSettings.get(variableDefsKeyword);
-			for (String currentVariableKey : rawVariableDefs.keySet()) {
+			ArrayList<String> variableDefsList = 
+					(ArrayList<String>) rawSettings.get(variableDefsKeyword);
+			// Map<String, Map<String, String>> for Map<VariableDef, Map<NameOrValueKeys, NameOrValue>>
+			for (String rawCurrentVariableDef : variableDefsList){
+				/*if(!rawCurrentVariableDef.containsKey(variableDefKeyword)){
+					throw new StructureException(
+							"Error at reading the pipeline: The variable defintion entry " + rawCurrentVariableDef + " did not get acknowledged as variable defintion.");
+				}*/
+				
 				try{
-					String currentContentDeclaration = rawVariableDefs.get(currentVariableKey).trim();
-					if (!currentContentDeclaration.startsWith(directValueKeyword + " ")) {
+					String[] currentVariableDef = rawCurrentVariableDef.trim().split(" ", 3);
+					
+					if(currentVariableDef.length != 3){
 						throw new StructureException(
-								"Structure error: \"direct \" before the content itself is missing in the content declaration for "
-										+ currentVariableKey);
+								"Error at reading the pipeline: The entry for variable definition " + rawCurrentVariableDef
+								+ " couldn't get split up properly during interpretation.");
 					}
-					String currentContent = currentContentDeclaration.replaceFirst((directValueKeyword + " "), "");
-					VariableHandlerInstance.setVariableValue(currentVariableKey, new VariableContent(currentContent));
+					
+					String currentName = currentVariableDef[1];
+					
+					if(VariableHandlerInstance.isVariableInitialized(currentName)){
+						throw new StructureException(
+								"Error at reading the pipeline: The variable name " + currentName + " is already known.\n"
+								+ "The overwriting of Variable contents has no purpose at the beginning of the pipeline configurations, so it is seen as an error.\n"
+								+ "So either remove the earlier declaration or assign this definition a different name.");
+					}
+					
+					String currentType = currentVariableDef[0];
+					if(!VariableTypes.checkIfAllowedType(currentType)){
+						throw new StructureException(
+								"Error at reading the pipeline: The entry for variable definition " + rawCurrentVariableDef
+								+ " contains the unknown or not recognizable type " + currentType + ".");
+					}
+					
+					String currentContent = currentVariableDef[2].trim();
+					// The Variables defined at the beginning also need to "announced" as initialized for the checks. 
+					VariableHandlerInstance.setVariableAsInitializedForValidation(currentName, currentType); 
+					VariableHandlerInstance.setVariableValue(currentName, new VariableContent(currentContent));
 				}
 				catch(ClassCastException e){
 					throw new StructureException(
-							"Error at reading the pipeline: The value entry for variable " + currentVariableKey + " couldn't get interpreted. This can happen if a number values is written without \"direct \" before the content itself");
+							"Error at reading the pipeline: The entry for variable definition " + rawCurrentVariableDef
+							+ " couldn't get interpreted.");
 				}
 			}
 		}
@@ -154,19 +183,20 @@ public class PipelineSettingsReader implements Keywords {
 		// Map<String, Map<String, Map<String, String>>> for
 		// Map<Step, Map<InOrOut, Map<ParameterOrOneOutput,
 		// SourceOrSaveTarget>>>
+		Set<String> allowedTransformationAndCodeGenerationPreconfigurationsStepTypes = stepDictionaryToUse.getAllowedTransformationAndCodeGenerationPreconfigurations();
 		if (rawSettings.keySet().contains(transformationAndCodeGenerationPreconfigurationsDefKeyword)) {
 			Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = (Map<String, Map<String, Map<String, String>>>) rawSettings
 					.get(transformationAndCodeGenerationPreconfigurationsDefKeyword);
 			
-			if (!(rawStandaloneUsageDefs.keySet().equals(allowedTransformationAndCodeGenerationPreconfigurations))) {
-				throw new StructureException("Error at reading the pipeline: The entries found in "
-						+ transformationAndCodeGenerationPreconfigurationsDefKeyword + " don't match the expected set of entries!\n"
-								+ "Found: " + rawStandaloneUsageDefs.keySet() + "\n"
-										+ "Expected: " + allowedTransformationAndCodeGenerationPreconfigurations);
-			}
-			
 			for (String currentStepKey : rawStandaloneUsageDefs.keySet()) {
 				String className = currentStepKey;
+
+				if(!allowedTransformationAndCodeGenerationPreconfigurationsStepTypes.contains(className)){
+					throw new StructureException("Error at reading the pipeline: The step type " + className + " is not allwed for "
+							+ transformationAndCodeGenerationPreconfigurationsDefKeyword + " !\n");
+				}
+				
+				
 				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
 						VariableHandlerInstance, className, rawStandaloneUsageDefs.get(currentStepKey));
 				transformationAndCodeGenerationPreconfigurationsDefs.put(currentStepKey, InterpretedStep);
@@ -225,6 +255,7 @@ public class PipelineSettingsReader implements Keywords {
 		postProcessingSequence = new ArrayList<PipelineStep>();
 		pipelineSequence = new ArrayList<PipelineStep>();
 		interpretPipelineSettingsCalled = false;
+		VariableHandlerInstance = new VariableHandler();
 	}
 
 	public PipelineSettingsReader(PipelineStepDictionary stepDictionaryToUse, Path settingsFilePath)
@@ -232,6 +263,7 @@ public class PipelineSettingsReader implements Keywords {
 		transformationAndCodeGenerationPreconfigurationsDefs = new HashMap<String, PipelineStep>();
 		this.stepDictionaryToUse = stepDictionaryToUse;
 		interpretPipelineSettingsCalled = false;
+		VariableHandlerInstance = new VariableHandler();
 
 		Yaml yaml = new Yaml();
 		/*
@@ -243,8 +275,8 @@ public class PipelineSettingsReader implements Keywords {
 		interpretPipelineSettings(rawSettings);
 	}
 
-	public void validateOrder()
-			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException	{
+	public void checkForDetectableErrors()
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException	{
 		String lastStep = "None";
 		String lastPart = postProcessingSequenceDefKeyword;
 		try {
@@ -252,7 +284,7 @@ public class PipelineSettingsReader implements Keywords {
 			for (String currentKey : transformationAndCodeGenerationPreconfigurationsDefs.keySet()) {
 				lastStep = currentKey;
 				VariableHandler ValidationVariableHandlerInstance = VariableHandlerInstance.getCopyForValidations();
-				transformationAndCodeGenerationPreconfigurationsDefs.get(currentKey).checkForDetectableErrors(ValidationVariableHandlerInstance);
+				transformationAndCodeGenerationPreconfigurationsDefs.get(currentKey).checkForDetectableParameterVariableAndTypeErrors(ValidationVariableHandlerInstance);
 			}
 		
 			// PostProcessingSequence
@@ -260,7 +292,7 @@ public class PipelineSettingsReader implements Keywords {
 			VariableHandler ValidationVariableHandlerInstancePostProcessing = VariableHandlerInstance.getCopyForValidations();
 			for (PipelineStep currentStep : postProcessingSequence) {
 				lastStep = currentStep.toString();
-				currentStep.checkForDetectableErrors(ValidationVariableHandlerInstancePostProcessing);
+				currentStep.checkForDetectableParameterVariableAndTypeErrors(ValidationVariableHandlerInstancePostProcessing);
 			}
 	
 			// PipelineSequence:
@@ -268,7 +300,7 @@ public class PipelineSettingsReader implements Keywords {
 			VariableHandler ValidationVariableHandlerInstancePipelineSequence = VariableHandlerInstance.getCopyForValidations();
 			for (PipelineStep currentStep : pipelineSequence) {
 				lastStep = currentStep.toString();
-				currentStep.checkForDetectableErrors(ValidationVariableHandlerInstancePipelineSequence);
+				currentStep.checkForDetectableParameterVariableAndTypeErrors(ValidationVariableHandlerInstancePipelineSequence);
 			}
 		
 		} catch (ParameterMismatchException e) {
@@ -320,4 +352,8 @@ public class PipelineSettingsReader implements Keywords {
 		return currentStep;
 	}
 
+	
+	public boolean IsEntryInTransformationAndCodeGenerationPreconfigurations(String name){
+		return transformationAndCodeGenerationPreconfigurationsDefs.containsKey(name);
+	}
 }

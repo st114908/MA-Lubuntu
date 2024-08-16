@@ -28,6 +28,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -36,7 +37,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * states you might have to customize this class or to use TerminalCommand or
  * TerminalCommand with a program/script/etc. for automatic upload.
  */
-public class AutoGitCommitAllAndPushCommand extends PipelineStep {
+public class AutoGitCommitAllAndPushCommand extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "AutoGitCommitAllAndPushCommand";
 
@@ -44,17 +45,17 @@ public class AutoGitCommitAllAndPushCommand extends PipelineStep {
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("comment");
-		ins.add("remoteName");
-		ins.add("branchName");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("comment", StringType);
+		ins.put("remoteName", StringType);
+		ins.put("branchName", StringType);
 		requiredInsAndOuts.put(inKeyword, ins);
 
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

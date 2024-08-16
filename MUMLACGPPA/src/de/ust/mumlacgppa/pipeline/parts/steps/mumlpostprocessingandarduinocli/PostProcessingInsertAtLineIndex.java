@@ -26,12 +26,13 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
 /**
  * @author muml
  *
  */
-public class PostProcessingInsertAtLineIndex extends PipelineStep{
+public class PostProcessingInsertAtLineIndex extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "PostProcessingInsertAtLineIndex";
 
@@ -56,17 +57,17 @@ public class PostProcessingInsertAtLineIndex extends PipelineStep{
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("filePath");
-		ins.add("insertIndex");
-		ins.add("lineToInsert");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("filePath", FilePathType);
+		ins.put("insertIndex", NumberType);
+		ins.put("lineToInsert", StringType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

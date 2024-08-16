@@ -6,6 +6,7 @@ package de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -21,12 +22,13 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
 /**
  * @author muml
  *
  */
-public class TerminalCommand extends PipelineStep {
+public class TerminalCommand extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "TerminalCommand";
 
@@ -34,19 +36,19 @@ public class TerminalCommand extends PipelineStep {
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("terminalCommand");
-		ins.add("exitCodeNumberForSuccessfulExecution");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("terminalCommand", StringType);
+		ins.put("exitCodeNumberForSuccessfulExecution", NumberType);
 		requiredInsAndOuts.put(inKeyword, ins);
 
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
-		outs.add("exitCode");
-		outs.add("normalFeedback");
-		outs.add("errorFeedback");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
+		outs.put("exitCode", NumberType);
+		outs.put("normalFeedback", StringType);
+		outs.put("errorFeedback", StringType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

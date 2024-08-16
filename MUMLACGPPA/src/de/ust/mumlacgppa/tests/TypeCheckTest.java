@@ -1,0 +1,91 @@
+package de.ust.mumlacgppa.tests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
+import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
+import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
+import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.TerminalCommand;
+import de.ust.mumlacgppa.pipeline.reader.PipelineSettingsReader;
+import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
+import projectfolderpathstorageplugin.ProjectFolderPathStorage;
+
+public class TypeCheckTest implements Keywords{
+	InternalTestVariableHandlerClearStorageAccess VariableHandlerInstance;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		ProjectFolderPathStorage.projectFolderPath = Paths.get("/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk");
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		VariableHandlerInstance = new InternalTestVariableHandlerClearStorageAccess();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		VariableHandlerInstance.clearVariableHandlerStorage();
+	}
+
+	
+	@Test
+	public void testTypeCheckNoAnyType() throws Exception{
+		String testYamlText = 
+				  variableDefsKeyword + ": \n"
+				+ "- BoardSerialNumber dummySerialVar dummySerial\n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": {}\n"
+				+ pipelineSequenceDefKeyword + ":  \n"
+				+ "  - " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
+				+ "      " + inKeyword + ": \n"
+				+ "        boardSerialNumber: from dummySerialVar\n"
+				+ "        boardTypeIdentifierFQBN: direct dummy\n"
+				+ "      " + outKeyword + ": \n"
+				+ "        ifSuccessful: dummyBool\n"
+				+ "        foundPortAddress: dummyPort\n";
+		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
+		PSRInstance.interpretPipelineSettings(testYamlText);
+		PSRInstance.checkForDetectableErrors();
+	}
+
+	@Test
+	public void testTypeCheckAnyTypeReceivesManualDefinedVariable() throws Exception{
+		String testYamlText = 
+				  variableDefsKeyword + ": \n"
+				+ "- BoardSerialNumber dummySerialVar dummySerial\n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": {}\n"
+				+ pipelineSequenceDefKeyword + ":  \n"
+				+ "  - " + directValueKeyword + " " + DialogMessage.nameFlag + ": \n"
+				+ "      " + inKeyword + ": \n"
+				+ "        condition: direct True\n"
+				+ "        message: from dummySerialVar\n";
+		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
+		PSRInstance.interpretPipelineSettings(testYamlText);
+		PSRInstance.checkForDetectableErrors();
+	}
+
+}

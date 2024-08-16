@@ -18,12 +18,13 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
 /**
  * @author muml
  *
  */
-public class ContainerTransformation extends PipelineStep {
+public class ContainerTransformation extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "ContainerTransformation";
 	
@@ -48,17 +49,17 @@ public class ContainerTransformation extends PipelineStep {
 	 * @see de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("roboCar_mumlSourceFile");
-		ins.add("middlewareOption");
-		ins.add("muml_containerFileDestination");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("roboCar_mumlSourceFile", FilePathType);
+		ins.put("middlewareOption", StringType);
+		ins.put("muml_containerFileDestination", FilePathType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

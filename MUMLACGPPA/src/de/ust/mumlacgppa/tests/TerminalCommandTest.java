@@ -19,6 +19,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
@@ -49,7 +50,7 @@ public class TerminalCommandTest implements Keywords{
 	public void testExecute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException, TypeMissmatchException {
 		String testYamlTextCompleteDefinitionContent =
 				inKeyword + ":\n"
 				+ "  terminalCommand: direct echo test\n"
@@ -60,7 +61,7 @@ public class TerminalCommandTest implements Keywords{
 				+ "  normalFeedback: normalFeedback\n"
 				+ "  errorFeedback: errorFeedback\n";
 		PipelineStep testInstance = new TerminalCommand(VariableHandlerInstance, testYamlTextCompleteDefinitionContent);
-		testInstance.checkForDetectableErrors(VariableHandlerInstance);
+		testInstance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 		testInstance.execute();
 		
 		assertTrue(VariableHandlerInstance.getVariableValue("ifSuccessful").getBooleanContent());

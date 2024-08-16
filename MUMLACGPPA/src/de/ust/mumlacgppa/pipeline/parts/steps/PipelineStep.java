@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -17,13 +18,15 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public abstract class PipelineStep implements Keywords{
+public abstract class PipelineStep implements Keywords, VariableTypes{
 	protected VariableHandler VariableHandlerInstance;
 	// The ins and outs are initially stored raw as strings since the variable content is only available at runtime. 
 	protected Map<String, String> in; // <Name>: [not] {from, direct} <VariableNameOrValue>
@@ -32,13 +35,11 @@ public abstract class PipelineStep implements Keywords{
 	
 	/**
 	 * To set the required parameters for the inputs (in) and the outputs (out).
-	 * Required to set the field requiredInsAndOuts for checkForDetectableErrorsEntryCheck.
+	 * Required to set the field requiredInsAndOuts for checkForDetectableErrorsEntryCheck since
+	 * "public static abstract" at once don't fit together in java.
 	 * @return 
 	 */
-	protected abstract Map<String, HashSet<String>> getRequiredInsAndOuts();
-	
-	
-	//public static abstract Map<String, Map<String, String>> generateDefaultOrExampleValues(); // public static abstract at once don't fit together.
+	protected abstract Map<String, Map<String, String>> getRequiredInsAndOuts();
 	
 	
 	public PipelineStep(VariableHandler VariableHandlerInstance, Map<String, Map<String, String>> readData) throws ProjectFolderPathNotSetExceptionMUMLACGPPA{
@@ -179,23 +180,29 @@ public abstract class PipelineStep implements Keywords{
 	 * Helper function for checkForDetectableErrors.
 	 * Handles direct, from and not keywords in the input entries.
 	 * Ensures an following space char to prevent trouble with variable names and values that start directly with them.
+	 * Also checks the type unless the value was directly given.
 	 * @param entry
+	 * @param expectedType
 	 * @param ValidationVariableHandlerInstance 
 	 * @throws StructureException
 	 * @throws VariableNotDefinedException
 	 * @throws FaultyDataException
+	 * @throws TypeMissmatchException 
 	 */
-	private void checkForDetectableErrorsEntryCheck(String entry, VariableHandler ValidationVariableHandlerInstance) throws StructureException, VariableNotDefinedException, FaultyDataException{
+	private void checkForDetectableVariableOrValueErrorsEntryCheck(String entry, String expectedType, VariableHandler ValidationVariableHandlerInstance)
+			throws StructureException, VariableNotDefinedException, FaultyDataException, TypeMissmatchException{
 		String directAndFollowingSpace = directValueKeyword + " ";
 		String fromAndFollowingSpace = fromKeyword + " ";
 		String notAndFollowingSpace = notKeyword + " ";
+		
 		if(entry.startsWith(directAndFollowingSpace)){
 			String afterDirect = entry.substring(directAndFollowingSpace.length()).trim();
 			if(afterDirect.equals("")){
 				throw new FaultyDataException("Value in direct entry missing or not recognized!");
 			}
-			// Currently nothing more to do.
+			// Currently nothing more to do since the users are supposed to know what they are doing when they write in something directly.
 		}
+		
 		else if(entry.startsWith(fromAndFollowingSpace)){
 			String referencedVariable = entry.substring(fromAndFollowingSpace.length()).trim();
 			if(ValidationVariableHandlerInstance.isVariableInitialized(referencedVariable)){
@@ -203,56 +210,86 @@ public abstract class PipelineStep implements Keywords{
 				if(afterFrom.equals("")){
 					throw new FaultyDataException("Reference in from entry missing or not recognized!");
 				}
-				// Currently nothing more to do.
+				String foundType = ValidationVariableHandlerInstance.getVariableType(referencedVariable);
+				if(!( expectedType.equals(AnyType) )){
+					if(!( expectedType.equals(foundType) )){
+						throw new TypeMissmatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got " + foundType+".\n"+
+								"Step info: " + toString());
+					}
+				}
+				
 			}
 			else{
 				ValidationVariableHandlerInstance.generateVariableNotDefinedException(referencedVariable);
 			}
 		}
+		
 		else if(entry.startsWith(notAndFollowingSpace)){
+			// Boolean operation means boolean value!
+			if(!( expectedType.equals("Boolean") )){
+				throw new TypeMissmatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got Boolean"+".\n"+
+						"Step info: " + toString());
+			}
+			
 			String afterNot = entry.substring(notAndFollowingSpace.length()).trim();
-			checkForDetectableErrorsEntryCheck(afterNot, ValidationVariableHandlerInstance);
+			checkForDetectableVariableOrValueErrorsEntryCheck(afterNot, expectedType, ValidationVariableHandlerInstance);
 		}
 		else{
 			throw new StructureException("Structure error or unexpected element " + entry);
 		}
 
 		for(String currentKey:out.keySet()){
-			@SuppressWarnings("unused")
+			@SuppressWarnings("unused") // This is intentionally used for checking.
 			String readAsTest = out.get(currentKey);
 		}
 	}
 	
 	
 	/**
-	 * Checks for errors such as missing parameters or referenced not existing variables.
+	 * Checks for errors such as missing parameters, referenced not existing variables and (through a helper function) type mismatches.
 	 * If it finds an error, then it throws an exception, else it simply finishes its execution.
-	 * It uses an external Variable handler in order to allow more complex tests/checks.
+	 * It uses an external VariableHandler instance in order to allow more complex tests/checks.
 	 * @param ValidationVariableHandlerInstance 
 	 * @param validationVariableHandlerInstance
 	 * @throws VariableNotDefinedException
 	 * @throws StructureException
 	 * @throws FaultyDataException
 	 * @throws ParameterMismatchException
+	 * @throws TypeMissmatchException 
 	 */
-	public void checkForDetectableErrors(VariableHandler ValidationVariableHandlerInstance) throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException{
-		Map<String, HashSet<String>> requiredInsAndOuts = getRequiredInsAndOuts();
-		if(! (in.keySet()).equals(requiredInsAndOuts.get(inKeyword)) ){
-			throw new ParameterMismatchException("Input parameter mismatch! Expected \n"+
-					requiredInsAndOuts.get(inKeyword).toString() + ", got \n" + in.keySet().toString());
+	public void checkForDetectableParameterVariableAndTypeErrors(VariableHandler ValidationVariableHandlerInstance)
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+		Map<String, Map<String, String>> requiredInsAndOuts = getRequiredInsAndOuts();
+		
+		if(! (in.keySet()).equals(requiredInsAndOuts.get(inKeyword).keySet() ) ){
+			throw new ParameterMismatchException("Input parameter set mismatch! Expected \n"+
+					requiredInsAndOuts.get(inKeyword).keySet() + ", got \n" + in.keySet().toString()+"\n"+
+					"Step info: " + toString());
 		}
-		if(! (out.keySet()).equals(requiredInsAndOuts.get(outKeyword)) ){
-			throw new ParameterMismatchException("Output parameter mismatch! Expected "+
-					requiredInsAndOuts.get(outKeyword).toString() + ", got \n" + out.keySet().toString());
+		if(! (out.keySet()).equals(requiredInsAndOuts.get(outKeyword).keySet()) ){
+			throw new ParameterMismatchException("Output parameter set mismatch! Expected "+
+					requiredInsAndOuts.get(outKeyword).keySet() + ", got \n" + out.keySet().toString()+"\n"+
+					"Step info: " + toString());
 		}
 		
-		for(String currentKey:in.keySet()){
-			String entry = in.get(currentKey);
-			checkForDetectableErrorsEntryCheck(entry, ValidationVariableHandlerInstance);
+		for(String currentInParameterKey:in.keySet()){
+			String input = in.get(currentInParameterKey);
+			String variableEntryType = requiredInsAndOuts.get(inKeyword).get(currentInParameterKey);
+			checkForDetectableVariableOrValueErrorsEntryCheck(input, variableEntryType, ValidationVariableHandlerInstance);
 		}
-		for(String currentKey:out.keySet()){
-			String entry = out.get(currentKey);
-			ValidationVariableHandlerInstance.setVariableAsInitialized(entry);
+		
+		for(String currentOutParameterKey:out.keySet()){
+			String variableEntryName = out.get(currentOutParameterKey);
+			String variableEntryType = requiredInsAndOuts.get(outKeyword).get(currentOutParameterKey);
+			
+			if(variableEntryType.equals(AnyType)){
+				throw new StructureException("PipelineStep subclass error: The Any type is only allowed for inputs, but not for outputs!\n"
+						+ "If you are only a user then it is not your fault, but the responsible programmers is to blame.\n"
+						+ "You can only stop using this step.\n"
+						+ "Step info: " + toString());
+			}
+			
+			ValidationVariableHandlerInstance.setVariableAsInitializedForValidation(variableEntryName, variableEntryType);
 		}
 	}
 	
@@ -282,13 +319,13 @@ public abstract class PipelineStep implements Keywords{
 	@Override
 	public String toString() {
 		if( (out.size() > 0) && (in.size() > 0) ){
-			return getClass().getSimpleName() + " [in=" + in + ", out=" + out + "]";
+			return getClass().getSimpleName() + "\n[in=" + in + ",\nout=" + out + "]";
 		}
 		else if( (out.size() == 0) && (in.size() > 0) ){
-			return getClass().getSimpleName() + " [in=" + in + "]";
+			return getClass().getSimpleName() + "\n[in=" + in + "]";
 		}
 		else if( (out.size() > 0) && (in.size() == 0) ){
-			return getClass().getSimpleName() + " [out=" + out + "]";
+			return getClass().getSimpleName() + "\n[out=" + out + "]";
 		}
 		else{
 			return getClass().getSimpleName() + " []";

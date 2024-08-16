@@ -12,24 +12,25 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
-class InternalTestDummyStep extends PipelineStep {
+class InternalTestDummyStep extends PipelineStep implements VariableTypes{
 
 
 	public static final String pipelineKeyword = "InternalTestDummyStep";
 	
 
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts(){
-		HashMap<String, HashSet<String>> requiredInsAndOuts = new HashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts(){
+		Map<String, Map<String, String>> requiredInsAndOuts = new HashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new HashSet<String>();
-		ins.add("input1");
-		ins.add("input2");
+		HashMap<String, String> ins = new HashMap<String, String>();
+		ins.put("input1", AnyType);
+		ins.put("input2", AnyType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new HashSet<String>();
-		outs.add("output1");
-		outs.add("output2");
+		HashMap<String, String> outs = new HashMap<String, String>();
+		outs.put("output1", StringType);
+		outs.put("output2", StringType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;
@@ -69,6 +70,7 @@ class InternalTestDummyStep extends PipelineStep {
 	@Override
 	public void execute(){
 		//throw new Exception("This test dummy is not supposed to be used outside of unit tests!");
+		System.out.println("This test dummy is not supposed to be used outside of unit tests!");
 	}
 
 	

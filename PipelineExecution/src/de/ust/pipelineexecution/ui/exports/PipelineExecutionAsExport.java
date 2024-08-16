@@ -39,6 +39,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
@@ -150,26 +151,26 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			PSRInstance = new PipelineSettingsReader(
 					new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer(),
 					completePipelineSettingsFilePath);
-			PSRInstance.validateOrder();
+			PSRInstance.checkForDetectableErrors();
 			pipelineSettingsErrorDetected = false;
 		} catch (FileNotFoundException | StructureException | StepNotMatched
 				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException | FaultyDataException
-				| ParameterMismatchException e) {
+				| ParameterMismatchException | TypeMissmatchException e) {
 			pipelineSettingsErrorDetected = true;
-			InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow("Errors in the pipeline!",
+			InfoWindow errorInfoWindow = new InfoWindow("Errors in the pipeline!",
 					"Errors in the pipeline settings!",
 					"The validation detected errors in the pipeline or while reading it.\n"
 							+ "This is the generated error message:\n" + e.getMessage());
-			addPage(arduinoCLISettingsMissingInfoWindow);
+			addPage(errorInfoWindow);
 			e.printStackTrace();
 			return true;
-		} catch (Exception e) {
+		} catch (Exception e) { // For other errors:
 			pipelineSettingsErrorDetected = true;
-			InfoWindow arduinoCLISettingsMissingInfoWindow = new InfoWindow("Errors in the pipeline!",
+			InfoWindow errorInfoWindow = new InfoWindow("Errors in the pipeline!",
 					"Errors in the pipeline settings!",
 					"The validation detected errors in the pipeline or while reading it.\n"
 							+ "This is the generated error message:\n" + e.getMessage());
-			addPage(arduinoCLISettingsMissingInfoWindow);
+			addPage(errorInfoWindow);
 			e.printStackTrace();
 			return true;
 		}

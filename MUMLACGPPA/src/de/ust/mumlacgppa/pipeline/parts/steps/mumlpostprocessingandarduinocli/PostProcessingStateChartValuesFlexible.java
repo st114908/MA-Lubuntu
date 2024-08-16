@@ -26,12 +26,13 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 
 /**
  * @author muml
  *
  */
-public class PostProcessingStateChartValuesFlexible extends PipelineStep{
+public class PostProcessingStateChartValuesFlexible extends PipelineStep implements VariableTypes {
 
 	public static final String nameFlag = "PostProcessingStateChartValuesFlexible";
 
@@ -56,19 +57,19 @@ public class PostProcessingStateChartValuesFlexible extends PipelineStep{
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#setRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("arduinoContainersPath");
-		ins.add("ECUName");
-		ins.add("fileName");
-		ins.add("targetStateChartValueName");
-		ins.add("valueToSet");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("arduinoContainersPath", FolderPathType);
+		ins.put("ECUName", StringType);
+		ins.put("fileName", StringType);
+		ins.put("targetStateChartValueName", NumberType);
+		ins.put("valueToSet", NumberType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;

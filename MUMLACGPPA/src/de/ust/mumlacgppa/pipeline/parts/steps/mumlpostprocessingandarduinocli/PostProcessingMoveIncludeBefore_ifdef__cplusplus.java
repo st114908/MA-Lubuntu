@@ -33,6 +33,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
+import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -40,7 +41,7 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
  * @author muml
  *
  */
-public class PostProcessingMoveIncludeBefore_ifdef__cplusplus extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths{
+public class PostProcessingMoveIncludeBefore_ifdef__cplusplus extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths, VariableTypes {
 
 	public static final String nameFlag = "PostProcessingMoveIncludeBefore_ifdef__cplusplus";
 
@@ -65,16 +66,16 @@ public class PostProcessingMoveIncludeBefore_ifdef__cplusplus extends PipelineSt
 	 * @see mumlacga.pipeline.parts.steps.common.PipelineStep#getRequiredInsAndOuts()
 	 */
 	@Override
-	protected Map<String, HashSet<String>> getRequiredInsAndOuts() {
-		LinkedHashMap<String, HashSet<String>> requiredInsAndOuts = new LinkedHashMap<String, HashSet<String>>();
+	protected Map<String, Map<String, String>> getRequiredInsAndOuts() {
+		LinkedHashMap<String, Map<String, String>> requiredInsAndOuts = new LinkedHashMap<String, Map<String, String>>();
 
-		HashSet<String> ins = new LinkedHashSet<String>();
-		ins.add("componentsPath");
-		ins.add("targetInclude");
+		LinkedHashMap<String, String> ins = new LinkedHashMap<String, String>();
+		ins.put("componentsPath", FolderPathType);
+		ins.put("targetInclude", StringType);
 		requiredInsAndOuts.put(inKeyword, ins);
 		
-		HashSet<String> outs = new LinkedHashSet<String>();
-		outs.add("ifSuccessful");
+		LinkedHashMap<String, String> outs = new LinkedHashMap<String, String>();
+		outs.put("ifSuccessful", BooleanType);
 		requiredInsAndOuts.put(outKeyword, outs);
 		
 		return requiredInsAndOuts;
