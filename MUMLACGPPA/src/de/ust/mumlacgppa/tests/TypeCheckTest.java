@@ -18,8 +18,9 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
@@ -88,4 +89,32 @@ public class TypeCheckTest implements Keywords{
 		PSRInstance.checkForDetectableErrors();
 	}
 
+
+	@Test
+	public void testCheckTypeChangePrevention() throws Exception{
+		String testYamlText = 
+				  variableDefsKeyword + ": \n"
+				+ "- BoardSerialNumber dummySerialVar dummySerial\n"
+				+ transformationAndCodeGenerationPreconfigurationsDefKeyword + ": {}\n"
+				+ pipelineSequenceDefKeyword + ":  \n"
+				+ "  - " + directValueKeyword + " " + LookupBoardBySerialNumber.nameFlag + ": \n"
+				+ "      " + inKeyword + ": \n"
+				+ "        boardSerialNumber: from dummySerialVar\n"
+				+ "        boardTypeIdentifierFQBN: direct dummy\n"
+				+ "      " + outKeyword + ": \n"
+				+ "        ifSuccessful: dummyOut\n"
+				+ "        foundPortAddress: dummyOut\n";
+		
+		PipelineSettingsReader PSRInstance = new PipelineSettingsReader(new PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer());
+		PSRInstance.interpretPipelineSettings(testYamlText);
+		
+		try{
+			PSRInstance.checkForDetectableErrors();
+		}
+		catch(TypeMismatchException e){
+			assertTrue(e.getMessage().contains("Attempted type change detected: Already existing definition has type Boolean, current output parameter has ConnectionPort."));
+			return;
+		}
+		assertTrue("Missing Step defintion in TransformationAndCodeGenerationPreconfigurations not detected!", false);
+	}
 }

@@ -15,7 +15,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
@@ -56,7 +56,7 @@ public class StepsGeneratedDefaultsAndExamplesTest implements Keywords{
 
 	
 	@Test
-	public void testCompile() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testCompile() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		Compile Instance = new Compile(VariableHandlerInstance, Compile.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
@@ -65,85 +65,85 @@ public class StepsGeneratedDefaultsAndExamplesTest implements Keywords{
 	public void testComponentCodeGeneration()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, TypeMissmatchException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, TypeMismatchException {
 		ComponentCodeGeneration Instance = new ComponentCodeGeneration(VariableHandlerInstance, ComponentCodeGeneration.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testContainerCodeGeneration() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testContainerCodeGeneration() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		ContainerCodeGeneration Instance = new ContainerCodeGeneration(VariableHandlerInstance, ContainerCodeGeneration.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testContainerTransformation() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testContainerTransformation() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		ContainerTransformation Instance = new ContainerTransformation(VariableHandlerInstance, ContainerTransformation.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testLookupBoardBySerialNumber() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testLookupBoardBySerialNumber() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		LookupBoardBySerialNumber Instance = new LookupBoardBySerialNumber(VariableHandlerInstance, LookupBoardBySerialNumber.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testOnlyContinueIfFullfilledElseAbort() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testOnlyContinueIfFullfilledElseAbort() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		OnlyContinueIfFulfilledElseAbort Instance = new OnlyContinueIfFulfilledElseAbort(VariableHandlerInstance, OnlyContinueIfFulfilledElseAbort.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testWindowMessage() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testWindowMessage() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		DialogMessage Instance = new DialogMessage(VariableHandlerInstance, DialogMessage.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testPostProcessingStateChartValues() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testPostProcessingStateChartValues() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		PostProcessingStateChartValues Instance = new PostProcessingStateChartValues(VariableHandlerInstance, PostProcessingStateChartValues.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testPostProcessingStateChartValuesFlexible() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testPostProcessingStateChartValuesFlexible() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		PostProcessingStateChartValuesFlexible Instance = new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, PostProcessingStateChartValuesFlexible.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testPostProcessingStepsUntilConfig() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testPostProcessingStepsUntilConfig() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		PostProcessingStepsUntilConfig Instance = new PostProcessingStepsUntilConfig(VariableHandlerInstance, PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testReplaceLineContent() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testReplaceLineContent() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		ReplaceLineContent Instance = new ReplaceLineContent(VariableHandlerInstance, ReplaceLineContent.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testSaveToTextFile() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testSaveToTextFile() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		SaveToTextFile Instance = new SaveToTextFile(VariableHandlerInstance, SaveToTextFile.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testSelectableWindow() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testSelectableWindow() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		SelectableTextWindow Instance = new SelectableTextWindow(VariableHandlerInstance, SelectableTextWindow.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testTerminalCommand() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testTerminalCommand() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		TerminalCommand Instance = new TerminalCommand(VariableHandlerInstance, TerminalCommand.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 
 	@Test
-	public void testUpload() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+	public void testUpload() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		Upload Instance = new Upload(VariableHandlerInstance, Upload.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}

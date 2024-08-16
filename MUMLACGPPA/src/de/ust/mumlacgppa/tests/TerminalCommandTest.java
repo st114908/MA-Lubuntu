@@ -19,7 +19,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
@@ -50,7 +50,7 @@ public class TerminalCommandTest implements Keywords{
 	public void testExecute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception,
-			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException, TypeMissmatchException {
+			ProjectFolderPathNotSetExceptionMUMLACGPPA,ProjectFolderPathNotSetException, AbortPipelineException, InOrOutKeyNotDefinedException, TypeMismatchException {
 		String testYamlTextCompleteDefinitionContent =
 				inKeyword + ":\n"
 				+ "  terminalCommand: direct echo test\n"

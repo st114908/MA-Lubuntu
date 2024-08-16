@@ -40,7 +40,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExcept
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
@@ -156,7 +156,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			pipelineSettingsErrorDetected = false;
 		} catch (FileNotFoundException | StructureException | StepNotMatched | StepNotDefinedException
 				| ProjectFolderPathNotSetExceptionMUMLACGPPA | VariableNotDefinedException | FaultyDataException
-				| ParameterMismatchException | TypeMissmatchException e) {
+				| ParameterMismatchException | TypeMismatchException e) {
 			pipelineSettingsErrorDetected = true;
 			InfoWindow errorInfoWindow = new InfoWindow("Errors in the pipeline!",
 					"Errors in the pipeline settings!",

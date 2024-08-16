@@ -19,7 +19,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
@@ -384,9 +384,9 @@ public class StepsInAndOutTest implements Keywords, VariableTypes{
 
 	@Test
 	public void testValidation() throws VariableNotDefinedException, StructureException, FaultyDataException,
-			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, TypeMissmatchException {
+			ParameterMismatchException, ProjectFolderPathNotSetExceptionMUMLACGPPA, InOrOutKeyNotDefinedException, TypeMismatchException {
 		String testYamlTextCompleteDefinitionContent = inKeyword + ":\n" + "  input1: from testTrueVariable\n"
-				+ "  input2: from testFalseVariable\n" + outKeyword + ":\n" + "  output1: testNumberVariable\n"
+				+ "  input2: from testFalseVariable\n" + outKeyword + ":\n" + "  output1: testTextVariable\n"
 				+ "  output2: testTextVariable\n";
 
 		InternalTestDummyStep testInstance = new InternalTestDummyStep(VariableHandlerInstance,

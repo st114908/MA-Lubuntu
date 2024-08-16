@@ -18,7 +18,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableContent;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
@@ -187,10 +187,10 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 	 * @throws StructureException
 	 * @throws VariableNotDefinedException
 	 * @throws FaultyDataException
-	 * @throws TypeMissmatchException 
+	 * @throws TypeMismatchException 
 	 */
 	private void checkForDetectableVariableOrValueErrorsEntryCheck(String entry, String expectedType, VariableHandler ValidationVariableHandlerInstance)
-			throws StructureException, VariableNotDefinedException, FaultyDataException, TypeMissmatchException{
+			throws StructureException, VariableNotDefinedException, FaultyDataException, TypeMismatchException{
 		String directAndFollowingSpace = directValueKeyword + " ";
 		String fromAndFollowingSpace = fromKeyword + " ";
 		String notAndFollowingSpace = notKeyword + " ";
@@ -213,7 +213,7 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 				String foundType = ValidationVariableHandlerInstance.getVariableType(referencedVariable);
 				if(!( expectedType.equals(AnyType) )){
 					if(!( expectedType.equals(foundType) )){
-						throw new TypeMissmatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got " + foundType+".\n"+
+						throw new TypeMismatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got " + foundType+".\n"+
 								"Step info: " + toString());
 					}
 				}
@@ -227,7 +227,7 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 		else if(entry.startsWith(notAndFollowingSpace)){
 			// Boolean operation means boolean value!
 			if(!( expectedType.equals("Boolean") )){
-				throw new TypeMissmatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got Boolean"+".\n"+
+				throw new TypeMismatchException("Type error in entry " + entry + ": Expected " + expectedType + ", got Boolean"+".\n"+
 						"Step info: " + toString());
 			}
 			
@@ -255,10 +255,10 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 	 * @throws StructureException
 	 * @throws FaultyDataException
 	 * @throws ParameterMismatchException
-	 * @throws TypeMissmatchException 
+	 * @throws TypeMismatchException 
 	 */
 	public void checkForDetectableParameterVariableAndTypeErrors(VariableHandler ValidationVariableHandlerInstance)
-			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException{
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		Map<String, Map<String, String>> requiredInsAndOuts = getRequiredInsAndOuts();
 		
 		if(! (in.keySet()).equals(requiredInsAndOuts.get(inKeyword).keySet() ) ){
@@ -289,7 +289,18 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 						+ "Step info: " + toString());
 			}
 			
-			ValidationVariableHandlerInstance.setVariableAsInitializedForValidation(variableEntryName, variableEntryType);
+			// Prevent type changes if already initialized:
+			if(ValidationVariableHandlerInstance.isVariableInitialized(variableEntryName)){
+				String typeOfExistingInstance = ValidationVariableHandlerInstance.getVariableType(variableEntryName); 
+				if(!( typeOfExistingInstance.equals(variableEntryType) )){
+					throw new TypeMismatchException("Attempted type change detected: Already existing definition has type " + typeOfExistingInstance
+							+ ", current output parameter has " + variableEntryType + ".\n"
+							+ "Step info: " + toString());
+				}
+			}
+			else{
+				ValidationVariableHandlerInstance.setVariableAsInitializedForValidation(variableEntryName, variableEntryType);
+			}
 		}
 	}
 	

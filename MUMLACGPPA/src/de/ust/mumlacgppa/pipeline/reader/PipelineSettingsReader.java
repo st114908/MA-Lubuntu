@@ -18,7 +18,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExcept
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMissmatchException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.TypeMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
@@ -281,7 +281,7 @@ public class PipelineSettingsReader implements Keywords {
 	}
 
 	public void checkForDetectableErrors()
-			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMissmatchException	{
+			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException	{
 		String lastStep = "None";
 		String lastPart = postProcessingSequenceDefKeyword;
 		try {
