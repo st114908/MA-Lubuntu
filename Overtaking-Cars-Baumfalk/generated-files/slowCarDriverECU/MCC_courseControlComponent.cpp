@@ -481,14 +481,6 @@ CourseControlComponent* MCC_create_CourseControlComponent(uint8_T ID){
 	switch(ID){
 		case CI_COURSECONTROLSCOURSECONTROL:
 			b.ID = ID;
-			b.FRONTDISTANCE = PORT_ACTIVE;
-			b.createFRONTDISTANCEHandle = &create_FRONTDISTANCELocalHandle;
-			b.FRONTDISTANCE_op.local_option.pubID = -20882;
-			b.FRONTDISTANCE_op.local_option.subID = -28884;
-			b.COURSECONTROL = PORT_ACTIVE;
-			b.createCOURSECONTROLHandle = &create_COURSECONTROLI2cHandle;
-			b.COURSECONTROL_op.i2c_option.ownAddress = 10;
-			b.COURSECONTROL_op.i2c_option.otherAddress = 2;
 			b.REARDISTANCE = PORT_ACTIVE;
 			b.createREARDISTANCEHandle = &create_REARDISTANCELocalHandle;
 			b.REARDISTANCE_op.local_option.pubID = 4979;
@@ -501,6 +493,14 @@ CourseControlComponent* MCC_create_CourseControlComponent(uint8_T ID){
 			b.createVELOCITYHandle = &create_VELOCITYLocalHandle;
 			b.VELOCITY_op.local_option.pubID = 9589;
 			b.VELOCITY_op.local_option.subID = -31489;
+			b.FRONTDISTANCE = PORT_ACTIVE;
+			b.createFRONTDISTANCEHandle = &create_FRONTDISTANCELocalHandle;
+			b.FRONTDISTANCE_op.local_option.pubID = -20882;
+			b.FRONTDISTANCE_op.local_option.subID = -28884;
+			b.COURSECONTROL = PORT_ACTIVE;
+			b.createCOURSECONTROLHandle = &create_COURSECONTROLI2cHandle;
+			b.COURSECONTROL_op.i2c_option.ownAddress = 10;
+			b.COURSECONTROL_op.i2c_option.otherAddress = 2;
 		break;
 	default:
 		break;

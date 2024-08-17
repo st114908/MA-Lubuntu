@@ -664,6 +664,8 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		Map<String, String> postProcessingConfigureMQTTSlowCoordinatorIns = postProcessingConfigureMQTTSlowCoordinator.get(inKeyword);
 		postProcessingConfigureMQTTSlowCoordinatorIns.put("arduinoContainersPath", fromKeyword + " " + deployableCodeFolderNameVariableName);
 		postProcessingConfigureMQTTSlowCoordinatorIns.put("ecuName", fromKeyword + " " + slowCarCoordinatorECUNameVariableName);
+		postProcessingConfigureMQTTSlowCoordinatorIns.put("serverIPAddress", fromKeyword + " " + MQTTServerIPAddressVariableName);
+		postProcessingConfigureMQTTSlowCoordinatorIns.put("serverPort", fromKeyword + " " + MQTTServerPortVariableName);
 		postProcessingConfigureMQTTSlowCoordinatorIns.put("clientName", fromKeyword + " " + slowCarCoordinatorECUNameVariableName);
 		postProcessingConfigureMQTTSlowCoordinator.put(inKeyword, postProcessingConfigureMQTTSlowCoordinatorIns);
 		

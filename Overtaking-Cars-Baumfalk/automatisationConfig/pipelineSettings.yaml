@@ -20,13 +20,13 @@ VariableDefs:
 - Number fastCarDesiredVelocity 65
 - Number slowCarDesiredVelocity 55
 - BoardIdentifierFQBN usedDriverBoardIdentifierFQBN arduino:avr:mega
-- BoardIdentifierFQBN usedCoordinatorBoardIdentifierFQBN arduino:avr:mega
+- BoardIdentifierFQBN usedCoordinatorBoardIdentifierFQBN arduino:avr:nano
 - String fastCarCoordinatorECUName fastCarCoordinatorECU
-- BoardSerialNumber fastCarCoordinatorECUBoardSerialNumber 8593731333735141A130
-- BoardSerialNumber fastCarDriverECUBoardSerialNumber 8593731333735141A130
+- BoardSerialNumber fastCarCoordinatorECUBoardSerialNumber DummyFastCarCoordinatorSerialNumber
+- BoardSerialNumber fastCarDriverECUBoardSerialNumber DummyFastCarDriverSerialNumber
 - String slowCarCoordinatorECUName slowCarCoordinatorECU
-- BoardSerialNumber slowCarCoordinatorECUBoardSerialNumber 8593731333735141A130
-- BoardSerialNumber slowCarDriverECUBoardSerialNumber 8593731333735141A130
+- BoardSerialNumber slowCarCoordinatorECUBoardSerialNumber DummySlowCarCoordinatorSerialNumber
+- BoardSerialNumber slowCarDriverECUBoardSerialNumber DummySlowCarDriverSerialNumber
 - FolderPath fastCarCoordinatorECUFolderPath  deployable-files/fastCarCoordinatorECU
 - FilePath fastCarCoordinatorECUINOFilePath  deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino
 - FilePath fastCarCoordinatorECUINOHEXFilePath  deployable-files/fastCarCoordinatorECU/CompiledFiles/fastCarCoordinatorECU.ino.hex
@@ -364,8 +364,8 @@ PostProcessingSequence:
     in:
       arduinoContainersPath: from deployableFilesFolderPath
       ecuName: from slowCarCoordinatorECUName
-      serverIPAddress: direct DummyServerIPAddress
-      serverPort: direct 1883
+      serverIPAddress: from MQTTServerIPAddress
+      serverPort: from MQTTServerPort
       clientName: from slowCarCoordinatorECUName
     out:
       ifSuccessful: ifSuccessful
