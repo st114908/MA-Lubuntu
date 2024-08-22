@@ -34,14 +34,14 @@ import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
  * @author muml
  *
  */
-public class PostProcessingAdjustIncludes extends PipelineStep implements PipelineSettingsDirectoryAndFilePaths, VariableTypes {
+public class PostProcessingAdjustIncludes extends PipelineStep implements PipelineSettingsDirectoryAndFilesPaths, VariableTypes {
 
 	public static final String nameFlag = "PostProcessingAdjustIncludes";
 

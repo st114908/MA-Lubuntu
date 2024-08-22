@@ -21,7 +21,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
@@ -49,8 +49,8 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
 
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if(problemsWithPipelineSettingsFile){
@@ -67,7 +67,7 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 		}
 		settingsMissing = false;
 		
-		generation = (ContainerCodeGeneration) PSRInstance.getStandaloneUsageDef(ContainerCodeGeneration.nameFlag);
+		generation = (ContainerCodeGeneration) PSRInstance.getTransformationAndCodeGenerationPreconfigurationsDef(ContainerCodeGeneration.nameFlag);
 		
 		try {
 			generateFolderIfNecessary(generation.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());

@@ -1,18 +1,18 @@
 VariableDefs:
-- Number ExampleNumberVariableName direct 12
-- String ExampleStringVariableName direct ExampleString
-- Boolean ExampleBooleanVariableName direct true
+- Number ExampleNumberVariableName 12
+- String ExampleStringVariableName ExampleString
+- Boolean ExampleBooleanVariableName true
 - FolderPath generatedIncompleteFilesFolderPath generated-files
 - FilePath muml_containerFilePath generated-files/MUML_Container.muml_container
-- FolderPath componentCodeFilesFolderPath  deployable-files/fastAndSlowCar_v2
-- FolderPath apiMappingsFolderPath  deployable-files/APImappings
-- FolderPath componentsFolderPath  deployable-files/fastAndSlowCar_v2/components
-- FolderPath libFolderPath  deployable-files/fastAndSlowCar_v2/lib
-- FolderPath messagesFolderPath  deployable-files/fastAndSlowCar_v2/messages
-- FolderPath operationsFolderPath  deployable-files/fastAndSlowCar_v2/operations
-- FolderPath RTSCsFolderPath  deployable-files/fastAndSlowCar_v2/RTSCs
-- FolderPath typesFolderPath  deployable-files/fastAndSlowCar_v2/types
-- FolderPath deployableFilesFolderPath  deployable-files
+- FolderPath componentCodeFilesFolderPath deployable-files/fastAndSlowCar_v2
+- FolderPath apiMappingsFolderPath deployable-files/APImappings
+- FolderPath componentsFolderPath deployable-files/fastAndSlowCar_v2/components
+- FolderPath libFolderPath deployable-files/fastAndSlowCar_v2/lib
+- FolderPath messagesFolderPath deployable-files/fastAndSlowCar_v2/messages
+- FolderPath operationsFolderPath deployable-files/fastAndSlowCar_v2/operations
+- FolderPath RTSCsFolderPath deployable-files/fastAndSlowCar_v2/RTSCs
+- FolderPath typesFolderPath deployable-files/fastAndSlowCar_v2/types
+- FolderPath deployableFilesFolderPath deployable-files
 - WLANName WLANNameOrSSID DummyWLANNameOrSSID
 - WLANPassword WLANPassword_MakeSureThisStaysSafe DummyWLANPassword
 - ServerIPAddress MQTTServerIPAddress DummyMQTTServerIPAddress
@@ -27,18 +27,18 @@ VariableDefs:
 - String slowCarCoordinatorECUName slowCarCoordinatorECU
 - BoardSerialNumber slowCarCoordinatorECUBoardSerialNumber DummySlowCarCoordinatorSerialNumber
 - BoardSerialNumber slowCarDriverECUBoardSerialNumber DummySlowCarDriverSerialNumber
-- FolderPath fastCarCoordinatorECUFolderPath  deployable-files/fastCarCoordinatorECU
-- FilePath fastCarCoordinatorECUINOFilePath  deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino
-- FilePath fastCarCoordinatorECUINOHEXFilePath  deployable-files/fastCarCoordinatorECU/CompiledFiles/fastCarCoordinatorECU.ino.hex
-- FolderPath fastCarDriverECUFolderPath  deployable-files/fastCarDriverECU
-- FilePath fastCarDriverECUINOFilePath  deployable-files/fastCarDriverECU/fastCarDriverECU.ino
-- FilePath fastCarDriverECUINOHEXFilePath  deployable-files/fastCarDriverECU/CompiledFiles/fastCarDriverECU.ino.hex
-- FolderPath slowCarCoordinatorECUFolderPath  deployable-files/slowCarCoordinatorECU
-- FilePath slowCarCoordinatorECUINOFilePath  deployable-files/slowCarCoordinatorECU/slowCarCoordinatorECU.ino
-- FilePath slowCarCoordinatorECUINOHEXFilePath  deployable-files/slowCarCoordinatorECU/CompiledFiles/slowCarCoordinatorECU.ino.hex
-- FolderPath slowCarDriverECUFolderPath  deployable-files/slowCarDriverECU
-- FilePath slowCarDriverECUINOFilePath  deployable-files/slowCarDriverECU/slowCarDriverECU.ino
-- FilePath slowCarDriverECUINOHEXFilePath  deployable-files/slowCarDriverECU/CompiledFiles/slowCarDriverECU.ino.hex
+- FolderPath fastCarCoordinatorECUFolderPath deployable-files/fastCarCoordinatorECU
+- FilePath fastCarCoordinatorECUINOFilePath deployable-files/fastCarCoordinatorECU/fastCarCoordinatorECU.ino
+- FilePath fastCarCoordinatorECUINOHEXFilePath deployable-files/fastCarCoordinatorECU/CompiledFiles/fastCarCoordinatorECU.ino.hex
+- FolderPath fastCarDriverECUFolderPath deployable-files/fastCarDriverECU
+- FilePath fastCarDriverECUINOFilePath deployable-files/fastCarDriverECU/fastCarDriverECU.ino
+- FilePath fastCarDriverECUINOHEXFilePath deployable-files/fastCarDriverECU/CompiledFiles/fastCarDriverECU.ino.hex
+- FolderPath slowCarCoordinatorECUFolderPath deployable-files/slowCarCoordinatorECU
+- FilePath slowCarCoordinatorECUINOFilePath deployable-files/slowCarCoordinatorECU/slowCarCoordinatorECU.ino
+- FilePath slowCarCoordinatorECUINOHEXFilePath deployable-files/slowCarCoordinatorECU/CompiledFiles/slowCarCoordinatorECU.ino.hex
+- FolderPath slowCarDriverECUFolderPath deployable-files/slowCarDriverECU
+- FilePath slowCarDriverECUINOFilePath deployable-files/slowCarDriverECU/slowCarDriverECU.ino
+- FilePath slowCarDriverECUINOHEXFilePath deployable-files/slowCarDriverECU/CompiledFiles/slowCarDriverECU.ino.hex
 
 
 TransformationAndCodeGenerationPreconfigurations:

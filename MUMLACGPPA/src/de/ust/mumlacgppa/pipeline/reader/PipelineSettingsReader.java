@@ -323,14 +323,10 @@ public class PipelineSettingsReader implements Keywords {
 		}
 	}
 
-	public PipelineStep getStandaloneUsageDef(String stepName) {
+	public PipelineStep getTransformationAndCodeGenerationPreconfigurationsDef(String stepName) {
 		return transformationAndCodeGenerationPreconfigurationsDefs.get(stepName);
 	}
 	
-	
-	public void resetPostProcessingProgress(){
-		postProcessingListExecutionIndex = 0;
-	}
 	
 	public boolean hasNextPostProcessingStep() {
 		return ( postProcessingListExecutionIndex < pipelineSequence.size() );
@@ -343,10 +339,6 @@ public class PipelineSettingsReader implements Keywords {
 	}
 	
 
-	public void resetPipelineSequenceProgress(){
-		pipelineSequenceExecutionIndex = 0;
-	}
-	
 	public boolean hasNextPipelineSequenceStep() {
 		return ( pipelineSequenceExecutionIndex < pipelineSequence.size() );
 	}
@@ -357,6 +349,14 @@ public class PipelineSettingsReader implements Keywords {
 		return currentStep;
 	}
 
+	
+	public void resetPostProcessingProgress(){
+		postProcessingListExecutionIndex = 0;
+	}
+	
+	public void resetPipelineSequenceProgress(){
+		pipelineSequenceExecutionIndex = 0;
+	}
 	
 	public boolean IsEntryInTransformationAndCodeGenerationPreconfigurations(String name){
 		return transformationAndCodeGenerationPreconfigurationsDefs.containsKey(name);

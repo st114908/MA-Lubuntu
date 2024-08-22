@@ -7,10 +7,10 @@ import java.nio.file.Path;
 
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class SofdcarHalConfig_hppFileGenerator implements PipelineSettingsDirectoryAndFilePaths, Keywords {
+public class SofdcarHalConfig_hppFileGenerator implements PipelineSettingsDirectoryAndFilesPaths, Keywords {
 	private Path completeMUMLACGPPASettingsDirectoryPath;
 	private Path completeSofdcarHalConfigFilePath;
 

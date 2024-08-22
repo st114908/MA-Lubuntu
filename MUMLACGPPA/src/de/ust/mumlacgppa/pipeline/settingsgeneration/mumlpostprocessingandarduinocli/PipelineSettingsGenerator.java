@@ -41,12 +41,11 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Po
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
 //import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
-import de.ust.mumlacgppa.pipeline.parts.storage.GenerateVariableDefStructure;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFilePaths, Keywords, VariableTypes, GenerateVariableDefStructure{
+public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFilesPaths, Keywords, VariableTypes{
 	private Path completeMUMLACGPPASettingsDirectoryPath;
 	private Path completeMUMLACGPPASettingsFilePath;
 
@@ -65,6 +64,11 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 	public Path getCompleteSettingsFilePath() {
 		return completeMUMLACGPPASettingsFilePath;
+	}
+	
+	private String generateVariableDefStructure(String name, String value, String type){
+		String currentVariableDef = type + " " + name + " " + value;
+		return currentVariableDef;
 	}
 	
 	private Map<String, Map<String, String>> generateDeleteFolder(String path) {
@@ -229,7 +233,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		String muml_containerFilePathVariableValue = generatedCodeFolderNameVariableValue
 				+ "/MUML_Container.muml_container";
 		String deployableCodeFolderNameVariableName = "deployableFilesFolderPath";
-		String deployableCodeFolderNameVariableValue =" deployable-files";
+		String deployableCodeFolderNameVariableValue ="deployable-files";
 		String componentCodeFolderNameVariableName = "componentCodeFilesFolderPath";
 		String componentCodeFolderNameVariableValue = deployableCodeFolderNameVariableValue + "/fastAndSlowCar_v2";
 		String apiMappingsFolderNameVariableName = "apiMappingsFolderPath";
@@ -768,56 +772,56 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		// Use default values and generate the config file with default values.
 		ArrayList<String> defaultVariableDefs = new ArrayList<String>();
 		
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure("ExampleNumberVariableName", directValueKeyword + " 12", NumberType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure("ExampleStringVariableName", directValueKeyword + " ExampleString", StringType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure("ExampleBooleanVariableName", directValueKeyword + " true", BooleanType));
+		defaultVariableDefs.add(generateVariableDefStructure("ExampleNumberVariableName", "12", NumberType));
+		defaultVariableDefs.add(generateVariableDefStructure("ExampleStringVariableName", "ExampleString", StringType));
+		defaultVariableDefs.add(generateVariableDefStructure("ExampleBooleanVariableName", "true", BooleanType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(generatedCodeFolderNameVariableName, generatedCodeFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(muml_containerFilePathVariableName, muml_containerFilePathVariableValue, FilePathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(componentCodeFolderNameVariableName, componentCodeFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(apiMappingsFolderNameVariableName, apiMappingsFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(componentsFolderNameVariableName, componentsFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(libFolderNameVariableName, libFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(messagesFolderNameVariableName, messagesFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(operationsFolderNameVariableName, operationsFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(RTSCsFolderNameVariableName, RTSCsFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(typesFolderNameVariableName, typesFolderNameVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(generatedCodeFolderNameVariableName, generatedCodeFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(muml_containerFilePathVariableName, muml_containerFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(componentCodeFolderNameVariableName, componentCodeFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(apiMappingsFolderNameVariableName, apiMappingsFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(componentsFolderNameVariableName, componentsFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(libFolderNameVariableName, libFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(messagesFolderNameVariableName, messagesFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(operationsFolderNameVariableName, operationsFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(RTSCsFolderNameVariableName, RTSCsFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(typesFolderNameVariableName, typesFolderNameVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(deployableCodeFolderNameVariableName, deployableCodeFolderNameVariableValue, FolderPathType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(WLANNameOrSSIDVariableName, WLANNameOrSSIDVariableValue, WLANNameType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(WLANPasswordVariableName, WLANPasswordVariableValue, WLANPasswordType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(MQTTServerIPAddressVariableName, MQTTServerIPAddressVariableValue, ServerIPAddressType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(MQTTServerPortVariableName, MQTTServerPortVariableValue, ServerPortType));
+		defaultVariableDefs.add(generateVariableDefStructure(WLANNameOrSSIDVariableName, WLANNameOrSSIDVariableValue, WLANNameType));
+		defaultVariableDefs.add(generateVariableDefStructure(WLANPasswordVariableName, WLANPasswordVariableValue, WLANPasswordType));
+		defaultVariableDefs.add(generateVariableDefStructure(MQTTServerIPAddressVariableName, MQTTServerIPAddressVariableValue, ServerIPAddressType));
+		defaultVariableDefs.add(generateVariableDefStructure(MQTTServerPortVariableName, MQTTServerPortVariableValue, ServerPortType));
 		
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarDesiredVelocityVariableName, fastCarDesiredVelocityVariableValue, NumberType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarDesiredVelocityVariableName, slowCarDesiredVelocityVariableValue, NumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarDesiredVelocityVariableName, fastCarDesiredVelocityVariableValue, NumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarDesiredVelocityVariableName, slowCarDesiredVelocityVariableValue, NumberType));
 		
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(usedDriverBoardIdentifierFQBNVariableName, usedDriverBoardIdentifierFQBNVariableValue, BoardIdentifierFQBNType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(usedCoordinatorBoardIdentifierFQBNVariableName, usedCoordinatorBoardIdentifierFQBNVariableValue, BoardIdentifierFQBNType));
+		defaultVariableDefs.add(generateVariableDefStructure(usedDriverBoardIdentifierFQBNVariableName, usedDriverBoardIdentifierFQBNVariableValue, BoardIdentifierFQBNType));
+		defaultVariableDefs.add(generateVariableDefStructure(usedCoordinatorBoardIdentifierFQBNVariableName, usedCoordinatorBoardIdentifierFQBNVariableValue, BoardIdentifierFQBNType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarCoordinatorECUNameVariableName, fastCarCoordinatorECUNameVariableValue, StringType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarCoordinatorECUBoardSerialNumberVariableName, fastCarCoordinatorECUBoardSerialNumberVariableValue, BoardSerialNumberType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarDriverECUBoardSerialNumberVariableName, fastCarDriverECUBoardSerialNumberVariableValue, BoardSerialNumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarCoordinatorECUNameVariableName, fastCarCoordinatorECUNameVariableValue, StringType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarCoordinatorECUBoardSerialNumberVariableName, fastCarCoordinatorECUBoardSerialNumberVariableValue, BoardSerialNumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarDriverECUBoardSerialNumberVariableName, fastCarDriverECUBoardSerialNumberVariableValue, BoardSerialNumberType));
 		
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarCoordinatorECUNameVariableName, slowCarCoordinatorECUNameVariableValue, StringType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarCoordinatorECUBoardSerialNumberVariableName, slowCarCoordinatorECUBoardSerialNumberVariableValue, BoardSerialNumberType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarDriverECUBoardSerialNumberVariableName, slowCarDriverECUBoardSerialNumberVariableValue, BoardSerialNumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarCoordinatorECUNameVariableName, slowCarCoordinatorECUNameVariableValue, StringType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarCoordinatorECUBoardSerialNumberVariableName, slowCarCoordinatorECUBoardSerialNumberVariableValue, BoardSerialNumberType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarDriverECUBoardSerialNumberVariableName, slowCarDriverECUBoardSerialNumberVariableValue, BoardSerialNumberType));
 		
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarCoordinatorECUFolderPathVariableName, fastCarCoordinatorECUFolderPathVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarCoordinatorECUINOFilePathVariableName, fastCarCoordinatorECUINOFilePathVariableValue, FilePathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarCoordinatorECUINOHEXFilePathVariableName, fastCarCoordinatorECUINOHEXFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarCoordinatorECUFolderPathVariableName, fastCarCoordinatorECUFolderPathVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarCoordinatorECUINOFilePathVariableName, fastCarCoordinatorECUINOFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarCoordinatorECUINOHEXFilePathVariableName, fastCarCoordinatorECUINOHEXFilePathVariableValue, FilePathType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarDriverECUFolderPathVariableName, fastCarDriverECUFolderPathVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarDriverECUINOFilePathVariableName, fastCarDriverECUINOFilePathVariableValue, FilePathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(fastCarDriverECUINOHEXFilePathVariableName, fastCarDriverECUINOHEXFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarDriverECUFolderPathVariableName, fastCarDriverECUFolderPathVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarDriverECUINOFilePathVariableName, fastCarDriverECUINOFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(fastCarDriverECUINOHEXFilePathVariableName, fastCarDriverECUINOHEXFilePathVariableValue, FilePathType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarCoordinatorECUFolderPathVariableName, slowCarCoordinatorECUFolderPathVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarCoordinatorECUINOFilePathVariableName, slowCarCoordinatorECUINOFilePathVariableValue, FilePathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarCoordinatorECUINOHEXFilePathVariableName, slowCarCoordinatorECUINOHEXFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarCoordinatorECUFolderPathVariableName, slowCarCoordinatorECUFolderPathVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarCoordinatorECUINOFilePathVariableName, slowCarCoordinatorECUINOFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarCoordinatorECUINOHEXFilePathVariableName, slowCarCoordinatorECUINOHEXFilePathVariableValue, FilePathType));
 
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarDriverECUFolderPathVariableName, slowCarDriverECUFolderPathVariableValue, FolderPathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarDriverECUINOFilePathVariableName, slowCarDriverECUINOFilePathVariableValue, FilePathType));
-		defaultVariableDefs.add(GenerateVariableDefStructure.generateVariableDefStructure(slowCarDriverECUINOHEXFilePathVariableName, slowCarDriverECUINOHEXFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarDriverECUFolderPathVariableName, slowCarDriverECUFolderPathVariableValue, FolderPathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarDriverECUINOFilePathVariableName, slowCarDriverECUINOFilePathVariableValue, FilePathType));
+		defaultVariableDefs.add(generateVariableDefStructure(slowCarDriverECUINOHEXFilePathVariableName, slowCarDriverECUINOHEXFilePathVariableValue, FilePathType));
 
 		mapForPipelineSettings.put(variableDefsKeyword, defaultVariableDefs);
 

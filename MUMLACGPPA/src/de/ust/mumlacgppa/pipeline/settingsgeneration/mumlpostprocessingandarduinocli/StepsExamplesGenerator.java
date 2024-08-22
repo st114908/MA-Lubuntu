@@ -44,10 +44,10 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Sa
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.TerminalCommand;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFilePaths, Keywords{
+public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFilesPaths, Keywords{
 	private Path completeSettingsDirectoryPath;
 	private Path completeExamplesFilePath;
 	

@@ -20,7 +20,7 @@ import org.muml.core.export.operation.IFujabaExportOperation;
 
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
@@ -44,12 +44,11 @@ public class PostProcessingExecutionAsExport extends PipelineExecutionAsExport {
 	protected boolean hasNextStepRespectiveSequence() {
 		return PSRInstance.hasNextPostProcessingStep();
 	}
-
+	
 	@Override
 	protected void resetRespectiveSequence() {
 		PSRInstance.resetPostProcessingProgress();;
 	}
-
 
 	@Override
 	public void addPages() {
@@ -62,8 +61,8 @@ public class PostProcessingExecutionAsExport extends PipelineExecutionAsExport {
 
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
 
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if(problemsWithPipelineSettingsFile){

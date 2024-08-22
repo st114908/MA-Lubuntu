@@ -32,7 +32,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -63,8 +63,8 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
 
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if (problemsWithPipelineSettingsFile) {
@@ -81,7 +81,7 @@ public class ContainerTransformationExecutionAsExport extends PipelineExecutionA
 		}
 		settingsMissing = false;
 		
-		transformation = (ContainerTransformation) PSRInstance.getStandaloneUsageDef(ContainerTransformation.nameFlag);
+		transformation = (ContainerTransformation) PSRInstance.getTransformationAndCodeGenerationPreconfigurationsDef(ContainerTransformation.nameFlag);
 
 		sourceSystemAllocationPage = generateSourceSystemAllocationPage();
 		addPage(sourceSystemAllocationPage);

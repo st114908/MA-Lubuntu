@@ -27,7 +27,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 /**
@@ -55,8 +55,8 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
 
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if(problemsWithPipelineSettingsFile){
@@ -73,7 +73,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 		}
 		settingsMissing = false;
 		
-		generation = (ComponentCodeGeneration) PSRInstance.getStandaloneUsageDef(ComponentCodeGeneration.nameFlag);
+		generation = (ComponentCodeGeneration) PSRInstance.getTransformationAndCodeGenerationPreconfigurationsDef(ComponentCodeGeneration.nameFlag);
 		
 		sourceComponentInstancePage = generateSourceComponentInstancePage();
 		addPage(sourceComponentInstancePage);

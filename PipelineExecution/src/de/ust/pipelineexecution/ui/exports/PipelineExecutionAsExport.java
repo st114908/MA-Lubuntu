@@ -53,7 +53,7 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Pi
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Upload;
-import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilePaths;
+import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import de.ust.mumlacgppa.pipeline.reader.PipelineSettingsReader;
 import projectfolderpathstorageplugin.ProjectFolderPathNotSetException;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
@@ -84,18 +84,17 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected boolean hasNextStepRespectiveSequence() {
 		return PSRInstance.hasNextPipelineSequenceStep();
 	}
-
+	
 	protected void resetRespectiveSequence() {
 		PSRInstance.resetPipelineSequenceProgress();
 	}
-
 	
 	protected void checkWhichImprovisationsToPerform() {
 		containerTransformationToBePerformed = false;
 		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
-
 		resetRespectiveSequence();
+
 		PipelineStep currentStep;
 		while(hasNextStepRespectiveSequence()){
 			currentStep = getNextStepRespectiveSequence();
@@ -247,8 +246,8 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
-				.resolve(PipelineSettingsDirectoryAndFilePaths.PIPELINE_SETTINGS_FILE_NAME);
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
+				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
 
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if(problemsWithPipelineSettingsFile){
