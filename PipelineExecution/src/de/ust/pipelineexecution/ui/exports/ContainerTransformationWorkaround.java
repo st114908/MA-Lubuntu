@@ -34,10 +34,10 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-class ContainerTransformationImprovisation{
+class ContainerTransformationWorkaround{
 	private ContainerTransformation step;
 	
-	public ContainerTransformationImprovisation(ContainerTransformation step)
+	public ContainerTransformationWorkaround(ContainerTransformation step)
 			throws VariableNotDefinedException, StructureException{
 		this.step = step;
 	}

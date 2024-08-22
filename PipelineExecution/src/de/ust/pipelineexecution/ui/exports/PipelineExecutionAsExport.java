@@ -89,7 +89,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		PSRInstance.resetPipelineSequenceProgress();
 	}
 	
-	protected void checkWhichImprovisationsToPerform() {
+	protected void checkWhichWorkaroundsToPerform() {
 		containerTransformationToBePerformed = false;
 		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
@@ -270,7 +270,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		// due to doExecute requiring the requested values to be "final or
 		// effectively final" (or with other words not maybe given values).
 		// .getClass().getSimpleName()
-		checkWhichImprovisationsToPerform();
+		checkWhichWorkaroundsToPerform();
 
 		// Information about steps with windows that appear.
 		handleStepsWithWindowCheck();
@@ -395,7 +395,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			final EObject[] sourceElementsSystemAllocation, ContainerTransformation step,
 			IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-		ContainerTransformationImprovisation ContainerTransformationHandlerInstance = new ContainerTransformationImprovisation(
+		ContainerTransformationWorkaround ContainerTransformationHandlerInstance = new ContainerTransformationWorkaround(
 				step);
 		ContainerTransformationHandlerInstance.performContainerTransformation(targetProject,
 				sourceElementsSystemAllocation, progressMonitor, editingDomain);
@@ -404,7 +404,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	protected void doExecuteContainerCodeGeneration(final IProject targetProject, ContainerCodeGeneration step,
 			IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-		ContainerCodeGenerationImprovisation ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationImprovisation(
+		ContainerCodeGenerationWorkaround ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationWorkaround(
 				step);
 		ContainerCodeGenerationHandlerInstance.performContainerCodeGeneration(targetProject, progressMonitor);
 	}
@@ -413,7 +413,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 			final EObject[] sourceElementsComponentInstance, ComponentCodeGeneration step,
 			IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-		ComponentCodeGenerationImprovisation componentCodeGenerationHandlerInstance = new ComponentCodeGenerationImprovisation(
+		ComponentCodeGenerationWorkaround componentCodeGenerationHandlerInstance = new ComponentCodeGenerationWorkaround(
 				step);
 		componentCodeGenerationHandlerInstance.performComponentCodeGeneration(targetProject,
 				sourceElementsComponentInstance, progressMonitor);
@@ -449,7 +449,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		// can't be used for messages during the pipeline execution.
 		
 		// Somehow A manual written "throws ... NoSuchFileException" for java.nio.file.NoSuchFileException won't get accepted in the catch clauses,
-		// so here an improvisation:
+		// so here an improvisation/workaround:
 		if(e.getClass().getSimpleName().contains("NoSuchFileException")){
 			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "File not found: " + e.getMessage(), e);
 			Activator.getDefault().getLog().log(status);

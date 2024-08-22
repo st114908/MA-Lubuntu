@@ -344,7 +344,7 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 	}
 	
 
-	// For improvisations that require more access possibilities:
+	// For workarounds that require more access possibilities:
 	
 	
 	public VariableContent getContentOfInput(String key) throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
@@ -371,7 +371,8 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 	
 	/**
 	 * Makes the called step interpret the entry under the parameter key as path and return the resolved result path. 
-	 * Please note: This is an helper method  that is only intended for the improvised pipeline execution, more specifically to be used for PipelineExecution/pipelineexecution.ui.exports/*Improvisation.java helper classes.
+	 * Please note: This is an helper method  that is only intended for the improvised pipeline execution (with workarounds),
+	 * more specifically to be used for PipelineExecution/pipelineexecution.ui.exports/*Workaround.java helper classes.
 	 * Please remove as soon as a misused export is no longer used for the pipeline execution.
 	 * @param key The input parameter name the step shall look for.  
 	 * @return

@@ -27,10 +27,10 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-class ComponentCodeGenerationImprovisation {
+class ComponentCodeGenerationWorkaround {
 	private ComponentCodeGeneration step;
 
-	public ComponentCodeGenerationImprovisation(ComponentCodeGeneration step) {
+	public ComponentCodeGenerationWorkaround(ComponentCodeGeneration step) {
 		this.step = step;
 	}
 

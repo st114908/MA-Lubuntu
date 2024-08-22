@@ -27,10 +27,10 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
-class ContainerCodeGenerationImprovisation{
+class ContainerCodeGenerationWorkaround{
 	private ContainerCodeGeneration step;
 	
-	public ContainerCodeGenerationImprovisation(ContainerCodeGeneration step){
+	public ContainerCodeGenerationWorkaround(ContainerCodeGeneration step){
 		this.step = step;
 	}
 	
