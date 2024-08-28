@@ -18,7 +18,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,7 +29,6 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;

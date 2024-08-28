@@ -7,19 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-
-import org.yaml.snakeyaml.Yaml;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.AbortPipelineException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;

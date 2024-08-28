@@ -1,14 +1,24 @@
 package de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.URI;
+
+import org.muml.arduino.adapter.container.ui.common.GenerateAll;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
@@ -16,6 +26,9 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableHandler;
 import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
+import projectfolderpathstorageplugin.ProjectFolderPathStorage;
+
+
 
 public class ContainerCodeGeneration extends PipelineStep implements VariableTypes {
 
@@ -83,14 +96,26 @@ public class ContainerCodeGeneration extends PipelineStep implements VariableTyp
 	@Override
 	public void execute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
-			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception {
-		/*
-		 * Due to a lack of detailed knowledge about Eclipse plug ins and a lack
-		 * of time this is currently done by a copied and adjusted call from
-		 * PipeLineExecutionAsExport. Its presence in the pipeline simply gets
-		 * detected by PipeLineExecutionAsExport, which adjusts its behaviour
-		 * and calls in order to trigger the desired generation/transformation.
-		 */
+			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception, InOrOutKeyNotDefinedException  {
+		handleOutputByKey("ifSuccessful", false);
+		
+		IProject targetProject = ProjectFolderPathStorage.project;
+		
+		Path referenceFolderForURIPathGeneration = ProjectFolderPathStorage.projectFolderPath.getParent();
+		Path sourceContainerFilePath = resolveFullOrLocalPath( handleInputByKey("muml_containerSourceFile").getContent() );
+		Path subPathForSourceContainerPlatformRessourseURI = referenceFolderForURIPathGeneration.relativize(sourceContainerFilePath);
+		final URI sourceContainerURI = URI.createPlatformResourceURI(subPathForSourceContainerPlatformRessourseURI.toString(), true);
+		
+		Path arduinoContainersDestinationFolderPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersDestinationFolder").getContent() );
+		Path subPathArduinoContainersDestinationFolder = ProjectFolderPathStorage.projectFolderPath.relativize(arduinoContainersDestinationFolderPath);
+		IFolder destinationFolder = targetProject.getFolder(subPathArduinoContainersDestinationFolder.toString());
+		final IContainer arduinoCodeDestination = destinationFolder;
+		
+		GenerateAll generator = new GenerateAll(sourceContainerURI, arduinoCodeDestination, ((List<? extends Object>) new ArrayList<String>()) );
+		//generator.doGenerate(progressMonitor);
+		generator.doGenerate(new NullProgressMonitor());
+
+		handleOutputByKey("ifSuccessful", true);
 	}
 
 }

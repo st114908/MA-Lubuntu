@@ -2,8 +2,6 @@ package de.ust.pipelineexecution.ui.exports;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -23,10 +21,7 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
-import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.paths.PipelineSettingsDirectoryAndFilesPaths;
 import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
@@ -53,6 +48,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 		final IProject targetProject = selectedResource.getProject();
 		Path projectPath = Paths.get(targetProject.getRawLocation().toString());
 
+		ProjectFolderPathStorage.project = targetProject;
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
 				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
@@ -118,8 +114,6 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IStructuredSelection selection = (IStructuredSelection) window.getSelectionService().getSelection();
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
-		final IResource selectedResource = (IResource) selection.getFirstElement();
-		final IProject targetProject = selectedResource.getProject();
 
 		// T3.3: Component Code Generation
 		final EObject[] sourceElementsComponentInstance = sourceComponentInstancePage.getSourceElements();
@@ -128,7 +122,7 @@ public class ComponentCodeGenerationExecutionAsExport extends PipelineExecutionA
 			protected IStatus doExecute(IProgressMonitor progressMonitor) {
 				// T3.3: Component Code Generation
 				try {
-					doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance,
+					doExecuteComponentCodeGeneration(sourceElementsComponentInstance,
 							generation, progressMonitor);
 				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					// TODO Auto-generated catch block

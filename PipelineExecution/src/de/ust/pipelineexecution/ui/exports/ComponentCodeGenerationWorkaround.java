@@ -34,10 +34,11 @@ class ComponentCodeGenerationWorkaround {
 		this.step = step;
 	}
 
-	public void performComponentCodeGeneration(IProject targetProject, EObject[] sourceElementsComponentInstance,
-			IProgressMonitor progressMonitor)
+	public void performComponentCodeGeneration(EObject[] sourceElementsComponentInstance, IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		step.setContentOfOutput("ifSuccessful", false);
+		
+		IProject targetProject = ProjectFolderPathStorage.project;
 		
 		Path arduinoContainersDestinationFolder = step
 				.getResolvedPathContentOfInput("arduinoContainersDestinationFolder");

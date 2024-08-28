@@ -3,11 +3,8 @@ package de.ust.mumlacgppa.pipeline.parts.steps;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
-
 import org.yaml.snakeyaml.Yaml;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;

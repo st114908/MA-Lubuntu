@@ -42,10 +42,12 @@ class ContainerTransformationWorkaround{
 		this.step = step;
 	}
 	
-	public void performContainerTransformation(IProject targetProject, EObject[] sourceElementsSystemAllocation, IProgressMonitor progressMonitor, EditingDomain editingDomain)
+	public void performContainerTransformation(EObject[] sourceElementsSystemAllocation, IProgressMonitor progressMonitor, EditingDomain editingDomain)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException{
 		step.setContentOfOutput("ifSuccessful", false);
 
+		IProject targetProject = ProjectFolderPathStorage.project;
+		
 		final SystemAllocation systemAllocation = (SystemAllocation) sourceElementsSystemAllocation[0];
 		AdapterFactoryEditingDomain.getEditingDomainFor(systemAllocation);
 

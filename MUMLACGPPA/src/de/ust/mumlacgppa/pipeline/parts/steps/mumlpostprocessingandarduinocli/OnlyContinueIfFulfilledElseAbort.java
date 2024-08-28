@@ -1,8 +1,6 @@
 package de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;

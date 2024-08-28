@@ -14,10 +14,10 @@
 
 
 //variable for component Instances
-CourseControlComponent* atomic_c1;
-DistanceSensorComponent* atomic_c2;
-DriveControllerComponent* atomic_c3;
-DistanceSensorComponent* atomic_c4;
+DistanceSensorComponent* atomic_c1;
+CourseControlComponent* atomic_c2;
+DistanceSensorComponent* atomic_c3;
+DriveControllerComponent* atomic_c4;
 
 void setup(){
 	#ifdef DEBUG
@@ -27,10 +27,10 @@ void setup(){
 	// Start of user code DEVICEINIT
 	/* TODO: if devices are used which need an initialization, call the functionse here */
 	// End of user code
-	atomic_c1= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
-	atomic_c2= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
-	atomic_c3= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
-	atomic_c4= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
+	atomic_c1= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
+	atomic_c2= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
+	atomic_c3= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
+	atomic_c4= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
 	
 	i2cCommunication_setup(9);
 
@@ -42,10 +42,10 @@ void setup(){
 
 void loop(){
 
-	CourseControlComponent_processStep(atomic_c1);
-	DistanceSensorComponent_processStep(atomic_c2);
-	DriveControllerComponent_processStep(atomic_c3);
-	DistanceSensorComponent_processStep(atomic_c4);
+	DistanceSensorComponent_processStep(atomic_c1);
+	CourseControlComponent_processStep(atomic_c2);
+	DistanceSensorComponent_processStep(atomic_c3);
+	DriveControllerComponent_processStep(atomic_c4);
 }	
 
 

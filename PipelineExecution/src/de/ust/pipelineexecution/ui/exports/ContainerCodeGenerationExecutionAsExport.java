@@ -1,5 +1,6 @@
 package de.ust.pipelineexecution.ui.exports;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -16,8 +17,11 @@ import org.eclipse.ui.PlatformUI;
 import org.muml.core.export.operation.AbstractFujabaExportOperation;
 import org.muml.core.export.operation.IFujabaExportOperation;
 
+import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
+import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
+import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
@@ -75,17 +79,18 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 			exceptionFeedback(e);
 		}
 		
-		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Container code generation execution",
-				"Container code generation ready to start.",
-				"The execution of the container code generation is ready to start.\n" + "Click \"Finish\" to start it.");
-		addPage(readyToStartPipelineInfoWindow);
-
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
 		try {
 			refreshWorkSpace(selectedFile);
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
+		
+		InfoWindow readyToStartPipelineInfoWindow = new InfoWindow("Container code generation execution",
+				"Container code generation ready to start.",
+				"The execution of the container code generation is ready to start.\n" + "Click \"Finish\" to start it.");
+		addPage(readyToStartPipelineInfoWindow);
+
 	}
 
 
@@ -110,16 +115,16 @@ public class ContainerCodeGenerationExecutionAsExport extends PipelineExecutionA
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IStructuredSelection selection = (IStructuredSelection) window.getSelectionService().getSelection();
 		final IFile selectedFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
-		final IResource selectedResource = (IResource) selection.getFirstElement();
-		final IProject targetProject = selectedResource.getProject();
 
 		return new AbstractFujabaExportOperation() {
 			@Override
 			protected IStatus doExecute(IProgressMonitor progressMonitor) {
 				// T3.6 and T3.7: Container Code Generation
 				try {
-					doExecuteContainerCodeGeneration(targetProject, generation, progressMonitor);
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
+					generation.execute();
+				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException |
+						FaultyDataException | ParameterMismatchException | IOException | InterruptedException |
+						NoArduinoCLIConfigFileException | FQBNErrorEception e) {
 					// TODO Auto-generated catch block
 					return exceptionFeedback(e);
 				}

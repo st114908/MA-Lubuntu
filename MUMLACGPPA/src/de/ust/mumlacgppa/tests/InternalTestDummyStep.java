@@ -1,7 +1,6 @@
 package de.ust.mumlacgppa.tests;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;

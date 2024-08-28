@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -45,7 +44,6 @@ import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.PipelineStep;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Compile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ComponentCodeGeneration;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
@@ -68,7 +66,6 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 
 	protected PipelineSettingsReader PSRInstance;
 	protected boolean containerTransformationToBePerformed;
-	protected boolean containerCodeGenerationToBePerformed;
 	protected boolean componentCodeGenerationToBePerformed;
 
 	@Override
@@ -91,7 +88,6 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 	
 	protected void checkWhichWorkaroundsToPerform() {
 		containerTransformationToBePerformed = false;
-		containerCodeGenerationToBePerformed = false;
 		componentCodeGenerationToBePerformed = false;
 		resetRespectiveSequence();
 
@@ -106,15 +102,6 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 				try {
 					generateFolderIfNecessary(
 							currentStep.getResolvedPathContentOfInput("muml_containerFileDestination").getParent());
-				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
-					exceptionFeedback(e);
-				}
-			} else if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
-				// T3.6 and T3.7: Container Code Generation
-				containerCodeGenerationToBePerformed = true;
-				try {
-					generateFolderIfNecessary(currentStep
-							.getResolvedPathContentOfInput("arduinoContainersDestinationFolder").getParent());
 				} catch (VariableNotDefinedException | StructureException | InOrOutKeyNotDefinedException | FaultyDataException e) {
 					exceptionFeedback(e);
 				}
@@ -244,11 +231,13 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		final IProject targetProject = selectedResource.getProject();
 		Path projectPath = Paths.get(targetProject.getRawLocation().toString());
 
+		ProjectFolderPathStorage.project = targetProject;
 		ProjectFolderPathStorage.projectFolderPath = projectPath;
 		completePipelineSettingsFilePath = projectPath
 				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_DIRECTORY_FOLDER)
 				.resolve(PipelineSettingsDirectoryAndFilesPaths.PIPELINE_SETTINGS_FILE_NAME);
-
+		
+		
 		boolean problemsWithPipelineSettingsFile = handlePipelineSettingsFile();
 		if(problemsWithPipelineSettingsFile){
 			return;
@@ -351,18 +340,12 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 								&& (currentStep.getClass().getSimpleName().equals(ContainerTransformation.nameFlag))) {
 							// T3.2: Deployment Configuration aka Container
 							// Transformation
-							doExecuteContainerTransformationPart(targetProject, sourceElementsSystemAllocation,
+							doExecuteContainerTransformationPart(sourceElementsSystemAllocation,
 									(ContainerTransformation) currentStep, progressMonitor);
-						} else if (currentStep.getClass().getSimpleName().equals(ContainerCodeGeneration.nameFlag)) {
-							// T3.6 and T3.7: Container Code Generation
-							if (containerCodeGenerationToBePerformed) {
-								doExecuteContainerCodeGeneration(targetProject, (ContainerCodeGeneration) currentStep,
-										progressMonitor);
-							}
 						} else if (componentCodeGenerationToBePerformed
 								&& (currentStep.getClass().getSimpleName().equals(ComponentCodeGeneration.nameFlag))) {
 							// T3.3: Component Code Generation
-							doExecuteComponentCodeGeneration(targetProject, sourceElementsComponentInstance,
+							doExecuteComponentCodeGeneration(sourceElementsComponentInstance,
 									(ComponentCodeGeneration) currentStep, progressMonitor);
 						} else {
 							handleOtherPipelineSteps(currentStep);
@@ -391,31 +374,23 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		}
 	}
 
-	protected void doExecuteContainerTransformationPart(final IProject targetProject,
+	protected void doExecuteContainerTransformationPart(
 			final EObject[] sourceElementsSystemAllocation, ContainerTransformation step,
 			IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		ContainerTransformationWorkaround ContainerTransformationHandlerInstance = new ContainerTransformationWorkaround(
 				step);
-		ContainerTransformationHandlerInstance.performContainerTransformation(targetProject,
+		ContainerTransformationHandlerInstance.performContainerTransformation(
 				sourceElementsSystemAllocation, progressMonitor, editingDomain);
 	}
 
-	protected void doExecuteContainerCodeGeneration(final IProject targetProject, ContainerCodeGeneration step,
-			IProgressMonitor progressMonitor)
-			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-		ContainerCodeGenerationWorkaround ContainerCodeGenerationHandlerInstance = new ContainerCodeGenerationWorkaround(
-				step);
-		ContainerCodeGenerationHandlerInstance.performContainerCodeGeneration(targetProject, progressMonitor);
-	}
-
-	protected void doExecuteComponentCodeGeneration(final IProject targetProject,
+	protected void doExecuteComponentCodeGeneration(
 			final EObject[] sourceElementsComponentInstance, ComponentCodeGeneration step,
 			IProgressMonitor progressMonitor)
 			throws VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
 		ComponentCodeGenerationWorkaround componentCodeGenerationHandlerInstance = new ComponentCodeGenerationWorkaround(
 				step);
-		componentCodeGenerationHandlerInstance.performComponentCodeGeneration(targetProject,
+		componentCodeGenerationHandlerInstance.performComponentCodeGeneration(
 				sourceElementsComponentInstance, progressMonitor);
 	}
 

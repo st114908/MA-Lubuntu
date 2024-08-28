@@ -9,19 +9,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.ParameterMismatchException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotDefinedException;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StepNotMatched;
-import de.ust.mumlacgppa.pipeline.parts.exceptions.StructureException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.VariableNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.steps.Keywords;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerCodeGeneration;
