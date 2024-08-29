@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import de.ust.arduinocliutilizer.worksteps.common.FallbackForBoardsWithoutInternalFQBNDataHander;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.arduinocliutilizer.worksteps.functions.ConnectedBoardsFinder;
 import de.ust.arduinocliutilizer.worksteps.functions.FQBNAndCoresHandler;
@@ -40,7 +41,14 @@ public class BoardAutoSelectionAndInstallation {
 		
 		Map<String, Object> connectedBoard = connectedBoards.get(0);
 		ArrayList<Map<String, Object>> connectedBoardMatchingBoardsPart = (ArrayList<Map<String, Object>>) connectedBoard.get("matchingboards");
-		foundFqbn = (String) ( (Map<String, Object>) connectedBoardMatchingBoardsPart.get(0) ).get("fqbn");
+		
+		if(connectedBoardMatchingBoardsPart.size() == 0){ // Check if the board knows its own data or not.
+			foundFqbn = FallbackForBoardsWithoutInternalFQBNDataHander.getFallbackFQBN();
+		}
+		else{
+			foundFqbn = (String) ( (Map<String, Object>) connectedBoardMatchingBoardsPart.get(0) ).get("fqbn");
+		}
+		
 		foundPortAddress = (String) ( (Map<String, Object>) connectedBoard.get("port") ).get("address");
 		
 		// FQBN matching and potentially performing necessary installation:

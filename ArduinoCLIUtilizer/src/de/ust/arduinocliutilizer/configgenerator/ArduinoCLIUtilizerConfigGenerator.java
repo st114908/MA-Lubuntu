@@ -69,6 +69,7 @@ public class ArduinoCLIUtilizerConfigGenerator implements DefaultConfigDirectory
 			data.put("arduinoCLIPathSetInPathEnvironment", false);
 		}
 		data.put("arduinoCLIDirectory", DEFAULT_ARDUINO_CLI_PATH);
+		data.put("fallbackFQBN", "arduino:avr:nano");
 
 		// For DumperOptions examples see
 		// https://www.tabnine.com/code/java/methods/org.yaml.snakeyaml.DumperOptions$LineBreak/getPlatformLineBreak

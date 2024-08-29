@@ -21,6 +21,17 @@ Normal response stream:
         serialNumber: 8593731333735141A130
         vid: "0x2341"
     hardwareid: 8593731333735141A130
+- matchingboards: []
+  port:
+    address: /dev/ttyUSB0
+    label: /dev/ttyUSB0
+    protocol: serial
+    protocollabel: Serial Port (USB)
+    properties:
+        pid: "0x6001"
+        serialNumber: AB0LRZAC
+        vid: "0x0403"
+    hardwareid: AB0LRZAC
 
 
 

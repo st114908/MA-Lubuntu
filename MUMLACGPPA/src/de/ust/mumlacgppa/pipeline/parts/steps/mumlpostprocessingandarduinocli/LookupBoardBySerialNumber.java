@@ -9,6 +9,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import de.ust.arduinocliutilizer.worksteps.common.ArduinoCLICommandLineHandler;
 import de.ust.arduinocliutilizer.worksteps.common.CallAndResponses;
+import de.ust.arduinocliutilizer.worksteps.common.FallbackForBoardsWithoutInternalFQBNDataHander;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
@@ -121,15 +122,23 @@ public class LookupBoardBySerialNumber extends PipelineStep implements VariableT
 			String foundSerial = foundProperties.get("serialNumber");
 			if (foundSerial.equals(wantedBoardSerialNumber)) {
 				ArrayList<Map<String, String>> matchingboardsInfo = (ArrayList<Map<String, String>>) currentBoardEntry.get("matchingboards");
-				for (Map<String, String> currentMatchData : matchingboardsInfo){
-					String foundFQBN = currentMatchData.get("fqbn");
-					if(foundFQBN.equals(wantedBoardTypeIdentifierFQBN)){
-						String foundAddress = (String) portInfo.get("address");
-						handleOutputByKey("foundPortAddress", foundAddress);
-						handleOutputByKey("ifSuccessful", true);
-						return;
-					}
+				String foundFQBN;
+				
+				if(matchingboardsInfo.size() == 0){ // Check if the board knows its own data or not.
+					foundFQBN = FallbackForBoardsWithoutInternalFQBNDataHander.getFallbackFQBN();
 				}
+				else{
+					Map<String, String> currentBoardData = matchingboardsInfo.get(0);
+					foundFQBN = currentBoardData.get("fqbn");
+				}
+				
+				if(foundFQBN.equals(wantedBoardTypeIdentifierFQBN)){
+					String foundAddress = (String) portInfo.get("address");
+					handleOutputByKey("foundPortAddress", foundAddress);
+					handleOutputByKey("ifSuccessful", true);
+					return;
+				}
+				
 			}
 		}
 
