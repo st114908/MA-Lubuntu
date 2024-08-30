@@ -47,7 +47,7 @@ public abstract class FallbackForBoardsWithoutInternalFQBNDataHander implements 
 		InputStream inputStream = new FileInputStream(completeConfigFilePath.toFile());
 		Yaml yaml = new Yaml();
 		Map<String, Object> loadedData = yaml.load(inputStream);
-		FQBNToUse = (String) loadedData.get("fallbackFQBN");
+		FQBNToUse = (String) loadedData.get("fallbackBoardIdentifierFQBN");
 		inputStream.close();
 		settingsRead = true;
 

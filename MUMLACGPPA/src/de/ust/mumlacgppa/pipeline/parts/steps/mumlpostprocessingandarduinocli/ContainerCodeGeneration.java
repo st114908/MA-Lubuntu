@@ -1,6 +1,7 @@
 package de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -107,6 +108,11 @@ public class ContainerCodeGeneration extends PipelineStep implements VariableTyp
 		final URI sourceContainerURI = URI.createPlatformResourceURI(subPathForSourceContainerPlatformRessourseURI.toString(), true);
 		
 		Path arduinoContainersDestinationFolderPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersDestinationFolder").getContent() );
+		
+		if(! Files.isDirectory(arduinoContainersDestinationFolderPath) ){
+			throw new IOException("ContainerCodeGeneration: The destination folder path " + arduinoContainersDestinationFolderPath.toString() + " doesn't exist!");
+		}
+		
 		Path subPathArduinoContainersDestinationFolder = ProjectFolderPathStorage.projectFolderPath.relativize(arduinoContainersDestinationFolderPath);
 		IFolder destinationFolder = targetProject.getFolder(subPathArduinoContainersDestinationFolder.toString());
 		final IContainer arduinoCodeDestination = destinationFolder;
