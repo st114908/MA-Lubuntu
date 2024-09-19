@@ -34,7 +34,7 @@ ComponentCodeGeneration:
 ContainerTransformation:
   in:
     roboCar_mumlSourceFile: direct model/roboCar.muml
-    middlewareOption: 'direct MQTT_I2C_CONFIG # Or DDS_CONFIG'
+    middlewareOption: direct MQTT_I2C_CONFIG # Or DDS_CONFIG
     muml_containerFileDestination: direct container-models/MUML_Container.muml_container
   out:
     ifSuccessful: ifSuccessful
@@ -72,8 +72,32 @@ CopyFiles:
 DeleteFolder:
   in:
     path: direct exampleFolderPath
+    returnFailureIftargetAlreadyExists: direct false
   out:
     ifSuccessful: ifSuccessful
+
+
+
+DeleteFile:
+  in:
+    path: direct exampleFilePath
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+DeleteFolder:
+  in:
+    path: direct exampleFolderPath
+  out:
+    ifSuccessful: ifSuccessful
+
+
+
+DialogMessage:
+  in:
+    condition: direct true
+    message: direct The condition is true, so this will be shown.
 
 
 
@@ -93,13 +117,6 @@ OnlyContinueIfFulfilledElseAbort:
     message: |-
       direct Pipeline aborted!
       The condition has been evaluated to false.
-
-
-
-DialogMessage:
-  in:
-    condition: direct true
-    message: direct The condition is true, so this will be shown.
 
 
 

@@ -7,7 +7,7 @@ public interface VariableTypes {
 	public final String StringType = "String";
 	public final String BooleanType = "Boolean";
 	
-	public final String PathType = "Path";
+	//public final String PathType = "Path";
 	public final String FolderPathType = "FolderPath";
 	public final String FilePathType = "FilePath";
 	
@@ -31,8 +31,8 @@ public interface VariableTypes {
 			case BooleanType:
 				return true;
 
-			case PathType:
-				return true;
+			//case PathType:
+			//	return true;
 			case FolderPathType:
 				return true;
 			case FilePathType:

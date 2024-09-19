@@ -11,7 +11,7 @@ TurnSteeringCarConfig config = {
     100,      // width, length
     204,      // wheel circumfrence
     {48, 49}, // frontDistance
-    {48, 49}  // rearDistance
+    {46, 47}  // rearDistance
 };
 
 uint8_t brightnessPins[3] = {A0, A1, A2};

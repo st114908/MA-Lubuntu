@@ -18,10 +18,9 @@ import projectfolderpathstorageplugin.ProjectFolderPathStorage;
 
 public abstract class FallbackForBoardsWithoutInternalFQBNDataHander implements DefaultConfigDirectoryAndFilePath {
 	private static String FQBNToUse;
-	private static boolean settingsRead = false;
 
 	public static String getFallbackFQBN() throws IOException, ProjectFolderPathNotSetException, NoArduinoCLIConfigFileException{
-		if(settingsRead){
+		if(FQBNToUse != null){
 			return FQBNToUse;
 		}
 		// else
@@ -49,7 +48,6 @@ public abstract class FallbackForBoardsWithoutInternalFQBNDataHander implements 
 		Map<String, Object> loadedData = yaml.load(inputStream);
 		FQBNToUse = (String) loadedData.get("fallbackBoardIdentifierFQBN");
 		inputStream.close();
-		settingsRead = true;
 
 		return FQBNToUse;
 	}

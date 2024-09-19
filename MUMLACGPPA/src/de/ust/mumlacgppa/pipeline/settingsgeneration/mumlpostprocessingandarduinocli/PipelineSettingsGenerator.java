@@ -225,6 +225,36 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		Yaml yaml = new Yaml(options);
 		FileWriter settingsWriter = new FileWriter(completeMUMLACGPPASettingsFilePath.toFile());
 
+		// Information text about the variable types and their limits or formats to keep in mind:
+		String variableTypeAndLimitsInfoText = ""
+				+ "#In generell you have to adhere to the YAML format regardless of the type,\n"
+				+ "#so if there is a # symbol in the data, then you have to wrap the data in ' symbols.\n"
+				+ "#This way the whole data entry is seen as a string which includes a # and following.\n"
+				+ "#Now the types with their respective limitfs and formats:\n"
+				+ "#Any: This type is only internally allowed for reading parameter entries,\n"
+				+ "#but not for variable definitions or outpt parameters.\n"
+				+ "#Number: Whole numbers / integer values that Java can handle as 'int' values.\n"
+				+ "#String: character sequences that Java can handle as 'String' values.\n"
+				+ "#Boolean: 'true' or 'false' values.\n"
+				+ "#(In generell for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.\n"
+				+ "#    If there is a '\\' symbol at the beginning, then it will be interpreted as absolute path.\n"
+				+ "#    Else the path will be handled relative to the project folder.\n"
+				+ "#FolderPath: Additionally the path is supposed to be a folder path.\n"
+				+ "#FolderPath: Additionally the path is supposed to be a file path.\n"
+				+ "#BoardSerianNumber: A serial number as string, probably consisting of letters and numbers.\n"
+				+ "#BoardIdentifierFQBN: The board type. Due to the used Arduino-CLI estimated to be '[producer]:[processortype]:[model type]' and in lower case letters\n"
+				+ "#    If a producer is using a different format then it will also work as long as the Arduino-CLI accepts it.\n"
+				+ "#ConnectionPort: The shape of the port addresses is depending on the used system and virtual machine (if used).\n"
+				+ "#    Recommendation: don't write it manually, but get it through pipeline step 'LookupBoardBySerialNumber'.\n"
+				+ "#WLANName: In principle the same limits that exist for naming WLAN networks.\n"
+				+ "#WLANPassword: In principle the same limits that exist for setting the password of WLAN networks.\n"
+				+ "#ServerIPAddress: Addresses as used in internet browsers, but without 'https://' oder 'http://'.\n"
+				+ "#ServerPort: Adhere to the standards of server ports , see https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/";
+		
+		settingsWriter.write(variableTypeAndLimitsInfoText);
+		settingsWriter.write("\n\n");
+		
+		// Back to the pipeline configuration itself:
 		// Variable names and potentially their values:
 
 		String generatedCodeFolderNameVariableName = "generatedIncompleteFilesFolderPath";
@@ -525,7 +555,6 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 			CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.c
 			CI_REARDISTANCESENSORSDISTANCESENSORdistancePortaccessCommand.h
 		*/
-		// No automatic *CarDriverECU folders search this time due to the name format used for the Mappings.
 		
 		Map<String, Map<String, String>> postProcessingFrontDistanceSensorFastCarAPI = generatePostProcessingAdjustAPIMappingFile(
 				fromKeyword + " " + apiMappingsFolderNameVariableName,
@@ -765,6 +794,16 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		windowMessageFinishedPipelineSettingsIns.put("message",
 				directValueKeyword + " Pipeline execution completed!");
 		windowMessageFinishedPipeline.put(inKeyword, windowMessageFinishedPipelineSettingsIns);
+		
+		Map<String, Map<String, String>> compileReport = DialogMessage
+				.generateDefaultOrExampleValues();
+		Map<String, String> compileReportSettingsIns = windowMessageFinishedPipeline
+				.get(inKeyword);
+		compileReportSettingsIns.put("condition",
+				notKeyword + " " + fromKeyword + " ifSuccessful");
+		compileReportSettingsIns.put("message",
+				fromKeyword + " resultMessage");
+		windowMessageFinishedPipeline.put(inKeyword, compileReportSettingsIns);
 
 		// Now the pipeline settings and sequences:
 		Map<String, Object> mapForPipelineSettings = new LinkedHashMap<String, Object>();
@@ -1051,21 +1090,29 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsFastCoordinator));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
+				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastCoordinator));
 		defaultPipelineSequenceDefs.add(
 				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsFastDriver));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
+				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastDriver));
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsSlowCoordinator));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
+				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileSlowCoordinator));
 		defaultPipelineSequenceDefs.add(
 				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsSlowDriver));
+		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
+				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileSlowDriver));

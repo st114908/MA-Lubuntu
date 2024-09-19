@@ -3,9 +3,13 @@ package de.ust.mumlacgppa.pipeline.settingsgeneration.mumlpostprocessingandardui
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -19,6 +23,8 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Co
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ContainerTransformation;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFiles;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CopyFolder;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.CreateFolder;
+import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DeleteFolder;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.LookupBoardBySerialNumber;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.OnlyContinueIfFulfilledElseAbort;
@@ -108,13 +114,17 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFiles
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, CopyFiles.nameFlag, CopyFiles.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
+		myWriter.write(exampleSegment(yaml, CreateFolder.nameFlag, CreateFolder.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
+		myWriter.write(exampleSegment(yaml, DeleteFile.nameFlag, DeleteFile.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, DeleteFolder.nameFlag, DeleteFolder.generateDefaultOrExampleValues()));
+		myWriter.write("\n\n\n");
+		myWriter.write(exampleSegment(yaml, DialogMessage.nameFlag, DialogMessage.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, LookupBoardBySerialNumber.nameFlag, LookupBoardBySerialNumber.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, OnlyContinueIfFulfilledElseAbort.nameFlag, OnlyContinueIfFulfilledElseAbort.generateDefaultOrExampleValues()));
-		myWriter.write("\n\n\n");
-		myWriter.write(exampleSegment(yaml, DialogMessage.nameFlag, DialogMessage.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, PostProcessingAddHALPartsIntoCarDriverInoFiles.nameFlag, PostProcessingAddHALPartsIntoCarDriverInoFiles.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
@@ -158,9 +168,36 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFiles
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, Upload.nameFlag, Upload.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
-		
 		myWriter.close();
 
+		// Cleanup of unwanted additions: ' chars around from entries in the
+		// pipeline sequence and after the "in:" flags the &id...s and *id...s.
+		String inSequenceForCleanup = " " + inKeyword + ":";
+
+		String intermediateFileName = completeExamplesFilePath.toString() + ".editing";
+		FileWriter workCopy = new FileWriter(intermediateFileName);
+		Scanner currentFileReader = new Scanner(completeExamplesFilePath.toFile());
+		while (currentFileReader.hasNextLine()) {
+			String currentLine = currentFileReader.nextLine();
+			if (currentLine.contains("'")) {
+				String intermediate = currentLine.replace("'", "");
+				workCopy.write(intermediate + "\n");
+			} else if (currentLine.contains("'")) {
+				String intermediate = currentLine.replace("'", "");
+				workCopy.write(intermediate + "\n");
+			} else if (currentLine.contains(" " + inKeyword + ":")) {
+				int index = currentLine.indexOf(inSequenceForCleanup);
+				String intermediate = currentLine.substring(0, index + inSequenceForCleanup.length());
+				workCopy.write(intermediate + "\n");
+			} else {
+				workCopy.write(currentLine + "\n");
+			}
+		}
+		currentFileReader.close();
+		workCopy.close();
+		Files.move(Paths.get(intermediateFileName), completeExamplesFilePath,
+				StandardCopyOption.REPLACE_EXISTING);
+		
 		return true;
 	}
 	

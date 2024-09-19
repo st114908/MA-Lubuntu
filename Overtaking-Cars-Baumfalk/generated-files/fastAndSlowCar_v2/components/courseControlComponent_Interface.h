@@ -280,14 +280,6 @@
 					void CourseControlCourseControlComponentStateChart_processStep(CourseControlCourseControlComponentStateChart* rtsc);
 			
 				/**
-				 * @brief Leaves the Region: driving of the Realtime-StateChart: CourseControlCourseControlComponent
-				 * @details This method is called, whenever a the Region: driving is left.
-				 * 			The correct State is set and all Exit-Events are executed.
-				 *
-				 * @param rtsc The specific CourseControlCourseControlComponentStateChart whose Region: driving shall be exit
-				 */
-					void CourseControlCourseControl_mainDrivingStateChart_exit(CourseControlCourseControlComponentStateChart* rtsc);
-				/**
 				 * @brief Leaves the Region: courseControlPort of the Realtime-StateChart: CourseControlCourseControlComponent
 				 * @details This method is called, whenever a the Region: courseControlPort is left.
 				 * 			The correct State is set and all Exit-Events are executed.
@@ -295,6 +287,14 @@
 				 * @param rtsc The specific CourseControlCourseControlComponentStateChart whose Region: courseControlPort shall be exit
 				 */
 					void CourseControlCourseControlCourseControlPortStateChart_exit(CourseControlCourseControlComponentStateChart* rtsc);
+				/**
+				 * @brief Leaves the Region: driving of the Realtime-StateChart: CourseControlCourseControlComponent
+				 * @details This method is called, whenever a the Region: driving is left.
+				 * 			The correct State is set and all Exit-Events are executed.
+				 *
+				 * @param rtsc The specific CourseControlCourseControlComponentStateChart whose Region: driving shall be exit
+				 */
+					void CourseControlCourseControl_mainDrivingStateChart_exit(CourseControlCourseControlComponentStateChart* rtsc);
 						
 				/**
 				 * @brief Returns wether the Realtime-StateChart: CourseControlCourseControlComponent is in a specific State

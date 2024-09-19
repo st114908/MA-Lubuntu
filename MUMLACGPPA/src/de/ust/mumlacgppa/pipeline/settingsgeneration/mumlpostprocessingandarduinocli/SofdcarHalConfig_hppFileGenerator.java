@@ -55,7 +55,7 @@ public class SofdcarHalConfig_hppFileGenerator implements PipelineSettingsDirect
 		localSofdcarHalConfig_hppFile.write("    100,      // width, length\n");
 		localSofdcarHalConfig_hppFile.write("    204,      // wheel circumfrence\n");
 		localSofdcarHalConfig_hppFile.write("    {48, 49}, // frontDistance\n");
-		localSofdcarHalConfig_hppFile.write("    {48, 49}  // rearDistance\n");
+		localSofdcarHalConfig_hppFile.write("    {46, 47}  // rearDistance\n");
 		localSofdcarHalConfig_hppFile.write("};\n");
 		localSofdcarHalConfig_hppFile.write("\n");
 		localSofdcarHalConfig_hppFile.write("uint8_t brightnessPins[3] = {A0, A1, A2};\n");
