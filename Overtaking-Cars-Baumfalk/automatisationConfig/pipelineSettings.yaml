@@ -7,7 +7,7 @@
 #Number: Whole numbers / integer values that Java can handle as int values.
 #String: character sequences that Java can handle as String values.
 #Boolean: true or false values.
-#(In generell for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.
+#(In general for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.
 #    If there is a \ symbol at the beginning, then it will be interpreted as absolute path.
 #    Else the path will be handled relative to the project folder.
 #FolderPath: Additionally the path is supposed to be a folder path.

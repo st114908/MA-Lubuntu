@@ -7,6 +7,7 @@ import java.util.Map;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.FQBNErrorEception;
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
+import de.ust.arduinocliutilizer.worksteps.functions.FQBNAndCoresHandler;
 import de.ust.arduinocliutilizer.worksteps.functions.UploadCall;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
@@ -80,10 +81,17 @@ public class Upload extends PipelineStep implements VariableTypes {
 	public void execute() throws VariableNotDefinedException, StructureException, FaultyDataException,
 			ParameterMismatchException, IOException, InterruptedException, NoArduinoCLIConfigFileException,
 			FQBNErrorEception, ProjectFolderPathNotSetException, InOrOutKeyNotDefinedException {
+		handleOutputByKey("ifSuccessful", false);
 		String foundPortAddress = handleInputByKey("portAddress").getContent();
 		String targetFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
 		Path targetFilePath = resolveFullOrLocalPath( handleInputByKey("targetInoOrHexFile").getContent() );
 
+		FQBNAndCoresHandler FQBNAndCoresHandlerInstance = new FQBNAndCoresHandler(targetFilePath, targetFqbn);
+		if(!FQBNAndCoresHandlerInstance.isSuccessful()){
+			handleOutputByKey("resultMessage", FQBNAndCoresHandlerInstance.generateResultMessage());
+			return;
+		}
+		
 		UploadCall UploadCallInstance = new UploadCall(targetFilePath, foundPortAddress, targetFqbn);
 		if (UploadCallInstance.isSuccessful()) {
 			handleOutputByKey("ifSuccessful", true);

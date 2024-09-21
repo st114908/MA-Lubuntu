@@ -27,7 +27,6 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.On
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.DialogMessage;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValuesFlexible;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ReplaceLineContent;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SaveToTextFile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
@@ -109,12 +108,6 @@ public class StepsGeneratedDefaultsAndExamplesTest implements Keywords{
 	@Test
 	public void testPostProcessingStateChartValuesFlexible() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
 		PostProcessingStateChartValuesFlexible Instance = new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, PostProcessingStateChartValuesFlexible.generateDefaultOrExampleValues());
-		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
-	}
-
-	@Test
-	public void testPostProcessingStepsUntilConfig() throws ProjectFolderPathNotSetExceptionMUMLACGPPA, VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException, TypeMismatchException{
-		PostProcessingStepsUntilConfig Instance = new PostProcessingStepsUntilConfig(VariableHandlerInstance, PostProcessingStepsUntilConfig.generateDefaultOrExampleValues());
 		Instance.checkForDetectableParameterVariableAndTypeErrors(VariableHandlerInstance);
 	}
 

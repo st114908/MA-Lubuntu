@@ -98,6 +98,7 @@ public class PostProcessingFillOutMethodStubs extends PipelineStep implements Pi
 	public void execute()
 			throws VariableNotDefinedException, StructureException, FaultyDataException, ParameterMismatchException,
 			IOException, InterruptedException, NoArduinoCLIConfigFileException, FQBNErrorEception, InOrOutKeyNotDefinedException {
+		handleOutputByKey("ifSuccessful", false);
 
 		// Only load once.
 		Path arduinoContainersPath = resolveFullOrLocalPath( handleInputByKey("arduinoContainersPath").getContent() );

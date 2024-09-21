@@ -65,7 +65,7 @@ public class FQBNAndCoresHandler extends ACLIWorkstep{
 		
 		// Download core:
 		//String coreInstallationCommand = "arduino-cli core install " + searchID + " --format yaml";
-		InstallCoreForBoard InstallCoreForBoardInstance = new InstallCoreForBoard(targetFilePath, candidateID);
+		InstallCoreForBoardInstance = new InstallCoreForBoard(targetFilePath, candidateID);
 		if(InstallCoreForBoardInstance.isSuccessful()){
 			successful = true;
 			return;

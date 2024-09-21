@@ -124,9 +124,6 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			case PostProcessingStateChartValuesFlexible.nameFlag:
 				return new PostProcessingStateChartValuesFlexible(VariableHandlerInstance, parameters);
 
-			case PostProcessingStepsUntilConfig.nameFlag:
-				return new PostProcessingStepsUntilConfig(VariableHandlerInstance, parameters);
-
 			case ReplaceLineContent.nameFlag:
 				return new ReplaceLineContent(VariableHandlerInstance, parameters);
 			

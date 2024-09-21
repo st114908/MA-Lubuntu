@@ -236,7 +236,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				+ "#Number: Whole numbers / integer values that Java can handle as 'int' values.\n"
 				+ "#String: character sequences that Java can handle as 'String' values.\n"
 				+ "#Boolean: 'true' or 'false' values.\n"
-				+ "#(In generell for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.\n"
+				+ "#(In general for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.\n"
 				+ "#    If there is a '\\' symbol at the beginning, then it will be interpreted as absolute path.\n"
 				+ "#    Else the path will be handled relative to the project folder.\n"
 				+ "#FolderPath: Additionally the path is supposed to be a folder path.\n"

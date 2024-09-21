@@ -44,7 +44,6 @@ import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.Po
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingMoveIncludeBefore_ifdef__cplusplus;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValues;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStateChartValuesFlexible;
-import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.PostProcessingStepsUntilConfig;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.ReplaceLineContent;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SaveToTextFile;
 import de.ust.mumlacgppa.pipeline.parts.steps.mumlpostprocessingandarduinocli.SelectableTextWindow;
@@ -155,8 +154,6 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFiles
 		myWriter.write(exampleSegment(yaml, PostProcessingStateChartValues.nameFlag, PostProcessingStateChartValues.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, PostProcessingStateChartValuesFlexible.nameFlag, PostProcessingStateChartValuesFlexible.generateDefaultOrExampleValues()));
-		myWriter.write("\n\n\n");
-		myWriter.write(exampleSegment(yaml, PostProcessingStepsUntilConfig.nameFlag, PostProcessingStepsUntilConfig.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");
 		myWriter.write(exampleSegment(yaml, ReplaceLineContent.nameFlag, ReplaceLineContent.generateDefaultOrExampleValues()));
 		myWriter.write("\n\n\n");

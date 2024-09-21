@@ -75,6 +75,13 @@ public class ArduinoCLICommandLineHandler implements DefaultConfigDirectoryAndFi
 					+ "is not compatible with default Windows storage setting. "
 					+ "Therefore no test under windows has been performed!");
 			}
+			
+			try {
+				doShellCommand("arduino-cli config init");
+			} catch (InterruptedException e) {
+				System.out.println("Warning! The command execution for the generation of "
+						+ "the internal config of the arduino-cli has been interrupted!");
+			}
 		}
 	}
 

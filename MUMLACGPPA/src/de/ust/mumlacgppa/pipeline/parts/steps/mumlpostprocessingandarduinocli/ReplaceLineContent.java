@@ -102,36 +102,10 @@ public class ReplaceLineContent extends PipelineStep implements VariableTypes {
 
 		handleOutputByKey("ifSuccessful", false); // In case of exception.
 		
-		// From https://github.com/SQA-Robo-Lab/Overtaking-Cars/blob/hal_demo/arduino-containers_demo_hal/deployable-files-hal-test/README.md:
-		// The comments are a rewritten summary to have the instructions/actions easier to read as comments in the code.  
-		
-		// For all the previous steps see PerformPostProcessingPartsUntilExceptConfig.
-		
-		replaceContent();
-		
-        /*
-        18. Compile and upload for/to the respective desired Arduino micro controller via Arduino IDE.
-        This is done separately.
-		*/
-		
-		handleOutputByKey("ifSuccessful", true);
-	}
-
-	
-	private void replaceContent()
-			throws IOException, FileNotFoundException, VariableNotDefinedException, StructureException, InOrOutKeyNotDefinedException, FaultyDataException {
-
-        /*
-        17. the values for the ```desiredVelocity``` and ```slowVelocity``` can be set individually in
-        the ```driveControlDriveControlComponentStateChart.c``` of the ```...DriverECU``` directories.
-            1. Also set distance und lanedistance.
-        For our modifications: The targeted file is "courseControlCourseControlComponentStateChart.c".
-        */
 		Path targetFilePath = resolveFullOrLocalPath( handleInputByKey("filePath").getContent() );
 		String intermediateFileName = targetFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
 		
-		// Such structures don't appear anywhere else in that file, so it should be safe to search by this.
 		String sequenceToLookFor = handleInputByKey("targetLineContent").getContent();
 		String sequenceToReplaceWith = handleInputByKey("contentReplacement").getContent();
 		
@@ -148,5 +122,7 @@ public class ReplaceLineContent extends PipelineStep implements VariableTypes {
 		targetSomethingStateChartFileScanner.close();
 	    workCopy.close();
 		Files.move(Paths.get(intermediateFileName), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+		
+		handleOutputByKey("ifSuccessful", true);
 	}
 }
