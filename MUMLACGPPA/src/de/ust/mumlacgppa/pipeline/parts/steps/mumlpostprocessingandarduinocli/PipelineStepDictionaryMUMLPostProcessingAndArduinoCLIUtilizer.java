@@ -64,6 +64,9 @@ public class PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer exten
 			case CopyFolder.nameFlag:
 				return new CopyFolder(VariableHandlerInstance, parameters);
 
+			case CreateFolder.nameFlag:
+				return new CreateFolder(VariableHandlerInstance, parameters);
+
 			case DeleteFile.nameFlag:
 				return new DeleteFile(VariableHandlerInstance, parameters);
 			

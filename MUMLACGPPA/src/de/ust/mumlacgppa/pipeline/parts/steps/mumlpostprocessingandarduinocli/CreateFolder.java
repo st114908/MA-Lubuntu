@@ -27,7 +27,7 @@ import de.ust.mumlacgppa.pipeline.parts.storage.VariableTypes;
  */
 public class CreateFolder extends PipelineStep implements VariableTypes {
 
-	public static final String nameFlag = "DeleteFolder";
+	public static final String nameFlag = "CreateFolder";
 
 	
 	/**

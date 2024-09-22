@@ -1,0 +1,15 @@
+Command:
+export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli lib install --zip-path /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/LibraryArchives/Sofdcar-HAL.zip --no-overwrite
+
+Results:
+Exit code: 1
+
+
+Normal response stream:
+--git-url and --zip-path flags allow installing untrusted files, use it at your own risk.
+
+
+
+Error response stream:
+Error installing Zip Library: Library install failed: moving extracted archive to destination dir: library Sofdcar-HAL already installed
+

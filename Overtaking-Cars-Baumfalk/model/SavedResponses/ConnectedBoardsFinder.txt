@@ -1,0 +1,40 @@
+Command:
+export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli board list --format yaml
+
+Results:
+Exit code: 0
+
+
+Normal response stream:
+- matchingboards:
+    - name: Arduino Mega or Mega 2560
+      fqbn: arduino:avr:mega
+      ishidden: false
+      platform: null
+  port:
+    address: /dev/ttyACM0
+    label: /dev/ttyACM0
+    protocol: serial
+    protocollabel: Serial Port (USB)
+    properties:
+        pid: "0x0042"
+        serialNumber: 8593731333735141A130
+        vid: "0x2341"
+    hardwareid: 8593731333735141A130
+- matchingboards: []
+  port:
+    address: /dev/ttyUSB0
+    label: /dev/ttyUSB0
+    protocol: serial
+    protocollabel: Serial Port (USB)
+    properties:
+        pid: "0x6001"
+        serialNumber: AB0LRZAC
+        vid: "0x0403"
+    hardwareid: AB0LRZAC
+
+
+
+
+Error response stream:
+

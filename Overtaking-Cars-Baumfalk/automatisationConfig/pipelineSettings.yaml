@@ -1,25 +1,25 @@
-#In generell you have to adhere to the YAML format regardless of the type,
-#so if there is a # symbol in the data, then you have to wrap the data in  symbols.
+#In general you have to adhere to the YAML format regardless of the type,
+#so if there is a # symbol in the data, then you have to wrap the data in ' symbols.
 #This way the whole data entry is seen as a string which includes a # and following.
-#Now the types with their respective limitfs and formats:
+#Now the types with their respective limits and formats:
 #Any: This type is only internally allowed for reading parameter entries,
-#but not for variable definitions or outpt parameters.
-#Number: Whole numbers / integer values that Java can handle as int values.
-#String: character sequences that Java can handle as String values.
-#Boolean: true or false values.
+#but not for variable definitions or output parameters.
+#Number: Whole numbers / integer values that Java can handle as 'int' values.
+#String: character sequences that Java can handle as 'String' values.
+#Boolean: 'true' or 'false' values.
 #(In general for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.
-#    If there is a \ symbol at the beginning, then it will be interpreted as absolute path.
+#    If there is a '\' symbol at the beginning, then it will be interpreted as absolute path.
 #    Else the path will be handled relative to the project folder.
 #FolderPath: Additionally the path is supposed to be a folder path.
 #FolderPath: Additionally the path is supposed to be a file path.
 #BoardSerianNumber: A serial number as string, probably consisting of letters and numbers.
-#BoardIdentifierFQBN: The board type. Due to the used Arduino-CLI estimated to be [producer]:[processortype]:[model type] and in lower case letters
+#BoardIdentifierFQBN: The board type. Due to the used Arduino-CLI estimated to be '[producer]:[processortype]:[model type]' and in lower case letters
 #    If a producer is using a different format then it will also work as long as the Arduino-CLI accepts it.
 #ConnectionPort: The shape of the port addresses is depending on the used system and virtual machine (if used).
-#    Recommendation: dont write it manually, but get it through pipeline step LookupBoardBySerialNumber.
+#    Recommendation: don't write it manually, but get it through pipeline step 'LookupBoardBySerialNumber'.
 #WLANName: In principle the same limits that exist for naming WLAN networks.
 #WLANPassword: In principle the same limits that exist for setting the password of WLAN networks.
-#ServerIPAddress: Addresses as used in internet browsers, but without https:// oder http://.
+#ServerIPAddress: Addresses as used in internet browsers, but without 'https://' oder 'http://'.
 #ServerPort: Adhere to the standards of server ports , see https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/
 
 VariableDefs:
@@ -69,7 +69,7 @@ TransformationAndCodeGenerationPreconfigurations:
   ContainerTransformation:
     in:
       roboCar_mumlSourceFile: direct model/roboCar.muml
-      middlewareOption: direct MQTT_I2C_CONFIG # Or DDS_CONFIG
+      middlewareOption: 'direct MQTT_I2C_CONFIG # Or DDS_CONFIG'
       muml_containerFileDestination: from muml_containerFilePath
     out:
       ifSuccessful: ifSuccessful
@@ -416,7 +416,7 @@ PipelineSequence:
     in:
       condition: from ifSuccessful
       message: direct ContainerCodeGeneration has failed!
-- from TransformationAndCodeGenerationPreconfigurations: ComponentCodeGeneration
+- from TransformationAndCodeGenerationPreconfigurations: ContainerCodeGeneration
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
@@ -430,10 +430,10 @@ PipelineSequence:
     out:
       ifSuccessful: ifSuccessful
       resultMessage: resultMessage
-- direct DialogMessage: &id001
+- direct DialogMessage:
     in:
-      condition: direct true
-      message: direct The condition is true, so this will be shown.
+      condition: not from ifSuccessful
+      message: from resultMessage
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
@@ -446,7 +446,10 @@ PipelineSequence:
     out:
       ifSuccessful: ifSuccessful
       resultMessage: resultMessage
-- direct DialogMessage: *id001
+- direct DialogMessage:
+    in:
+      condition: not from ifSuccessful
+      message: from resultMessage
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
@@ -459,7 +462,10 @@ PipelineSequence:
     out:
       ifSuccessful: ifSuccessful
       resultMessage: resultMessage
-- direct DialogMessage: *id001
+- direct DialogMessage:
+    in:
+      condition: not from ifSuccessful
+      message: from resultMessage
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
@@ -472,7 +478,10 @@ PipelineSequence:
     out:
       ifSuccessful: ifSuccessful
       resultMessage: resultMessage
-- direct DialogMessage: *id001
+- direct DialogMessage:
+    in:
+      condition: not from ifSuccessful
+      message: from resultMessage
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful
@@ -571,5 +580,5 @@ PipelineSequence:
       message: direct Upload for slowCarDriverECU has failed!
 - direct DialogMessage:
     in:
-      condition: not from ifSuccessful
-      message: from resultMessage
+      condition: direct true
+      message: direct Pipeline execution completed!
