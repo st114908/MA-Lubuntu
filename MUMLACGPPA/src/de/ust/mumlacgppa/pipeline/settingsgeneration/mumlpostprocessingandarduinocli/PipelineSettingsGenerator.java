@@ -236,7 +236,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				+ "#Number: Whole numbers / integer values that Java can handle as 'int' values.\n"
 				+ "#String: character sequences that Java can handle as 'String' values.\n"
 				+ "#Boolean: 'true' or 'false' values.\n"
-				+ "#(In general for paths written or given in FolderPath and FilePath): The path format as used by Linux or Ubuntu.\n"
+				+ "#(In general for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.\n"
 				+ "#    If there is a '\\' symbol at the beginning, then it will be interpreted as absolute path.\n"
 				+ "#    Else the path will be handled relative to the project folder.\n"
 				+ "#FolderPath: Additionally the path is supposed to be a folder path.\n"
@@ -1057,28 +1057,40 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DeleteFolder.nameFlag,
 				deleteDirectoryDeployableFiles));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
-				+ ContainerTransformation.nameFlag);
+		//defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
+		//		+ ContainerTransformation.nameFlag);
+		LinkedHashMap<String, String> loadContainerTransformation = new LinkedHashMap<String, String>();
+		loadContainerTransformation.put(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword, ContainerTransformation.nameFlag);
+		defaultPipelineSequenceDefs.add(loadContainerTransformation);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerTransformation));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
-				+ ContainerCodeGeneration.nameFlag);
+		//defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
+		//		+ ContainerCodeGeneration.nameFlag);
+		LinkedHashMap<String, String> loadContainerCodeGeneration = new LinkedHashMap<String, String>();
+		loadContainerCodeGeneration.put(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword, ContainerCodeGeneration.nameFlag);
+		defaultPipelineSequenceDefs.add(loadContainerCodeGeneration);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortContainerCodeGeneration));
 
-		defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
-				+ ComponentCodeGeneration.nameFlag);
+		//defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
+		//		+ ComponentCodeGeneration.nameFlag);
+		LinkedHashMap<String, String> loadComponentCodeGeneration = new LinkedHashMap<String, String>();
+		loadComponentCodeGeneration.put(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword, ContainerCodeGeneration.nameFlag);
+		defaultPipelineSequenceDefs.add(loadComponentCodeGeneration);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortComponentCode));
 
-		defaultPipelineSequenceDefs.add(
-				fromKeyword + " " + postProcessingSequenceDefKeyword + ": " + allKeyword);
+		//defaultPipelineSequenceDefs.add(
+		//		fromKeyword + " " + postProcessingSequenceDefKeyword + ": " + allKeyword);
+		LinkedHashMap<String, String> loadPostProcessing = new LinkedHashMap<String, String>();
+		loadPostProcessing.put(fromKeyword + " " + postProcessingSequenceDefKeyword, allKeyword);
+		defaultPipelineSequenceDefs.add(loadPostProcessing);
 
-		// Map structures are difficult to deep copy, so the following lines are redundant.
+		//Deep copies of maps are difficult in java, so this gets a bit redundant.
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsFastCoordinator));
 		Map<String, Map<String, String>> compileReport = DialogMessage
@@ -1089,6 +1101,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		compileReportSettingsIns.put("message",
 				fromKeyword + " resultMessage");
 		compileReport.put(inKeyword, compileReportSettingsIns);
+
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
 				compileReport));
 		defaultPipelineSequenceDefs
