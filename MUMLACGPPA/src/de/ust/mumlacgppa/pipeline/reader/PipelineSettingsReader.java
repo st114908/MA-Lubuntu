@@ -188,31 +188,45 @@ public class PipelineSettingsReader implements Keywords {
 		// SourceOrSaveTarget>>>
 		Set<String> allowedTransformationAndCodeGenerationPreconfigurationsStepTypes = stepDictionaryToUse.getAllowedTransformationAndCodeGenerationPreconfigurations();
 		if (rawSettings.keySet().contains(transformationAndCodeGenerationPreconfigurationsDefKeyword)) {
-			Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = (Map<String, Map<String, Map<String, String>>>) rawSettings
-					.get(transformationAndCodeGenerationPreconfigurationsDefKeyword);
-			
-			for (String currentStepKey : rawStandaloneUsageDefs.keySet()) {
-				String className = currentStepKey;
-
-				if(!allowedTransformationAndCodeGenerationPreconfigurationsStepTypes.contains(className)){
-					throw new StructureException("Error at reading the pipeline: The step type " + className + " is not allwed for "
-							+ transformationAndCodeGenerationPreconfigurationsDefKeyword + " !\n");
+			try{
+				Map<String, Map<String, Map<String, String>>> rawStandaloneUsageDefs = (Map<String, Map<String, Map<String, String>>>) rawSettings
+						.get(transformationAndCodeGenerationPreconfigurationsDefKeyword);
+				
+				for (String currentStepKey : rawStandaloneUsageDefs.keySet()) {
+					String className = currentStepKey;
+		
+					if(!allowedTransformationAndCodeGenerationPreconfigurationsStepTypes.contains(className)){
+						throw new StructureException("Error at reading the pipeline: The step type " + className + " is not allwed for "
+								+ transformationAndCodeGenerationPreconfigurationsDefKeyword + " !\n");
+					}
+					
+					
+					PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
+							VariableHandlerInstance, className, rawStandaloneUsageDefs.get(currentStepKey));
+					transformationAndCodeGenerationPreconfigurationsDefs.put(currentStepKey, InterpretedStep);
 				}
-				
-				
-				PipelineStep InterpretedStep = stepDictionaryToUse.lookupStepNameAndGenerateInstance(
-						VariableHandlerInstance, className, rawStandaloneUsageDefs.get(currentStepKey));
-				transformationAndCodeGenerationPreconfigurationsDefs.put(currentStepKey, InterpretedStep);
+			}
+			catch(ClassCastException e){
+				throw new StructureException(e.getMessage() + "\n"
+						+ "Apparently there was a heavy structure error while \n"
+						+ "trying to read the TransformationAndCodeGenerationPreconfigurations.");
 			}
 		}
 		
 		// Here the post-processing:
 		
 		if (rawSettings.keySet().contains(postProcessingSequenceDefKeyword)) {
-			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
+			try{
+				ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
 					.get(postProcessingSequenceDefKeyword);
-			// Here loading/copying the results of the interpretation of PostProcessingSequence is not possible since it is in the process of being generated.
-			postProcessingSequence = interpretSequenceDef(rawCurrentSequenceDef, false);
+				// Here loading/copying the results of the interpretation of PostProcessingSequence is not possible since it is in the process of being generated.
+				postProcessingSequence = interpretSequenceDef(rawCurrentSequenceDef, false);
+			}
+			catch(ClassCastException e){
+				throw new StructureException(e.getMessage() + "\n"
+						+ "Apparently there was a heavy structure error while \n"
+						+ "trying to read the PostProcessingSequence.");
+			}
 		}
 		else{
 			// For simplicity at copying this sequence or executing the pipeline.
@@ -222,10 +236,17 @@ public class PipelineSettingsReader implements Keywords {
 		// Here the pipeline sequence:
 		
 		if (rawSettings.keySet().contains(pipelineSequenceDefKeyword)) {
-			ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
-					.get(pipelineSequenceDefKeyword);
-			// Here loading/copying the results of the interpretation of PostProcessingSequence is possible
-			pipelineSequence = interpretSequenceDef(rawCurrentSequenceDef, true);
+			try{
+				ArrayList<Map<String, Object>> rawCurrentSequenceDef = (ArrayList<Map<String, Object>>) rawSettings
+						.get(pipelineSequenceDefKeyword);
+				// Here loading/copying the results of the interpretation of PostProcessingSequence is possible
+				pipelineSequence = interpretSequenceDef(rawCurrentSequenceDef, true);
+			}
+			catch(ClassCastException e){
+				throw new StructureException(e.getMessage() + "\n"
+						+ "Apparently there was a heavy structure error while \n"
+						+ "trying to read the PipelineSequence.");
+			}
 		}
 		else{
 			// For simplicity at executing the pipeline.
