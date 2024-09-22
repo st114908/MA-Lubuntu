@@ -410,8 +410,9 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 		System.out.println(
 				"\n\n\nDue to Access restrictions no windows for e.g. messages can be created from the export wizard process without aborting the pipeline.\n");
 		System.out.println("(Or at least no way could be found.)");
-		System.out.println("So here the output in the console:\n\n");
+		System.out.println("So here the output in the console:\n");
 		System.out.println(message);
+		System.out.println("\n\n");
 	}
 
 	protected IStatus exceptionFeedback(Exception e) {

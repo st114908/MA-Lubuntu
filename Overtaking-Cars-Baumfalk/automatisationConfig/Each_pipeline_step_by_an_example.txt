@@ -275,16 +275,6 @@ PostProcessingStateChartValuesFlexible:
 
 
 
-PostProcessingStepsUntilConfig:
-  in:
-    arduinoContainersPath: direct arduino-containers
-    componentCodePath: direct arduino-containers/fastAndSlowCar_v2
-    useLocallyStoredConfig_hppFileInsteadOfDownloadingIt: direct true
-  out:
-    ifSuccessful: ifSuccessful
-
-
-
 ReplaceLineContent:
   in:
     filePath: direct arduino-containers/fastCarDriverECU/courseControlCourseControlComponentStateChart.c

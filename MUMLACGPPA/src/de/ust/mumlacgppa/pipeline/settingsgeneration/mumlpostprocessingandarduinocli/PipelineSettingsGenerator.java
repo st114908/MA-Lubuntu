@@ -227,16 +227,16 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		// Information text about the variable types and their limits or formats to keep in mind:
 		String variableTypeAndLimitsInfoText = ""
-				+ "#In generell you have to adhere to the YAML format regardless of the type,\n"
+				+ "#In general you have to adhere to the YAML format regardless of the type,\n"
 				+ "#so if there is a # symbol in the data, then you have to wrap the data in ' symbols.\n"
 				+ "#This way the whole data entry is seen as a string which includes a # and following.\n"
-				+ "#Now the types with their respective limitfs and formats:\n"
+				+ "#Now the types with their respective limits and formats:\n"
 				+ "#Any: This type is only internally allowed for reading parameter entries,\n"
-				+ "#but not for variable definitions or outpt parameters.\n"
+				+ "#but not for variable definitions or output parameters.\n"
 				+ "#Number: Whole numbers / integer values that Java can handle as 'int' values.\n"
 				+ "#String: character sequences that Java can handle as 'String' values.\n"
 				+ "#Boolean: 'true' or 'false' values.\n"
-				+ "#(In general for paths written or given in FolderPath und FilePath): The path format as used by Linux or Ubuntu.\n"
+				+ "#(In general for paths written or given in FolderPath and FilePath): The path format as used by Linux or Ubuntu.\n"
 				+ "#    If there is a '\\' symbol at the beginning, then it will be interpreted as absolute path.\n"
 				+ "#    Else the path will be handled relative to the project folder.\n"
 				+ "#FolderPath: Additionally the path is supposed to be a folder path.\n"
@@ -795,16 +795,6 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				directValueKeyword + " Pipeline execution completed!");
 		windowMessageFinishedPipeline.put(inKeyword, windowMessageFinishedPipelineSettingsIns);
 		
-		Map<String, Map<String, String>> compileReport = DialogMessage
-				.generateDefaultOrExampleValues();
-		Map<String, String> compileReportSettingsIns = windowMessageFinishedPipeline
-				.get(inKeyword);
-		compileReportSettingsIns.put("condition",
-				notKeyword + " " + fromKeyword + " ifSuccessful");
-		compileReportSettingsIns.put("message",
-				fromKeyword + " resultMessage");
-		windowMessageFinishedPipeline.put(inKeyword, compileReportSettingsIns);
-
 		// Now the pipeline settings and sequences:
 		Map<String, Object> mapForPipelineSettings = new LinkedHashMap<String, Object>();
 
@@ -1088,29 +1078,65 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		defaultPipelineSequenceDefs.add(
 				fromKeyword + " " + postProcessingSequenceDefKeyword + ": " + allKeyword);
 
+		// Map structures are difficult to deep copy, so the following lines are redundant.
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsFastCoordinator));
+		Map<String, Map<String, String>> compileReport = DialogMessage
+				.generateDefaultOrExampleValues();
+		Map<String, String> compileReportSettingsIns = compileReport.get(inKeyword);
+		compileReportSettingsIns.put("condition",
+				notKeyword + " " + fromKeyword + " ifSuccessful");
+		compileReportSettingsIns.put("message",
+				fromKeyword + " resultMessage");
+		compileReport.put(inKeyword, compileReportSettingsIns);
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
 				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastCoordinator));
+		
 		defaultPipelineSequenceDefs.add(
 				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsFastDriver));
+		compileReport = DialogMessage
+				.generateDefaultOrExampleValues();
+		compileReportSettingsIns = compileReport.get(inKeyword);
+		compileReportSettingsIns.put("condition",
+				notKeyword + " " + fromKeyword + " ifSuccessful");
+		compileReportSettingsIns.put("message",
+				fromKeyword + " resultMessage");
+		compileReport.put(inKeyword, compileReportSettingsIns);
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
 				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileFastDriver));
+		
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag,
 				compileSettingsSlowCoordinator));
+		compileReport = DialogMessage
+				.generateDefaultOrExampleValues();
+		compileReportSettingsIns = compileReport.get(inKeyword);
+		compileReportSettingsIns.put("condition",
+				notKeyword + " " + fromKeyword + " ifSuccessful");
+		compileReportSettingsIns.put("message",
+				fromKeyword + " resultMessage");
+		compileReport.put(inKeyword, compileReportSettingsIns);
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
 				compileReport));
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
 						onlyContinueIfFulfilledElseAbortCompileSlowCoordinator));
+		
 		defaultPipelineSequenceDefs.add(
 				pipelineSegmentHelper(yaml, directValueKeyword + " " + Compile.nameFlag, compileSettingsSlowDriver));
+		compileReport = DialogMessage
+				.generateDefaultOrExampleValues();
+		compileReportSettingsIns = compileReport.get(inKeyword);
+		compileReportSettingsIns.put("condition",
+				notKeyword + " " + fromKeyword + " ifSuccessful");
+		compileReportSettingsIns.put("message",
+				fromKeyword + " resultMessage");
+		compileReport.put(inKeyword, compileReportSettingsIns);
 		defaultPipelineSequenceDefs.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + DialogMessage.nameFlag,
 				compileReport));
 		defaultPipelineSequenceDefs
@@ -1172,34 +1198,6 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
 		settingsWriter.close();
-
-		// Cleanup of unwanted additions: ' chars around from entries in the
-		// pipeline sequence and after the "in:" flags the &id...s and *id...s.
-		String inSequenceForCleanup = " " + inKeyword + ":";
-
-		String intermediateFileName = completeMUMLACGPPASettingsFilePath.toString() + ".editing";
-		FileWriter workCopy = new FileWriter(intermediateFileName);
-		Scanner currentFileReader = new Scanner(completeMUMLACGPPASettingsFilePath.toFile());
-		while (currentFileReader.hasNextLine()) {
-			String currentLine = currentFileReader.nextLine();
-			if (currentLine.contains("'")) {
-				String intermediate = currentLine.replace("'", "");
-				workCopy.write(intermediate + "\n");
-			} else if (currentLine.contains("'")) {
-				String intermediate = currentLine.replace("'", "");
-				workCopy.write(intermediate + "\n");
-			} else if (currentLine.contains(" " + inKeyword + ":")) {
-				int index = currentLine.indexOf(inSequenceForCleanup);
-				String intermediate = currentLine.substring(0, index + inSequenceForCleanup.length());
-				workCopy.write(intermediate + "\n");
-			} else {
-				workCopy.write(currentLine + "\n");
-			}
-		}
-		currentFileReader.close();
-		workCopy.close();
-		Files.move(Paths.get(intermediateFileName), completeMUMLACGPPASettingsFilePath,
-				StandardCopyOption.REPLACE_EXISTING);
 
 		return true;
 	}
