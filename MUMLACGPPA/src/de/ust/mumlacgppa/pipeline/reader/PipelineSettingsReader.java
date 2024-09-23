@@ -209,7 +209,8 @@ public class PipelineSettingsReader implements Keywords {
 			catch(ClassCastException e){
 				throw new StructureException(e.getMessage() + "\n"
 						+ "Apparently there was a heavy structure error while \n"
-						+ "trying to read the TransformationAndCodeGenerationPreconfigurations.");
+						+ "trying to read the TransformationAndCodeGenerationPreconfigurations.\n"
+						+ "Example: For the interpreter entirely unreadable entries can cause this.");
 			}
 		}
 		
@@ -225,7 +226,8 @@ public class PipelineSettingsReader implements Keywords {
 			catch(ClassCastException e){
 				throw new StructureException(e.getMessage() + "\n"
 						+ "Apparently there was a heavy structure error while \n"
-						+ "trying to read the PostProcessingSequence.");
+						+ "trying to read the PostProcessingSequence.\n"
+						+ "Example: For the interpreter entirely unreadable entries can cause this.");
 			}
 		}
 		else{
@@ -245,7 +247,8 @@ public class PipelineSettingsReader implements Keywords {
 			catch(ClassCastException e){
 				throw new StructureException(e.getMessage() + "\n"
 						+ "Apparently there was a heavy structure error while \n"
-						+ "trying to read the PipelineSequence.");
+						+ "trying to read the PipelineSequence.\n"
+						+ "Example: For the interpreter entirely unreadable entries can cause this.");
 			}
 		}
 		else{

@@ -1078,7 +1078,7 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		//defaultPipelineSequenceDefs.add(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword + ": "
 		//		+ ComponentCodeGeneration.nameFlag);
 		LinkedHashMap<String, String> loadComponentCodeGeneration = new LinkedHashMap<String, String>();
-		loadComponentCodeGeneration.put(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword, ContainerCodeGeneration.nameFlag);
+		loadComponentCodeGeneration.put(fromKeyword + " " + transformationAndCodeGenerationPreconfigurationsDefKeyword, ComponentCodeGeneration.nameFlag);
 		defaultPipelineSequenceDefs.add(loadComponentCodeGeneration);
 		defaultPipelineSequenceDefs
 				.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + OnlyContinueIfFulfilledElseAbort.nameFlag,
@@ -1212,6 +1212,24 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		settingsWriter.write(yaml.dump(mapForPipelineSettings));
 		settingsWriter.close();
 
+		// For the # Or DDS_CONFIG
+		String intermediateFileName = completeMUMLACGPPASettingsFilePath.toString() + ".editing";
+		FileWriter workCopy = new FileWriter(intermediateFileName);
+		Scanner currentFileReader = new Scanner(completeMUMLACGPPASettingsFilePath.toFile());
+		while (currentFileReader.hasNextLine()) {
+			String currentLine = currentFileReader.nextLine();
+			if (currentLine.contains("MQTT_I2C_CONFIG")) {
+				String intermediate = currentLine + " # Or DDS_CONFIG";
+				workCopy.write(intermediate + "\n");
+			} else {
+				workCopy.write(currentLine + "\n");
+			}
+		}
+		currentFileReader.close();
+		workCopy.close();
+		Files.move(Paths.get(intermediateFileName), completeMUMLACGPPASettingsFilePath,
+				StandardCopyOption.REPLACE_EXISTING);
+		
 		return true;
 	}
 

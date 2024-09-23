@@ -10,6 +10,7 @@ import java.util.Map;
 
 import de.ust.arduinocliutilizer.worksteps.exceptions.NoArduinoCLIConfigFileException;
 import de.ust.arduinocliutilizer.worksteps.functions.CompilationCall;
+import de.ust.arduinocliutilizer.worksteps.functions.FQBNAndCoresHandler;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.FaultyDataException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.InOrOutKeyNotDefinedException;
 import de.ust.mumlacgppa.pipeline.parts.exceptions.ProjectFolderPathNotSetExceptionMUMLACGPPA;
@@ -95,10 +96,18 @@ public class Compile extends PipelineStep implements VariableTypes {
 			throws IOException, InterruptedException, NoArduinoCLIConfigFileException, VariableNotDefinedException,
 			StructureException, ProjectFolderPathNotSetException, InOrOutKeyNotDefinedException, FaultyDataException{
 		handleOutputByKey("ifSuccessful", false); // For Exceptions 
-		String foundFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
+		String targetFqbn = handleInputByKey("boardTypeIdentifierFQBN").getContent();
 		Path targetINOFilePath = resolveFullOrLocalPath( handleInputByKey("targetInoFile").getContent() );
+		
+		FQBNAndCoresHandler FQBNAndCoresHandlerInstance = new FQBNAndCoresHandler(targetINOFilePath, targetFqbn);
+		if(!FQBNAndCoresHandlerInstance.isSuccessful()){
+			handleOutputByKey("ifSuccessful", false);
+			handleOutputByKey("resultMessage", FQBNAndCoresHandlerInstance.generateResultMessage());
+		}
+		
+		
 		boolean saveCompiledFilesNearby = handleInputByKey("saveCompiledFilesNearby").getBooleanContent();
-		CompilationCall CompilationStepInstance = new CompilationCall(targetINOFilePath, foundFqbn, saveCompiledFilesNearby);
+		CompilationCall CompilationStepInstance = new CompilationCall(targetINOFilePath, targetFqbn, saveCompiledFilesNearby);
 		
 		if(CompilationStepInstance.isSuccessful()){
 			handleOutputByKey("ifSuccessful", true);

@@ -71,7 +71,7 @@ public class ContainerTransformation extends PipelineStep implements VariableTyp
 		// Ins:
 		Map<String, String> ins = new LinkedHashMap<String, String>();
 		ins.put("roboCar_mumlSourceFile", "direct model/roboCar.muml");
-		ins.put("middlewareOption", "direct MQTT_I2C_CONFIG # Or DDS_CONFIG");
+		ins.put("middlewareOption", "direct MQTT_I2C_CONFIG");
 		ins.put("muml_containerFileDestination", "direct container-models/MUML_Container.muml_container");
 		exampleSettings.put(inKeyword, ins);
 		

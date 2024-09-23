@@ -62,7 +62,7 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 		if(readData.containsKey(outKeyword)){
 			Map<String, String> outData = (Map<String, String>) readData.get(outKeyword); 
 			for(String currentKey: outData.keySet()){
-				out.put(currentKey, outData.get(currentKey));
+				out.put(currentKey, outData.get(currentKey).trim());
 			}
 		}
 
@@ -202,11 +202,17 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 		
 		else if(entry.startsWith(fromAndFollowingSpace)){
 			String referencedVariable = entry.substring(fromAndFollowingSpace.length()).trim();
+			if(referencedVariable.equals("")){
+				throw new FaultyDataException("Reference in from entry missing or not recognized!");
+			}
+
+			if(referencedVariable.contains(" ")){
+				throw new StructureException("Variable name error:\n"
+						+ "Variable names are not allowed to contain spaces!\n"
+						+ "Step info: " + toString());
+			}
+			
 			if(ValidationVariableHandlerInstance.isVariableInitialized(referencedVariable)){
-				String afterFrom = entry.substring(fromAndFollowingSpace.length()).trim();
-				if(afterFrom.equals("")){
-					throw new FaultyDataException("Reference in from entry missing or not recognized!");
-				}
 				String foundType = ValidationVariableHandlerInstance.getVariableType(referencedVariable);
 				if(!( expectedType.equals(AnyType) )){
 					if(!( expectedType.equals(foundType) )){
@@ -278,6 +284,12 @@ public abstract class PipelineStep implements Keywords, VariableTypes{
 		for(String currentOutParameterKey:out.keySet()){
 			String variableEntryName = out.get(currentOutParameterKey);
 			String variableEntryType = requiredInsAndOuts.get(outKeyword).get(currentOutParameterKey);
+			
+			if(variableEntryName.contains(" ")){
+				throw new StructureException("Variable name error:\n"
+						+ "Variable names are not allowed to contain spaces!\n"
+						+ "Step info: " + toString());
+			}
 			
 			if(variableEntryType.equals(AnyType)){
 				throw new StructureException("PipelineStep subclass error: The Any type is only allowed for inputs, but not for outputs!\n"

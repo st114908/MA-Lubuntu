@@ -67,7 +67,9 @@ public class CompilationCall extends ACLIWorkstep implements CompiledFilesFolder
 	@Override
 	public String generateResultMessage(){
 		if(successful){
-			return "Nothing wrong.";
+			return "Nothing wrong.\n"
+					+ "For more details see\n"
+					+ responseLocation;
 		}
 		else{
 			return "Error at the compilation!\n"

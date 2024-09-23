@@ -167,24 +167,14 @@ public class StepsExamplesGenerator implements PipelineSettingsDirectoryAndFiles
 		myWriter.write("\n\n\n");
 		myWriter.close();
 
-		// Cleanup of unwanted additions: ' chars around from entries in the
-		// pipeline sequence and after the "in:" flags the &id...s and *id...s.
-		String inSequenceForCleanup = " " + inKeyword + ":";
-
+		// For the # Or DDS_CONFIG
 		String intermediateFileName = completeExamplesFilePath.toString() + ".editing";
 		FileWriter workCopy = new FileWriter(intermediateFileName);
 		Scanner currentFileReader = new Scanner(completeExamplesFilePath.toFile());
 		while (currentFileReader.hasNextLine()) {
 			String currentLine = currentFileReader.nextLine();
-			if (currentLine.contains("'")) {
-				String intermediate = currentLine.replace("'", "");
-				workCopy.write(intermediate + "\n");
-			} else if (currentLine.contains("'")) {
-				String intermediate = currentLine.replace("'", "");
-				workCopy.write(intermediate + "\n");
-			} else if (currentLine.contains(" " + inKeyword + ":")) {
-				int index = currentLine.indexOf(inSequenceForCleanup);
-				String intermediate = currentLine.substring(0, index + inSequenceForCleanup.length());
+			if (currentLine.contains("MQTT_I2C_CONFIG")) {
+				String intermediate = currentLine + " # Or DDS_CONFIG";
 				workCopy.write(intermediate + "\n");
 			} else {
 				workCopy.write(currentLine + "\n");
