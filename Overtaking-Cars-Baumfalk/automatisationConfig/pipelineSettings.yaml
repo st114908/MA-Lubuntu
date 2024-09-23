@@ -69,7 +69,7 @@ TransformationAndCodeGenerationPreconfigurations:
   ContainerTransformation:
     in:
       roboCar_mumlSourceFile: direct model/roboCar.muml
-      middlewareOption: 'direct MQTT_I2C_CONFIG # Or DDS_CONFIG'
+      middlewareOption: direct MQTT_I2C_CONFIG # Or DDS_CONFIG
       muml_containerFileDestination: from muml_containerFilePath
     out:
       ifSuccessful: ifSuccessful
@@ -393,6 +393,10 @@ PostProcessingSequence:
       clientName: from slowCarCoordinatorECUName
     out:
       ifSuccessful: ifSuccessful
+- direct DialogMessage:
+    in:
+      condition: direct true
+      message: direct Post-Processing execution completed!
 
 
 PipelineSequence:
@@ -416,7 +420,7 @@ PipelineSequence:
     in:
       condition: from ifSuccessful
       message: direct ContainerCodeGeneration has failed!
-- from TransformationAndCodeGenerationPreconfigurations: ContainerCodeGeneration
+- from TransformationAndCodeGenerationPreconfigurations: ComponentCodeGeneration
 - direct OnlyContinueIfFulfilledElseAbort:
     in:
       condition: from ifSuccessful

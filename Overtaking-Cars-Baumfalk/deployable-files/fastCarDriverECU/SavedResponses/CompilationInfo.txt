@@ -7,7 +7,7 @@ Exit code: 0
 
 Normal response stream:
 compilerout: |
-    Sketch uses 28834 bytes (11%) of program storage space. Maximum is 253952 bytes.
+    Sketch uses 28830 bytes (11%) of program storage space. Maximum is 253952 bytes.
     Global variables use 1672 bytes (20%) of dynamic memory, leaving 6520 bytes for local variables. Maximum is 8192 bytes.
 compilererr: ""
 builderresult:
@@ -201,7 +201,7 @@ builderresult:
           indevelopment: false
     executablesectionssize:
         - name: text
-          size: 28834
+          size: 28830
           maxsize: 253952
         - name: data
           size: 1672
@@ -275,8 +275,8 @@ builderresult:
         - compiler.warning_flags.more=-Wall
         - compiler.warning_flags.none=-w
         - extra.time.dst=3600
-        - extra.time.local=1726758266
-        - extra.time.utc=1726751066
+        - extra.time.local=1727120657
+        - extra.time.utc=1727113457
         - extra.time.zone=3600
         - ide_version=10607
         - menu.cpu.atmega1280=ATmega1280

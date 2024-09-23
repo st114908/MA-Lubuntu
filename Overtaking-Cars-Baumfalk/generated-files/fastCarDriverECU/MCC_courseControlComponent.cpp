@@ -493,14 +493,14 @@ CourseControlComponent* MCC_create_CourseControlComponent(uint8_T ID){
 			b.createCOURSECONTROLHandle = &create_COURSECONTROLI2cHandle;
 			b.COURSECONTROL_op.i2c_option.ownAddress = 9;
 			b.COURSECONTROL_op.i2c_option.otherAddress = 1;
-			b.REARDISTANCE = PORT_ACTIVE;
-			b.createREARDISTANCEHandle = &create_REARDISTANCELocalHandle;
-			b.REARDISTANCE_op.local_option.pubID = 30090;
-			b.REARDISTANCE_op.local_option.subID = 715;
 			b.VELOCITY = PORT_ACTIVE;
 			b.createVELOCITYHandle = &create_VELOCITYLocalHandle;
 			b.VELOCITY_op.local_option.pubID = -31865;
 			b.VELOCITY_op.local_option.subID = 31295;
+			b.REARDISTANCE = PORT_ACTIVE;
+			b.createREARDISTANCEHandle = &create_REARDISTANCELocalHandle;
+			b.REARDISTANCE_op.local_option.pubID = 30090;
+			b.REARDISTANCE_op.local_option.subID = 715;
 		break;
 	default:
 		break;

@@ -288,14 +288,6 @@
 					void CoordinatorCoordinatorComponentStateChart_processStep(CoordinatorCoordinatorComponentStateChart* rtsc);
 			
 				/**
-				 * @brief Leaves the Region: overtakingInitiatorPort of the Realtime-StateChart: CoordinatorCoordinatorComponent
-				 * @details This method is called, whenever a the Region: overtakingInitiatorPort is left.
-				 * 			The correct State is set and all Exit-Events are executed.
-				 *
-				 * @param rtsc The specific CoordinatorCoordinatorComponentStateChart whose Region: overtakingInitiatorPort shall be exit
-				 */
-					void CoordinatorOvertakingInitiatorOvertakingInitiatorPortStateChart_exit(CoordinatorCoordinatorComponentStateChart* rtsc);
-				/**
 				 * @brief Leaves the Region: communicatorPort of the Realtime-StateChart: CoordinatorCoordinatorComponent
 				 * @details This method is called, whenever a the Region: communicatorPort is left.
 				 * 			The correct State is set and all Exit-Events are executed.
@@ -311,6 +303,14 @@
 				 * @param rtsc The specific CoordinatorCoordinatorComponentStateChart whose Region: overtakingAffiliatePort shall be exit
 				 */
 					void CoordinatorOvertakingAffiliateOvertakingAffiliatePortStateChart_exit(CoordinatorCoordinatorComponentStateChart* rtsc);
+				/**
+				 * @brief Leaves the Region: overtakingInitiatorPort of the Realtime-StateChart: CoordinatorCoordinatorComponent
+				 * @details This method is called, whenever a the Region: overtakingInitiatorPort is left.
+				 * 			The correct State is set and all Exit-Events are executed.
+				 *
+				 * @param rtsc The specific CoordinatorCoordinatorComponentStateChart whose Region: overtakingInitiatorPort shall be exit
+				 */
+					void CoordinatorOvertakingInitiatorOvertakingInitiatorPortStateChart_exit(CoordinatorCoordinatorComponentStateChart* rtsc);
 						
 				/**
 				 * @brief Returns wether the Realtime-StateChart: CoordinatorCoordinatorComponent is in a specific State

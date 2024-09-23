@@ -5,8 +5,8 @@
 
 
 #include "MCC_courseControlComponent.h"
-#include "MCC_driveControllerComponent.h"
 #include "MCC_distanceSensorComponent.h"
+#include "MCC_driveControllerComponent.h"
 
 // Start of user code DEVICEINITINCLUDES
 /* TODO: if devices or libraries are used which need an initialization, include the headers here */
@@ -27,9 +27,9 @@ void setup(){
 	// Start of user code DEVICEINIT
 	/* TODO: if devices are used which need an initialization, call the functionse here */
 	// End of user code
-	atomic_c1= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
+	atomic_c1= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
 	atomic_c2= MCC_create_CourseControlComponent(CI_COURSECONTROLFCOURSECONTROL);
-	atomic_c3= MCC_create_DistanceSensorComponent(CI_REARDISTANCESENSORFDISTANCESENSOR);
+	atomic_c3= MCC_create_DistanceSensorComponent(CI_FRONTDISTANCESENSORFDISTANCESENSOR);
 	atomic_c4= MCC_create_DriveControllerComponent(CI_DRIVECONTROLLERFDRIVECONTROLLER);
 	
 	i2cCommunication_setup(9);
