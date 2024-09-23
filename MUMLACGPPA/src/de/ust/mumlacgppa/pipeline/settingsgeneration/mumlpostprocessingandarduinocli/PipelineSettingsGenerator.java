@@ -787,6 +787,14 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 				fromKeyword + " ifSuccessful",
 				directValueKeyword + " " + Upload.nameFlag + " for " + slowCarDriverECUName + " has failed!");
 
+		Map<String, Map<String, String>> windowMessageFinishedPostProcessing = DialogMessage
+				.generateDefaultOrExampleValues();
+		Map<String, String> windowMessageFinishedPostProcessingSettingsIns = windowMessageFinishedPostProcessing
+				.get(inKeyword);
+		windowMessageFinishedPostProcessingSettingsIns.put("message",
+				directValueKeyword + " Post-Processing execution completed!");
+		windowMessageFinishedPostProcessing.put(inKeyword, windowMessageFinishedPostProcessingSettingsIns);
+		
 		Map<String, Map<String, String>> windowMessageFinishedPipeline = DialogMessage
 				.generateDefaultOrExampleValues();
 		Map<String, String> windowMessageFinishedPipelineSettingsIns = windowMessageFinishedPipeline
@@ -1042,6 +1050,10 @@ public class PipelineSettingsGenerator implements PipelineSettingsDirectoryAndFi
 		defaultPostProcessingSequenceDefs
 		.add(pipelineSegmentHelper(yaml, directValueKeyword + " " + PostProcessingConfigureMQTTSettings.nameFlag,
 				postProcessingConfigureMQTTSlowCoordinator));
+		
+
+		defaultPostProcessingSequenceDefs.add(pipelineSegmentHelper(yaml,
+				directValueKeyword + " " + DialogMessage.nameFlag, windowMessageFinishedPostProcessing));
 		
 		mapForPipelineSettings.put(postProcessingSequenceDefKeyword, defaultPostProcessingSequenceDefs);
 

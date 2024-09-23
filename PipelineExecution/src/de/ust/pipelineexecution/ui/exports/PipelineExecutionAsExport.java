@@ -358,7 +358,7 @@ public class PipelineExecutionAsExport extends AbstractFujabaExportWizard {
 						return exceptionFeedback(e);
 					}
 				}
-				System.out.println("Pipeline finished successfully!");
+				System.out.println("Execution finished successfully!");
 				return Status.OK_STATUS;
 			}
 		};

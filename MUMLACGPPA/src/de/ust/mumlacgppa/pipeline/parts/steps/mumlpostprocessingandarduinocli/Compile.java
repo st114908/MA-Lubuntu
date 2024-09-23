@@ -103,8 +103,8 @@ public class Compile extends PipelineStep implements VariableTypes {
 		if(!FQBNAndCoresHandlerInstance.isSuccessful()){
 			handleOutputByKey("ifSuccessful", false);
 			handleOutputByKey("resultMessage", FQBNAndCoresHandlerInstance.generateResultMessage());
+			return;
 		}
-		
 		
 		boolean saveCompiledFilesNearby = handleInputByKey("saveCompiledFilesNearby").getBooleanContent();
 		CompilationCall CompilationStepInstance = new CompilationCall(targetINOFilePath, targetFqbn, saveCompiledFilesNearby);

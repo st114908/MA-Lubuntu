@@ -1,10 +1,8 @@
 package de.ust.arduinocliutilizer.worksteps.common;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -20,11 +18,6 @@ public abstract class FallbackForBoardsWithoutInternalFQBNDataHander implements 
 	private static String FQBNToUse;
 
 	public static String getFallbackFQBN() throws IOException, ProjectFolderPathNotSetException, NoArduinoCLIConfigFileException{
-		if(FQBNToUse != null){
-			return FQBNToUse;
-		}
-		// else
-		
 		Path projectPathOfSelectedFile = ProjectFolderPathStorage.projectFolderPath;
 		if (ProjectFolderPathStorage.projectFolderPath == null) {
 			throw new ProjectFolderPathNotSetException(

@@ -351,7 +351,7 @@ public class PipelineSettingsReader implements Keywords {
 	
 	
 	public boolean hasNextPostProcessingStep() {
-		return ( postProcessingListExecutionIndex < pipelineSequence.size() );
+		return ( postProcessingListExecutionIndex < postProcessingSequence.size() );
 	}
 
 	public PipelineStep getNextPostProcessingStep() {

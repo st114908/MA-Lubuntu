@@ -33,8 +33,7 @@ public class FQBNAndCoresHandler extends ACLIWorkstep{
 		ArrayList<Map<String, Object>> installedInstalledBoardDataList = (ArrayList<Map<String, Object>>) yamlKnownBoardsInterpreted.get("boards");
 		for(Map<String, Object> currentEntry: installedInstalledBoardDataList){
 			String currentFqbn = (String) currentEntry.get("fqbn");
-			boolean currentIsHidden = (boolean) currentEntry.get("ishidden");
-			if( foundFqbn.equals(currentFqbn) && !currentIsHidden ){
+			if( foundFqbn.equals(currentFqbn)){
 				successful = true;
 				return; // if yes then finish here.
 			}
