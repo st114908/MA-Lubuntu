@@ -1,0 +1,72 @@
+[comment encoding = UTF-8 /]
+[**
+ * This module contains all templates, that are used to generate the Configuration-files
+ * for a given Container. Inspired by org.muml.c.adapter.container.container with necessary adaptions.
+ */]
+[module Container('http://www.muml.org/pim/connector/1.0.0',
+				'http://www.muml.org/pim/behavior/1.0.0',
+				'http://www.muml.org/core/1.0.0',
+				'http://www.muml.org/pim/actionlanguage/1.0.0',
+				'http://www.muml.org/core/expressions/common/1.0.0',
+				'http://www.muml.org/pim/msgtype/1.0.0',
+				'http://www.muml.org/pim/types/1.0.0',
+				'http://www.muml.org/modelinstance/1.0.0',
+				'http://www.muml.org/pim/component/1.0.0',
+				'http://www.muml.org/pim/instance/1.0.0',
+				'http://www.muml.org/pim/realtimestatechart/1.0.0',
+				'http://www.muml.org/psm/1.0.0',
+				'http://www.muml.org/psm/muml_container/0.5.0')/]
+
+
+[import org::muml::c::adapter::componenttype::queries::stringQueries]
+[import org::muml::c::adapter::componenttype::queries::modelQueries/]
+[import org::muml::c::adapter::componenttype::queries::ContainerQueries/]
+
+[import org::muml::c::adapter::container::queries::containerStringQueries/]
+[import org::muml::c::adapter::container::container::ContainerBuilder/]
+
+[import org::muml::arduino::adapter::container::communication::ArduinoCommunication /]
+[import org::muml::arduino::adapter::container::container::ContainerComponentInstanceConfiguration /]
+[import org::muml::arduino::adapter::container::container::ContainerBuilder /]
+
+[**
+ * Generate the implementation of a container including the APImapping stubs 
+ * (These stubs may be replaced by generating the code from the APIMappingML).
+*/]
+[template public generateContainer(container:ComponentContainer, useSubDir:Boolean, path: String)]
+[comment generate the container implementation file /]
+[file (path+getFileNameCpp(container, false, useSubDir), false, 'UTF-8')] [comment Cpp for Arduino /]
+[includes(container, useSubDir)/]
+
+[comment generate a Builder Struct adapted for Arduino /]
+[generateArduinoBuilderStruct(container.componentType)/]
+
+[comment Reuse the C Adapter ContainerBuilder here/]
+[generateComponentInstancePool(container)/]
+
+[comment generate the Arduino-specific methods to check if a message exists, send receive messages used by the component/]
+[generateCommunicationMethods(container)/] 
+
+[comment Reuse the C Adapter ContainerBuilder here/]
+[generateComponentBuilder(container.componentType)/]
+
+[comment generate the Arduino-specific Port Handles /]
+[generateBuilderForPortHandles(container) /]
+
+[comment Reuse the C Adapter ContainerComponentInstanceConfiguration here/]
+[generateCreateMethodForComponentInstances(container, container.componentInstanceConfigurations)/]
+	
+[/file]
+
+[comment generate the files in APImappings/... that contain the access command stubs /]
+[generateAccessCommandStubsAsFiles(container, container.componentInstanceConfigurations, useSubDir)/]
+[/template]	
+
+
+[template private includes(container : ComponentContainer, useSubDir:Boolean)]
+// Container HeaderFile
+#include "[container.getFileName(true, useSubDir)/]"
+[/template]
+
+
+

@@ -1,0 +1,249 @@
+<mxfile host="Electron" modified="2024-09-23T19:11:41.513Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="ofQzsS3WvEawQx7uj7q5" version="24.2.5" type="device">
+  <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
+    <mxGraphModel dx="1550" dy="2017" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-49" value="" style="endArrow=open;html=1;rounded=0;entryX=-0.005;entryY=0.176;entryDx=0;entryDy=0;endFill=0;endSize=12;startArrow=none;startFill=0;startSize=12;entryPerimeter=0;exitX=1.004;exitY=0.236;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-87" target="fb7qDsoBfBqJsrEPXAHY-78" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="70" as="sourcePoint" />
+            <mxPoint x="1429.9999999999995" y="240" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-50" value="# ReceivedFeedback" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fb7qDsoBfBqJsrEPXAHY-49" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="11" y="21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-51" value="1" style="edgeLabel;resizable=0;html=1;;align=left;verticalAlign=bottom;" parent="fb7qDsoBfBqJsrEPXAHY-49" connectable="0" vertex="1">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="10" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-52" value="1" style="edgeLabel;resizable=0;html=1;;align=right;verticalAlign=bottom;" parent="fb7qDsoBfBqJsrEPXAHY-49" connectable="0" vertex="1">
+          <mxGeometry x="1" relative="1" as="geometry">
+            <mxPoint x="-30" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-73" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;DefaultConfigDirectoryAndFilePath&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ CONFIG_DIRECTORY_FOLDER_NAME : String = &quot;automatisationConfig&quot; {readOnly}&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ CONFIG_FILE_NAME : String = &quot;arduinoCLIUtilizerConfig.yaml&quot; {readOnly}&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="880" y="-240" width="480" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-74" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial; text-align: left;&quot;&gt;&lt;b&gt;CompiledFilesFolderNameInterface&lt;/b&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ COMPILED_FILES_FOLDER_NAME : String = &quot;CompiledFiles&quot; {readOnly}&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="120" y="240" width="480" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-75" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial; text-align: left;&quot;&gt;&lt;b&gt;FQBNStorageFileName&lt;/b&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ FQBN_STORAGE_FILE_NAME : String = &quot;fqbn.txt&quot; {readOnly}&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="160" y="500" width="480" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-76" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;SaveResponseInfo&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ SavedResponsesFolderName: String = &quot;SavedResponses&quot; {readOnly}&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;saveShellResponseInfo(targetFileDirectoryPath: Path, name: String, command: String, feedback: CallAndResponses): Path&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="790" y="-130" width="690" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-77" value="CallAndResponses" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="900" width="700" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-78" value="&lt;div&gt;- usedCommand: String&lt;/div&gt;&lt;div&gt;- exitCode: int&lt;/div&gt;&lt;div&gt;- normalFeedback: String&lt;/div&gt;&lt;div&gt;- errorFeedback: String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-77" vertex="1">
+          <mxGeometry y="26" width="700" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-79" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-77" vertex="1">
+          <mxGeometry y="100" width="700" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-80" value="+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;CallAndResponses(usedCommand: String, exitCode: int, normalFeedback: String, errorFeedback: String) : CallAndResponses&lt;/span&gt;&lt;div&gt;+ toString(): String&lt;/div&gt;&lt;div&gt;+ getU&lt;span style=&quot;background-color: initial;&quot;&gt;sedCommand(): String&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ getExitCode(): int&lt;/div&gt;&lt;div&gt;+ getNormalFeedback(): String&lt;/div&gt;&lt;div&gt;+ getErrorFeedback(): String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-77" vertex="1">
+          <mxGeometry y="108" width="700" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-86" value="&lt;i&gt;ACLIWorkstep&lt;/i&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" width="360" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-87" value="&lt;div&gt;+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer&quot;&lt;/u&gt; {readOnly}&lt;/div&gt;&lt;div&gt;# responseLocation: Path&lt;/div&gt;&lt;div&gt;# successful: boolean&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-86" vertex="1">
+          <mxGeometry y="26" width="360" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-88" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-86" vertex="1">
+          <mxGeometry y="80" width="360" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-89" value="&lt;div&gt;+ getResponseLocation(): Path&lt;/div&gt;&lt;div&gt;+ getResponseFeedback(): CallAndResponses&lt;/div&gt;&lt;div&gt;+ isSuccessful(): boolean&lt;/div&gt;&lt;div&gt;+ &lt;i&gt;getResultMessage(): String&lt;/i&gt;&lt;/div&gt;&lt;div&gt;+ doErrorMessage(Shell shell): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-86" vertex="1">
+          <mxGeometry y="88" width="360" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-100" value="Does not cover the *Action classes and what is only used by them." style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="-240" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-102" value="ArduinoCLICommandLineHandler" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="360" y="-240" width="400" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-103" value="&lt;div&gt;- arduinoCLIPathSetInPathEnvironment:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;- arduinoCLIDirectory: String&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- potentialArduinoCLIPathCommand: String&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- isWindows: boolean&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-102" vertex="1">
+          <mxGeometry y="26" width="400" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-104" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-102" vertex="1">
+          <mxGeometry y="100" width="400" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-105" value="+ ArduinoCLICommandLineHandler(): ArduinoCLICommandLineHandler&lt;div&gt;+&amp;nbsp;doShellCommand(commandSequence: String): CallAndResponses&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-102" vertex="1">
+          <mxGeometry y="108" width="400" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-106" value="CompilationCall" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="360" width="640" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-107" value="+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer: Compiling step&quot;&lt;/u&gt; {readOnly}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-106" vertex="1">
+          <mxGeometry y="26" width="640" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-108" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-106" vertex="1">
+          <mxGeometry y="50" width="640" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-109" value="+ CompilationCall(targetINOFilePath: Path, foundFqbn: String, saveCompiledFilesNearby: boolean): CompilationCall&lt;div&gt;+ generateResultMessage(): String&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-106" vertex="1">
+          <mxGeometry y="58" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-111" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=1.008;entryY=0.983;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-89" edge="1">
+          <mxGeometry x="-0.3334" y="30" width="160" relative="1" as="geometry">
+            <mxPoint x="800" y="240" as="sourcePoint" />
+            <mxPoint x="799.9999999999998" y="179.99799999999996" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="800" y="178" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-116" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.099;entryY=0.985;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-86" target="fb7qDsoBfBqJsrEPXAHY-105" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="440" y="330" as="sourcePoint" />
+            <mxPoint x="710" y="-70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-122" value="UploadCall" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="160" y="620" width="560" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-123" value="+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer: Upload step&quot;&lt;/u&gt; {readOnly}&lt;div&gt;-&amp;nbsp;notInSyncProblem: String&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-122" vertex="1">
+          <mxGeometry y="26" width="560" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-124" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-122" vertex="1">
+          <mxGeometry y="70" width="560" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-125" value="+ UploadCall(targetFilePath: Path, foundPortAddress: String, targetFqbn: String): UploadCall&lt;div&gt;+ generateResultMessage(): String&lt;/div&gt;+&amp;nbsp;hadNotInSyncProblem(): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-122" vertex="1">
+          <mxGeometry y="78" width="560" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-126" value="implements" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;verticalAlign=middle;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-74" edge="1">
+          <mxGeometry x="0.0162" y="-41" width="160" relative="1" as="geometry">
+            <mxPoint x="360" y="360" as="sourcePoint" />
+            <mxPoint x="610" y="290" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-127" value="implements" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;verticalAlign=middle;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-75" edge="1">
+          <mxGeometry y="40" width="160" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="680" y="530" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-128" value="" style="endArrow=none;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="720" y="640" as="sourcePoint" />
+            <mxPoint x="800" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-129" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-106" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1240" y="210" as="sourcePoint" />
+            <mxPoint x="800" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-130" value="" style="endArrow=none;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="240" as="sourcePoint" />
+            <mxPoint x="800" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-131" value="implements" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;verticalAlign=middle;entryX=0.584;entryY=1.05;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-122" target="fb7qDsoBfBqJsrEPXAHY-75" edge="1">
+          <mxGeometry x="0.1308" y="-40" width="160" relative="1" as="geometry">
+            <mxPoint x="1240" y="460" as="sourcePoint" />
+            <mxPoint x="970" y="490" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-134" value="ConnectedBoardsFinder" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="840" y="240" width="500" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-135" value="+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer: ConnectedBoardsFinder&quot;&lt;/u&gt; {readOnly}&lt;div&gt;+ resultList:&amp;nbsp;ArrayList&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ numberOfBoards: int&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-134" vertex="1">
+          <mxGeometry y="26" width="500" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-136" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-134" vertex="1">
+          <mxGeometry y="80" width="500" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-137" value="+ ConnectedBoardsFinder(targetFilePath: Path): ConnectedBoardsFinder&lt;div&gt;+ generateResultMessage(): String&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ getResultList():&amp;nbsp;ArrayList&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ getNumberOfBoards(): int&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-134" vertex="1">
+          <mxGeometry y="88" width="500" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-139" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-134" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="240" as="sourcePoint" />
+            <mxPoint x="1010" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-140" value="FQBNAndCoresHandler" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="840" y="440" width="660" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-141" value="+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer: Core search&quot;&lt;/u&gt; {readOnly}&lt;div&gt;+ coreFound: boolean&lt;/div&gt;&lt;div&gt;+&amp;nbsp;InstallCoreForBoardInstance:&amp;nbsp;InstallCoreForBoard&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-140" vertex="1">
+          <mxGeometry y="26" width="660" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-142" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-140" vertex="1">
+          <mxGeometry y="80" width="660" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-143" value="+ FQBNAndCoresHandler(targetFilePath: Path, foundPortAddress: String, foundFqbn: String): FQBNAndCoresHandler&lt;div&gt;+ generateResultMessage(): String&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-140" vertex="1">
+          <mxGeometry y="88" width="660" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-144" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-140" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="440" as="sourcePoint" />
+            <mxPoint x="1050" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-145" value="Please note:&lt;div&gt;All classes that inherit fom ACLIWorkstep use the ArduinoCLICommandLineHandler&lt;/div&gt;" style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="120" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-147" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0;entryDx=200;entryDy=50;entryPerimeter=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-87" target="fb7qDsoBfBqJsrEPXAHY-145" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1090" y="330" as="sourcePoint" />
+            <mxPoint x="1140" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-148" value="InstallCoreForBoard" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="840" y="640" width="500" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-149" value="+ &lt;u&gt;messageWindowTitle: String = &quot;ArduinoCLIUtilizer: Core installation&quot;&lt;/u&gt; {readOnly}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-148" vertex="1">
+          <mxGeometry y="26" width="500" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-150" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="fb7qDsoBfBqJsrEPXAHY-148" vertex="1">
+          <mxGeometry y="50" width="500" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-151" value="+ InstallCoreForBoard(targetFilePath: Path, candidateID: String): InstallCoreForBoard&lt;div&gt;+ generateResultMessage(): String&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="fb7qDsoBfBqJsrEPXAHY-148" vertex="1">
+          <mxGeometry y="58" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-152" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.361;exitY=1.12;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-143" target="fb7qDsoBfBqJsrEPXAHY-148" edge="1">
+          <mxGeometry x="-0.5246" y="19" width="160" relative="1" as="geometry">
+            <mxPoint x="1180" y="590" as="sourcePoint" />
+            <mxPoint x="740" y="-64" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-153" value="implements" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;verticalAlign=middle;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-86" target="fb7qDsoBfBqJsrEPXAHY-76" edge="1">
+          <mxGeometry x="-1" y="28" width="160" relative="1" as="geometry">
+            <mxPoint x="330" y="370" as="sourcePoint" />
+            <mxPoint x="330" y="330" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb7qDsoBfBqJsrEPXAHY-154" value="implements" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;verticalAlign=middle;exitX=1.002;exitY=0.182;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="fb7qDsoBfBqJsrEPXAHY-103" target="fb7qDsoBfBqJsrEPXAHY-73" edge="1">
+          <mxGeometry x="-0.0052" y="-20" width="160" relative="1" as="geometry">
+            <mxPoint x="810" y="10" as="sourcePoint" />
+            <mxPoint x="850" y="-30" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZR7kzj_-uZc7aep37ibn-1" value="Exceptions and the accesses&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;to&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;the project&lt;/span&gt;&lt;div&gt;ProjectFolderPathStoragePlugIn and the static variable projectFolderPath&amp;nbsp; in it&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;(almost every class in this diagram is accessing it)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;left out&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;to avoid cluttering.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="-140" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="5Cpwidb8YbwnTNovhLdv-1" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" target="fb7qDsoBfBqJsrEPXAHY-148" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="640" as="sourcePoint" />
+            <mxPoint x="810" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

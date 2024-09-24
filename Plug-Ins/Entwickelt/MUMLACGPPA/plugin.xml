@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="MUMLACGPPA.contributionPipeline"
+            nameFilter="*.muml"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               label="MUMLACGPPA"
+               path="additions"
+               id="MUMLACGPPA.menuPipeline">
+            <separator
+                  name="groupPipelineExecution">
+            </separator>
+            <separator
+                  name="groupPipelineSettingsAndExamples">
+            </separator>
+            <separator
+                  name="MUMLACGPPA.groupArduinoCLIUtilizerAccess">
+            </separator>
+         </menu>
+         <action
+               label="Run pipeline"
+               class="de.ust.mumlacgppa.popup.actions.RunPipelineAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineExecution"
+               enablesFor="1"
+               id="MUMLACGPPA.RunPipelineAction">
+         </action>
+         <action
+               label="Generate default/example pipeline settings"
+               class="de.ust.mumlacgppa.popup.actions.GenerateDefaultOrExamplePipelineSettingsAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateDefaultOrExamplePipelineSettingsAction">
+         </action>
+         <action
+               label="Generate all pipeline step example settings"
+               class="de.ust.mumlacgppa.popup.actions.GenerateAllPipelineStepExamplesAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateAllPipelineStepExamplesAction">
+         </action>
+         <action
+               label="Generate local settings for Sofdcar-Hal"
+               class="de.ust.mumlacgppa.popup.actions.GenerateSofdcarHalConfig_hppFileAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupPipelineSettingsAndExamples"
+               enablesFor="1"
+               id="MUMLACGPPA.GenerateSofdcarHalConfig_hppFileAction">
+         </action>
+         
+         <action
+               label="Generate ArduinoCLIUtilizer config file"
+               class="de.ust.mumlacgppa.popup.actions.CallArduinoCLIUtilizerConfigGenerationAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupArduinoCLIUtilizerAccess"
+               enablesFor="1"
+               id="MUMLACGPPA.CallArduinoCLIUtilizerConfigGenerationAction">
+         </action>
+         <action
+               label="List connected Arduino boards"
+               class="de.ust.mumlacgppa.popup.actions.CallListAllConnectedArduinoBoardsAction"
+               menubarPath="MUMLACGPPA.menuPipeline/groupArduinoCLIUtilizerAccess"
+               enablesFor="1"
+               id="MUMLACGPPA.actioncall.CallListAllConnectedArduinoBoardsAction">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

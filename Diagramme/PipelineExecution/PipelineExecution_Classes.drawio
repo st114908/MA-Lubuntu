@@ -1,0 +1,326 @@
+<mxfile host="Electron" modified="2024-09-24T09:02:56.343Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="kQUQ_HI-PXuoMMndxDQS" version="24.2.5" type="device">
+  <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
+    <mxGraphModel dx="2208" dy="1908" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-1" value="PipeLineExecutionAsExport" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="240" width="620" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-2" value="&lt;div&gt;# sourceSystemAllocationPage:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;AbstractFujabaExportSourcePage&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# sourceComponentInstancePage:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;AbstractFujabaExportSourcePage&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# completePipelineSettingsFilePath: Path&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# pipelineSettingsFileNotFound: boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# pipelineSettingsErrorDetected: boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;# PSRInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineSettingsReader&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# containerTransformationToBePerformed: boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# componentCodeGenerationToBePerformed&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-1" vertex="1">
+          <mxGeometry y="26" width="620" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-1" vertex="1">
+          <mxGeometry y="150" width="620" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-4" value="&lt;div&gt;+ wizardGetId(): String&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;# getNextStepRespectiveSequence(): PipelineStep&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;# hasNextStepRespectiveSequence(): boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre; white-space: normal;&quot;&gt;&#x9;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# resetRespectiveSequence(): void&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;# checkWhichWorkaroundsToPerform(): void&lt;/div&gt;&lt;div&gt;# handlePipelineSettingsFile(&lt;span style=&quot;background-color: initial;&quot;&gt;): boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;# handleArduinoCLIUtilizerCheck(&lt;span style=&quot;background-color: initial;&quot;&gt;projectPath:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Path&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleStepsWithWindowCheck(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ addPages(): void&lt;br&gt;&lt;/div&gt;&lt;div&gt;# generateSourceComponentInstancePage():&amp;nbsp;AbstractFujabaExportSourcePage&lt;/div&gt;&lt;div&gt;#&amp;nbsp;generateSourceSystemAllocationPage():&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;AbstractFujabaExportSourcePage&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;executeSequenceOperation(selectedFile:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IFile&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;targetProject:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IProject&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp;sourceElementsSystemAllocation:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;EObject[]&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp;sourceElementsComponentInstance:&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;EObject[]&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;AbstractFujabaExportOperation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;generateFolderIfNecessary(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;directoriesPath:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Path): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;doExecuteContainerTransformationPart(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;sourceElementsSystemAllocation:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;EObject[]&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp;step:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ContainerTransformation&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;progressMonitor:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IProgressMonitor&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;doExecuteComponentCodeGeneration(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;sourceElementsComponentInstance:&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;EObject[]&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp;step:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ComponentCodeGeneration&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;progressMonitor:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IProgressMonitor&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;refreshWorkSpace(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;selectedFile:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IFile&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;{readOnly}&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;printTextWindowMessage(message: String): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;printDialogWindowMessage(message: String): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;exceptionFeedback(e: Exception):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IStatus&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleOtherPipelineSteps(currentStep:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;wizardCreateExportOperation():&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IFujabaExportOperation&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-1" vertex="1">
+          <mxGeometry y="158" width="620" height="382" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-5" value="ComponentCodeGenerationWorkaround" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-740" y="260" width="700.4" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-6" value="&amp;nbsp;-&amp;nbsp;step:&amp;nbsp;ComponentCodeGeneration" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-5" vertex="1">
+          <mxGeometry y="26" width="700.4" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-5" vertex="1">
+          <mxGeometry y="52" width="700.4" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-8" value="+&amp;nbsp;ComponentCodeGenerationWorkaround(step: ComponentCodeGeneration):&amp;nbsp;ComponentCodeGenerationWorkaround&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;performComponentCodeGeneration(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;sourceElementsComponentInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;EObject[]&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;progressMonitor:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IProgressMonitor&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-5" vertex="1">
+          <mxGeometry y="60" width="700.4" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-9" value="ComponentCodeGeneration" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-740" y="-80" width="820.6" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-10" value="+&amp;nbsp;&lt;u&gt;nameFlag : String = &quot;ComponentCodeGeneration&quot;&lt;/u&gt; {readOnly}&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-9" vertex="1">
+          <mxGeometry y="26" width="820.6" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-11" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-9" vertex="1">
+          <mxGeometry y="50" width="820.6" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-12" value="+ ComponentCodeGeneration(VariableHandlerInstance: VariableHandler, readData: Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;): ComponentCodeGeneration&lt;div&gt;+ ComponentCodeGeneration(VariableHandlerInstance:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, yamlData: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ComponentCodeGeneration&lt;/span&gt;&lt;/div&gt;&lt;div&gt;#&amp;nbsp;getRequiredInsAndOuts():&amp;nbsp;Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ generateDefaultOrExampleValues():&amp;nbsp;Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ execute(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-9" vertex="1">
+          <mxGeometry y="58" width="820.6" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-14" value="org.muml.c.adapter.componenttype.ui.export::C99SourceCodeExport" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="-519.5999999999999" y="100" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-15" value="org.muml.codegen.componenttype.export.ui::Activator" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="40" y="140" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-16" value="org.muml.codegen.componenttype.export.ui::ITargetPlatformGenerator" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="-479.5999999999999" y="180" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-17" value="- step" style="endArrow=open;endSize=12;html=1;rounded=0;entryX=0.074;entryY=1.049;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" parent="1" target="ekuC0I5UsIN45DEHxdDx-12" edge="1">
+          <mxGeometry x="0.8068" y="31" width="160" relative="1" as="geometry">
+            <mxPoint x="-679.9999999999995" y="260" as="sourcePoint" />
+            <mxPoint x="-1079.6" y="170" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5A1i0bu2V5VuhyqM19EN-1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ekuC0I5UsIN45DEHxdDx-17" vertex="1" connectable="0">
+          <mxGeometry x="0.85" y="-1" relative="1" as="geometry">
+            <mxPoint x="18" y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5A1i0bu2V5VuhyqM19EN-2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ekuC0I5UsIN45DEHxdDx-17" vertex="1" connectable="0">
+          <mxGeometry x="-0.8331" y="-1" relative="1" as="geometry">
+            <mxPoint x="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-18" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.095;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="ekuC0I5UsIN45DEHxdDx-14" edge="1">
+          <mxGeometry x="0.7002" y="-20" width="160" relative="1" as="geometry">
+            <mxPoint x="-519.9999999999998" y="260" as="sourcePoint" />
+            <mxPoint x="-669.8" y="324" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-19" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.143;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="ekuC0I5UsIN45DEHxdDx-16" edge="1">
+          <mxGeometry x="0.002" y="-20" width="160" relative="1" as="geometry">
+            <mxPoint x="-479.68000000000006" y="260" as="sourcePoint" />
+            <mxPoint x="-509.79999999999995" y="70" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-20" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-5" target="ekuC0I5UsIN45DEHxdDx-15" edge="1">
+          <mxGeometry x="0.2475" y="-14" width="160" relative="1" as="geometry">
+            <mxPoint x="-639.3599999999999" y="240" as="sourcePoint" />
+            <mxPoint x="-699.8" y="60" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-21" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=-0.003;exitY=0.222;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-2" target="ekuC0I5UsIN45DEHxdDx-6" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="-870" y="305" as="sourcePoint" />
+            <mxPoint x="-950" y="304" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-28" value="ContainerTransformation" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="740" y="40" width="780" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-29" value="+&amp;nbsp;&lt;u&gt;nameFlag : String = &quot;ContainerTransformation&quot;&lt;/u&gt; {readOnly}&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-28" vertex="1">
+          <mxGeometry y="26" width="780" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-30" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-28" vertex="1">
+          <mxGeometry y="50" width="780" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-31" value="+ ContainerTransformation(VariableHandlerInstance: VariableHandler, readData: Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;):&amp;nbsp;ContainerTransformation&lt;div&gt;+ ContainerTransformation(VariableHandlerInstance:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, yamlData: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ContainerTransformation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;# getRequiredInsAndOuts(): Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ generateDefaultOrExampleValues():&amp;nbsp;Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ execute(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-28" vertex="1">
+          <mxGeometry y="58" width="780" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-39" value="ContainerTransformationWorkaround" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="700" y="440" width="840" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-40" value="- step:&amp;nbsp;ContainerTransformation" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-39" vertex="1">
+          <mxGeometry y="26" width="840" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-41" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-39" vertex="1">
+          <mxGeometry y="52" width="840" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-42" value="+ ContainerTransformationWorkaround(step: ContainerTransformation):&amp;nbsp;ContainerTransformationWorkaround&lt;div&gt;+&amp;nbsp;performContainerTransformation(&lt;span style=&quot;background-color: initial;&quot;&gt;sourceElementsSystemAllocation:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;EObject[]&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, progressMonitor:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IProgressMonitor&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, editingDomain:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;EditingDomain&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;):&amp;nbsp;void&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-39" vertex="1">
+          <mxGeometry y="60" width="840" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-45" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1520" y="440" as="sourcePoint" />
+            <mxPoint x="1520" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-46" value="- step" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ekuC0I5UsIN45DEHxdDx-45" vertex="1" connectable="0">
+          <mxGeometry x="0.0372" y="-1" relative="1" as="geometry">
+            <mxPoint x="-32" y="-105" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5A1i0bu2V5VuhyqM19EN-6" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ekuC0I5UsIN45DEHxdDx-45" vertex="1" connectable="0">
+          <mxGeometry x="0.7978" relative="1" as="geometry">
+            <mxPoint x="10" y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5A1i0bu2V5VuhyqM19EN-7" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ekuC0I5UsIN45DEHxdDx-45" vertex="1" connectable="0">
+          <mxGeometry x="-0.8647" y="-1" relative="1" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-48" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-39" target="ekuC0I5UsIN45DEHxdDx-15" edge="1">
+          <mxGeometry x="0.4571" y="-18" width="160" relative="1" as="geometry">
+            <mxPoint x="-233" y="270" as="sourcePoint" />
+            <mxPoint x="200" y="170" as="targetPoint" />
+            <mxPoint x="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="680" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-49" value="org.muml.container.transformation.job::ContainerGenerationJob" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="240" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-50" value="org.muml.container.transformation.job:MiddlewareOption" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="760" y="240" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-51" value="org.muml.psm.allocation::SystemAllocation" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="800" y="360" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-52" value="org.muml.psm.muml_container::DeploymentConfiguration" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="360" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-53" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-39" target="ekuC0I5UsIN45DEHxdDx-51" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="48" y="310" as="sourcePoint" />
+            <mxPoint x="-30" y="309" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-55" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-39" target="ekuC0I5UsIN45DEHxdDx-50" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="1095" y="440" as="sourcePoint" />
+            <mxPoint x="1050" y="410" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-56" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-39" target="ekuC0I5UsIN45DEHxdDx-49" edge="1">
+          <mxGeometry x="0.25" y="-20" width="160" relative="1" as="geometry">
+            <mxPoint x="1140" y="430" as="sourcePoint" />
+            <mxPoint x="1060" y="420" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-57" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.29;exitY=-0.006;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="1180" y="440" as="sourcePoint" />
+            <mxPoint x="1182" y="401" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-58" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=1;exitY=0.213;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-4" target="ekuC0I5UsIN45DEHxdDx-40" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="51" y="700" as="sourcePoint" />
+            <mxPoint x="-29" y="695" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-59" value="InfoWindow" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-660" y="420" width="440" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-60" value="-&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;dummyButton:&amp;nbsp;&lt;/span&gt;Button&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;- message: String&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-59" vertex="1">
+          <mxGeometry y="26" width="440" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-61" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="ekuC0I5UsIN45DEHxdDx-59" vertex="1">
+          <mxGeometry y="70" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-62" value="+ InfoWindow(pageTitle: String, title: String, message: String):&amp;nbsp;InfoWindow&lt;div&gt;+&amp;nbsp;createControl(parent: Composite): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ekuC0I5UsIN45DEHxdDx-59" vertex="1">
+          <mxGeometry y="78" width="440" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="ekuC0I5UsIN45DEHxdDx-63" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-1" target="ekuC0I5UsIN45DEHxdDx-59" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="670" y="494" as="sourcePoint" />
+            <mxPoint x="730" y="489" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kOyEuy9XaZ1z3xaVlcRu-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PipelineStepDictionaryMUMLPostProcessingAndArduinoCLIUtilizer&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;lookupStepNameAndGenerateInstance(VariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, className: String, parameters:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): PipelineStep&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="679.9999999999999" y="1120" width="900" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="kOyEuy9XaZ1z3xaVlcRu-2" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-1" target="kOyEuy9XaZ1z3xaVlcRu-1" edge="1">
+          <mxGeometry x="-0.1823" y="-19" width="160" relative="1" as="geometry">
+            <mxPoint x="672" y="591" as="sourcePoint" />
+            <mxPoint x="730" y="590" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vPUa8ZsOn4JjoPj-fIfv-1" value="PostProcessingExecutionAsExport" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="1120" width="330" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vPUa8ZsOn4JjoPj-fIfv-2" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="vPUa8ZsOn4JjoPj-fIfv-1" vertex="1">
+          <mxGeometry y="26" width="330" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="vPUa8ZsOn4JjoPj-fIfv-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="vPUa8ZsOn4JjoPj-fIfv-1" vertex="1">
+          <mxGeometry y="50" width="330" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="vPUa8ZsOn4JjoPj-fIfv-4" value="&lt;div&gt;+ wizardGetId(): String&lt;/div&gt;&lt;div&gt;# getNextStepRespectiveSequence():&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep&lt;/span&gt;&lt;/div&gt;&lt;div&gt;# hasNextStepRespectiveSequence():&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;boolean&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;# reset&lt;span style=&quot;background-color: initial;&quot;&gt;RespectiveSequence():&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ addPages(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="vPUa8ZsOn4JjoPj-fIfv-1" vertex="1">
+          <mxGeometry y="58" width="330" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="ITXBuHmnkI-sYWAgwWiU-1" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-1" edge="1">
+          <mxGeometry x="-0.0042" y="15" width="160" relative="1" as="geometry">
+            <mxPoint x="50" y="520" as="sourcePoint" />
+            <mxPoint x="-79.59999999999991" y="681.931696905016" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-1" value="ComponentCodeGenerationExecutionAsExport" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-449.6" y="1120" width="330" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-2" value="&lt;div&gt;# generation:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;ComponentCodeGeneration&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;settingsMissing:&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="eRkx31UwzXEYybRe-iOz-1" vertex="1">
+          <mxGeometry y="26" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="eRkx31UwzXEYybRe-iOz-1" vertex="1">
+          <mxGeometry y="80" width="330" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-4" value="&lt;div&gt;+ wizardGetId(): String&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ addPages(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;wizardCreateExportOperation():&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IFujabaExportOperation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="eRkx31UwzXEYybRe-iOz-1" vertex="1">
+          <mxGeometry y="88" width="330" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-5" value="ContainerCodeGenerationExecutionAsExport" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-79.60000000000002" y="1120" width="330" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-6" value="&lt;div&gt;# generation:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;ContainerCodeGeneration&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;settingsMissing:&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;boolean&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="eRkx31UwzXEYybRe-iOz-5" vertex="1">
+          <mxGeometry y="26" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="eRkx31UwzXEYybRe-iOz-5" vertex="1">
+          <mxGeometry y="80" width="330" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-8" value="&lt;div&gt;+ wizardGetId(): String&lt;/div&gt;&lt;div&gt;&lt;div&gt;+ addPages(): void&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;wizardCreateExportOperation():&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;IFujabaExportOperation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="eRkx31UwzXEYybRe-iOz-5" vertex="1">
+          <mxGeometry y="88" width="330" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-10" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" parent="1" source="eRkx31UwzXEYybRe-iOz-5" target="ekuC0I5UsIN45DEHxdDx-4" edge="1">
+          <mxGeometry x="-0.1939" y="-16" width="160" relative="1" as="geometry">
+            <mxPoint x="170" y="940" as="sourcePoint" />
+            <mxPoint x="107" y="900" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-12" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" parent="1" source="vPUa8ZsOn4JjoPj-fIfv-1" target="ekuC0I5UsIN45DEHxdDx-4" edge="1">
+          <mxGeometry x="-0.1939" y="-16" width="160" relative="1" as="geometry">
+            <mxPoint x="408" y="1140" as="sourcePoint" />
+            <mxPoint x="377" y="790" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eRkx31UwzXEYybRe-iOz-13" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="eRkx31UwzXEYybRe-iOz-1" target="ekuC0I5UsIN45DEHxdDx-4" edge="1">
+          <mxGeometry x="-0.1939" y="-16" width="160" relative="1" as="geometry">
+            <mxPoint x="418" y="1150" as="sourcePoint" />
+            <mxPoint x="387" y="800" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2nkhR8xfukjbfSWDMizb-1" value="&lt;i&gt;PipelineStep&lt;/i&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-819.6" y="580" width="740" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="2nkhR8xfukjbfSWDMizb-2" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;# in: Map&amp;lt;String, String&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;# out: Map&amp;lt;String, String&amp;gt;&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="2nkhR8xfukjbfSWDMizb-1" vertex="1">
+          <mxGeometry y="26" width="740" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="2nkhR8xfukjbfSWDMizb-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="2nkhR8xfukjbfSWDMizb-1" vertex="1">
+          <mxGeometry y="90" width="740" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="2nkhR8xfukjbfSWDMizb-4" value="# g&lt;i&gt;etRequiredInsAndOuts(): &lt;/i&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Map&amp;lt;String,&amp;nbsp;&lt;/span&gt;Map&amp;lt;String,&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;String&amp;gt;&amp;gt;&lt;/span&gt;&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep(VariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, readData: Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, yamlData: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;PipelineStep&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;-&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;resolveInputEntry(entry: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableContent&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleInputByKey(inputParameterKey: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableContent&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleInputByKeyAsArray(inputParameterKey: String, split: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;String[]&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleOutputByKey(outputKey: String, newValue: VariableContent): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleOutputByKey(outputKey: String, newValue: String)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleOutputByKey(outputKey: String, newValue: int)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;handleOutputByKey(outputKey: String, newValue: boolean)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;-&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;checkForDetectableErrorsEntryCheck(entry: String&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, expectedType&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: String&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ValidationVariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;checkForDetectableErrors(&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ValidationVariableHandlerInstance:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;#&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;resolveFullOrLocalPath(givenPathString: String): Path&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;i&gt;execute(): void&lt;/i&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ toString(): String&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;// For workarounds that require more access possibilities:&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;getContentOfInput(key: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableContent&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;setContentOfOutput(key: String, newValue: VariableContent)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;setContentOfOutput(key: String, newValue: String)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;setContentOfOutput(key: String, newValue: int)&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;setContentOfOutput(key: String, newValue: boolean): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;getResolvedPathContentOfInput(key: String): Path&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="2nkhR8xfukjbfSWDMizb-1" vertex="1">
+          <mxGeometry y="98" width="740" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="TX_1NmUcOdfMXuLTlD41-1" value="LookupBoardBySerialNumber" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="720" y="720" width="820" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="TX_1NmUcOdfMXuLTlD41-2" value="&lt;div&gt;&lt;div style=&quot;&quot;&gt;+&amp;nbsp;&lt;u&gt;nameFlag:&amp;nbsp;&lt;/u&gt;&lt;u style=&quot;background-color: initial;&quot;&gt;String&lt;/u&gt;&lt;u style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;= &quot;LookupBoardBySerialNumber&quot; {readOnly}&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- &lt;u&gt;hasSearched:&amp;nbsp;&lt;/u&gt;&lt;/span&gt;&lt;u&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;boolean&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;= false&lt;/span&gt;&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;white-space: normal;&quot;&gt;-&amp;nbsp;&lt;u&gt;foundBoardsStorage:&amp;nbsp;&lt;/u&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;u&gt;ArrayList&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt;&lt;/u&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TX_1NmUcOdfMXuLTlD41-1" vertex="1">
+          <mxGeometry y="26" width="820" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="TX_1NmUcOdfMXuLTlD41-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="TX_1NmUcOdfMXuLTlD41-1" vertex="1">
+          <mxGeometry y="80" width="820" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="TX_1NmUcOdfMXuLTlD41-4" value="&lt;div&gt;# getRequiredInsAndOuts(): Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ generateDefaultOrExampleValues():&amp;nbsp;Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;&lt;br&gt;&lt;/div&gt;+ LookupBoardBySerialNumber(VariableHandlerInstance: VariableHandler, readData: Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt;): LookupBoardBySerialNumber&lt;div&gt;+ LookupBoardBySerialNumber(VariableHandlerInstance:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;VariableHandler&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;, yamlData: String):&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;LookupBoardBySerialNumber&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ &lt;u&gt;resetSearchState(): void&lt;/u&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ execute(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TX_1NmUcOdfMXuLTlD41-1" vertex="1">
+          <mxGeometry y="88" width="820" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="TX_1NmUcOdfMXuLTlD41-5" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ekuC0I5UsIN45DEHxdDx-1" target="TX_1NmUcOdfMXuLTlD41-1" edge="1">
+          <mxGeometry x="0.0665" y="16" width="160" relative="1" as="geometry">
+            <mxPoint x="670" y="773" as="sourcePoint" />
+            <mxPoint x="740" y="830" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

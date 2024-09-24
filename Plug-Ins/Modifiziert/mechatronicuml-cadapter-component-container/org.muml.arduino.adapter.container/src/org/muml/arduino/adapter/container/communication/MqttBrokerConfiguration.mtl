@@ -1,0 +1,52 @@
+[comment encoding = UTF-8 /]
+[module MqttBrokerConfiguration('http://www.eclipse.org/emf/2002/Ecore')]
+
+[**
+ * Generates all files required for a Mosquitto MQTT broker using Docker.
+ * The given mqttServerPort will be configured, and the files will be generated in the given path.
+*/]
+[template public generateMosquittoDockerFiles (mqttServerPort : Integer, path : String)]
+[generateMosquittoConf(mqttServerPort, path) /]
+[generateMosquittoDockerfile(path) /]
+[generateMosquittoDockerCompose(mqttServerPort, path) /]
+[/template]
+
+[**
+ * Generates the configuration for the Mosquitto MQTT broker using the given mqttServerPort.
+*/]
+[template private generateMosquittoConf(mqttServerPort : Integer, path : String)]
+
+[file (path+'config/mosquitto.conf', false, 'UTF-8')]
+allow_anonymous true
+listener [mqttServerPort /]
+[/file]
+[/template]
+
+[**
+ * Generates the Dockerfile for the MQTT broker.
+*/]
+[template private generateMosquittoDockerfile(path: String)]
+[file (path+'Dockerfile', false, 'UTF-8')]
+FROM eclipse-mosquitto:2.0.14
+COPY ./config /mosquitto/config
+[/file]
+[/template]
+
+[**
+ * Generates the docker-compose file for convenient start-up of the Mosquitto MQTT broker with the given mqttServerPort.
+*/]
+[template private generateMosquittoDockerCompose(mqttServerPort : Integer, path : String)]
+[file (path+'docker-compose.yml', false, 'UTF-8')]
+version: "3.5"
+
+services:
+  mqtt:
+    container_name: mqtt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "[mqttServerPort/]:[mqttServerPort/]"
+[/file]
+[/template]

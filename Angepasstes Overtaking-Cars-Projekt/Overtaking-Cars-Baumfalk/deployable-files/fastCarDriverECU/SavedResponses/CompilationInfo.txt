@@ -1,0 +1,423 @@
+Command:
+export PATH=/home/muml/ArduinoCLI:$PATH && arduino-cli compile --fqbn arduino:avr:mega /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarDriverECU/fastCarDriverECU.ino --output-dir /home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarDriverECU/CompiledFiles --format yaml
+
+Results:
+Exit code: 0
+
+
+Normal response stream:
+compilerout: |
+    Sketch uses 28830 bytes (11%) of program storage space. Maximum is 253952 bytes.
+    Global variables use 1672 bytes (20%) of dynamic memory, leaving 6520 bytes for local variables. Maximum is 8192 bytes.
+compilererr: ""
+builderresult:
+    outstream: []
+    errstream: []
+    buildpath: /tmp/arduino/sketches/056252D0832629960D910632D85F4222
+    usedlibraries:
+        - name: Sofdcar-HAL
+          author: SQARoboLab
+          maintainer: SQARoboLab <test@example.com>
+          sentence: HAL for the Arduino based cars
+          paragraph: 'Hardware abstraction for: Distance sensor, Line detection, Drive control'
+          website: https://github.com/SQA-Robo-Lab/Sofdcar-HAL
+          category: Other
+          architectures:
+            - '*'
+          types: []
+          installdir: /home/muml/Arduino/libraries/Sofdcar-HAL
+          sourcedir: /home/muml/Arduino/libraries/Sofdcar-HAL/src
+          utilitydir: ""
+          containerplatform: ""
+          dotalinkage: false
+          precompiled: false
+          ldflags: ""
+          islegacy: false
+          version: 1.0.0
+          license: Unspecified
+          properties: {}
+          location: 1
+          layout: 1
+          examples:
+            - /home/muml/Arduino/libraries/Sofdcar-HAL/examples/MotorCalibrator
+            - /home/muml/Arduino/libraries/Sofdcar-HAL/examples/SimpleHardwareController
+            - /home/muml/Arduino/libraries/Sofdcar-HAL/examples/basicLineFollow
+            - /home/muml/Arduino/libraries/Sofdcar-HAL/examples/halExampleUsage
+            - /home/muml/Arduino/libraries/Sofdcar-HAL/examples/rpcHal
+          providesincludes:
+            - SimpleHardwareController.hpp
+            - SimpleHardwareController_Connector.h
+            - Sofdcar-HAL.hpp
+            - Sofdcar-RPC.hpp
+          compatiblewith: {}
+          indevelopment: false
+        - name: Servo
+          author: Michael Margolis, Arduino
+          maintainer: Arduino <info@arduino.cc>
+          sentence: Allows Arduino boards to control a variety of servo motors.
+          paragraph: 'This library can control a great number of servos.<br />It makes careful use of timers: the library can control 12 servos using only 1 timer.<br />On the Arduino Due you can control up to 60 servos.'
+          website: https://www.arduino.cc/reference/en/libraries/servo/
+          category: Device Control
+          architectures:
+            - avr
+            - megaavr
+            - sam
+            - samd
+            - nrf52
+            - stm32f4
+            - mbed
+            - mbed_nano
+            - mbed_portenta
+            - mbed_rp2040
+            - renesas
+            - renesas_portenta
+            - renesas_uno
+          types: []
+          installdir: /home/muml/Arduino/libraries/Servo
+          sourcedir: /home/muml/Arduino/libraries/Servo/src
+          utilitydir: ""
+          containerplatform: ""
+          dotalinkage: false
+          precompiled: false
+          ldflags: ""
+          islegacy: false
+          version: 1.2.1
+          license: Unspecified
+          properties: {}
+          location: 1
+          layout: 1
+          examples:
+            - /home/muml/Arduino/libraries/Servo/examples/Knob
+            - /home/muml/Arduino/libraries/Servo/examples/Sweep
+          providesincludes:
+            - Servo.h
+          compatiblewith: {}
+          indevelopment: false
+        - name: PubSubClient
+          author: Nick O'Leary <nick.oleary@gmail.com>
+          maintainer: Nick O'Leary <nick.oleary@gmail.com>
+          sentence: A client library for MQTT messaging.
+          paragraph: MQTT is a lightweight messaging protocol ideal for small devices. This library allows you to send and receive MQTT messages. It supports the latest MQTT 3.1.1 protocol and can be configured to use the older MQTT 3.1 if needed. It supports all Arduino Ethernet Client compatible hardware, including the Intel Galileo/Edison, ESP8266 and TI CC3000.
+          website: http://pubsubclient.knolleary.net
+          category: Communication
+          architectures:
+            - '*'
+          types: []
+          installdir: /home/muml/Arduino/libraries/PubSubClient
+          sourcedir: /home/muml/Arduino/libraries/PubSubClient/src
+          utilitydir: ""
+          containerplatform: ""
+          dotalinkage: false
+          precompiled: false
+          ldflags: ""
+          islegacy: false
+          version: "2.8"
+          license: Unspecified
+          properties: {}
+          location: 1
+          layout: 1
+          examples:
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_auth
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_basic
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_esp8266
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_large_message
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_publish_in_callback
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_reconnect_nonblocking
+            - /home/muml/Arduino/libraries/PubSubClient/examples/mqtt_stream
+          providesincludes:
+            - PubSubClient.h
+          compatiblewith: {}
+          indevelopment: false
+        - name: SoftwareSerial
+          author: Arduino
+          maintainer: Arduino <info@arduino.cc>
+          sentence: Enables serial communication on any digital pin.
+          paragraph: The SoftwareSerial library has been developed to allow serial communication on any digital pin of the board, using software to replicate the functionality of the hardware UART. It is possible to have multiple software serial ports with speeds up to 115200 bps.
+          website: http://www.arduino.cc/en/Reference/SoftwareSerial
+          category: Communication
+          architectures:
+            - avr
+          types: []
+          installdir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SoftwareSerial
+          sourcedir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SoftwareSerial/src
+          utilitydir: ""
+          containerplatform: arduino:avr@1.8.6
+          dotalinkage: false
+          precompiled: false
+          ldflags: ""
+          islegacy: false
+          version: "1.0"
+          license: Unspecified
+          properties: {}
+          location: 2
+          layout: 1
+          examples:
+            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SoftwareSerial/examples/SoftwareSerialExample
+            - /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SoftwareSerial/examples/TwoPortReceive
+          providesincludes:
+            - SoftwareSerial.h
+          compatiblewith: {}
+          indevelopment: false
+        - name: WiFiEsp
+          author: bportaluri
+          maintainer: Bruno Portaluri <bportaluri@gmail.com>
+          sentence: Arduino WiFi library for ESP8266
+          paragraph: Arduino WiFi library for ESP8266. Works only with SDK version 1.1.1 and above (AT version 0.25 and above).
+          website: https://github.com/bportaluri/WiFiEsp
+          category: Other
+          architectures:
+            - '*'
+          types: []
+          installdir: /home/muml/Arduino/libraries/WiFiEsp
+          sourcedir: /home/muml/Arduino/libraries/WiFiEsp/src
+          utilitydir: ""
+          containerplatform: ""
+          dotalinkage: false
+          precompiled: false
+          ldflags: ""
+          islegacy: false
+          version: 2.2.2
+          license: Unspecified
+          properties: {}
+          location: 1
+          layout: 1
+          examples:
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/ConnectWPA
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/ScanNetworks
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/UdpNTPClient
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/UdpSendReceive
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebClient
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebClientRepeating
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebClientSSL
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebServer
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebServerAP
+            - /home/muml/Arduino/libraries/WiFiEsp/examples/WebServerLed
+          providesincludes:
+            - WiFiEsp.h
+            - WiFiEspClient.h
+            - WiFiEspServer.h
+            - WiFiEspUdp.h
+          compatiblewith: {}
+          indevelopment: false
+    executablesectionssize:
+        - name: text
+          size: 28830
+          maxsize: 253952
+        - name: data
+          size: 1672
+          maxsize: 8192
+    boardplatform:
+        id: arduino:avr
+        version: 1.8.6
+        installdir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6
+        packageurl: ""
+    buildplatform:
+        id: arduino:avr
+        version: 1.8.6
+        installdir: /home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6
+        packageurl: ""
+    progress: null
+    buildproperties:
+        - _id=mega
+        - archive_file_path=/tmp/arduino/sketches/056252D0832629960D910632D85F4222/{archive_file}
+        - bootloader.extended_fuses=0xFD
+        - bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+        - bootloader.high_fuses=0xD8
+        - bootloader.lock_bits=0x0F
+        - bootloader.low_fuses=0xFF
+        - bootloader.tool=avrdude
+        - bootloader.tool.default=avrdude
+        - bootloader.unlock_bits=0x3F
+        - build.arch=AVR
+        - build.board=AVR_MEGA2560
+        - build.core=arduino
+        - build.core.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino
+        - build.extra_flags=
+        - build.f_cpu=16000000L
+        - build.fqbn=arduino:avr:mega
+        - build.library_discovery_phase=0
+        - build.mcu=atmega2560
+        - build.path=/tmp/arduino/sketches/056252D0832629960D910632D85F4222
+        - build.project_name=fastCarDriverECU.ino
+        - build.source.path=/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarDriverECU
+        - build.system.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/system
+        - build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER="Unknown"' '-DUSB_PRODUCT={build.usb_product}'
+        - build.usb_manufacturer="Unknown"
+        - build.variant=mega
+        - build.variant.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/mega
+        - compiler.S.extra_flags=
+        - compiler.S.flags=-c -g -x assembler-with-cpp -flto -MMD
+        - compiler.ar.cmd=avr-gcc-ar
+        - compiler.ar.extra_flags=
+        - compiler.ar.flags=rcs
+        - compiler.c.cmd=avr-gcc
+        - compiler.c.elf.cmd=avr-gcc
+        - compiler.c.elf.extra_flags=
+        - compiler.c.elf.flags=-w -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections
+        - compiler.c.extra_flags=
+        - compiler.c.flags=-c -g -Os -w -std=gnu11 -ffunction-sections -fdata-sections -MMD -flto -fno-fat-lto-objects
+        - compiler.cpp.cmd=avr-g++
+        - compiler.cpp.extra_flags=
+        - compiler.cpp.flags=-c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto
+        - compiler.elf2hex.cmd=avr-objcopy
+        - compiler.elf2hex.extra_flags=
+        - compiler.elf2hex.flags=-O ihex -R .eeprom
+        - compiler.ldflags=
+        - compiler.libraries.ldflags=
+        - compiler.objcopy.cmd=avr-objcopy
+        - compiler.objcopy.eep.extra_flags=
+        - compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+        - compiler.path=/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/
+        - compiler.size.cmd=avr-size
+        - compiler.warning_flags=-w
+        - compiler.warning_flags.all=-Wall -Wextra
+        - compiler.warning_flags.default=
+        - compiler.warning_flags.more=-Wall
+        - compiler.warning_flags.none=-w
+        - extra.time.dst=3600
+        - extra.time.local=1727193143
+        - extra.time.utc=1727185943
+        - extra.time.zone=3600
+        - ide_version=10607
+        - menu.cpu.atmega1280=ATmega1280
+        - menu.cpu.atmega1280.bootloader.extended_fuses=0xF5
+        - menu.cpu.atmega1280.bootloader.file=atmega/ATmegaBOOT_168_atmega1280.hex
+        - menu.cpu.atmega1280.bootloader.high_fuses=0xDA
+        - menu.cpu.atmega1280.build.board=AVR_MEGA
+        - menu.cpu.atmega1280.build.mcu=atmega1280
+        - menu.cpu.atmega1280.upload.maximum_size=126976
+        - menu.cpu.atmega1280.upload.protocol=arduino
+        - menu.cpu.atmega1280.upload.speed=57600
+        - menu.cpu.atmega2560=ATmega2560 (Mega 2560)
+        - menu.cpu.atmega2560.bootloader.extended_fuses=0xFD
+        - menu.cpu.atmega2560.bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+        - menu.cpu.atmega2560.bootloader.high_fuses=0xD8
+        - menu.cpu.atmega2560.build.board=AVR_MEGA2560
+        - menu.cpu.atmega2560.build.mcu=atmega2560
+        - menu.cpu.atmega2560.upload.maximum_size=253952
+        - menu.cpu.atmega2560.upload.protocol=wiring
+        - menu.cpu.atmega2560.upload.speed=115200
+        - name=Arduino Mega or Mega 2560
+        - pid.0=0x0010
+        - pid.1=0x0042
+        - pid.2=0x0010
+        - pid.3=0x0042
+        - pid.4=0x0210
+        - pid.5=0x0242
+        - pluggable_discovery.required.0=builtin:serial-discovery
+        - pluggable_discovery.required.1=builtin:mdns-discovery
+        - pluggable_monitor.required.serial=builtin:serial-monitor
+        - preproc.includes.flags=-w -x c++ -M -MG -MP
+        - preproc.macros.flags=-w -x c++ -E -CC
+        - recipe.S.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -x assembler-with-cpp -flto -MMD -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.ar.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc-ar" rcs  "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/{archive_file}" "{object_file}"
+        - recipe.c.combine.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -w -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=atmega2560   -o "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.elf" {object_files}  "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/{archive_file}" "-L/tmp/arduino/sketches/056252D0832629960D910632D85F4222" -lm
+        - recipe.c.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-gcc" -c -g -Os -w -std=gnu11 -ffunction-sections -fdata-sections -MMD -flto -fno-fat-lto-objects -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.cpp.o.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{object_file}"
+        - recipe.objcopy.eep.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-objcopy" -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.elf" "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.eep"
+        - recipe.objcopy.hex.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-objcopy" -O ihex -R .eeprom  "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.elf" "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.hex"
+        - recipe.output.save_file=fastCarDriverECU.ino.mega.hex
+        - recipe.output.tmp_file=fastCarDriverECU.ino.hex
+        - recipe.preproc.includes="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -M -MG -MP -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}"
+        - recipe.preproc.macros="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-g++" -c -g -Os -w -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -Wno-error=narrowing -MMD -flto -w -x c++ -E -CC -mmcu=atmega2560 -DF_CPU=16000000L -DARDUINO=10607 -DARDUINO_AVR_MEGA2560 -DARDUINO_ARCH_AVR   {includes} "{source_file}" -o "{preprocessed_file_path}"
+        - recipe.size.pattern="/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/bin/avr-size" -A "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.elf"
+        - recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+        - recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+        - recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+        - runtime.hardware.path=/home/muml/.arduino15/packages/arduino/hardware/avr
+        - runtime.ide.path=/home/muml/ArduinoCLI
+        - runtime.ide.version=10607
+        - runtime.os=linux
+        - runtime.platform.path=/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6
+        - runtime.tools.CMSIS-4.5.0.path=/home/muml/.arduino15/packages/arduino/tools/CMSIS/4.5.0
+        - runtime.tools.CMSIS-Atmel-1.2.0.path=/home/muml/.arduino15/packages/arduino/tools/CMSIS-Atmel/1.2.0
+        - runtime.tools.CMSIS-Atmel.path=/home/muml/.arduino15/packages/arduino/tools/CMSIS-Atmel/1.2.0
+        - runtime.tools.CMSIS.path=/home/muml/.arduino15/packages/arduino/tools/CMSIS/4.5.0
+        - runtime.tools.arduinoOTA-1.2.1.path=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.2.1
+        - runtime.tools.arduinoOTA-1.3.0.path=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.3.0
+        - runtime.tools.arduinoOTA.path=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.3.0
+        - runtime.tools.arm-none-eabi-gcc-7-2017q4.path=/home/muml/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4
+        - runtime.tools.arm-none-eabi-gcc.path=/home/muml/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4
+        - runtime.tools.avr-gcc-7.3.0-atmel3.6.1-arduino7.path=/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
+        - runtime.tools.avr-gcc.path=/home/muml/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
+        - runtime.tools.avrdude-6.3.0-arduino17.path=/home/muml/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17
+        - runtime.tools.avrdude.path=/home/muml/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17
+        - runtime.tools.bossac-1.7.0-arduino3.path=/home/muml/.arduino15/packages/arduino/tools/bossac/1.7.0-arduino3
+        - runtime.tools.bossac.path=/home/muml/.arduino15/packages/arduino/tools/bossac/1.7.0-arduino3
+        - runtime.tools.ctags-5.8-arduino11.path=/home/muml/.arduino15/packages/builtin/tools/ctags/5.8-arduino11
+        - runtime.tools.ctags.path=/home/muml/.arduino15/packages/builtin/tools/ctags/5.8-arduino11
+        - runtime.tools.dfu-discovery-0.1.2.path=/home/muml/.arduino15/packages/builtin/tools/dfu-discovery/0.1.2
+        - runtime.tools.dfu-discovery.path=/home/muml/.arduino15/packages/builtin/tools/dfu-discovery/0.1.2
+        - runtime.tools.mdns-discovery-1.0.9.path=/home/muml/.arduino15/packages/builtin/tools/mdns-discovery/1.0.9
+        - runtime.tools.mdns-discovery.path=/home/muml/.arduino15/packages/builtin/tools/mdns-discovery/1.0.9
+        - runtime.tools.openocd-0.10.0-arduino7.path=/home/muml/.arduino15/packages/arduino/tools/openocd/0.10.0-arduino7
+        - runtime.tools.openocd.path=/home/muml/.arduino15/packages/arduino/tools/openocd/0.10.0-arduino7
+        - runtime.tools.serial-discovery-1.4.0.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.0
+        - runtime.tools.serial-discovery-1.4.1.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.1
+        - runtime.tools.serial-discovery.path=/home/muml/.arduino15/packages/builtin/tools/serial-discovery/1.4.1
+        - runtime.tools.serial-monitor-0.13.0.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.13.0
+        - runtime.tools.serial-monitor-0.14.1.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.14.1
+        - runtime.tools.serial-monitor.path=/home/muml/.arduino15/packages/builtin/tools/serial-monitor/0.14.1
+        - sketch_path=/home/muml/MUMLProjects/Overtaking-Cars-Baumfalk/deployable-files/fastCarDriverECU
+        - software=ARDUINO
+        - tools.arduino_ota.cmd=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.3.0/bin/arduinoOTA
+        - tools.arduino_ota.upload.pattern="{cmd}" -address {upload.port.address} -port {upload.port.properties.port} -sketch "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.hex" -upload {upload.port.properties.endpoint_upload} -sync {upload.port.properties.endpoint_sync} -reset {upload.port.properties.endpoint_reset} -sync_exp {upload.port.properties.sync_return}
+        - tools.avrdude.bootloader.params.quiet=-q -q
+        - tools.avrdude.bootloader.params.verbose=-v
+        - tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -patmega2560 -c{protocol} {program.extra_params} "-Uflash:w:/home/muml/.arduino15/packages/arduino/hardware/avr/1.8.6/bootloaders/stk500v2/stk500boot_v2_mega2560.hex:i" -Ulock:w:0x0F:m
+        - tools.avrdude.cmd.path={path}/bin/avrdude
+        - tools.avrdude.config.path={path}/etc/avrdude.conf
+        - tools.avrdude.erase.params.quiet=-q -q
+        - tools.avrdude.erase.params.verbose=-v
+        - tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -patmega2560 -c{protocol} {program.extra_params} -e -Ulock:w:0x3F:m -Uefuse:w:0xFD:m -Uhfuse:w:0xD8:m -Ulfuse:w:0xFF:m
+        - tools.avrdude.network_cmd=/home/muml/.arduino15/packages/arduino/tools/arduinoOTA/1.3.0/bin/arduinoOTA
+        - tools.avrdude.path=/home/muml/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17
+        - tools.avrdude.program.params.noverify=-V
+        - tools.avrdude.program.params.quiet=-q -q
+        - tools.avrdude.program.params.verbose=-v
+        - tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} {program.verify} -patmega2560 -c{protocol} {program.extra_params} "-Uflash:w:/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.hex:i"
+        - tools.avrdude.program.verify=
+        - tools.avrdude.upload.network_pattern="{network_cmd}" -address {serial.port} -port {upload.network.port} -sketch "/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.hex" -upload {upload.network.endpoint_upload} -sync {upload.network.endpoint_sync} -reset {upload.network.endpoint_reset} -sync_exp {upload.network.sync_return}
+        - tools.avrdude.upload.params.noverify=-V
+        - tools.avrdude.upload.params.quiet=-q -q
+        - tools.avrdude.upload.params.verbose=-v
+        - tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -patmega2560 -cwiring "-P{serial.port}" -b115200 -D "-Uflash:w:/tmp/arduino/sketches/056252D0832629960D910632D85F4222/fastCarDriverECU.ino.hex:i"
+        - tools.avrdude.upload.verify=
+        - tools.avrdude_remote.upload.pattern=/usr/bin/run-avrdude /tmp/sketch.hex {upload.verbose} -patmega2560
+        - upload.maximum_data_size=8192
+        - upload.maximum_size=253952
+        - upload.protocol=wiring
+        - upload.speed=115200
+        - upload.tool=avrdude
+        - upload.tool.default=avrdude
+        - upload.tool.network=arduino_ota
+        - upload_port.0.pid=0x0010
+        - upload_port.0.vid=0x2341
+        - upload_port.1.pid=0x0042
+        - upload_port.1.vid=0x2341
+        - upload_port.2.pid=0x0010
+        - upload_port.2.vid=0x2A03
+        - upload_port.3.pid=0x0042
+        - upload_port.3.vid=0x2A03
+        - upload_port.4.pid=0x0210
+        - upload_port.4.vid=0x2341
+        - upload_port.5.pid=0x0242
+        - upload_port.5.vid=0x2341
+        - upload_port.6.board=mega
+        - version=1.8.6
+        - vid.0=0x2341
+        - vid.1=0x2341
+        - vid.2=0x2A03
+        - vid.3=0x2A03
+        - vid.4=0x2341
+        - vid.5=0x2341
+uploadresult: null
+success: true
+profileout: ""
+error: ""
+
+
+
+
+Error response stream:
+

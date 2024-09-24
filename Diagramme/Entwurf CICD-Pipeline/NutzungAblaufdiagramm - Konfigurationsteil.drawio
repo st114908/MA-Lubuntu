@@ -1,0 +1,419 @@
+<mxfile host="Electron" modified="2024-09-23T18:14:21.749Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="VGG_iTkY0Pz6iVNt4yOS" version="24.2.5" type="device">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1572" dy="3003" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="YIM583KONvALGsWJV8ko-24" value="T2: Einstellen der Konfigurationen" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=abstract;strokeColor=default;align=left;verticalAlign=top;spacingLeft=5;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="120" y="-200" width="580" height="1660" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="260" as="targetPoint" />
+            <mxPoint x="280" y="220" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="270" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rsZH7y0TYli8b2UmggMa-8" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;T2.2: Generierung der Konfigurationsdatei für ArduinoCLIUtilizer&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=service;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="160" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rsZH7y0TYli8b2UmggMa-9" value="&lt;span style=&quot;text-align: left;&quot;&gt;T2.5&lt;/span&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;: Generierung der Konfigurationsdatei für die Pipeline&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=service;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="720" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rsZH7y0TYli8b2UmggMa-18" value="" style="points=[[0.145,0.145,0],[0.5,0,0],[0.855,0.145,0],[1,0.5,0],[0.855,0.855,0],[0.5,1,0],[0.145,0.855,0],[0,0.5,0]];shape=mxgraph.bpmn.event;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=ellipsePerimeter;outlineConnect=0;aspect=fixed;outline=end;symbol=terminate2;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="1400" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-43" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rsZH7y0TYli8b2UmggMa-43" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;gwType=complex;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="480" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="ta-Gz7XjjbDgZz7PzBXk-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300.00000000000045" y="-130" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-5" value="" style="points=[[0.145,0.145,0],[0.5,0,0],[0.855,0.145,0],[1,0.5,0],[0.855,0.855,0],[0.5,1,0],[0.145,0.855,0],[0,0.5,0]];shape=mxgraph.bpmn.event;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=ellipsePerimeter;outlineConnect=0;aspect=fixed;outline=standard;symbol=general;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="280" y="-170" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-8" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="280" y="-100" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-9" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-8" target="rsZH7y0TYli8b2UmggMa-43" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="70" as="sourcePoint" />
+            <mxPoint x="390" y="40" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="500" y="-80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-10" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-9" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-130" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-11" value="Wegen Anpassungen, Fehler in T4, etc. zurück in T2?" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="310" y="-120" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="-10" as="sourcePoint" />
+            <mxPoint x="160" y="-20" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="160" y="-80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-14" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-13" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-16" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-18" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="30" y="50" as="sourcePoint" />
+            <mxPoint x="160" y="460" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-17" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-16" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" y="-50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-18" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-19" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-18" target="ta-Gz7XjjbDgZz7PzBXk-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="80" as="sourcePoint" />
+            <mxPoint x="240" y="379.9999999999998" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-20" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-19" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-45" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-21" value="Sind Anpassungen der Einstellungen für ArduinoCLIUtilizer&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;erforderlich?&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="170" y="300" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="ta-Gz7XjjbDgZz7PzBXk-18" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="280" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="480" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-23" value="T2.3&lt;span style=&quot;background-color: initial;&quot;&gt;: Anpassen der Einstellungen für ArduinoCLIUtlizer&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=user;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="380" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-42" value="T2.6: Anzeigen der Informationen der angeschlossenen Boards" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=service;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="280" y="1130" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-43" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-45" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="111.25" y="690" as="sourcePoint" />
+            <mxPoint x="240" y="1250" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-44" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-43" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-21" y="-60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-45" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="960" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-46" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-45" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="121.25" y="700" as="sourcePoint" />
+            <mxPoint x="360" y="1010" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="360" y="980" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-47" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="ta-Gz7XjjbDgZz7PzBXk-46" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-51" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-48" value="Sind die Seriennummern der Boards&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;erforderlich und unbekannt?&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="250" y="930" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ta-Gz7XjjbDgZz7PzBXk-57" value="T2.7&lt;span style=&quot;background-color: initial;&quot;&gt;: Anpassen der Einstellungen&lt;br&gt;für die Pipeline, z.B. Ändern der Sequenz der Pipelineschritte&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=user;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="1250" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-6" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="30" y="-170" as="sourcePoint" />
+            <mxPoint x="160" y="240" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-7" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-6" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-10" y="-110" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-8" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="-20" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="-260" as="sourcePoint" />
+            <mxPoint x="270" y="40" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-10" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-9" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-45" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-11" value="Ist die Konfigurationsdatei für ArduinoCLIUtilizer vorhanden&lt;span style=&quot;background-color: initial;&quot;&gt;?&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="170" y="-40" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="820" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" y="820" />
+            </Array>
+            <mxPoint x="280" y="780" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-18" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="30" y="390" as="sourcePoint" />
+            <mxPoint x="160" y="800" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-19" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-18" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" y="-110" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-20" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="540" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-21" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="300" as="sourcePoint" />
+            <mxPoint x="270" y="600" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-22" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-21" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-45" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-23" value="Ist die Konfigurationsdatei für die Pipeline vorhanden&lt;span style=&quot;background-color: initial;&quot;&gt;?&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="170" y="525" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-26" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="fke2xoYTFlwqS61LEhha-20" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="500" as="sourcePoint" />
+            <mxPoint x="460" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-27" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-29" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="30" y="650" as="sourcePoint" />
+            <mxPoint x="160" y="1330" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-28" value="Nein" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-27" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" y="-205" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-29" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="880" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-30" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-29" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="660" as="sourcePoint" />
+            <mxPoint x="220" y="900" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-31" value="Ja" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="fke2xoYTFlwqS61LEhha-30" connectable="0" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-32" value="Sind Anpassungen an den Einstellungen für die Pipeline&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;erforderlich?&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="190" y="840" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-34" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-57" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1390" as="sourcePoint" />
+            <mxPoint x="180" y="1350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="300" y="1350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-35" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="rsZH7y0TYli8b2UmggMa-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="1370" as="sourcePoint" />
+            <mxPoint x="160" y="1410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-41" target="ta-Gz7XjjbDgZz7PzBXk-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-40" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="fke2xoYTFlwqS61LEhha-41" target="KiU0uKNCzfdo6ye2o-Qh-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="880" as="sourcePoint" />
+            <mxPoint x="260" y="880" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="500" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-43" target="fke2xoYTFlwqS61LEhha-41" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="220" as="sourcePoint" />
+            <mxPoint x="360" y="420" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-41" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;gwType=complex;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="480" y="400" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-62" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="fke2xoYTFlwqS61LEhha-29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="840" as="sourcePoint" />
+            <mxPoint x="460" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fke2xoYTFlwqS61LEhha-63" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="1210" as="sourcePoint" />
+            <mxPoint x="360" y="1250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qHbNBGb3_WVknqoZvV5s-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="qHbNBGb3_WVknqoZvV5s-0" target="rsZH7y0TYli8b2UmggMa-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qHbNBGb3_WVknqoZvV5s-0" value="T2.1&lt;span style=&quot;background-color: initial;&quot;&gt;: Starten der Generi&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;erung der&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; text-align: left;&quot;&gt;Konfigurationsdatei für ArduinoCLIUtilizer&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=user;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="40" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="qHbNBGb3_WVknqoZvV5s-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="qHbNBGb3_WVknqoZvV5s-2" target="rsZH7y0TYli8b2UmggMa-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qHbNBGb3_WVknqoZvV5s-2" value="&lt;span style=&quot;text-align: left;&quot;&gt;T2.4&lt;/span&gt;&lt;span style=&quot;background-color: initial; text-align: left;&quot;&gt;: Starten der Generierung der Konfigurationsdatei für die Pipeline&lt;/span&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=user;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="200" y="600" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-14" value="" style="shape=mxgraph.bpmn.data;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;size=15;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="540" y="260" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-15" value="&lt;div&gt;Konfigurationsdatei für ArduinoCLIUtilizer&lt;/div&gt;arduinoCLIUtilizerConfig.yaml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="520" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-18" value="" style="endArrow=classic;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-8" target="Qg0PHN_ECKM0FbM2JeUu-14" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-200" y="373" as="sourcePoint" />
+            <mxPoint x="-120" y="371" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-19" value="" style="endArrow=classic;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-23" target="Qg0PHN_ECKM0FbM2JeUu-14" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="246" as="sourcePoint" />
+            <mxPoint x="647" y="314" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-20" value="" style="shape=mxgraph.bpmn.data;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;size=15;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="530" y="900" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-21" value="&lt;div&gt;Konfigurationsdatei für die Pipeline&lt;/div&gt;pipelineSettings.yaml" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="530" y="960" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Qg0PHN_ECKM0FbM2JeUu-22" target="ta-Gz7XjjbDgZz7PzBXk-42" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-22" value="T2.6&lt;span style=&quot;background-color: initial;&quot;&gt;:&amp;nbsp;&lt;/span&gt;Anzeigenlassen&lt;div&gt;der Informationen der angeschlossenen Boards&lt;/div&gt;" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;container=1;expand=0;collapsible=0;taskMarker=user;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="290" y="1010" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-24" value="" style="endArrow=classic;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="rsZH7y0TYli8b2UmggMa-9" target="Qg0PHN_ECKM0FbM2JeUu-20" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="430" as="sourcePoint" />
+            <mxPoint x="647" y="344" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Qg0PHN_ECKM0FbM2JeUu-26" value="" style="endArrow=classic;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ta-Gz7XjjbDgZz7PzBXk-57" target="Qg0PHN_ECKM0FbM2JeUu-21" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="803" as="sourcePoint" />
+            <mxPoint x="660" y="903" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="440" y="1240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1DqokT_0otpftzXZqgMk-33" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="239.5" y="920" as="sourcePoint" />
+            <mxPoint x="239.5" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KiU0uKNCzfdo6ye2o-Qh-1" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KiU0uKNCzfdo6ye2o-Qh-2" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="880" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-6" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="460" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-7" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="800" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-8" value="" style="points=[[0.25,0.25,0],[0.5,0,0],[0.75,0.25,0],[1,0.5,0],[0.75,0.75,0],[0.5,1,0],[0.25,0.75,0],[0,0.5,0]];shape=mxgraph.bpmn.gateway2;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;align=center;perimeter=rhombusPerimeter;outlineConnect=0;outline=none;symbol=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="140" y="1330" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-9" value="Fehlende Konfigurationsdatei für ArduinoCLIUtilizer" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="360" y="10" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-10" value="Sonstiges" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="510" y="90" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-11" value="Unpassende Konfigurationen für ArduinoCLIUtilizer" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="430" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lAEqiTVltEiGorZCPzqU-13" value="Anpassung der Pipelinekonfigurationen erforderlich" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="510" y="450" width="130" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

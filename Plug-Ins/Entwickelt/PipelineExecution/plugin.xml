@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="org.eclipse.ui.exportWizards">
+		<wizard
+			category="org.muml.core.export"
+            class="de.ust.pipelineexecution.ui.exports.PipelineExecutionAsExport"
+            id="org.muml.container.transformation.ui.PipeLineExecutionAsExport"
+            name="Execute pipeline sequence">
+		</wizard>
+		<wizard
+			category="org.muml.core.export"
+            class="de.ust.pipelineexecution.ui.exports.PostProcessingExecutionAsExport"
+            id="org.muml.container.transformation.ui.PostProcessingExecutionAsExport"
+            name="Execute postprocessing sequence">
+		</wizard>
+		<wizard
+			category="org.muml.core.export"
+            class="de.ust.pipelineexecution.ui.exports.ContainerTransformationExecutionAsExport"
+            id="org.muml.container.transformation.ui.ContainerTransformationExecutionAsExport"
+            name="Execute container transformation">
+		</wizard>
+		<wizard
+			category="org.muml.core.export"
+            class="de.ust.pipelineexecution.ui.exports.ContainerCodeGenerationExecutionAsExport"
+            id="org.muml.container.transformation.ui.ContainerCodeGenerationExecutionAsExport"
+            name="Execute container code generation">
+		</wizard>
+		<wizard
+			category="org.muml.core.export"
+            class="de.ust.pipelineexecution.ui.exports.ComponentCodeGenerationExecutionAsExport"
+            id="org.muml.container.transformation.ui.ComponentCodeGenerationExecutionAsExport"
+            name="Execute component code generation">
+		</wizard>
+	</extension>
+
+</plugin>

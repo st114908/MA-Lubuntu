@@ -1,0 +1,6 @@
+arduinoCLIPathSetInPathEnvironment: false
+arduinoCLIDirectory: /home/muml/ArduinoCLI
+fallbackBoardIdentifierFQBN: arduino:avr:nano
+
+# Info: The config file generation has detected, that the Arduino-CLI is already installed in the folder set by arduinoCLIDirectory.
+# Info: The generated settings should directly work.

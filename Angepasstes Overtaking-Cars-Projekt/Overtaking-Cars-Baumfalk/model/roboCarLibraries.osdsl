@@ -1,0 +1,13 @@
+import "robocar.muml"
+
+OperatingSystem:RoboCarLibraries{
+	Device_API_Calls: DistanceSensor {
+		void initializeDistanceSensors();
+		int32 getFrontDistance();
+		int32 getRearDistance();
+	}
+	Device_API_Calls: DriveController {
+		void setSpeed(int16 speed);
+		void setAngle(int8 angle);
+	}
+}
